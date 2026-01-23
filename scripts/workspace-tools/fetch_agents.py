@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-Fetch and organize agents from agent-services using the manifest in repo root.
-Supports Dutch manifest fields (agents-publicatie.json) as provided in agent-services.
+Fetch and organize agents from mandarin-agents using the manifest in repo root.
+Supports Dutch manifest fields (agents-publicatie.json) as provided in mandarin-agents.
 
 BELANGRIJK - Overschrijfgedrag:
-- Charters: Volledig overschreven met versie uit agent-services
+- Charters: Volledig overschreven met versie uit mandarin-agents
 - Prompts: Bestaande prompts met dezelfde naam overschreven; extra prompts behouden
 - Runner module folders: Volledig verwijderd en vervangen (niet gemerged!)
 
-Dit is by design: fetching installeert de canonieke versie uit agent-services.
+Dit is by design: fetching installeert de canonieke versie uit mandarin-agents.
 Workspace-specifieke aanpassingen worden overschreven.
 
 Usage:
@@ -54,14 +54,14 @@ def run_command(cmd: List[str], cwd: Path | None = None) -> str:
 
 
 def fetch_repo(repo_url: str, temp_dir: Path) -> Path:
-    """Clone or pull agent-services repository.
+    """Clone or pull mandarin-agents repository.
     
-    Als de repository al bestaat in temp_dir/agent-services, wordt een git pull gedaan.
+    Als de repository al bestaat in temp_dir/mandarin-agents, wordt een git pull gedaan.
     Anders wordt de repository ge-cloned.
     
     Dit zorgt ervoor dat altijd de laatste versie wordt opgehaald.
     """
-    clone_path = temp_dir / "agent-services"
+    clone_path = temp_dir / "mandarin-agents"
     
     if clone_path.exists() and (clone_path / ".git").exists():
         # Repository bestaat al - doe een pull
@@ -80,6 +80,16 @@ def fetch_repo(repo_url: str, temp_dir: Path) -> Path:
         run_command(["git", "clone", "--depth", "1", repo_url, str(clone_path)])
     
     return clone_path
+
+
+def get_template(loc_dict, vs: str) -> str | None:
+    """Get location template for value stream, with fallback to default."""
+    if isinstance(loc_dict, str):
+        return loc_dict  # Old format: single string template
+    if isinstance(loc_dict, dict):
+        # New format: per-value-stream dict with optional default
+        return loc_dict.get(vs) or loc_dict.get("default")
+    return None
 
 
 def load_manifest(repo_path: Path, manifest_name: str) -> Tuple[List[AgentSpec], Dict[str, str], Dict[str, str]]:
@@ -105,14 +115,17 @@ def load_manifest(repo_path: Path, manifest_name: str) -> Tuple[List[AgentSpec],
         agent_type = "utility" if value_stream.lower() == "utility" else "value-stream"
         files: List[Path] = []
         # charter
-        if locaties.get("charters"):
-            files.append(Path(locaties["charters"].replace("<value-stream>", value_stream).replace("<agent-naam>", naam)))
+        charter_tpl = get_template(locaties.get("charters"), value_stream)
+        if charter_tpl:
+            files.append(Path(charter_tpl.replace("<value-stream>", value_stream).replace("<agent-naam>", naam)))
         # prompts (wildcard)
-        if aantal_prompts > 0 and locaties.get("prompts"):
-            files.append(Path(locaties["prompts"].replace("<value-stream>", value_stream).replace("<agent-naam>", naam).replace("<werkwoord>", "*")))
+        prompts_tpl = get_template(locaties.get("prompts"), value_stream)
+        if aantal_prompts > 0 and prompts_tpl:
+            files.append(Path(prompts_tpl.replace("<value-stream>", value_stream).replace("<agent-naam>", naam).replace("<werkwoord>", "*")))
         # runner
-        if aantal_runners > 0 and locaties.get("runners"):
-            files.append(Path(locaties["runners"].replace("<value-stream>", value_stream).replace("<agent-naam>", naam)))
+        runner_tpl = get_template(locaties.get("runners"), value_stream)
+        if aantal_runners > 0 and runner_tpl:
+            files.append(Path(runner_tpl.replace("<value-stream>", value_stream).replace("<agent-naam>", naam)))
 
         specs.append(
             AgentSpec(
@@ -231,8 +244,8 @@ def organize(vs_files: List[Path], util_files: List[Path], runner_modules: List[
         
         try:
             # BELANGRIJK: Verwijder bestaande module VOLLEDIG (niet mergen!)
-            # Als workspace-folder 2 files heeft en agent-services 1 file,
-            # blijven na fetch alleen het 1 file uit agent-services over.
+            # Als workspace-folder 2 files heeft en mandarin-agents 1 file,
+            # blijven na fetch alleen het 1 file uit mandarin-agents over.
             if module_dst.exists():
                 print(f"  [REPLACE] Removing existing {module_name}/ before copy")
                 shutil.rmtree(module_dst)
@@ -278,8 +291,8 @@ def organize(vs_files: List[Path], util_files: List[Path], runner_modules: List[
 
 
 def write_fetch_log(workspace: Path, value_stream: str, meta: Dict[str, str], applicable: List[AgentSpec], stats: Dict[str, int], source_repo: str) -> Path:
-    """Write detailed fetch log to logs/ folder."""
-    logs_dir = workspace / "logs"
+    """Write detailed fetch log to docs/logs/ folder."""
+    logs_dir = workspace / "docs" / "logs"
     logs_dir.mkdir(parents=True, exist_ok=True)
     
     log_timestamp = datetime.now()
@@ -325,9 +338,9 @@ def write_fetch_log(workspace: Path, value_stream: str, meta: Dict[str, str], ap
     
     log_lines.append(f"\n## Overschrijfgedrag\n\n")
     log_lines.append(f"⚠️  **Runner modules**: Volledig verwijderd en vervangen (niet gemerged!)\n")
-    log_lines.append(f"- Charters: Volledig overschreven met versie uit agent-services\n")
+    log_lines.append(f"- Charters: Volledig overschreven met versie uit mandarin-agents\n")
     log_lines.append(f"- Prompts: Bestaande prompts met dezelfde naam overschreven\n\n")
-    log_lines.append(f"Dit gedrag is by design: fetching installeert de canonieke versie uit agent-services.\n")
+    log_lines.append(f"Dit gedrag is by design: fetching installeert de canonieke versie uit mandarin-agents.\n")
     
     log_path.write_text("".join(log_lines), encoding="utf-8")
     return log_path
@@ -335,24 +348,51 @@ def write_fetch_log(workspace: Path, value_stream: str, meta: Dict[str, str], ap
 
 def sync_self_script(repo_path: Path, workspace: Path) -> str:
     """Update the local fetch_agents.py from the source repo if available."""
-    src = repo_path / "exports" / "fetch_agents.py"
-    dest = workspace / "scripts" / "fetch_agents.py"
-
-    if not src.exists():
+    # Primary location: workspace-tools (where development happens)
+    # Secondary location: exports/utility/runners (legacy published location)
+    possible_paths = [
+        repo_path / "scripts" / "workspace-tools" / "fetch_agents.py",
+        repo_path / "exports" / "utility" / "runners" / "fetch_agents.py",
+        repo_path / "exports" / "fetch_agents.py",  # Legacy location
+    ]
+    
+    src = None
+    for path in possible_paths:
+        if path.exists():
+            src = path
+            print(f"[INFO] Found fetch_agents.py in mandarin-agents: {path.relative_to(repo_path)}")
+            break
+    
+    if not src:
+        print(f"[WARN] fetch_agents.py not found in mandarin-agents (checked workspace-tools, utility/runners, exports)")
         return "missing"
+    
+    dest = workspace / "scripts" / "fetch_agents.py"
 
     try:
         if dest.exists() and src.read_bytes() == dest.read_bytes():
             status = "unchanged"
         elif dest.exists():
             status = "updated"
+            print(f"[INFO] Local fetch_agents.py is outdated, updating...")
         else:
             status = "new"
+            print(f"[INFO] Installing fetch_agents.py for the first time...")
 
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, dest)
+        
+        if status == "updated":
+            print(f"[OK] fetch_agents.py updated to latest version from mandarin-agents")
+            print(f"")
+            print(f"⚠️  IMPORTANT: The script has been updated.")
+            print(f"   Please run your command again to use the new version:")
+            print(f"   fetch-agents {' '.join(sys.argv[1:])}")
+            print(f"")
+        
         return status
-    except Exception:
+    except Exception as e:
+        print(f"[WARN] Could not sync fetch_agents.py: {e}")
         return "error"
 
 
@@ -360,7 +400,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Fetch agents via manifest")
     parser.add_argument("value_stream", nargs="?", help="Target value-stream")
     parser.add_argument("--manifest", default="agents-publicatie.json")
-    parser.add_argument("--source-repo", default="https://github.com/hans-blok/agent-services.git")
+    parser.add_argument("--source-repo", default="https://github.com/hans-blok/mandarin-agents.git")
     parser.add_argument("--list", action="store_true")
     parser.add_argument("--no-cleanup", action="store_true")
     args = parser.parse_args()
@@ -368,12 +408,21 @@ def main() -> int:
     value_stream = args.value_stream.strip("'\"") if args.value_stream else None
     workspace = Path(os.getcwd())
 
-    # Gebruik persistente agent-services folder in workspace root voor git pull functionaliteit
-    agent_services_dir = workspace / "agent-services"
-    agent_services_dir.mkdir(exist_ok=True)
+    # Gebruik persistente mandarin-agents folder in workspace root voor git pull functionaliteit
+    mandarin_agents_dir = workspace / "mandarin-agents"
+    mandarin_agents_dir.mkdir(exist_ok=True)
 
     try:
-        repo = fetch_repo(args.source_repo, agent_services_dir.parent)
+        repo = fetch_repo(args.source_repo, mandarin_agents_dir.parent)
+        
+        # Sync this script from source of truth FIRST (before loading manifest)
+        # This ensures we use the latest version with bug fixes
+        self_status = sync_self_script(repo, workspace)
+        if self_status == "updated":
+            # Script was updated, exit and ask user to re-run
+            print("[INFO] fetch_agents.py was updated. Please run the command again.")
+            return 2  # Special exit code: script updated, re-run needed
+        
         specs, meta, _loc = load_manifest(repo, args.manifest)
         streams = derive_streams(specs)
 
@@ -411,10 +460,13 @@ def main() -> int:
         stats = organize(vs_files, util_files, runner_modules, workspace, repo)
         
         # Write detailed log
-        log_path = write_fetch_log(workspace, value_stream, meta, applicable, stats, args.source_repo)
-
-        # Sync this script from source of truth (agent-services)
-        self_status = sync_self_script(repo, workspace)
+        try:
+            log_path = write_fetch_log(workspace, value_stream, meta, applicable, stats, args.source_repo)
+            log_written = True
+        except Exception as e:
+            print(f"[WARN] Could not write log file: {e}")
+            log_path = None
+            log_written = False
 
         print("\nSUMMARY")
         print(f"Value-stream: {value_stream}")
@@ -427,9 +479,10 @@ def main() -> int:
         print(f"Files copied -> new: {stats['new']}, updated: {stats['updated']}, unchanged: {stats['unchanged']}, errors: {stats['error']}")
         if stats.get('modules_replaced', 0) > 0:
             print(f"Runner modules replaced: {stats['modules_replaced']} (⚠️  old content removed)")
-        if self_status != "missing":
-            print(f"fetch_agents.py sync: {self_status}")
-        print(f"Log: {log_path.relative_to(workspace)}")
+        if self_status not in ["missing", "unchanged"]:
+            print(f"fetch_agents.py: {self_status}")
+        if log_written and log_path:
+            print(f"Log: {log_path.relative_to(workspace)}")
         print("[SUCCESS] Agents fetched")
         return 0
     except Exception as e:

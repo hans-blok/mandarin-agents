@@ -4,7 +4,7 @@ Initialize a workspace according to the workspace doctrine.
 
 This script sets up a new workspace by:
 1. Creating the required folder structure
-2. Fetching fetch_agents.py and fetch-agents.bat from mandarin-agents repository using Git sparse checkout
+2. Fetching fetch_agents.py and fetch-agents.bat from mandarin-agents repository
 3. Creating .gitignore and workspace policy
 
 Usage:
@@ -15,17 +15,15 @@ Usage:
 
 Requirements:
     - Python 3.9+
-    - Git installed and in PATH
-    - Internet connection (to clone from GitHub)
+    - Internet connection (to download fetch scripts)
 
 Assumptions:
     - Running from the target workspace directory
-    - GitHub repository is accessible
+    - GitHub raw content URLs are accessible
 
 Design Decisions:
-    - Uses Git sparse checkout for efficient partial clone
-    - Only fetches required files, not entire repository
-    - Temporary clone is cleaned up after file extraction
+    - Downloads fetch scripts from mandarin-agents main branch
+    - Uses urllib (standard library) to avoid external dependencies
     - Idempotent: safe to run multiple times
     - Follows Code Complete principles: defensive programming, clear contracts
 """
@@ -33,10 +31,9 @@ Design Decisions:
 from __future__ import annotations
 
 import argparse
-import shutil
-import subprocess
 import sys
-import tempfile
+import urllib.request
+import urllib.error
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
@@ -48,8 +45,8 @@ class WorkspaceConfig:
     
     value_stream: Optional[str] = None
     
-    # GitHub repository URL
-    github_repo_url: str = "https://github.com/hans-blok/mandarin-agents.git"
+    # GitHub raw content base URL
+    github_base_url: str = "https://raw.githubusercontent.com/hans-blok/mandarin-agents/main"
     
     # Required folders per workspace doctrine
     required_folders: List[str] = None
@@ -102,147 +99,74 @@ def create_folder_structure(
     print(f"[OK] Folder structure ready ({created} created, {existing} existed)")
 
 
-def run_git_command(
-    cmd: List[str],
-    cwd: Optional[Path] = None,
-    capture_output: bool = True
-) -> str:
-    """
-    Execute a Git command and return stdout.
-    
-    Args:
-        cmd: Command and arguments as list
-        cwd: Working directory for command execution
-        capture_output: Whether to capture and return output
-        
-    Returns:
-        Command stdout as string (empty if capture_output=False)
-        
-    Raises:
-        InitializationError: If command fails
-    """
-    try:
-        if capture_output:
-            result = subprocess.run(
-                cmd,
-                cwd=cwd,
-                text=True,
-                capture_output=True,
-                check=True
-            )
-            return result.stdout.strip()
-        else:
-            subprocess.run(cmd, cwd=cwd, check=True)
-            return ""
-    except subprocess.CalledProcessError as e:
-        error_msg = f"Git command failed: {' '.join(cmd)}"
-        if capture_output and e.stderr:
-            error_msg += f"\n{e.stderr}"
-        raise InitializationError(error_msg) from e
-    except FileNotFoundError as e:
-        raise InitializationError(
-            "Git is not installed or not in PATH. Please install Git first."
-        ) from e
-
-
 def fetch_scripts_from_github(
     workspace: Path,
-    github_repo_url: str
+    github_base_url: str
 ) -> None:
     """
-    Fetch fetch_agents.py and fetch-agents.bat using Git sparse checkout.
-    
-    Uses sparse checkout to efficiently download only required files
-    without cloning the entire repository.
+    Download fetch_agents.py and fetch-agents.bat from mandarin-agents repository.
     
     Args:
         workspace: Workspace root directory
-        github_repo_url: GitHub repository URL
+        github_base_url: Base URL for GitHub raw content
         
     Raises:
-        InitializationError: If Git operations fail
+        InitializationError: If download fails
     """
-    print("[INFO] Fetching scripts from mandarin-agents using Git sparse checkout...")
+    print("[INFO] Downloading fetch scripts from mandarin-agents...")
     
-    # Create temporary directory for sparse checkout
-    temp_dir = Path(tempfile.mkdtemp(prefix="init-workspace-"))
+    # Define files to download and their destinations
+    files_to_fetch = [
+        {
+            "url": f"{github_base_url}/scripts/workspace-tools/fetch_agents.py",
+            "destination": workspace / "scripts" / "fetch_agents.py",
+            "name": "fetch_agents.py"
+        },
+        {
+            "url": f"{github_base_url}/scripts/workspace-tools/fetch-agents.bat",
+            "destination": workspace / "fetch-agents.bat",
+            "name": "fetch-agents.bat"
+        }
+    ]
     
-    try:
-        # Files to fetch from repository
-        files_to_fetch = [
-            {
-                "source": "scripts/workspace-tools/fetch_agents.py",
-                "destination": workspace / "scripts" / "fetch_agents.py"
-            },
-            {
-                "source": "scripts/workspace-tools/fetch-agents.bat",
-                "destination": workspace / "fetch-agents.bat"
-            }
-        ]
+    for file_info in files_to_fetch:
+        url = file_info["url"]
+        destination = file_info["destination"]
+        name = file_info["name"]
         
-        print(f"  [GIT] Initializing sparse checkout...")
-        
-        # Step 1: Clone with filter, no checkout
-        run_git_command(
-            ["git", "clone", "--filter=blob:none", "--no-checkout", 
-             "--depth", "1", github_repo_url, str(temp_dir)],
-            capture_output=False
-        )
-        
-        # Step 2: Initialize sparse checkout
-        run_git_command(
-            ["git", "sparse-checkout", "init", "--cone"],
-            cwd=temp_dir
-        )
-        
-        # Step 3: Set sparse checkout paths
-        sparse_paths = [f["source"] for f in files_to_fetch]
-        run_git_command(
-            ["git", "sparse-checkout", "set"] + sparse_paths,
-            cwd=temp_dir
-        )
-        
-        # Step 4: Checkout the files
-        run_git_command(
-            ["git", "checkout"],
-            cwd=temp_dir
-        )
-        
-        print(f"  [OK] Sparse checkout complete")
-        
-        # Step 5: Copy files to workspace
-        for file_info in files_to_fetch:
-            source_path = temp_dir / file_info["source"]
-            dest_path = file_info["destination"]
+        try:
+            print(f"  [DOWNLOAD] {name}...")
             
-            if not source_path.exists():
-                raise InitializationError(
-                    f"File not found in repository: {file_info['source']}"
-                )
+            # Download file
+            with urllib.request.urlopen(url, timeout=30) as response:
+                content = response.read()
             
-            # Ensure destination directory exists
-            dest_path.parent.mkdir(parents=True, exist_ok=True)
+            # Ensure parent directory exists
+            destination.parent.mkdir(parents=True, exist_ok=True)
             
-            # Copy file
-            shutil.copy2(source_path, dest_path)
-            print(f"  [COPY] {source_path.name} -> {dest_path.relative_to(workspace)}")
-        
-        print(f"[OK] Fetch scripts copied successfully")
-        
-    except InitializationError:
-        raise
-    except Exception as e:
-        raise InitializationError(
-            f"Unexpected error during sparse checkout: {e}"
-        ) from e
-    finally:
-        # Clean up temporary directory
-        if temp_dir.exists():
-            try:
-                shutil.rmtree(temp_dir)
-                print(f"  [CLEANUP] Temporary files removed")
-            except Exception as e:
-                print(f"  [WARN] Could not remove temporary directory: {e}")
+            # Write to destination
+            destination.write_bytes(content)
+            
+            print(f"  [OK] {name} -> {destination.relative_to(workspace)}")
+            
+        except urllib.error.HTTPError as e:
+            raise InitializationError(
+                f"Failed to download {name}: HTTP {e.code} {e.reason}\n"
+                f"URL: {url}\n"
+                f"Check if the file exists in mandarin-agents repository."
+            ) from e
+        except urllib.error.URLError as e:
+            raise InitializationError(
+                f"Failed to download {name}: Network error\n"
+                f"Reason: {e.reason}\n"
+                f"Check your internet connection."
+            ) from e
+        except (OSError, IOError) as e:
+            raise InitializationError(
+                f"Failed to write {name} to {destination}: {e}"
+            ) from e
+    
+    print(f"[OK] Fetch scripts downloaded successfully")
 
 
 def create_gitignore(workspace: Path) -> None:
@@ -388,10 +312,10 @@ def initialize_workspace(config: WorkspaceConfig) -> None:
     create_folder_structure(workspace, config.required_folders)
     print()
     
-    # Step 2: Fetch scripts using Git sparse checkout
-    print("[STEP 2] Fetching scripts from GitHub...")
+    # Step 2: Download fetch scripts
+    print("[STEP 2] Downloading fetch scripts...")
     try:
-        fetch_scripts_from_github(workspace, config.github_repo_url)
+        fetch_scripts_from_github(workspace, config.github_base_url)
     except InitializationError as e:
         raise InitializationError(
             f"Failed to download fetch scripts: {e}\n"
@@ -464,14 +388,9 @@ Examples:
   
 The script will:
   1. Create required folder structure (.github/prompts, scripts/runners, etc.)
-  2. Fetch fetch_agents.py and fetch-agents.bat using Git sparse checkout
+  2. Download fetch_agents.py and fetch-agents.bat from mandarin-agents
   3. Create .gitignore with logs/ and temp/
   4. Create beleid-workspace.md template (if value stream provided)
-
-Requirements:
-  - Python 3.9+
-  - Git installed and in PATH
-  - Internet connection for GitHub access
         """
     )
     
@@ -507,8 +426,7 @@ Requirements:
         print(f"Error: {e}")
         print()
         print("Troubleshooting:")
-        print("  - Ensure Git is installed and in PATH: git --version")
-        print("  - Check internet connection (needed for GitHub access)")
+        print("  - Check internet connection (needed for downloading fetch scripts)")
         print("  - Ensure you have write permissions in current directory")
         print("  - Check available disk space")
         print("  - Verify GitHub is accessible: https://github.com/hans-blok/mandarin-agents")

@@ -21,7 +21,7 @@ Operaties:
     4. schrijf-beleid      - Beleid genereren bij nieuwe workspace
     5. zet-agent-boundary  - Agent boundary definitie
     6. valideer-governance - Governance compliance validatie
-    7. fetch-agents        - Agents ophalen uit agent-services repository
+    7. fetch-agents        - Agents ophalen uit mandarin-agents repository
 
 Kerntaak 7 (beheer-workspace-state) heeft geen runner - deze taak is conversationeel.
 

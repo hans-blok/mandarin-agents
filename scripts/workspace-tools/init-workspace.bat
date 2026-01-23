@@ -5,7 +5,7 @@ REM ============================================================================
 REM
 REM Doel:
 REM   Richt een nieuwe workspace in volgens de workspace doctrine.
-REM   Fetcht canon en agent-services, creeert folder structuur,
+REM   Fetcht canon en mandarin-agents, creeert folder structuur,
 REM   installeert fetch_agents.py en fetch-agents.bat.
 REM
 REM Gebruik:
@@ -14,7 +14,7 @@ REM   init-workspace.bat kennispublicatie
 REM
 REM Output:
 REM   - canon/ (governance en doctrine)
-REM   - agent-services/ (agent definities)
+REM   - mandarin-agents/ (agent definities)
 REM   - scripts/fetch_agents.py
 REM   - fetch-agents.bat
 REM   - beleid-workspace.md

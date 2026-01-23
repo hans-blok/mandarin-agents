@@ -4,7 +4,7 @@ REM Fetch Agents - Windows Wrapper
 REM ==============================================================================
 REM
 REM Wrapper script voor fetch_agents.py voor Windows gebruikers.
-REM Fetcht agents uit agent-services repository voor opgegeven value stream.
+REM Fetcht agents uit mandarin-agents repository voor opgegeven value stream.
 REM
 REM Gebruik:
 REM   fetch-agents.bat <value-stream>

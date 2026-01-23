@@ -57,7 +57,7 @@ pull.bat <repository-naam>
 
 # Voorbeelden:
 pull.bat canon
-pull.bat agent-services
+pull.bat mandarin-agents
 ```
 
 **Gedrag**:
@@ -84,7 +84,7 @@ fetch-agents.bat --list
 
 **Vereisten**:
 - Python 3.9+ geïnstalleerd
-- `agents-publicatie.json` manifest in workspace root of agent-services
+- `agents-publicatie.json` manifest in workspace root of mandarin-agents
 
 ## Vereisten per Tool
 
@@ -94,7 +94,7 @@ fetch-agents.bat --list
 | pull.bat | - | ✓ | ✓ |
 | fetch-agents.bat | ✓ | - | Optioneel* |
 
-*fetch-agents werkt met lokale agent-services of haalt deze op indien nodig.
+*fetch-agents werkt met lokale mandarin-agents of haalt deze op indien nodig.
 
 ## Installatie van Vereisten
 
@@ -131,8 +131,8 @@ fetch-agents.bat --list
 1. Kopieer workspace tools naar nieuwe folder
 2. Run `init-workspace.bat <value-stream>`
 3. Run `pull.bat canon` (optioneel, voor governance)
-4. Run `pull.bat agent-services` (optioneel, voor agents)
-5. Run `fetch-agents.bat <value-stream>` (als agent-services lokaal)
+4. Run `pull.bat mandarin-agents` (optioneel, voor agents)
+5. Run `fetch-agents.bat <value-stream>` (als mandarin-agents lokaal)
 6. Begin met werken in de workspace
 
 ## Over deze Folder

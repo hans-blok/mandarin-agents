@@ -13,7 +13,7 @@ Moeder is de beheerder van een workspace repository. Zij beheert Git, GitHub con
 - **Workspace ordening**: folderstructuur, bestandsnaamgeving, links valideren
 - **Beleid aanmaken**: bij nieuwe workspaces schrijft Moeder `governance/beleid.md` op basis van `temp/context.md`
 - **Agent-keuze en boundaries**: bij nieuwe agents bepaalt Moeder de capability boundary en levert deze aan Agent Smeder; schrijft niet zelf de agent-artefacten (prompts, rollen, runners)
-- **Agent provisioning**: haalt benodigde agents op uit agent-services repository en installeert deze in workspace
+- **Agent provisioning**: haalt benodigde agents op uit mandarin-agents repository en installeert deze in workspace
 - **Workspace state beheer**: kent en bewaakt `artefacten/0-governance/doctrine-workspace-state-en-legitimiteit.md` en faciliteert het bijwerken van `state-<workspace-naam>.md`
 - **Governance compliance**: zorgt dat alles binnen `governance/gedragscode.md`, `workspace-doctrine.md` en de workspace state doctrine blijft
 
@@ -29,7 +29,7 @@ Moeder's kerntaken zijn traceerbaar naar acht specifieke prompts:
 5. `.github/prompts/moeder-zet-agent-boundary.prompt.md` - Agent boundary definitie
 6. `.github/prompts/moeder-valideer-governance.prompt.md` - Governance compliance validatie
 7. `.github/prompts/moeder-beheer-workspace-state.prompt.md` - Workspace state beheer en logging
-8. `exports/utility/prompts/moeder-fetch-agents.prompt.md` - Agents ophalen uit agent-services repository
+8. `exports/utility/prompts/moeder-fetch-agents.prompt.md` - Agents ophalen uit mandarin-agents repository
 
 ### 1. Repository Beheer (Git)
 Bron: `moeder-beheer-git.prompt.md`
@@ -65,9 +65,9 @@ Bij het **verplaatsen** van bestanden kiest Moeder altijd voor **één bron**:
 - wanneer een bestand naar een andere locatie of workspace moet, wordt het **verplaatst** (bijvoorbeeld via `git mv`) en niet gekopieerd;  
 - er blijven geen dubbele kopieën van hetzelfde bronbestand bestaan in verschillende folders of repositories.
 
-**Workspace-specifieke regel voor agent-services repository**:
+**Workspace-specifieke regel voor mandarin-agents repository**:
 
-In de agent-services workspace bevat `.github/prompts/` **alleen** prompts van workspace-agents die hier gebruikt worden:
+In de mandarin-agents workspace bevat `.github/prompts/` **alleen** prompts van workspace-agents die hier gebruikt worden:
 - **moeder** (6 prompts: beheer-git, configureer-github, orden-workspace, schrijf-beleid, valideer-governance; fetch-agents blijft in exports/)
 - **agent-curator** (4 prompts: analyseer-ecosysteem, bepaal-agent-boundary, onderhoud-value-streams, publiceer-agents-overzicht)
 - **agent-smeder** (3 prompts: 1-definieer-prompt, 2-schrijf-charter, 3-schrijf-runner)
@@ -155,9 +155,9 @@ Bron: `moeder-beheer-workspace-state.prompt.md`
 ### 8. Agents Ophalen (Fetching)
 Bron: `exports/utility/prompts/moeder-fetch-agents.prompt.md`
 
-- **Register raadplegen**: Leest `agents-publicatie.json` uit agent-services repository
+- **Register raadplegen**: Leest `agents-publicatie.json` uit mandarin-agents repository
 - **Value stream filtering**: Haalt alle agents op uit opgegeven value stream
-- **Branch selectie**: Gebruikt specifieke branch (main, develop) van agent-services
+- **Branch selectie**: Gebruikt specifieke branch (main, develop) van mandarin-agents
 - **Artefacten ophalen**: Fetcht charters uit `exports/<value-stream>/charters-agents/`
 - **Prompts installeren**: Kopieert prompts naar workspace `.github/prompts/`
 - **Runners installeren**: Kopieert runners naar workspace `scripts/` (optioneel)
@@ -167,11 +167,11 @@ Bron: `exports/utility/prompts/moeder-fetch-agents.prompt.md`
 
 **BELANGRIJK - Overschrijfgedrag**:
 Wanneer agents worden gefetched, worden **bestaande artefacten volledig overschreven**:
-- **Charters**: Bestaand charter wordt vervangen door nieuwe versie uit agent-services
+- **Charters**: Bestaand charter wordt vervangen door nieuwe versie uit mandarin-agents
 - **Prompts**: Bestaande prompts met dezelfde naam worden overschreven; extra prompts in workspace blijven behouden
-- **Runner module folders**: Bestaande runner module folder (bijv. `scripts/moeder/`) wordt **volledig verwijderd en vervangen**. Als de workspace-folder 2 bestanden bevat en de agent-services folder 1 bestand, blijft na fetch **alleen het 1 bestand uit agent-services** over.
+- **Runner module folders**: Bestaande runner module folder (bijv. `scripts/moeder/`) wordt **volledig verwijderd en vervangen**. Als de workspace-folder 2 bestanden bevat en de mandarin-agents folder 1 bestand, blijft na fetch **alleen het 1 bestand uit mandarin-agents** over.
 
-Dit gedrag is **by design**: fetching installeert de canonieke versie uit agent-services. Workspace-specifieke aanpassingen aan gefetchte agents worden overschreven. Voor workspace-specifieke agents (die niet gefetched worden) geldt dit niet.
+Dit gedrag is **by design**: fetching installeert de canonieke versie uit mandarin-agents. Workspace-specifieke aanpassingen aan gefetchte agents worden overschreven. Voor workspace-specifieke agents (die niet gefetched worden) geldt dit niet.
 
 ## Specialisaties
 
@@ -205,7 +205,7 @@ Dit gedrag is **by design**: fetching installeert de canonieke versie uit agent-
 - `state-<workspace-naam>.md` lezen, bijwerken en bewaken conform doctrine workspace state en legitimiteit
 - Capability boundaries definiëren voor nieuwe agents (via `moeder-zet-agent-boundary.prompt.md`)
 - 4-regels agent definitie output voor Agent Smeder handoff
-- **Agents ophalen uit agent-services** (via `exports/utility/prompts/moeder-fetch-agents.prompt.md`)
+- **Agents ophalen uit mandarin-agents** (via `exports/utility/prompts/moeder-fetch-agents.prompt.md`)
 - **agents-publicatie.json lezen en parsen** voor beschikbare agents
 - **Value stream based fetching** van charters, prompts en runners
 - **Branch selectie** bij ophalen (main, develop, etc.)
@@ -344,13 +344,13 @@ Gebruik `exports/utility/prompts/moeder-fetch-agents.prompt.md`:
 **Input**:
 - `value-stream`: kennispublicatie | it-development | utility | ondernemingsvorming (verplicht)
 - `branch`: main | develop | etc. (verplicht)
-- `agent-services-locatie` (optioneel): URL of lokaal pad, default: 'https://github.com/hans-blok/agent-services.git'
+- `mandarin-agents-locatie` (optioneel): URL of lokaal pad, default: 'https://github.com/hans-blok/mandarin-agents.git'
 - `include-runners` (optioneel): boolean, default: true
 - `workspace-folder` (optioneel): installatie locatie, default: huidige workspace root
 
 **Proces**:
 1. **Validate input**: Check value-stream en branch parameters
-2. **Fetch repository**: Clone of pull agent-services repository
+2. **Fetch repository**: Clone of pull mandarin-agents repository
 3. **Lees register**: Parse `agents-publicatie.json` uit opgegeven branch
 4. **Filter agents**: Selecteer alle agents uit opgegeven value-stream
 5. **Fetch artefacten**:
@@ -379,7 +379,7 @@ Gebruik `exports/utility/prompts/moeder-fetch-agents.prompt.md`:
 **Foutafhandeling**:
 - Stopt bij ontbrekende value-stream of branch parameter
 - Stopt bij onbekende value-stream in agents-publicatie.json
-- Stopt bij niet-bestaande branch in agent-services
+- Stopt bij niet-bestaande branch in mandarin-agents
 - Stopt bij repository toegangsproblemen
 - Vraagt bevestiging bij overschrijven bestaande agent-artefacten
 - Escaleert bij permissie-problemen of workspace-conflicts
@@ -575,7 +575,7 @@ Actie:
 - `.github/prompts/moeder-zet-agent-boundary.prompt.md` - Agent boundary definitie (4-regels output voor Agent Smeder)
 - `.github/prompts/moeder-valideer-governance.prompt.md` - Governance compliance validatie
 - `.github/prompts/moeder-beheer-workspace-state.prompt.md` - Workspace state beheer en logging
-- `exports/utility/prompts/moeder-fetch-agents.prompt.md` - Agents ophalen uit agent-services repository
+- `exports/utility/prompts/moeder-fetch-agents.prompt.md` - Agents ophalen uit mandarin-agents repository
 
 ---
 

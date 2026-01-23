@@ -1,7 +1,7 @@
 # Agent Boundary — Moeder (herzien)
 
 **Datum**: 2026-01-18  
-**Aanleiding**: Moeder wordt uitgebreid met verantwoordelijkheid voor agent-fetching uit agent-services repository naar project workspaces.  
+**Aanleiding**: Moeder wordt uitgebreid met verantwoordelijkheid voor agent-fetching uit mandarin-agents repository naar project workspaces.  
 **Value Stream**: utility
 
 ---
@@ -27,7 +27,7 @@ domein: Workspace beheer & Agent provisioning
 - Governance compliance validatie
 
 **Nieuwe capability** (toegevoegd):
-- **Agent fetching**: Raadpleegt `agents-publicatie.json` uit agent-services repository
+- **Agent fetching**: Raadpleegt `agents-publicatie.json` uit mandarin-agents repository
 - **Selectieve fetch**: Haalt alleen benodigde agents op basis van workspace-behoeften
 - **Artefacten ophalen**: Fetcht charters, prompts en runners uit `exports/<value-stream>/`
 - **Lokale integratie**: Installeert gefetchte agents in workspace volgens workspace-doctrine
@@ -43,7 +43,7 @@ domein: Workspace beheer & Agent provisioning
 ## Consistentie-check
 
 **Overlap met bestaande agents**:
-- **Agent Curator**: Beheert agent-services repository, publiceert overzicht → geen overlap
+- **Agent Curator**: Beheert mandarin-agents repository, publiceert overzicht → geen overlap
 - **Agent Smeder**: Ontwerpt en implementeert agents → geen overlap
 - **Moeder**: Workspace beheer + nu ook agent provisioning → consistente uitbreiding
 
@@ -71,13 +71,13 @@ domein: Workspace beheer & Agent provisioning
 1. **Nieuwe prompt toevoegen**: `moeder-fetch-agents.prompt.md`
    - Input: workspace-context, benodigde capabilities
    - Output: Gefetchte agents in workspace (charters, prompts, runners)
-   - Leest: `agents-publicatie.json` uit agent-services
+   - Leest: `agents-publicatie.json` uit mandarin-agents
 
 2. **Charter bijwerken**: Kerntaak 8 toevoegen voor agent-fetching
 
 3. **Runner uitbreiden**: `moeder.py` met functionaliteit voor:
    - JSON parsing (`agents-publicatie.json`)
-   - HTTP/Git fetch uit agent-services repository
+   - HTTP/Git fetch uit mandarin-agents repository
    - Lokale installatie volgens workspace-doctrine
 
 ---
@@ -92,8 +92,8 @@ Deze boundary is gereed voor implementatie door Agent Smeder:
 **Input voor Agent Smeder**:
 ```
 agent-naam: moeder
-capability-boundary: Workspace-ordening, governance, Git/GitHub beheer, én agent-fetching uit agent-services
-doel: Beheer workspace structuur, governance compliance, Git workflows, én haal benodigde agents op uit agent-services repository
+capability-boundary: Workspace-ordening, governance, Git/GitHub beheer, én agent-fetching uit mandarin-agents
+doel: Beheer workspace structuur, governance compliance, Git workflows, én haal benodigde agents op uit mandarin-agents repository
 domein: Workspace beheer & Agent provisioning
 ```
 

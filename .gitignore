@@ -6,7 +6,7 @@
 # Workspace Folders (Runtime/Cache)
 # ===================================
 # Agent cache en synchronisatie
-agent-services/
+mandarin-agents/
 
 # Logs van fetch operaties en agent runs
 logs/
