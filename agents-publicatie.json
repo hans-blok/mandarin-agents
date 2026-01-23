@@ -1,24 +1,12 @@
 {
-  "publicatiedatum": "2026-01-22",
-  "digest": "e0a45",
+  "publicatiedatum": "2026-01-23",
+  "digest": "ce0de",
   "agents": [
-    {
-      "naam": "agent-curator",
-      "valueStream": "agent-enablement",
-      "aantalPrompts": 4,
-      "aantalRunners": 1
-    },
     {
       "naam": "agent-publisher",
       "valueStream": "kennispublicatie",
       "aantalPrompts": 1,
       "aantalRunners": 0
-    },
-    {
-      "naam": "agent-smeder",
-      "valueStream": "agent-enablement",
-      "aantalPrompts": 3,
-      "aantalRunners": 1
     },
     {
       "naam": "archimate-modelleur",
@@ -30,12 +18,6 @@
       "naam": "artikel-schrijver",
       "valueStream": "kennispublicatie",
       "aantalPrompts": 6,
-      "aantalRunners": 1
-    },
-    {
-      "naam": "bedrijfsarchitect",
-      "valueStream": "architectuur-en-oplossingsontwerp",
-      "aantalPrompts": 0,
       "aantalRunners": 0
     },
     {
@@ -45,16 +27,10 @@
       "aantalRunners": 0
     },
     {
-      "naam": "converter-md-to-archimate",
-      "valueStream": "architectuur-en-oplossingsontwerp",
-      "aantalPrompts": 1,
-      "aantalRunners": 0
-    },
-    {
       "naam": "de-schrijver",
       "valueStream": "kennispublicatie",
       "aantalPrompts": 0,
-      "aantalRunners": 1
+      "aantalRunners": 0
     },
     {
       "naam": "docker-steward",
@@ -66,7 +42,7 @@
       "naam": "essayist",
       "valueStream": "kennispublicatie",
       "aantalPrompts": 1,
-      "aantalRunners": 1
+      "aantalRunners": 0
     },
     {
       "naam": "heraut",
@@ -90,13 +66,13 @@
       "naam": "moeder",
       "valueStream": "utility",
       "aantalPrompts": 11,
-      "aantalRunners": 2
+      "aantalRunners": 0
     },
     {
       "naam": "pipeline-executor",
       "valueStream": "it-development",
       "aantalPrompts": 1,
-      "aantalRunners": 1
+      "aantalRunners": 0
     },
     {
       "naam": "presentatie-architect",
@@ -108,23 +84,22 @@
       "naam": "python-expert",
       "valueStream": "utility",
       "aantalPrompts": 6,
-      "aantalRunners": 1
+      "aantalRunners": 0
     },
     {
       "naam": "vertaler",
       "valueStream": "kennispublicatie",
       "aantalPrompts": 1,
-      "aantalRunners": 1
+      "aantalRunners": 0
     },
     {
       "naam": "workflow-architect",
       "valueStream": "it-development",
       "aantalPrompts": 3,
-      "aantalRunners": 1
+      "aantalRunners": 0
     }
   ],
   "valueStreams": [
-    "agent-enablement",
     "architectuur-en-oplossingsontwerp",
     "it-development",
     "kennispublicatie",
