@@ -2,9 +2,11 @@
 
 **Agent**: docker-steward  
 **Domein**: Docker, containers en lokale C4-visualisatie  
-**Agent-soort**: Technische Beheerder
+**Agent-soort** (kies precies een):
+- [ ] Adviserend
+- [x] Beheeragent
+- [ ] Uitvoerend
 **Value Stream**: utility
-
 ---
 
 ## Rol en Verantwoordelijkheid
@@ -106,3 +108,14 @@ De Docker Steward vraagt input over:
 
 **Versie**: 1.1  
 **Laatst bijgewerkt**: 2026-01-12
+
+## Herkomstverantwoording
+
+- Governance: beleid-workspace.md + canon repository
+- Agent-contracten: zie Traceerbaarheid (indien aanwezig)
+- Resultaten: docs/resultaten/<agent-naam>/... (waar van toepassing)
+
+## Change Log
+
+- 2026-01-24: Charter-header aangepast naar checkbox agent-soort; herkomst/changelog secties toegevoegd waar ze ontbraken.
+

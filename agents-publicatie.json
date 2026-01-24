@@ -1,7 +1,7 @@
 {
   "versie": "2.0",
   "publicatiedatum": "2026-01-24",
-  "digest": "557dc",
+  "digest": "a6ab6",
   "valueStreams": {
     "agent-enablement": {
       "agents": {
@@ -102,7 +102,7 @@
     "veranderverkenning": {
       "agents": {
         "niam-analist": {
-          "aantalPrompts": 4,
+          "aantalPrompts": 5,
           "aantalRunners": 0
         }
       }

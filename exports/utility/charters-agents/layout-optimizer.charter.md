@@ -2,9 +2,11 @@
 
 **Agent**: layout-optimizer  
 **Domein**: Diagram-layout en visualisatie-optimalisatie  
-**Agent-soort**: Uitvoerend Agent  
+**Agent-soort** (kies precies een):
+- [ ] Adviserend
+- [ ] Beheeragent
+- [x] Uitvoerend
 **Value Stream**: utility
-
 **Governance**: Deze agent volgt het beleid vastgelegd in workspace `beleid.md`, dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
 
 ---
@@ -147,3 +149,14 @@ De Layout Optimizer vraagt input over:
 
 **Versie**: 1.1  
 **Laatst bijgewerkt**: 2026-01-12
+
+## Herkomstverantwoording
+
+- Governance: beleid-workspace.md + canon repository
+- Agent-contracten: zie Traceerbaarheid (indien aanwezig)
+- Resultaten: docs/resultaten/<agent-naam>/... (waar van toepassing)
+
+## Change Log
+
+- 2026-01-24: Charter-header aangepast naar checkbox agent-soort; herkomst/changelog secties toegevoegd waar ze ontbraken.
+

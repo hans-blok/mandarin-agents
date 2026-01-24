@@ -4,7 +4,8 @@ REM Fetch Agents - Windows Wrapper
 REM ==============================================================================
 REM
 REM Wrapper voor fetch_mandarin_agents.py die agents ophaalt uit mandarin-agents
-REM repository op basis van gepubliceerd manifest (agents-publicatie.json).
+REM repository (inclusief .github directory) op basis van gepubliceerd manifest 
+REM (agents-publicatie.json).
 REM
 REM Gebruik:
 REM   fetch-agents.bat <value-stream>   - Fetch agents voor value stream

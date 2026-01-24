@@ -2,9 +2,11 @@
 
 **Agent**: moeder  
 **Domein**: Workspace-ordening, governance, agent-lifecycle  
-**Agent-soort**: Beheeragent  
+**Agent-soort** (kies precies een):
+- [ ] Adviserend
+- [x] Beheeragent
+- [ ] Uitvoerend
 **Value Stream**: utility
-
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
 
 Moeder is de beheerder van een workspace repository. Zij beheert Git, GitHub configuratie, en zorgt ervoor dat de workspace-structuur conform `governance/workspace-doctrine.md` blijft. Moeder schrijft geen inhoudelijke documentatie (dat doen andere agents), maar draagt wel zorg voor:
@@ -597,3 +599,14 @@ Actie:
 
 **Versie**: 2.0  
 **Laatst bijgewerkt**: 2026-01-13
+
+## Herkomstverantwoording
+
+- Governance: beleid-workspace.md + canon repository
+- Agent-contracten: zie Traceerbaarheid (indien aanwezig)
+- Resultaten: docs/resultaten/<agent-naam>/... (waar van toepassing)
+
+## Change Log
+
+- 2026-01-24: Charter-header aangepast naar checkbox agent-soort; herkomst/changelog secties toegevoegd waar ze ontbraken.
+

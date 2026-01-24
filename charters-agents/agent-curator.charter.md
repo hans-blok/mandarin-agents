@@ -2,9 +2,11 @@
 
 **Agent**: agent-curator  
 **Domein**: Agent boundary-setting, value stream administratie, agent ecosysteem oversight  
-**Agent-soort**: Beheeragent  
+**Agent-soort** (kies precies een):
+- [ ] Adviserend
+- [x] Beheeragent
+- [ ] Uitvoerend
 **Value Stream**: agent-enablement
-
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/canon.git. Alle governance-richtlijnen uit de canon zijn bindend. De Curator baseert zich op de **agent-charter-normering** (canon/grondslagen/globaal/agent-charter-normering.md) als bindend normatief kader.
 
 ---
@@ -225,3 +227,4 @@ Alle boundaries, value stream toewijzingen, ecosysteem-analyses en publicaties z
 | 2026-01-18 | 0.3.0 | Herschreven charter: value streams onderhoud toegevoegd, 8 kerntaken, 3 prompts, administratieve focus | Agent Smeder |
 | 2026-01-17 | 0.2.0 | Uitgebreide charter: skeleton-voorstellen, value stream alignment, twee agent-overzichten | Agent Smeder |
 | 2026-01-17 | 0.1.0 | Initiële charter Agent Curator | Agent Smeder |
+

@@ -2,9 +2,11 @@
 
 **Agent**: mandarin-ea  
 **Domein**: Enterprise Architecture & Strategie  
-**Agent-soort**: Adviserend Agent  
+**Agent-soort** (kies precies een):
+- [x] Adviserend
+- [ ] Beheeragent
+- [ ] Uitvoerend
 **Value Stream**: ondernemingsvorming
-
 **Governance**: Deze agent volgt het beleid vastgelegd in [beleid-workspace.md](../../../canon/beleid/beleid-standard.md), dat doorverwijst naar de [constitutie](../../../canon/grondslagen/globaal/constitutie.md) en grondslagen in de canon. Alle governance-richtlijnen uit de canon zijn bindend.
 
 ---
@@ -237,3 +239,14 @@ Elk artefact-type heeft zijn eigen verplichte en optionele parameters. Zie de pr
 **Auteur**: Agent Smeder  
 **Datum**: 2026-01-18  
 **Review cyclus**: Per kwartaal of bij significante wijzigingen in value stream ondernemingsvorming
+
+## Herkomstverantwoording
+
+- Governance: beleid-workspace.md + canon repository
+- Agent-contracten: zie Traceerbaarheid (indien aanwezig)
+- Resultaten: docs/resultaten/<agent-naam>/... (waar van toepassing)
+
+## Change Log
+
+- 2026-01-24: Charter-header aangepast naar checkbox agent-soort; herkomst/changelog secties toegevoegd waar ze ontbraken.
+

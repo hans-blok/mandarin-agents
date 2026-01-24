@@ -2,9 +2,11 @@
 
 **Agent**: essayist  
 **Domein**: Essayproductie, reflectieve kennisoverdracht  
-**Agent-soort**: Uitvoerend Agent  
+**Agent-soort** (kies precies een):
+- [ ] Adviserend
+- [ ] Beheeragent
+- [x] Uitvoerend
 **Value Stream**: kennispublicatie
-
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
 
 ## Doel en bestaansreden
@@ -89,3 +91,14 @@ De Essayist:
 - Ontvangt inhoudelijke concepten en principes van de Canon Architect
 - Zet deze om in leesbare, positionele essays
 - Voegt geen nieuwe architecturale besluiten toe
+
+## Herkomstverantwoording
+
+- Governance: beleid-workspace.md + canon repository
+- Agent-contracten: zie Traceerbaarheid (indien aanwezig)
+- Resultaten: docs/resultaten/<agent-naam>/... (waar van toepassing)
+
+## Change Log
+
+- 2026-01-24: Charter-header aangepast naar checkbox agent-soort; herkomst/changelog secties toegevoegd waar ze ontbraken.
+

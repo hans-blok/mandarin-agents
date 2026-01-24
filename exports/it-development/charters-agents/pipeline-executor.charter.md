@@ -2,9 +2,11 @@
 
 **Agent**: pipeline-executor  
 **Domein**: Pipeline-uitvoering, workflow-orkestratie  
-**Agent-soort**: Uitvoerend Agent  
+**Agent-soort** (kies precies een):
+- [ ] Adviserend
+- [ ] Beheeragent
+- [x] Uitvoerend
 **Value Stream**: it-development
-
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
 
 Pipeline Executor is de runtime execution engine voor multi-agent workflows. De agent leest pipeline-documenten (ontworpen door Workflow Architect), voert agents in de juiste volgorde uit, valideert quality gates tussen stappen, en handelt failures af volgens de pipeline-specificatie.
@@ -414,3 +416,14 @@ Actie:
 **Laatst bijgewerkt**: 2026-01-13  
 **Gegenereerd door**: Agent Smeder (workspace.agent-smeder)  
 **Prompt**: `.github/prompts/agent-smeder-3-schrijf-rol.prompt.md`
+
+## Herkomstverantwoording
+
+- Governance: beleid-workspace.md + canon repository
+- Agent-contracten: zie Traceerbaarheid (indien aanwezig)
+- Resultaten: docs/resultaten/<agent-naam>/... (waar van toepassing)
+
+## Change Log
+
+- 2026-01-24: Charter-header aangepast naar checkbox agent-soort; herkomst/changelog secties toegevoegd waar ze ontbraken.
+

@@ -2,9 +2,11 @@
 
 **Agent**: python-expert  
 **Domein**: Python-ontwikkeling, code-kwaliteit  
-**Agent-soort**: Uitvoerend Agent  
+**Agent-soort** (kies precies een):
+- [ ] Adviserend
+- [ ] Beheeragent
+- [x] Uitvoerend
 **Value Stream**: utility
-
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
 
 ## 1. Doel van de agent
@@ -184,3 +186,14 @@ Dit document is het charter voor deze agent en volgt de naamconventie:
 Waar in andere documenten over "rolbeschrijvingen" wordt gesproken, wordt
 voor agents in dit eco-systeem bedoeld: het bijbehorende **charter** in
 `governance/charters-agents/charter.<agent-naam>.md`.
+
+## Herkomstverantwoording
+
+- Governance: beleid-workspace.md + canon repository
+- Agent-contracten: zie Traceerbaarheid (indien aanwezig)
+- Resultaten: docs/resultaten/<agent-naam>/... (waar van toepassing)
+
+## Change Log
+
+- 2026-01-24: Charter-header aangepast naar checkbox agent-soort; herkomst/changelog secties toegevoegd waar ze ontbraken.
+
