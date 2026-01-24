@@ -1,7 +1,7 @@
 {
   "versie": "2.0",
   "publicatiedatum": "2026-01-24",
-  "digest": "a7b51",
+  "digest": "155b3",
   "valueStreams": {
     "agent-enablement": {
       "agents": {
@@ -57,10 +57,6 @@
           "aantalPrompts": 2,
           "aantalRunners": 0
         },
-        "presentatie-architect": {
-          "aantalPrompts": 1,
-          "aantalRunners": 0
-        },
         "vertaler": {
           "aantalPrompts": 1,
           "aantalRunners": 0
@@ -91,6 +87,10 @@
         },
         "moeder": {
           "aantalPrompts": 11,
+          "aantalRunners": 0
+        },
+        "presentatie-architect": {
+          "aantalPrompts": 1,
           "aantalRunners": 0
         },
         "python-expert": {

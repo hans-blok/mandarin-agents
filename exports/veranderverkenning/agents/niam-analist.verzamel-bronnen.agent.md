@@ -80,7 +80,7 @@ Voor alle details over werkwijze en kwaliteitsborging zie de charter.
 
 ---
 
-Documentatie: Zie [exports/veranderverkenning/charters-agents/niam-analist.charter.md](exports/veranderverkenning/charters-agents/niam-analist.charter.md)  
+Documentatie: Zie [exports/veranderverkenning/charters-agents/niam-analist.charter.md](../charters-agents/niam-analist.charter.md)  
 Runner: scripts/runners/niam-analist.py (indien nodig)
 
 ````

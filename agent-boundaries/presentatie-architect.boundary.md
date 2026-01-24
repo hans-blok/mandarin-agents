@@ -15,7 +15,7 @@ Consistentie-check
 - Scheiding van verantwoordelijkheden: Presentatie-Architect ontwerpt, Publisher genereert en publiceert.
 - Geen overlap met Publisher (transformeert Markdown → HTML/PDF met aangeleverde design).
 - Geen overlap met Agent Curator (bepaalt boundaries) of Agent Smeder (construeert agents).
-- Past binnen governance/beleid: presentatie-ontwerp is in scope als onderdeel van kennispublicatie value stream.
+- Past binnen governance/beleid: presentatie-ontwerp is in scope als utility capability (design-assets) die door publicatie-agents wordt geconsumeerd.
 
 Overlaps en aanbevelingen
 - Mogelijke raakvlakken met Publisher: expliciete handoff van design-assets (templates, stylesheets, design-tokens).
@@ -24,7 +24,7 @@ Overlaps en aanbevelingen
 - Samenwerking: Presentatie-Architect levert design-bron aan; Publisher consumeert deze zonder interpretatie.
 
 Referentie naar criteria (nummering, positionering, canon)
-- Nummering/positionering: onder "kennispublicatie" in de canon-structuur, upstream van Publisher.
+- Nummering/positionering: onder "utility" in de canon-structuur; wordt geconsumeerd door Publisher.
 - Canon-consistentie: houdt ontwerp objectief en reproduceerbaar; design-beslissingen zijn gedocumenteerd en traceerbaar.
 - Agent-naming: `presentatie-architect` (lowercase, semantisch duidelijk).
 
