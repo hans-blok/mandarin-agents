@@ -100,12 +100,12 @@ agents:
     runners:
       - scripts/runners/workflow-architect.py
 
-  # kennispublicatie value stream
-  - id: agent-publisher
-    name: workspace.agent-publisher
+  # utility value stream
+  - id: publicatie-agent
+    name: workspace.publicatie-agent
     type: uitvoerend
-    valueStream: kennispublicatie
-    charter: exports/kennispublicatie/charters-agents/charter.agent-publisher.md
+    valueStream: utility
+    charter: exports/utility/charters-agents/publicatie-agent.charter.md
     prompts: []
     runners: []
 
