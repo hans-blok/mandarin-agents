@@ -4,8 +4,9 @@ Initialize a workspace according to the workspace doctrine.
 
 This script sets up a new workspace by:
 1. Creating the required folder structure
-2. Fetching fetch_agents.py and fetch-agents.bat from mandarin-agents repository
-3. Creating .gitignore and workspace policy
+2. Fetching fetch__mandarin_agents.py and fetch-agents.bat from mandarin-agents repository
+3. Fetching beleid-workspace.template from mandarin-canon and renaming to beleid-<workspace-name>.md
+4. Creating .gitignore and workspace policy
 
 Usage:
     python init-workspace.py
@@ -15,14 +16,16 @@ Usage:
 
 Requirements:
     - Python 3.9+
-    - Internet connection (to download fetch scripts)
+    - Internet connection (to download fetch scripts and policy template)
 
 Assumptions:
     - Running from the target workspace directory
     - GitHub raw content URLs are accessible
+    - Workspace directory name is used for beleid filename
 
 Design Decisions:
     - Downloads fetch scripts from mandarin-agents main branch
+    - Downloads beleid template from mandarin-canon main branch
     - Uses urllib (standard library) to avoid external dependencies
     - Idempotent: safe to run multiple times
     - Follows Code Complete principles: defensive programming, clear contracts
@@ -104,7 +107,7 @@ def fetch_scripts_from_github(
     github_base_url: str
 ) -> None:
     """
-    Download fetch_agents.py and fetch-agents.bat from mandarin-agents repository.
+    Download fetch__mandarin_agents.py and fetch-agents.bat from mandarin-agents repository.
     
     Args:
         workspace: Workspace root directory
@@ -118,9 +121,9 @@ def fetch_scripts_from_github(
     # Define files to download and their destinations
     files_to_fetch = [
         {
-            "url": f"{github_base_url}/scripts/workspace-tools/fetch_agents.py",
-            "destination": workspace / "scripts" / "fetch_agents.py",
-            "name": "fetch_agents.py"
+            "url": f"{github_base_url}/scripts/workspace-tools/fetch__mandarin_agents.py",
+            "destination": workspace / "scripts" / "fetch__mandarin_agents.py",
+            "name": "fetch__mandarin_agents.py"
         },
         {
             "url": f"{github_base_url}/scripts/workspace-tools/fetch-agents.bat",
@@ -231,61 +234,60 @@ def create_gitignore(workspace: Path) -> None:
         print(f"  [WARN] Could not create/update .gitignore: {e}")
 
 
-def create_beleid_workspace(
+def fetch_beleid_template(
     workspace: Path,
-    value_stream: str
+    workspace_name: str
 ) -> None:
     """
-    Create beleid-workspace.md in workspace root.
-    
-    This file describes workspace-specific policy.
+    Fetch beleid-workspace.template from mandarin-canon and rename to beleid-<workspace_name>.md.
     
     Args:
         workspace: Workspace root directory
-        value_stream: Value stream name for this workspace
+        workspace_name: Name of the workspace (used for beleid filename)
+        
+    Raises:
+        InitializationError: If download fails
     """
-    print("[INFO] Creating beleid-workspace.md...")
+    print("[INFO] Fetching workspace policy template from mandarin-canon...")
     
-    beleid_path = workspace / "beleid-workspace.md"
+    template_url = "https://raw.githubusercontent.com/hans-blok/mandarin-canon/main/templates/beleid-workspace.template.md"
+    beleid_filename = f"beleid-{workspace_name}.md"
+    beleid_path = workspace / beleid_filename
     
     # Don't overwrite existing policy
     if beleid_path.exists():
-        print("  [SKIP] beleid-workspace.md already exists")
+        print(f"  [SKIP] {beleid_filename} already exists")
         return
     
-    beleid_content = f"""# Beleid voor de {value_stream} workspace
-
-Deze workspace hoort bij de waardestroom **{value_stream}**.
-
-## Scope
-
-- Deze workspace gaat over: [beschrijf hier de scope van je value stream]
-- Andere domeinen vallen buiten deze workspace en horen in andere repositories.
-
-## Folder Structuur
-
-De workspace heeft de volgende standaard structuur:
-
-```
-.github/prompts/      # Agent prompts
-charters-agents/      # Agent charters
-scripts/runners/      # Agent runner scripts
-docs/resultaten/      # Output van agents
-logs/                 # Log bestanden (niet in Git)
-temp/                 # Tijdelijke bestanden (niet in Git)
-```
-
-## Dit beleid is workspace-specifiek
-
-Dit beleid beschrijft de workspace-specifieke scope en werkafspraken.
-Pas dit document aan naar jouw specifieke behoeften.
-"""
-    
     try:
-        beleid_path.write_text(beleid_content, encoding="utf-8")
-        print(f"  [CREATE] beleid-workspace.md")
+        print(f"  [DOWNLOAD] beleid-workspace.template.md...")
+        
+        # Download template
+        with urllib.request.urlopen(template_url, timeout=30) as response:
+            content = response.read()
+        
+        # Write to destination with workspace-specific name
+        beleid_path.write_bytes(content)
+        
+        print(f"  [OK] Template -> {beleid_filename}")
+        print(f"  [INFO] Please review and customize {beleid_filename} for your workspace")
+        
+    except urllib.error.HTTPError as e:
+        raise InitializationError(
+            f"Failed to download beleid template: HTTP {e.code} {e.reason}\n"
+            f"URL: {template_url}\n"
+            f"Check if the file exists in mandarin-canon repository."
+        ) from e
+    except urllib.error.URLError as e:
+        raise InitializationError(
+            f"Failed to download beleid template: Network error\n"
+            f"Reason: {e.reason}\n"
+            f"Check your internet connection."
+        ) from e
     except (OSError, IOError) as e:
-        print(f"  [WARN] Could not create beleid-workspace.md: {e}")
+        raise InitializationError(
+            f"Failed to write {beleid_filename} to {beleid_path}: {e}"
+        ) from e
 
 
 def initialize_workspace(config: WorkspaceConfig) -> None:
@@ -328,10 +330,12 @@ def initialize_workspace(config: WorkspaceConfig) -> None:
     create_gitignore(workspace)
     print()
     
-    # Step 4: Create workspace policy (only if value stream specified)
+    # Step 4: Fetch workspace policy template (only if value stream specified)
     if config.value_stream:
-        print("[STEP 4] Creating workspace policy...")
-        create_beleid_workspace(workspace, config.value_stream)
+        print("[STEP 4] Fetching workspace policy template...")
+        # Use workspace directory name as workspace name
+        workspace_name = workspace.name if workspace.name else config.value_stream
+        fetch_beleid_template(workspace, workspace_name)
         print()
     else:
         print("[STEP 4] Skipping workspace policy (no value stream specified)...")
@@ -343,30 +347,33 @@ def initialize_workspace(config: WorkspaceConfig) -> None:
     print("=" * 70)
     print()
     print("Workspace structure created:")
-    print(f"  .github/prompts/    - Agent prompts")
-    print(f"  charters-agents/    - Agent charters")
+    print(f"  .github/prompts/       - Agent prompts")
+    print(f"  charters-agents/       - Agent charters")
     print(f"  scripts/")
-    print(f"    fetch_agents.py   - Fetch agents script")
-    print(f"    runners/          - Agent runner scripts")
-    print(f"  docs/resultaten/    - Output van agents")
-    print(f"  logs/               - Log bestanden (ignored by Git)")
-    print(f"  temp/               - Tijdelijke bestanden (ignored by Git)")
-    print(f"  fetch-agents.bat    - Windows wrapper for fetch_agents.py")
-    print(f"  .gitignore          - Git ignore configuration")
+    print(f"    fetch__mandarin_agents.py - Fetch agents script")
+    print(f"    runners/             - Agent runner scripts")
+    print(f"  docs/resultaten/       - Output van agents")
+    print(f"  logs/                  - Log bestanden (ignored by Git)")
+    print(f"  temp/                  - Tijdelijke bestanden (ignored by Git)")
+    print(f"  fetch-agents.bat       - Windows wrapper for fetch script")
+    print(f"  .gitignore             - Git ignore configuration")
     if config.value_stream:
-        print(f"  beleid-workspace.md - Workspace policy")
+        workspace_name = workspace.name if workspace.name else config.value_stream
+        print(f"  beleid-{workspace_name}.md - Workspace policy (template)")
     print()
     print("Next steps:")
+    print("  1. Fetch utility agents: fetch-agents.bat utility")
     if config.value_stream:
-        print(f"  1. Review and customize beleid-workspace.md")
-        print(f"  2. Fetch agents: fetch-agents.bat {config.value_stream}")
-        print(f"  3. Add your scripts and documentation")
-        print(f"  4. Initialize Git repository if needed: git init")
+        workspace_name = workspace.name if workspace.name else config.value_stream
+        print(f"  2. Review and customize beleid-{workspace_name}.md")
+        print(f"  3. Fetch value stream agents: fetch-agents.bat {config.value_stream}")
+        print(f"  4. Add your scripts and documentation")
+        print(f"  5. Initialize Git repository if needed: git init")
     else:
-        print(f"  1. Create beleid-workspace.md for your workspace")
-        print(f"  2. Fetch agents when ready: fetch-agents.bat <value-stream>")
-        print(f"  3. Add your scripts and documentation")
-        print(f"  4. Initialize Git repository if needed: git init")
+        print(f"  2. Create workspace policy: beleid-<workspace-name>.md")
+        print(f"  3. Fetch agents when ready: fetch-agents.bat <value-stream>")
+        print(f"  4. Add your scripts and documentation")
+        print(f"  5. Initialize Git repository if needed: git init")
     print()
 
 
@@ -388,9 +395,14 @@ Examples:
   
 The script will:
   1. Create required folder structure (.github/prompts, scripts/runners, etc.)
-  2. Download fetch_agents.py and fetch-agents.bat from mandarin-agents
-  3. Create .gitignore with logs/ and temp/
-  4. Create beleid-workspace.md template (if value stream provided)
+  2. Download fetch__mandarin_agents.py and fetch-agents.bat from mandarin-agents
+  3. Download beleid-workspace.template from mandarin-canon (renamed to beleid-<workspace-name>.md)
+  4. Create .gitignore with logs/ and temp/
+  
+After initialization:
+  - Fetch utility agents first: fetch-agents.bat utility
+  - Customize the beleid-<workspace-name>.md file
+  - Fetch value stream agents: fetch-agents.bat <value-stream>
         """
     )
     

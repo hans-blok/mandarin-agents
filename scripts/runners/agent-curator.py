@@ -79,6 +79,9 @@ def scan_charter(charter_path: Path) -> Optional[AgentMetadata]:
         if not naam or not value_stream:
             print(f"[WARN] Charter missing required fields: {charter_path.name}")
             return None
+
+        # Normalize value stream identifiers (slug form, used in folder names)
+        value_stream = re.sub(r"\s+", "-", value_stream.strip().lower())
         
         # Extract optional fields
         domein = extract_header_field(content, "Domein")
@@ -118,7 +121,7 @@ def count_prompts(agent_naam: str, workspace_root: Path) -> int:
         # Scan .github/prompts/
         prompts_dir = workspace_root / ".github" / "prompts"
         if prompts_dir.exists() and prompts_dir.is_dir():
-            pattern = f"{agent_naam}-*.prompt.md"
+            pattern = f"mandarin.{agent_naam}*.prompt.md"
             count += len(list(prompts_dir.glob(pattern)))
         
         # Scan exports/*/prompts/
@@ -128,7 +131,7 @@ def count_prompts(agent_naam: str, workspace_root: Path) -> int:
                 if value_stream_dir.is_dir():
                     vs_prompts = value_stream_dir / "prompts"
                     if vs_prompts.exists() and vs_prompts.is_dir():
-                        pattern = f"{agent_naam}-*.prompt.md"
+                        pattern = f"mandarin.{agent_naam}*.prompt.md"
                         count += len(list(vs_prompts.glob(pattern)))
     except OSError as e:
         print(f"[WARN] Error scanning prompts for {agent_naam}: {e}")
@@ -173,7 +176,7 @@ def count_runners(agent_naam: str, workspace_root: Path) -> int:
 
 
 def scan_all_agents(workspace_root: Path) -> List[AgentMetadata]:
-    """Scan all charters in agent-charters/ and exports/.
+    """Scan all agent charters under repo conventions.
     
     Args:
         workspace_root: Root directory of workspace
@@ -185,10 +188,10 @@ def scan_all_agents(workspace_root: Path) -> List[AgentMetadata]:
     scanned_names = set()  # Track duplicates
     
     try:
-        # Scan agent-charters/ (agent-enablement agents)
-        charters_dir = workspace_root / "agent-charters"
+        # Scan root charters-agents/ (agent-enablement style)
+        charters_dir = workspace_root / "charters-agents"
         if charters_dir.exists() and charters_dir.is_dir():
-            for charter_file in charters_dir.glob("charter.*.md"):
+            for charter_file in charters_dir.glob("*.charter.md"):
                 metadata = scan_charter(charter_file)
                 if metadata and metadata.naam not in scanned_names:
                     metadata.aantal_prompts = count_prompts(metadata.naam, workspace_root)
@@ -198,7 +201,7 @@ def scan_all_agents(workspace_root: Path) -> List[AgentMetadata]:
                 elif metadata and metadata.naam in scanned_names:
                     print(f"[WARN] Duplicate agent found: {metadata.naam} in {charter_file}")
         
-        # Scan exports/*/charters/ and exports/*/charters-agents/
+        # Scan exports/*/(charters|charters-agents)/
         exports_dir = workspace_root / "exports"
         if exports_dir.exists() and exports_dir.is_dir():
             for value_stream_dir in exports_dir.iterdir():
@@ -209,7 +212,7 @@ def scan_all_agents(workspace_root: Path) -> List[AgentMetadata]:
                 for charter_subdir in ["charters", "charters-agents"]:
                     charters_vs = value_stream_dir / charter_subdir
                     if charters_vs.exists() and charters_vs.is_dir():
-                        for charter_file in charters_vs.glob("charter.*.md"):
+                        for charter_file in charters_vs.glob("*.charter.md"):
                             metadata = scan_charter(charter_file)
                             if metadata and metadata.naam not in scanned_names:
                                 metadata.aantal_prompts = count_prompts(metadata.naam, workspace_root)
@@ -272,40 +275,36 @@ def generate_json(agents: List[AgentMetadata], workspace_root: Path) -> Dict:
     """
     # Collect unique value streams
     value_streams = sorted(set(agent.value_stream for agent in agents))
-    
-    # Build agents list
-    agents_list = []
+
+    # Build normalized valueStreams -> agents structure
+    value_streams_obj: Dict[str, Dict] = {vs: {"agents": {}} for vs in value_streams}
     for agent in sorted(agents, key=lambda a: a.naam):
-        agents_list.append({
-            "naam": agent.naam,
-            "valueStream": agent.value_stream,
+        value_streams_obj[agent.value_stream]["agents"][agent.naam] = {
             "aantalPrompts": agent.aantal_prompts,
-            "aantalRunners": agent.aantal_runners
-        })
-    
-    # Build locaties structure
+            "aantalRunners": agent.aantal_runners,
+        }
+
+    # Build locaties structure (file-based templates)
     locaties = {
         "charters": {
-            "agent-enablement": "agent-charters/charter.<agent-naam>.md",
-            "architectuur-en-oplossingsontwerp": "exports/architectuur-en-oplossingsontwerp/charters/charter.<agent-naam>.md",
-            "utility": "exports/utility/charters-agents/charter.<agent-naam>.md",
-            "default": "exports/<value-stream>/charters-agents/charter.<agent-naam>.md"
+            "agent-enablement": "charters-agents/<agent-naam>.charter.md",
+            "architectuur-en-oplossingsontwerp": "exports/architectuur-en-oplossingsontwerp/charters/<agent-naam>.charter.md",
+            "utility": "exports/utility/charters-agents/<agent-naam>.charter.md",
+            "default": "exports/<value-stream>/charters-agents/<agent-naam>.charter.md",
         },
         "prompts": {
-            "agent-enablement": ".github/prompts/<agent-naam>-<werkwoord>.prompt.md",
-            "architectuur-en-oplossingsontwerp": "exports/architectuur-en-oplossingsontwerp/prompts/<agent-naam>-<werkwoord>.prompt.md",
-            "utility": "exports/utility/prompts/<agent-naam>-<werkwoord>.prompt.md",
-            "default": "exports/<value-stream>/prompts/<agent-naam>-<werkwoord>.prompt.md"
+            "agent-enablement": ".github/prompts/mandarin.<agent-naam>*.prompt.md",
+            "default": "exports/<value-stream>/prompts/mandarin.<agent-naam>*.prompt.md",
         },
-        "runners": "scripts/runners/<agent-naam>.py"
+        "runners": "scripts/runners/<agent-naam>.py",
     }
-    
+
     return {
+        "versie": "2.0",
         "publicatiedatum": datetime.now().strftime("%Y-%m-%d"),
         "digest": calculate_digest(agents),
-        "agents": agents_list,
-        "valueStreams": value_streams,
-        "locaties": locaties
+        "valueStreams": value_streams_obj,
+        "locaties": locaties,
     }
 
 

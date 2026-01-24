@@ -88,37 +88,79 @@ class ManifestParser:
     def parse(self) -> Tuple[List[Agent], Dict[str, str], Dict[str, str]]:
         """Parse manifest and return agents, metadata, and location templates."""
         self._data = json.loads(self.manifest_path.read_text(encoding="utf-8"))
-        
+
         # Extract metadata
         metadata = {
             "version": str(self._data.get("versie", "unknown")),
             "published_at": str(self._data.get("publicatiedatum", "unknown")),
         }
-        
+
         # Extract location templates
         self._locations = self._data.get("locaties", {})
-        
-        # Parse agents
-        agents_raw = self._data.get("agents", [])
-        for idx, entry in enumerate(agents_raw):
-            if not isinstance(entry, dict):
-                raise ValueError(f"Agent entry {idx} must be object, got {type(entry)}")
-            
-            name = entry.get("naam")
-            value_stream = entry.get("valueStream")
-            
-            if not name or not value_stream:
-                raise ValueError(f"Agent entry {idx} missing required fields: naam={name}, valueStream={value_stream}")
-            
-            agent = Agent(
-                name=str(name),
-                value_stream=str(value_stream),
-                charter_count=1,  # Always 1 charter per agent
-                prompt_count=int(entry.get("aantalPrompts", 0)),
-                runner_count=int(entry.get("aantalRunners", 0)),
+
+        # Parse agents (supports old flat list and new normalized structure)
+        self._agents = []
+        agents_raw = self._data.get("agents")
+        value_streams_raw = self._data.get("valueStreams")
+
+        if isinstance(agents_raw, list):
+            # Legacy schema: top-level agents list
+            for idx, entry in enumerate(agents_raw):
+                if not isinstance(entry, dict):
+                    raise ValueError(f"Agent entry {idx} must be object, got {type(entry)}")
+
+                name = entry.get("naam")
+                value_stream = entry.get("valueStream")
+
+                if not name or not value_stream:
+                    raise ValueError(
+                        f"Agent entry {idx} missing required fields: naam={name}, valueStream={value_stream}"
+                    )
+
+                self._agents.append(
+                    Agent(
+                        name=str(name),
+                        value_stream=str(value_stream),
+                        charter_count=1,  # Always 1 charter per agent
+                        prompt_count=int(entry.get("aantalPrompts", 0)),
+                        runner_count=int(entry.get("aantalRunners", 0)),
+                    )
+                )
+        elif isinstance(value_streams_raw, dict):
+            # New schema: valueStreams -> { agents: { <agent>: {counts} } }
+            for value_stream, stream_obj in value_streams_raw.items():
+                if not isinstance(stream_obj, dict):
+                    raise ValueError(
+                        f"valueStreams['{value_stream}'] must be object, got {type(stream_obj)}"
+                    )
+                agents_obj = stream_obj.get("agents", {})
+                if not isinstance(agents_obj, dict):
+                    raise ValueError(
+                        f"valueStreams['{value_stream}'].agents must be object, got {type(agents_obj)}"
+                    )
+                for name, counts in agents_obj.items():
+                    if not name:
+                        continue
+                    if counts is None:
+                        counts = {}
+                    if not isinstance(counts, dict):
+                        raise ValueError(
+                            f"valueStreams['{value_stream}'].agents['{name}'] must be object, got {type(counts)}"
+                        )
+                    self._agents.append(
+                        Agent(
+                            name=str(name),
+                            value_stream=str(value_stream),
+                            charter_count=1,
+                            prompt_count=int(counts.get("aantalPrompts", 0)),
+                            runner_count=int(counts.get("aantalRunners", 0)),
+                        )
+                    )
+        else:
+            raise ValueError(
+                "Manifest must contain either a top-level 'agents' list (legacy) or a 'valueStreams' object (v2)."
             )
-            self._agents.append(agent)
-        
+
         metadata["agent_count"] = str(len(self._agents))
         return self._agents, metadata, self._locations
     
@@ -263,17 +305,16 @@ class FileOrganizer:
             .replace("<agent-naam>", agent.name)
             .replace("<value-stream>", agent.value_stream)
         )
-        
-        # Extract directory path (remove werkwoord pattern and filename)
-        prompts_dir_str = template_path.rsplit("/", 1)[0]
+
+        # Use the manifest template's basename as glob pattern (supports wildcards)
+        prompts_dir_str, filename_pattern = template_path.rsplit("/", 1)
         prompts_dir = self.repo_path / prompts_dir_str
         
         if not prompts_dir.exists():
             return operations
         
         # Find all prompts matching pattern
-        pattern = f"{agent.name}-*.prompt.md"
-        for prompt_file in prompts_dir.glob(pattern):
+        for prompt_file in prompts_dir.glob(filename_pattern):
             dest = self.prompts_dir / prompt_file.name
             operations.append(FileOperation(source=prompt_file, destination=dest))
         

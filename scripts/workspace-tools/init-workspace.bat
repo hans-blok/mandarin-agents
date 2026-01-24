@@ -15,9 +15,9 @@ REM
 REM Output:
 REM   - canon/ (governance en doctrine)
 REM   - mandarin-agents/ (agent definities)
-REM   - scripts/fetch_agents.py
+REM   - scripts/fetch__mandarin_agents.py
 REM   - fetch-agents.bat
-REM   - beleid-workspace.md
+REM   - beleid-<workspace-name>.md (template uit mandarin-canon)
 REM   - Basis folder structuur (.github/prompts, scripts/runners, etc.)
 REM
 REM Vereisten:
