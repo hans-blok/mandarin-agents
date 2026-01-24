@@ -17,7 +17,7 @@ Deze boundary positioneert de Solution Architect als verantwoordelijke voor het 
 - Koppel de Solution Architect aan ADR-richtlijnen en referentiemodellen (GEMMA, Common Ground) om canon-consistentie te borgen.
 
 ## Referentie naar criteria (nummering, positionering, canon)
-- Nummering/positionering: de aangeleverde value stream "solution-architecting" bestaat nog niet in het erkende overzicht (zie canon/grondslagen/value-streams/value-streams.md). Voorstel: positioneer tijdelijk onder **Agent enablement** of **IT-development (fase B)**, en laat governance beslissen over formele toevoeging van "solution-architecting" als nieuwe value stream.
+- Nummering/positionering: de aangeleverde value stream "solution-architecting" bestaat nog niet in het erkende overzicht (zie grondslagen/value-streams/value-streams.md in mandarin-canon). Voorstel: positioneer tijdelijk onder **Agent enablement** of **IT-development (fase B)**, en laat governance beslissen over formele toevoeging van "solution-architecting" als nieuwe value stream.
 - Canon-consistentie: Solution Architect hanteert GEMMA en Common Ground als normatieve referenties; ADR's en architectuurkaders worden afgestemd met constitutie en workspace-architecture richtlijnen.
 
 ## Status en vervolg

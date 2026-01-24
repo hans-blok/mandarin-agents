@@ -17,10 +17,10 @@
 - `agent-services` functioneert als broncatalogus; `.github/prompts` dient te worden gevuld door fetch in project-repos, niet direct hier.
 
 ## Aanbevelingen (governance)
-- Adopteer de voorgestelde standaard: zie `canon/grondslagen/globaal/proposals/cr-agent-artifact-placement-standard.md`.
+- Adopteer de voorgestelde standaard: zie `grondslagen/globaal/proposals/cr-agent-artifact-placement-standard.md` (mandarin-canon).
 - Markeer governance-duplicaten voor verwijdering na akkoord (niet automatisch verwijderen).
 - Laat Curator validatie rapporteren wanneer in bronrepo artefacten buiten `exports/<value-stream>` worden aangetroffen.
 
 ## Herkomstverantwoording
 - Gescand: `.github/prompts/`, `governance/`, `exports/*` in deze repository.
-- Normatieve referentie: `canon/grondslagen/globaal/agent-charter-normering.md` (structuur), value stream overzicht.
+- Normatieve referentie: `grondslagen/globaal/agent-charter-normering.md` (mandarin-canon; structuur), value stream overzicht.

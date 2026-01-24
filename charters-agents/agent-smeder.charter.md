@@ -7,7 +7,7 @@
 - [ ] Beheeragent
 - [x] Uitvoerend
 **Value Stream**: agent-enablement
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/mandarin-canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
 
 ---
 
@@ -61,10 +61,10 @@ Belangrijk: de Agent Smeder **beslist niet of** een agent nodig is. De Agent Sme
      - Prompt bestanden: `exports/<value-stream>/prompts/` (value stream) of `.github/prompts/` (utility)
 
 3. **Charter opstellen (interne werking)**
-   - Schrijft een charter conform `canon/grondslagen/globaal/agent-charter-normering.md` (normatief kader in de canon).
+   - Schrijft een charter conform `grondslagen/globaal/agent-charter-normering.md` (normatief kader in mandarin-canon).
    - Maakt grenzen expliciet (WEL/NIET) en op B1-niveau.
    - Zorgt dat het charter traceerbaar is naar het agent bestand (input/output/foutafhandeling).
-   - **Charter bevat governance-verwijzing** naar `beleid-workspace.md` en canon repository.
+   - **Charter bevat governance-verwijzing** naar `beleid-mandarin-agents.md` en mandarin-canon repository.
    - Charter beschrijft interne werkwijze, kerntaken, grenzen - agent bestanden beschrijven interface.
    - **Naamgeving**: `<agent-naam>.charter.md` (bijvoorbeeld "moeder.charter.md", "essayist.charter.md")
    - **Locatie charters**: `exports/<value-stream>/charters-agents/` (value stream) of `charters-agents/` (utility)
@@ -209,7 +209,7 @@ De Agent Smeder communiceert:
 ## 9. Herkomstverantwoording
 
 - Dit charter is afgeleid van het charter-template: `template/.charter.template.md`.
-- Het charter is bedoeld om uitvoerbaar te zijn door Agent Smeder zelf, binnen de governance zoals vastgelegd in `beleid-workspace.md` en de canon.
+- Het charter is bedoeld om uitvoerbaar te zijn door Agent Smeder zelf, binnen de governance zoals vastgelegd in `beleid-mandarin-agents.md` en mandarin-canon.
 
 ## 10. Change Log
 
@@ -222,7 +222,7 @@ De Agent Smeder communiceert:
 
 ## Herkomstverantwoording
 
-- Governance: beleid-workspace.md + canon repository
+- Governance: beleid-mandarin-agents.md + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid (indien aanwezig)
 - Resultaten: docs/resultaten/<agent-naam>/... (waar van toepassing)
 

@@ -7,7 +7,7 @@
 - [ ] Beheeragent
 - [x] Uitvoerend
 **Value Stream**: architectuur-en-oplossingsontwerp
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/mandarin-canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
 
 ---
 
@@ -302,9 +302,9 @@ Deze agent mag NOOIT:
 ## Referenties
 
 - **ArchiMate 3.2 Specificatie**: The Open Group ArchiMate® 3.2 Specification
-- **Beleid**: `beleid-workspace.md` (workspace root)
-- **Canon Grondslagen**: https://github.com/hans-blok/canon.git
-- **Agent Charter Normering**: `canon/grondslagen/globaal/agent-charter-normering.md`
+- **Beleid**: `beleid-mandarin-agents.md` (workspace root)
+- **Canon Grondslagen**: https://github.com/hans-blok/mandarin-canon.git
+- **Agent Charter Normering**: `grondslagen/globaal/agent-charter-normering.md` (mandarin-canon)
 
 ---
 
@@ -314,7 +314,7 @@ Deze agent mag NOOIT:
 
 ## Herkomstverantwoording
 
-- Governance: beleid-workspace.md + canon repository
+- Governance: beleid-mandarin-agents.md + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid (indien aanwezig)
 - Resultaten: docs/resultaten/<agent-naam>/... (waar van toepassing)
 

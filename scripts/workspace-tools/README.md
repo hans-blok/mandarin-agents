@@ -44,7 +44,7 @@ Deze folder bevat hulpmiddelen voor het inrichten en onderhouden van workspaces.
   ├── logs/                 # Log bestanden (ignored)
   ├── temp/                 # Tijdelijke bestanden (ignored)
   ├── .gitignore            # Git ignore configuratie
-  └── beleid-workspace.md   # Workspace beleid (optioneel)
+   └── beleid-mandarin-agents.md   # Workspace beleid
 ```
 
 ### 2. Repository Clonen/Updaten
@@ -56,7 +56,7 @@ Deze folder bevat hulpmiddelen voor het inrichten en onderhouden van workspaces.
 pull.bat <repository-naam>
 
 # Voorbeelden:
-pull.bat canon
+pull.bat mandarin-canon
 pull.bat mandarin-agents
 ```
 

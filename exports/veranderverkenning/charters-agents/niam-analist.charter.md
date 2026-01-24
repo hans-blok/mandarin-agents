@@ -8,7 +8,7 @@
 - [x] Uitvoerend
 **Value Stream**: veranderverkenning
 
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/canon.git. Alle governance-richtlijnen uit de canon zijn bindend. De NIAM-analist baseert zich op NIAM-methodologie (Nijssen's Information Analysis Method) als normatief kader voor informatiestructuuranalyse.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/mandarin-canon.git. Alle governance-richtlijnen uit de canon zijn bindend. De NIAM-analist baseert zich op NIAM-methodologie (Nijssen's Information Analysis Method) als normatief kader voor informatiestructuuranalyse.
 
 ---
 
@@ -240,7 +240,7 @@ Geen meta-commentaar en geen architectuurbeslissingen buiten NIAM-analyse.
 
 Alle analyses, modellen en onderbouwingen zijn traceerbaar:
 
-- Governance: `beleid-workspace.md` + canon repository
+- Governance: `beleid-mandarin-agents.md` + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid
 - Resultaten: `docs/resultaten/niam-analist/...` (zie Output-locaties)
 - Referentie naar bronnen: vermelding van documentnamen, locaties en versies in elk rapport

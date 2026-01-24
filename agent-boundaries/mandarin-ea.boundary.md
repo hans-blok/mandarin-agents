@@ -57,7 +57,7 @@ domein: Enterprise Architecture & Strategie
 
 - **Nummering**: Mandarin-EA krijgt geen numerieke prefix (is geen uitvoerende agent)
 - **Positionering**: Enterprise niveau, boven alle value streams
-- **Canon-consistentie**: Aligned met governance-structuur uit canon repository; verwijst naar en respecteert beleid-workspace.md
+- **Canon-consistentie**: Aligned met governance-structuur uit mandarin-canon repository; verwijst naar en respecteert beleid-mandarin-agents.md
 
 ---
 

@@ -1,7 +1,7 @@
 {
   "versie": "2.0",
   "publicatiedatum": "2026-01-24",
-  "digest": "a6ab6",
+  "digest": "a7b51",
   "valueStreams": {
     "agent-enablement": {
       "agents": {
@@ -41,10 +41,6 @@
     },
     "kennispublicatie": {
       "agents": {
-        "agent-publisher": {
-          "aantalPrompts": 1,
-          "aantalRunners": 0
-        },
         "artikel-schrijver": {
           "aantalPrompts": 6,
           "aantalRunners": 0
@@ -71,7 +67,7 @@
         }
       }
     },
-    "ondernemingsvorming": {
+    "markt-en-investeringsvorming": {
       "agents": {
         "mandarin-ea": {
           "aantalPrompts": 1,
@@ -81,6 +77,10 @@
     },
     "utility": {
       "agents": {
+        "agent-publisher": {
+          "aantalPrompts": 1,
+          "aantalRunners": 0
+        },
         "docker-steward": {
           "aantalPrompts": 1,
           "aantalRunners": 0

@@ -45,7 +45,7 @@ De agent richt zich op **informatiestructuuranalyse** als voorbereiding op veran
 
 ## Consistentie met Value Stream
 
-De value stream **Veranderverkenning** (zoals gedefinieerd in canon/grondslagen/value-streams/) richt zich op het verkennen, analyseren en voorbereiden van organisatieveranderingen. NIAM-analist past hierbinnen als:
+De value stream **Veranderverkenning** (zoals gedefinieerd in grondslagen/value-streams/ in mandarin-canon) richt zich op het verkennen, analyseren en voorbereiden van organisatieveranderingen. NIAM-analist past hierbinnen als:
 
 - **Informatiestructuuranalyse** - Inzicht in huidige en gewenste informatiesituaties
 - **Impactverkenning** - Identificeren van effecten op informatiehuishouding
@@ -101,7 +101,7 @@ Value stream scope: Veranderverkenning omvat analyse, impactbepaling en scenario
    - **Coördinatie met**: Agent Smeder (voor agent-ontwerp), Agent Curator (voor ecosysteem-consistentie)
 
 4. **Governance-afstemming**:
-   - Valideer value stream "Veranderverkenning" in canon/grondslagen/value-streams/
+   - Valideer value stream "Veranderverkenning" in grondslagen/value-streams/ (mandarin-canon)
    - Stem NIAM-methodologie af met organisatorische standaarden
    - Zorg voor traceerbaarheid naar constitutie en workspace-beleid
 
@@ -109,7 +109,7 @@ Value stream scope: Veranderverkenning omvat analyse, impactbepaling en scenario
 
 ## Referentie naar criteria (nummering, positionering, canon)
 
-- **Nummering/positionering**: Value stream "Veranderverkenning" moet worden geverifieerd in canon/grondslagen/value-streams/. Indien deze stream nog niet bestaat, voorstel: positioneer tijdelijk onder **ondernemingsvorming** of creëer nieuwe stream via governance.
+- **Nummering/positionering**: Value stream "Veranderverkenning" moet worden geverifieerd in grondslagen/value-streams/ (mandarin-canon). Indien deze stream nog niet bestaat, voorstel: positioneer tijdelijk onder **ondernemingsvorming** of creëer nieuwe stream via governance.
 - **Canon-consistentie**: NIAM-analist hanteert NIAM als normatieve methodologie; conceptuele modellen worden afgestemd met constitutie en workspace-governance richtlijnen.
 - **Traceerbaarheid**: Alle informatieanalyses traceerbaar naar governance/beleid.md en canon/grondslagen.
 
@@ -117,6 +117,6 @@ Value stream scope: Veranderverkenning omvat analyse, impactbepaling en scenario
 
 ## Status en vervolg
 
-- **Value stream validatie**: "Veranderverkenning" moet worden geverifieerd in canon/grondslagen/value-streams/. Indien onbekend, moet governance deze stream formeel toevoegen of een bestaande stream toewijzen.
+- **Value stream validatie**: "Veranderverkenning" moet worden geverifieerd in grondslagen/value-streams/ (mandarin-canon). Indien onbekend, moet governance deze stream formeel toevoegen of een bestaande stream toewijzen.
 - **Geen impliciete aannames**: Boundary is vastgesteld onder voorwaarde dat value stream "Veranderverkenning" door governance wordt bevestigd.
 - **Volgende stap**: Handoff naar Agent Smeder voor agent-ontwerp (prompts, charter, runner) zodra value stream is gevalideerd.

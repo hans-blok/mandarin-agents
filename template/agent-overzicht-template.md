@@ -81,7 +81,7 @@ Dit overzicht is gegenereerd door **Agent Curator** op basis van:
 - Beschikbare prompts (capabilities)
 
 **Bronnen**:
-- Charter-normering: canon/grondslagen/globaal/doctrine-agent-charter-normering.md
+- Charter-normering: grondslagen/globaal/doctrine-agent-charter-normering.md (mandarin-canon)
 - Agent Curator charter: agent-charters/charter.agent-curator.md
 - Prompt-contract: .github/prompts/agent-curator-publiceer-agents-overzicht.prompt.md
 

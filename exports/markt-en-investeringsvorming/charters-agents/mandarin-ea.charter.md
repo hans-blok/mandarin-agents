@@ -6,8 +6,8 @@
 - [x] Adviserend
 - [ ] Beheeragent
 - [ ] Uitvoerend
-**Value Stream**: ondernemingsvorming
-**Governance**: Deze agent volgt het beleid vastgelegd in [beleid-workspace.md](../../../canon/beleid/beleid-standard.md), dat doorverwijst naar de [constitutie](../../../canon/grondslagen/globaal/constitutie.md) en grondslagen in de canon. Alle governance-richtlijnen uit de canon zijn bindend.
+**Value Stream**: markt-en-investeringsvorming
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/mandarin-canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
 
 ---
 
@@ -242,7 +242,7 @@ Elk artefact-type heeft zijn eigen verplichte en optionele parameters. Zie de pr
 
 ## Herkomstverantwoording
 
-- Governance: beleid-workspace.md + canon repository
+- Governance: beleid-mandarin-agents.md + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid (indien aanwezig)
 - Resultaten: docs/resultaten/<agent-naam>/... (waar van toepassing)
 

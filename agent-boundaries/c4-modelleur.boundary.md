@@ -99,7 +99,7 @@ De c4-modelleur opereert in de value stream "architectuur-en-oplossingsontwerp" 
 ## Referenties
 - **C4 Model**: https://c4model.com/ (Simon Brown)
 - **Value Streams Overzicht**: docs/resultaten/agent-curator/value-streams-overzicht.md
-- **Agent Charter Normering**: canon/grondslagen/globaal/agent-charter-normering.md
+- **Agent Charter Normering**: grondslagen/globaal/agent-charter-normering.md (mandarin-canon)
 - **Complementaire Agents**: archimate-modelleur, bedrijfsarchitect, converter-md-to-archimate
 
 ---

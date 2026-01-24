@@ -7,7 +7,7 @@
 - [ ] Beheeragent
 - [x] Uitvoerend
 **Value Stream**: kennispublicatie
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/canon.git. Alle governance-richtlijnen uit de canon zijn bindend. De Heraut baseert zich op en kondigt de **agent-charter-normering** (canon/grondslagen/globaal/agent-charter-normering.md) aan als bindend normatief kader voor het agent eco-systeem.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/mandarin-canon.git. Alle governance-richtlijnen uit de canon zijn bindend. De Heraut baseert zich op en kondigt de **agent-charter-normering** (`grondslagen/globaal/agent-charter-normering.md` in mandarin-canon) aan als bindend normatief kader voor het agent eco-systeem.
 
 ---
 
@@ -116,7 +116,7 @@ De Heraut operateert buiten de standaard SAFe lifecycle; het is een governance-a
 
 - **Agent-Charter-Normering**  
   - Type: Markdown (normatief governance-document)  
-  - Bron: Canon (canon/grondslagen/globaal/agent-charter-normering.md)  
+  - Bron: Canon (`grondslagen/globaal/agent-charter-normering.md` in mandarin-canon)  
   - Verplicht: Ja  
   - Beschrijving: Bindend normatief kader dat definieert wat een geldig Agent Charter is; vormt onderdeel van canon waarop Heraut zijn aankondigingen baseert
 
@@ -285,7 +285,7 @@ De Heraut werkt in drie primaire rollen, traceerbaar naar drie prompts/processen
 
 ## Herkomstverantwoording
 
-- Governance: beleid-workspace.md + canon repository
+- Governance: beleid-mandarin-agents.md + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid (indien aanwezig)
 - Resultaten: docs/resultaten/<agent-naam>/... (waar van toepassing)
 
