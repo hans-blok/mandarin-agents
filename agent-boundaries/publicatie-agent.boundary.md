@@ -7,8 +7,7 @@ domein: publicatie
 
 Toelichting
 - De publicatie-agent voert uit: plaatst/maakt publicatie-output onder `docs/` en commit/pusht naar GitHub.
-- `docs/index.html` is verplicht als startpunt voor GitHub Pages.
-- Na publicatie meldt de agent de GitHub Pages URL waarmee de site te bekijken is.
+- `docs/index.html` is verplicht als startpunt voor GitHub Pages- Na publicatie meldt de agent de GitHub Pages URL waarmee de site te bekijken is.
 - De agent consumeert design-assets van Presentatie-Architect zonder wijziging.
 - De agent publiceert uitsluitend artefacten die door andere agents of werkstromen zijn vastgesteld.
 
