@@ -1,7 +1,7 @@
 {
   "versie": "2.0",
-  "publicatiedatum": "2026-01-24",
-  "digest": "88ea7",
+  "publicatiedatum": "2026-01-26",
+  "digest": "76ad7",
   "valueStreams": {
     "agent-enablement": {
       "agents": {
@@ -75,6 +75,10 @@
       "agents": {
         "docker-steward": {
           "aantalPrompts": 1,
+          "aantalRunners": 0
+        },
+        "kort-schrijver": {
+          "aantalPrompts": 7,
           "aantalRunners": 0
         },
         "layout-optimizer": {
