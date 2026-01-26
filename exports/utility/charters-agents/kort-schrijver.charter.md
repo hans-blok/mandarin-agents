@@ -168,26 +168,26 @@ Bij alle intents:
 Dit charter is traceerbaar naar de bijbehorende agent-contracten per intent:
 
 - Intent: `herschrijf-standaard`
-  - Agent contract: `.github/agents/kort-schrijver.herschrijf-standaard.agent.md`
-  - Prompt metadata: `.github/prompts/mandarin.kort-schrijver.herschrijf-standaard.prompt.md`
+  - Agent contract: `exports/utility/agents/kort-schrijver.herschrijf-standaard.agent.md`
+  - Prompt metadata: `exports/utility/prompts/mandarin.kort-schrijver.herschrijf-standaard.prompt.md`
 - Intent: `herschrijf-zeer-kort`
-  - Agent contract: `.github/agents/kort-schrijver.herschrijf-zeer-kort.agent.md`
-  - Prompt metadata: `.github/prompts/mandarin.kort-schrijver.herschrijf-zeer-kort.prompt.md`
+  - Agent contract: `exports/utility/agents/kort-schrijver.herschrijf-zeer-kort.agent.md`
+  - Prompt metadata: `exports/utility/prompts/mandarin.kort-schrijver.herschrijf-zeer-kort.prompt.md`
 - Intent: `herschrijf-met-kopjes`
-  - Agent contract: `.github/agents/kort-schrijver.herschrijf-met-kopjes.agent.md`
-  - Prompt metadata: `.github/prompts/mandarin.kort-schrijver.herschrijf-met-kopjes.prompt.md`
+  - Agent contract: `exports/utility/agents/kort-schrijver.herschrijf-met-kopjes.agent.md`
+  - Prompt metadata: `exports/utility/prompts/mandarin.kort-schrijver.herschrijf-met-kopjes.prompt.md`
 - Intent: `herschrijf-actiegericht`
-  - Agent contract: `.github/agents/kort-schrijver.herschrijf-actiegericht.agent.md`
-  - Prompt metadata: `.github/prompts/mandarin.kort-schrijver.herschrijf-actiegericht.prompt.md`
+  - Agent contract: `exports/utility/agents/kort-schrijver.herschrijf-actiegericht.agent.md`
+  - Prompt metadata: `exports/utility/prompts/mandarin.kort-schrijver.herschrijf-actiegericht.prompt.md`
 - Intent: `schrijf-status`
-  - Agent contract: `.github/agents/kort-schrijver.schrijf-status.agent.md`
-  - Prompt metadata: `.github/prompts/mandarin.kort-schrijver.schrijf-status.prompt.md`
+  - Agent contract: `exports/utility/agents/kort-schrijver.schrijf-status.agent.md`
+  - Prompt metadata: `exports/utility/prompts/mandarin.kort-schrijver.schrijf-status.prompt.md`
 - Intent: `schoon-op`
-  - Agent contract: `.github/agents/kort-schrijver.schoon-op.agent.md`
-  - Prompt metadata: `.github/prompts/mandarin.kort-schrijver.schoon-op.prompt.md`
+  - Agent contract: `exports/utility/agents/kort-schrijver.schoon-op.agent.md`
+  - Prompt metadata: `exports/utility/prompts/mandarin.kort-schrijver.schoon-op.prompt.md`
 - Intent: `controleer`
-  - Agent contract: `.github/agents/kort-schrijver.controleer.agent.md`
-  - Prompt metadata: `.github/prompts/mandarin.kort-schrijver.controleer.prompt.md`
+  - Agent contract: `exports/utility/agents/kort-schrijver.controleer.agent.md`
+  - Prompt metadata: `exports/utility/prompts/mandarin.kort-schrijver.controleer.prompt.md`
 
 ---
 

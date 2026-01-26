@@ -53,12 +53,12 @@ Belangrijk: de Agent Smeder **beslist niet of** een agent nodig is. De Agent Sme
      ---
      agent: mandarin.<agent-naam>
      intent: <intent>
-     charter_ref: @main:charters-agents/<agent-naam>.charter.md
+     charter_ref: @main:exports/<value-stream>/charters-agents/<agent-naam>.charter.md
      ---
      ```
-   - **Locaties**:
-     - Agent bestanden: `exports/<value-stream>/agents/` (value stream) of `.github/agents/` (utility)
-     - Prompt bestanden: `exports/<value-stream>/prompts/` (value stream) of `.github/prompts/` (utility)
+   - **Locaties** (ALTIJD in exports/):
+     - Agent bestanden: `exports/<value-stream>/agents/` (voor alle value streams, inclusief utility)
+     - Prompt bestanden: `exports/<value-stream>/prompts/` (voor alle value streams, inclusief utility)
 
 3. **Charter opstellen (interne werking)**
    - Schrijft een charter conform `grondslagen/globaal/agent-charter-normering.md` (normatief kader in mandarin-canon).
@@ -67,18 +67,16 @@ Belangrijk: de Agent Smeder **beslist niet of** een agent nodig is. De Agent Sme
    - **Charter bevat governance-verwijzing** naar `beleid-mandarin-agents.md` en mandarin-canon repository.
    - Charter beschrijft interne werkwijze, kerntaken, grenzen - agent bestanden beschrijven interface.
    - **Naamgeving**: `<agent-naam>.charter.md` (bijvoorbeeld "moeder.charter.md", "essayist.charter.md")
-   - **Locatie charters**: `exports/<value-stream>/charters-agents/` (value stream) of `charters-agents/` (utility)
+   - **Locatie charters** (ALTIJD in exports/): `exports/<value-stream>/charters-agents/` (voor alle value streams, inclusief utility)
 
 4. **Agent-skeleton neerzetten (structuur)**
-   - Zet de basisbestanden neer volgens de agent-standaard:
-     - Value stream agents: 
+   - Zet de basisbestanden neer volgens de agent-standaard (ALTIJD in exports/):
+     - **Alle agents** (inclusief utility/agent-enablement): 
        - `exports/<value-stream>/agents/` (agent bestanden)
        - `exports/<value-stream>/prompts/` (prompt YAML)
        - `exports/<value-stream>/charters-agents/` (charters)
-     - Utility agents: 
-       - `.github/agents/` (agent bestanden)
-       - `.github/prompts/` (prompt YAML)
-       - `charters-agents/` (charters)
+     - Voor utility agents: value-stream = "utility"
+     - Voor agent-enablement: kan ook "utility" zijn of eigen stream indien van toepassing
    - Zorgt voor correcte locaties en naamgeving volgens `<agent-naam>.<intent>.agent.md` en `mandarin.<agent-naam>.<intent>.prompt.md`
    - Zorgt dat de nieuwe agent geen publicatieformaten maakt (HTML/PDF is alleen voor Publisher)
 
@@ -185,16 +183,21 @@ Dit charter is traceerbaar naar de eigen contracten en prompt metadata van Agent
 
 ## 8. Output-locaties
 
-Agent Smeder schrijft nieuwe agent-artefacten naar:
+Agent Smeder schrijft nieuwe agent-artefacten naar (ALTIJD in exports/):
 
-- Value stream agents:
+- **Alle agents** (inclusief utility en agent-enablement):
    - `exports/<value-stream>/agents/` (agent-contracten)
    - `exports/<value-stream>/prompts/` (YAML prompt metadata)
    - `exports/<value-stream>/charters-agents/` (charters)
-- Lokale/agent-enablement agents:
-   - `.github/agents/` (agent-contracten)
-   - `.github/prompts/` (YAML prompt metadata)
-   - `charters-agents/` (charters)
+   - `scripts/runners/<agent-naam>.py` (optionele runners)
+
+**Value stream mapping**:
+- Kennispublicatie agents → `exports/kennispublicatie/`
+- IT-development agents → `exports/it-development/`
+- Utility agents → `exports/utility/`
+- Agent-enablement agents → `exports/utility/` (tenzij anders bepaald)
+
+**Let op**: `.github/agents/` en `charters-agents/` (workspace root) zijn legacy locaties en worden niet meer gebruikt voor nieuwe agents.
 
 ## Communicatie
 
@@ -213,20 +216,17 @@ De Agent Smeder communiceert:
 
 ## 10. Change Log
 
+- 2026-01-26: **BREAKING**: Alle agents (inclusief utility/agent-enablement) komen nu in `exports/<value-stream>/`. Legacy locaties (`.github/agents/`, `charters-agents/` root) worden niet meer gebruikt voor nieuwe agents.
 - 2026-01-24: Structuur gelijkgetrokken met template; werkwijze opgeschoond; traceerbaarheid en output-locaties toegevoegd; markdown fence artefact verwijderd.
 
 ---
 
-**Versie**: 1.3  
-**Laatst bijgewerkt**: 2026-01-24
+**Versie**: 1.4  
+**Laatst bijgewerkt**: 2026-01-26
 
 ## Herkomstverantwoording
 
 - Governance: beleid-mandarin-agents.md + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid (indien aanwezig)
 - Resultaten: docs/resultaten/<agent-naam>/... (waar van toepassing)
-
-## Change Log
-
-- 2026-01-24: Charter-header aangepast naar checkbox agent-soort; herkomst/changelog secties toegevoegd waar ze ontbraken.
 

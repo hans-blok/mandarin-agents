@@ -4,7 +4,7 @@
 
 Controleert Markdown-tekst op leesbaarheid en compliance met kort-schrijver principes. Geeft feedback zonder de tekst te herschrijven. Geschikt voor kwaliteitscontrole voor publicatie.
 
-**VERPLICHT**: Lees charters-agents/kort-schrijver.charter.md voor volledige context, grenzen en werkwijze.
+**VERPLICHT**: Lees exports/utility/charters-agents/kort-schrijver.charter.md voor volledige context, grenzen en werkwijze.
 
 ## Contract
 
@@ -76,4 +76,4 @@ Voor alle details over controle-criteria en kwaliteitsborging zie de charter.
 
 ---
 
-Documentatie: Zie [charters-agents/kort-schrijver.charter.md](charters-agents/kort-schrijver.charter.md)
+Documentatie: Zie [exports/utility/charters-agents/kort-schrijver.charter.md](exports/utility/charters-agents/kort-schrijver.charter.md)

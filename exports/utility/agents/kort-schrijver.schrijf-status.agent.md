@@ -4,7 +4,7 @@
 
 Herschrijft Markdown-tekst naar statusupdate met focus op wat is bereikt, wat loopt en wat nog moet. Gebruikt een vaste structuur voor consistente status-communicatie.
 
-**VERPLICHT**: Lees charters-agents/kort-schrijver.charter.md voor volledige context, grenzen en werkwijze.
+**VERPLICHT**: Lees exports/utility/charters-agents/kort-schrijver.charter.md voor volledige context, grenzen en werkwijze.
 
 ## Contract
 
@@ -72,4 +72,4 @@ Voor alle details over stijlregels, taalniveau en kwaliteitsborging zie de chart
 
 ---
 
-Documentatie: Zie [charters-agents/kort-schrijver.charter.md](charters-agents/kort-schrijver.charter.md)
+Documentatie: Zie [exports/utility/charters-agents/kort-schrijver.charter.md](exports/utility/charters-agents/kort-schrijver.charter.md)

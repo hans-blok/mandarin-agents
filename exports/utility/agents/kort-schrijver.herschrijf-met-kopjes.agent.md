@@ -4,7 +4,7 @@
 
 Herschrijft Markdown-tekst naar gestructureerde berichten met duidelijke kopjes en secties. Gebruikt een hiërarchische structuur voor overzichtelijke e-mails met meerdere onderwerpen of complexere updates.
 
-**VERPLICHT**: Lees charters-agents/kort-schrijver.charter.md voor volledige context, grenzen en werkwijze.
+**VERPLICHT**: Lees exports/utility/charters-agents/kort-schrijver.charter.md voor volledige context, grenzen en werkwijze.
 
 ## Contract
 
@@ -65,4 +65,4 @@ Voor alle details over stijlregels, taalniveau en kwaliteitsborging zie de chart
 
 ---
 
-Documentatie: Zie [charters-agents/kort-schrijver.charter.md](charters-agents/kort-schrijver.charter.md)
+Documentatie: Zie [exports/utility/charters-agents/kort-schrijver.charter.md](exports/utility/charters-agents/kort-schrijver.charter.md)

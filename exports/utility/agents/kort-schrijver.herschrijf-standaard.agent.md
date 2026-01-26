@@ -4,7 +4,7 @@
 
 Herschrijft Markdown-tekst naar standaard korte, heldere berichten voor e-mail en chat. Gebruikt een gebalanceerde aanpak met kopjes, bullets en witruimte waar nodig. Geschikt voor algemene interne communicatie op B1-niveau.
 
-**VERPLICHT**: Lees charters-agents/kort-schrijver.charter.md voor volledige context, grenzen en werkwijze.
+**VERPLICHT**: Lees exports/utility/charters-agents/kort-schrijver.charter.md voor volledige context, grenzen en werkwijze.
 
 ## Contract
 
@@ -62,4 +62,4 @@ Voor alle details over stijlregels, taalniveau en kwaliteitsborging zie de chart
 
 ---
 
-Documentatie: Zie [charters-agents/kort-schrijver.charter.md](charters-agents/kort-schrijver.charter.md)
+Documentatie: Zie [exports/utility/charters-agents/kort-schrijver.charter.md](exports/utility/charters-agents/kort-schrijver.charter.md)
