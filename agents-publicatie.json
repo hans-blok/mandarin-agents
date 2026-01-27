@@ -1,7 +1,7 @@
 {
   "versie": "2.0",
-  "publicatiedatum": "2026-01-26",
-  "digest": "76ad7",
+  "publicatiedatum": "2026-01-27",
+  "digest": "4165f",
   "valueStreams": {
     "agent-enablement": {
       "agents": {
@@ -77,8 +77,12 @@
           "aantalPrompts": 1,
           "aantalRunners": 0
         },
+        "formaat-vertaler": {
+          "aantalPrompts": 3,
+          "aantalRunners": 0
+        },
         "kort-schrijver": {
-          "aantalPrompts": 7,
+          "aantalPrompts": 8,
           "aantalRunners": 0
         },
         "layout-optimizer": {
