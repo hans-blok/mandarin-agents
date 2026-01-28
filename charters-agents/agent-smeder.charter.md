@@ -58,7 +58,8 @@ Belangrijk: de Agent Smeder **beslist niet of** een agent nodig is. De Agent Sme
      ```
    - **Locaties** (ALTIJD in exports/):
      - Agent bestanden: `exports/<value-stream>/agents/` (voor alle value streams, inclusief utility)
-     - Prompt bestanden: `exports/<value-stream>/prompts/` (voor alle value streams, inclusief utility)
+     - Prompt bestanden: `exports/<value-stream>/prompts/` (voor alle value streams, inclusief utility)  
+     - Charter bestanden: `exports/<value-stream>/charters-agents/` (voor alle value streams, inclusief utility)
 
 3. **Charter opstellen (interne werking)**
    - Schrijft een charter conform `grondslagen/globaal/agent-charter-normering.md` (normatief kader in mandarin-canon).
@@ -144,7 +145,7 @@ Agent Smeder volgt drie stappen (contract-first) bij het maken van een nieuwe ag
 1. **Definieer prompt (contract)**
    - Schrijf per intent een agent-contractbestand (`<agent>.<intent>.agent.md`) met input/output/foutafhandeling.
    - Schrijf per intent een YAML-only promptbestand (`mandarin.<agent>.<intent>.prompt.md`) met `agent`, `intent`, `charter_ref`.
-   - Controleer naamgeving en locaties (value stream of lokaal).
+   - Locatie prompt: `exports/<value-stream>/prompts/mandarin.<agent-naam>.prompt.md`.
 
 2. **Schrijf charter (interne werking)**
    - Gebruik het charter-template: `template/.charter.template.md`.

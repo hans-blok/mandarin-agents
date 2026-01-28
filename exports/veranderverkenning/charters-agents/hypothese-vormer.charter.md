@@ -73,12 +73,15 @@ De hypothese-vormer bewaakt daarbij:
 
 Dit charter is traceerbaar naar de bijbehorende agent-contracten per intent:
 
-- Intent: `boundary`
-  - Agent contract: `exports/veranderverkenning/agents/hypothese-vormer.boundary.agent.md`
-  - Prompt metadata: `exports/veranderverkenning/prompts/mandarin.hypothese-vormer.boundary.prompt.md`
-- Intent: `prompt`
-  - Agent contract: `exports/veranderverkenning/agents/hypothese-vormer.prompt.agent.md`
-  - Prompt metadata: `exports/veranderverkenning/prompts/mandarin.hypothese-vormer.prompt.prompt.md`
+- Intent: `probleemkader-hypothese`
+   - Agent contract: `exports/veranderverkenning/agents/hypothese-vormer.probleemkader-hypothese.agent.md`
+   - Prompt metadata: `exports/veranderverkenning/prompts/mandarin.hypothese-vormer.probleemkader-hypothese.prompt.md`
+- Intent: `richting-toetsen`
+   - Agent contract: `exports/veranderverkenning/agents/hypothese-vormer.richting-toetsen.agent.md`
+   - Prompt metadata: `exports/veranderverkenning/prompts/mandarin.hypothese-vormer.richting-toetsen.prompt.md`
+- Intent: `interventie-versus-nietsdoen`
+   - Agent contract: `exports/veranderverkenning/agents/hypothese-vormer.interventie-versus-nietsdoen.agent.md`
+   - Prompt metadata: `exports/veranderverkenning/prompts/mandarin.hypothese-vormer.interventie-versus-nietsdoen.prompt.md`
 
 ## 8. Output-locaties
 

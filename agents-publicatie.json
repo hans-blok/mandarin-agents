@@ -1,7 +1,7 @@
 {
   "versie": "2.0",
   "publicatiedatum": "2026-01-28",
-  "digest": "00afa",
+  "digest": "e55ec",
   "valueStreams": {
     "agent-enablement": {
       "agents": {
@@ -118,7 +118,7 @@
     "veranderverkenning": {
       "agents": {
         "hypothese-vormer": {
-          "aantalPrompts": 0,
+          "aantalPrompts": 3,
           "aantalRunners": 0
         },
         "niam-analist": {
