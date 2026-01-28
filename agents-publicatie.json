@@ -1,7 +1,7 @@
 {
   "versie": "2.0",
   "publicatiedatum": "2026-01-28",
-  "digest": "4165f",
+  "digest": "9a615",
   "valueStreams": {
     "agent-enablement": {
       "agents": {
@@ -18,6 +18,10 @@
     "architectuur-en-oplossingsontwerp": {
       "agents": {
         "archimate-modelleur": {
+          "aantalPrompts": 2,
+          "aantalRunners": 0
+        },
+        "architectuur-regisseur": {
           "aantalPrompts": 2,
           "aantalRunners": 0
         },
