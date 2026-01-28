@@ -150,6 +150,11 @@ Agent Smeder volgt drie stappen (contract-first) bij het maken van een nieuwe ag
    - Gebruik het charter-template: `template/.charter.template.md`.
    - Maak WEL/NIET expliciet en borg traceerbaarheid naar de contracten.
    - Voeg governance-verwijzing toe (beleid-workspace + canon).
+   - Charter bevat verplichte secties: Doel, Capability boundary, Rol en kerntaken, Grenzen (WEL/NIET), Werkwijze, Traceerbaarheid, Output-locaties, Change Log.
+   - Charter is op B1-niveau en heeft concrete, toetsbare grenzen.
+   - Charter is traceerbaar naar agent-contracten: elk contractpunt is terug te vinden in charter of kerntaken.
+   - Charter borgt dat agent geen publicatieformaten maakt (HTML/PDF is alleen voor Publisher).
+   - Locatie charter: `exports/<value-stream>/charters-agents/<agent-naam>.charter.md`.
 
 3. **Schrijf runner (indien nodig)**
    - Alleen als herhaalbare uitvoering nodig is.
@@ -216,13 +221,14 @@ De Agent Smeder communiceert:
 
 ## 10. Change Log
 
-- 2026-01-26: **BREAKING**: Alle agents (inclusief utility/agent-enablement) komen nu in `exports/<value-stream>/`. Legacy locaties (`.github/agents/`, `charters-agents/` root) worden niet meer gebruikt voor nieuwe agents.
+- 2026-01-27: v1.5: Charter-schrijf stap aangescherpt met verplichte secties, B1-niveau, traceerbaarheid en publicatieformaat-borging (conform agent-smeder-2.schrijf-charter.agent.md).
+- 2026-01-26: v1.4: **BREAKING**: Alle agents (inclusief utility/agent-enablement) komen nu in `exports/<value-stream>/`. Legacy locaties (`.github/agents/`, `charters-agents/` root) worden niet meer gebruikt voor nieuwe agents.
 - 2026-01-24: Structuur gelijkgetrokken met template; werkwijze opgeschoond; traceerbaarheid en output-locaties toegevoegd; markdown fence artefact verwijderd.
 
 ---
 
-**Versie**: 1.4  
-**Laatst bijgewerkt**: 2026-01-26
+**Versie**: 1.5  
+**Laatst bijgewerkt**: 2026-01-27
 
 ## Herkomstverantwoording
 
