@@ -190,19 +190,21 @@ Dit charter is traceerbaar naar de eigen contracten en prompt metadata van Agent
 
 Agent Smeder schrijft nieuwe agent-artefacten naar (ALTIJD in exports/):
 
-- **Alle agents** (inclusief utility en agent-enablement):
+- **Alle agents ** (inclusief utility en agent-enablement):
    - `exports/<value-stream>/agents/` (agent-contracten)
    - `exports/<value-stream>/prompts/` (YAML prompt metadata)
    - `exports/<value-stream>/charters-agents/` (charters)
-   - `scripts/runners/<agent-naam>.py` (optionele runners)
-
+   - `exports/<value-stream>/runners/` (runners)
+   
 **Value stream mapping**:
+- de value stream-namen komen exact overeen met de foldernamen
+Voorbeeld:
 - Kennispublicatie agents → `exports/kennispublicatie/`
-- IT-development agents → `exports/it-development/`
-- Utility agents → `exports/utility/`
+
+Uitzondering
 - Agent-enablement agents → `exports/utility/` (tenzij anders bepaald)
 
-**Let op**: `.github/agents/` en `charters-agents/` (workspace root) zijn legacy locaties en worden niet meer gebruikt voor nieuwe agents.
+**Let op**: `.github/agents/` en `charters-agents/` (workspace root) zijn locaties voor de agents in de workspace MANDARIN-AGENTS en worden niet ge-exporteerd.
 
 ## Communicatie
 
