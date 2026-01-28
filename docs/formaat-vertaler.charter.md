@@ -33,9 +33,10 @@ De Formaat-Vertaler bewaakt daarbij:
 ### Kerntaken
 
 1. **Markdown naar Word conversie**
-   - Vertaalt Markdown-structuur naar Word-stijlen (Heading 1, Heading 2, etc.)
+   - Vertaalt Markdown-syntax naar Word-opmaak: **bold** wordt Bold formattering (niet de tekens **)
+   - Vertaalt Markdown-structuur naar Word-stijlen: # wordt Heading 1 (niet het teken #)
    - Genereert automatisch inhoudsopgave op basis van heading-hiërarchie
-   - Behoudt bullets, tabellen, vet, cursief, links
+   - Markdown-syntax verdwijnt; alleen opmaak blijft (**, *, #, etc. worden formattering)
    - Geen inhoudelijke wijzigingen
 
 2. **Word naar Markdown conversie**
@@ -68,6 +69,8 @@ De Formaat-Vertaler bewaakt daarbij:
 
 ### Formaat-conversie
 - Betrouwbare transformatie tussen Markdown en Word
+- Markdown → Word: syntax wordt opmaak (**, *, # verdwijnen; worden Bold, Italic, Heading)
+- Word → Markdown: opmaak wordt syntax (Bold wordt **, Italic wordt *, Heading wordt #)
 - Structuurbehoud bij conversie
 - Validatie van input en output
 
@@ -159,14 +162,17 @@ De Formaat-Vertaler bewaakt daarbij:
 1. Parse Markdown met strikte syntax
 2. Detecteer heading-niveaus (# → Heading 1, ## → Heading 2, etc.)
 3. Valideer heading-hiërarchie (geen niveaus overgeslagen)
-4. Converteer naar Word-stijlen:
-   - # → Heading 1
-   - ## → Heading 2
-   - ### → Heading 3 (etc.)
-5. Converteer bullets (- → Bullet list)
-6. Converteer genummerde lijsten (1. → Numbered list)
-7. Converteer opmaak (**bold**, *italic*, [link](url))
-8. Converteer tabellen naar Word-tabellen
+4. Converteer Markdown-syntax naar Word-stijlen (syntax verdwijnt, wordt opmaak):
+   - # → Heading 1 stijl (# verdwijnt, tekst krijgt Heading 1 formattering)
+   - ## → Heading 2 stijl (## verdwijnt, tekst krijgt Heading 2 formattering)
+   - ### → Heading 3 stijl (etc.)
+5. Converteer bullets (- verdwijnt → Bullet list formattering)
+6. Converteer genummerde lijsten (1. blijft → Numbered list formattering)
+7. Converteer Markdown-opmaak naar Word-opmaak:
+   - **bold** → Bold formattering (** verdwijnt)
+   - *italic* → Italic formattering (* verdwijnt)
+   - [link](url) → Hyperlink (Markdown-syntax verdwijnt)
+8. Converteer tabellen naar Word-tabellen (| en - verdwijnen)
 9. **Genereer inhoudsopgave** aan begin van document (gebaseerd op Heading-stijlen)
 10. Schrijf .docx bestand
 11. Valideer structuur en genereer rapport
@@ -320,10 +326,12 @@ Opmaak dient uitsluitend om betekenis expliciet, consistent en machine-leesbaar 
 - Bijwerkbaar via Word "Update Table of Contents"
 
 **Stijlen**:
-- Heading 1, Heading 2, Heading 3: hiërarchische structuur
-- Bullets en genummerde lijsten: Word List styles
+- Heading 1, Heading 2, Heading 3: hiërarchische structuur (Markdown # wordt Heading 1 formattering)
+- Bullets en genummerde lijsten: Word List styles (Markdown - wordt Bullet formattering)
+- Bold en Italic: Word formattering (Markdown ** en * verdwijnen)
 - Normaal: body text
 - Code: Courier New font (geen syntax highlighting)
+- Hyperlinks: Word hyperlinks (Markdown [tekst](url) wordt klikbare link)
 
 **Geen macro's of scripts**: Word-documenten bevatten geen macro's, VBA-scripts of embedded objecten (behalve afbeeldingen als referentie).
 
