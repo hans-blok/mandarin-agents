@@ -43,11 +43,11 @@ Belangrijk: de Agent Smeder **beslist niet of** een agent nodig is. De Agent Sme
    - Maakt de boundary scherp en toetsbaar: wat hoort er WEL/NIET bij.
    - Signaleert overlap met bestaande agents en stelt afbakening voor.
 
-2. **Agent en prompt bestanden aanmaken**
+2. **Agent contract en prompt bestanden aanmaken**
    - Maakt **twee bestanden per intent**:
-     - **Agent bestand** (`<agent-naam>.<intent>.agent.md`): bevat input, output, foutafhandeling en volledige instructies
+     - **Agent contract** (`<agent-naam>.<intent>.agent.md`): bevat input, output, foutafhandeling en volledige instructies. 
      - **Prompt bestand** (`mandarin.<agent-naam>.<intent>.prompt.md`): bevat alleen YAML front matter met verwijzing naar charter
-   - Agent bestand definieert input (verplicht/optioneel), output (vaste deliverables) en foutafhandeling
+   - Agent contract definieert input (verplicht/optioneel), output (vaste deliverables) en foutafhandeling
    - **Governance wordt NIET benoemd in agent bestanden** - dit is een concern van charters
    - Prompt bestand volgt altijd dit formaat:
      ```yaml
@@ -58,7 +58,7 @@ Belangrijk: de Agent Smeder **beslist niet of** een agent nodig is. De Agent Sme
      ---
      ```
    - **Locaties** (ALTIJD in exports/):
-     - Agent bestanden: `exports/<value-stream>/agents/` (voor alle value streams, inclusief utility)
+     - Agent contracten: `exports/<value-stream>/agents/` (voor alle value streams, inclusief utility)
      - Prompt bestanden: `exports/<value-stream>/prompts/` (voor alle value streams, inclusief utility)  
      - Charter bestanden: `exports/<value-stream>/charters-agents/` (voor alle value streams, inclusief utility)
 
@@ -68,7 +68,7 @@ Belangrijk: de Agent Smeder **beslist niet of** een agent nodig is. De Agent Sme
    - Zorgt dat het charter traceerbaar is naar het agent bestand (input/output/foutafhandeling).
    - **Charter bevat governance-verwijzing** naar `beleid-mandarin-agents.md` en mandarin-canon repository.
    - **Header bevat template-verwijzing**: `**Template**: <bestandsnaam>` wanneer een template is gebruikt, anders `—`.
-   - Prompts zijn altijd pure YAML volgens het template `templates/agent-prompt.template.yaml`.
+   - Bij definiëren van een prompt worden altijd twee artefacten aangemaakt: de YAML-prompt (volgens `templates/agent-prompt.template.yaml`) én het agent-contract (volgens `templates/agent-contract.template.md`).
    - Charter beschrijft interne werkwijze, kerntaken, grenzen - agent bestanden beschrijven interface.
    - **Naamgeving**: `<agent-naam>.charter.md` (bijvoorbeeld "moeder.charter.md", "essayist.charter.md")
    - **Locatie charters** (ALTIJD in exports/): `exports/<value-stream>/charters-agents/` (voor alle value streams, inclusief utility)
@@ -228,6 +228,7 @@ De Agent Smeder communiceert:
 
 ## 10. Change Log
 
+- 2026-01-30: v1.6: Outputlocaties voor agent, prompt en charter expliciet verduidelijkt en handhaving in praktijk gecorrigeerd.
 - 2026-01-27: v1.5: Charter-schrijf stap aangescherpt met verplichte secties, B1-niveau, traceerbaarheid en publicatieformaat-borging (conform agent-smeder-2.schrijf-charter.agent.md).
 - 2026-01-26: v1.4: **BREAKING**: Alle agents (inclusief utility/agent-enablement) komen nu in `exports/<value-stream>/`. Legacy locaties (`.github/agents/`, `charters-agents/` root) worden niet meer gebruikt voor nieuwe agents.
 - 2026-01-24: Structuur gelijkgetrokken met template; werkwijze opgeschoond; traceerbaarheid en output-locaties toegevoegd; markdown fence artefact verwijderd.

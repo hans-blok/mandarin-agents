@@ -1,7 +1,7 @@
 {
   "versie": "2.0",
   "publicatiedatum": "2026-01-30",
-  "digest": "92f00",
+  "digest": "2eb26",
   "valueStreams": {
     "agent-enablement": {
       "agents": {
@@ -31,6 +31,10 @@
         },
         "c4-modelleur": {
           "aantalPrompts": 2,
+          "aantalRunners": 0
+        },
+        "c4-vertaler": {
+          "aantalPrompts": 0,
           "aantalRunners": 0
         },
         "data-duidingsarchitect": {

@@ -285,5 +285,9 @@ De Heraut werkt in drie primaire rollen, traceerbaar naar drie prompts/processen
 
 ## Change Log
 
-- 2026-01-24: Charter-header aangepast naar checkbox agent-soort; herkomst/changelog secties toegevoegd waar ze ontbraken.
+| Datum       | Versie | Wijziging                | Auteur         |
+|-------------|--------|--------------------------|----------------|
+| 2026-01-30  | 1.0.0  | Charter conform template | GitHub Copilot |
+| 2026-01-24  | 0.9.0  | Charter-header aangepast naar checkbox agent-soort; herkomst/changelog secties toegevoegd waar ze ontbraken. | GitHub Copilot |
+| 2026-01-17  | 0.1.0  | Initiële versie charter Heraut — rework van rolbeschrijving naar normatief charter | Agent Smeder |
 
