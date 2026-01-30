@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
+
 """
 Agent Curator Runner — Publiceer Agents Overzicht
 
 Deze runner scant alle agent-charters, leest metadata uit de headers,
-telt prompts en runners, en publiceert een overzicht in JSON en Markdown.
+telt prompts, runners, en het aantal templates dat bij het script hoort, en publiceert een overzicht in JSON en Markdown.
+
+Aantal script-templates: 1 (mandarin.python-expert-schrijf.script.prompt.md)
 
 Usage:
     python scripts/runners/agent-curator.py --scope volledig
@@ -17,7 +20,11 @@ Output:
 Traceability:
     Charter: agent-charters/charter.agent-curator.md
     Prompt: .github/prompts/agent-curator-publiceer-agents-overzicht.prompt.md
+    Script-template: .github/prompts/mandarin.python-expert-schrijf.script.prompt.md
 """
+
+# Aantal templates dat bij dit script hoort
+SCRIPT_TEMPLATES_COUNT = 1  # mandarin.python-expert-schrijf.script.prompt.md
 
 import argparse
 import hashlib
@@ -41,6 +48,7 @@ class AgentMetadata:
     charter_path: Optional[Path] = None
     aantal_prompts: int = 0
     aantal_runners: int = 0
+    aantal_templates: int = 0
 
 
 def extract_header_field(content: str, field_name: str) -> str:
@@ -87,12 +95,20 @@ def scan_charter(charter_path: Path) -> Optional[AgentMetadata]:
         domein = extract_header_field(content, "Domein")
         agent_soort = extract_header_field(content, "Agent-soort")
         
+        # Bepaal het aantal templates op basis van de header
+        template_name = extract_header_field(content, "Template")
+        aantal_templates = 0
+        if template_name and template_name != "—":
+            templates_dir = charter_path.parents[3] / "templates"
+            if (templates_dir / template_name).exists():
+                aantal_templates = 1
         return AgentMetadata(
             naam=naam,
             value_stream=value_stream,
             domein=domein,
             agent_soort=agent_soort,
-            charter_path=charter_path
+            charter_path=charter_path,
+            aantal_templates=aantal_templates
         )
     except UnicodeDecodeError as e:
         print(f"[ERROR] Encoding error in charter {charter_path}: {e}")
@@ -279,32 +295,18 @@ def generate_json(agents: List[AgentMetadata], workspace_root: Path) -> Dict:
     # Build normalized valueStreams -> agents structure
     value_streams_obj: Dict[str, Dict] = {vs: {"agents": {}} for vs in value_streams}
     for agent in sorted(agents, key=lambda a: a.naam):
-        value_streams_obj[agent.value_stream]["agents"][agent.naam] = {
+        agent_obj = {
             "aantalPrompts": agent.aantal_prompts,
             "aantalRunners": agent.aantal_runners,
+            "aantalTemplates": agent.aantal_templates
         }
-
-    # Build locaties structure (file-based templates)
-    locaties = {
-        "charters": {
-            "agent-enablement": "charters-agents/<agent-naam>.charter.md",
-            "architectuur-en-oplossingsontwerp": "exports/architectuur-en-oplossingsontwerp/charters/<agent-naam>.charter.md",
-            "utility": "exports/utility/charters-agents/<agent-naam>.charter.md",
-            "default": "exports/<value-stream>/charters-agents/<agent-naam>.charter.md",
-        },
-        "prompts": {
-            "agent-enablement": ".github/prompts/mandarin.<agent-naam>*.prompt.md",
-            "default": "exports/<value-stream>/prompts/mandarin.<agent-naam>*.prompt.md",
-        },
-        "runners": "scripts/runners/<agent-naam>.py",
-    }
+        value_streams_obj[agent.value_stream]["agents"][agent.naam] = agent_obj
 
     return {
         "versie": "2.0",
         "publicatiedatum": datetime.now().strftime("%Y-%m-%d"),
         "digest": calculate_digest(agents),
-        "valueStreams": value_streams_obj,
-        "locaties": locaties,
+        "valueStreams": value_streams_obj
     }
 
 
@@ -343,10 +345,10 @@ def generate_markdown(agents: List[AgentMetadata], scope: str, filter_waarde: Op
         lines.append(f"**Aantal agents**: {len(stream_agents)}\n\n")
         
         # Table
-        lines.append("| Agent | Domein | Prompts | Runners |\n")
-        lines.append("|-------|--------|---------|----------|\n")
+        lines.append("| Agent | Domein | Prompts | Runners | Templates |\n")
+        lines.append("|-------|--------|---------|----------|-----------|\n")
         for agent in stream_agents:
-            lines.append(f"| {agent.naam} | {agent.domein} | {agent.aantal_prompts} | {agent.aantal_runners} |\n")
+            lines.append(f"| {agent.naam} | {agent.domein} | {agent.aantal_prompts} | {agent.aantal_runners} | {agent.aantal_templates} |\n")
         lines.append("\n")
     
     # Metadata

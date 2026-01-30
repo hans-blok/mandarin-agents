@@ -1,21 +1,24 @@
 {
   "versie": "2.0",
   "publicatiedatum": "2026-01-30",
-  "digest": "2eb26",
+  "digest": "78a52",
   "valueStreams": {
     "agent-enablement": {
       "agents": {
         "agent-curator": {
           "aantalPrompts": 4,
-          "aantalRunners": 1
+          "aantalRunners": 1,
+          "aantalTemplates": 0
         },
         "agent-smeder": {
           "aantalPrompts": 3,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "template-maker": {
           "aantalPrompts": 2,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         }
       }
     },
@@ -23,23 +26,28 @@
       "agents": {
         "archimate-modelleur": {
           "aantalPrompts": 2,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "architectuur-regisseur": {
           "aantalPrompts": 3,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "c4-modelleur": {
           "aantalPrompts": 2,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "c4-vertaler": {
-          "aantalPrompts": 0,
-          "aantalRunners": 0
+          "aantalPrompts": 2,
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "data-duidingsarchitect": {
           "aantalPrompts": 5,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         }
       }
     },
@@ -47,11 +55,13 @@
       "agents": {
         "pipeline-executor": {
           "aantalPrompts": 1,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "workflow-architect": {
           "aantalPrompts": 3,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         }
       }
     },
@@ -59,23 +69,28 @@
       "agents": {
         "artikel-schrijver": {
           "aantalPrompts": 6,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "de-schrijver": {
           "aantalPrompts": 0,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "essayist": {
           "aantalPrompts": 1,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "heraut": {
           "aantalPrompts": 2,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "vertaler": {
           "aantalPrompts": 1,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         }
       }
     },
@@ -83,7 +98,8 @@
       "agents": {
         "mandarin-ea": {
           "aantalPrompts": 1,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         }
       }
     },
@@ -91,35 +107,43 @@
       "agents": {
         "docker-steward": {
           "aantalPrompts": 1,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "formaat-vertaler": {
           "aantalPrompts": 3,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "kort-schrijver": {
           "aantalPrompts": 8,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "layout-optimizer": {
           "aantalPrompts": 1,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "moeder": {
           "aantalPrompts": 11,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "presentatie-architect": {
           "aantalPrompts": 1,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "publicatie-agent": {
           "aantalPrompts": 1,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "python-expert": {
           "aantalPrompts": 6,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         }
       }
     },
@@ -127,11 +151,13 @@
       "agents": {
         "hypothese-vormer": {
           "aantalPrompts": 3,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         },
         "niam-analist": {
           "aantalPrompts": 5,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         }
       }
     },
@@ -139,26 +165,15 @@
       "agents": {
         "thema-verwoorder": {
           "aantalPrompts": 2,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 1
         },
         "verbeteringen-beschrijver": {
           "aantalPrompts": 2,
-          "aantalRunners": 0
+          "aantalRunners": 0,
+          "aantalTemplates": 0
         }
       }
     }
-  },
-  "locaties": {
-    "charters": {
-      "agent-enablement": "charters-agents/<agent-naam>.charter.md",
-      "architectuur-en-oplossingsontwerp": "exports/architectuur-en-oplossingsontwerp/charters/<agent-naam>.charter.md",
-      "utility": "exports/utility/charters-agents/<agent-naam>.charter.md",
-      "default": "exports/<value-stream>/charters-agents/<agent-naam>.charter.md"
-    },
-    "prompts": {
-      "agent-enablement": ".github/prompts/mandarin.<agent-naam>*.prompt.md",
-      "default": "exports/<value-stream>/prompts/mandarin.<agent-naam>*.prompt.md"
-    },
-    "runners": "scripts/runners/<agent-naam>.py"
   }
 }

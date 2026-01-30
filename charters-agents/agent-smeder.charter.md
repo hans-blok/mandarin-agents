@@ -7,7 +7,7 @@
 - [ ] Beheeragent
 - [x] Uitvoerend
 **Value Stream**: agent-enablement
-**Template**: charter.template.md / agent-prompt.template.yaml
+**Template**: charter.tempate.md
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/mandarin-canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
 
 ---
@@ -44,31 +44,32 @@ Belangrijk: de Agent Smeder **beslist niet of** een agent nodig is. De Agent Sme
    - Signaleert overlap met bestaande agents en stelt afbakening voor.
 
 2. **Agent contract en prompt bestanden aanmaken**
-   - Maakt **twee bestanden per intent**:
-     - **Agent contract** (`<agent-naam>.<intent>.agent.md`): bevat input, output, foutafhandeling en volledige instructies. 
-     - **Prompt bestand** (`mandarin.<agent-naam>.<intent>.prompt.md`): bevat alleen YAML front matter met verwijzing naar charter
-   - Agent contract definieert input (verplicht/optioneel), output (vaste deliverables) en foutafhandeling
-   - **Governance wordt NIET benoemd in agent bestanden** - dit is een concern van charters
-   - Prompt bestand volgt altijd dit formaat:
-     ```yaml
-     ---
-     agent: mandarin.<agent-naam>
-     intent: <intent>
-     charter_ref: @main:exports/<value-stream>/charters-agents/<agent-naam>.charter.md
-     ---
-     ```
-   - **Locaties** (ALTIJD in exports/):
-     - Agent contracten: `exports/<value-stream>/agents/` (voor alle value streams, inclusief utility)
-     - Prompt bestanden: `exports/<value-stream>/prompts/` (voor alle value streams, inclusief utility)  
-     - Charter bestanden: `exports/<value-stream>/charters-agents/` (voor alle value streams, inclusief utility)
+    - Bij elke nieuwe intent maakt Agent Smeder **altijd twee artefacten aan**:
+       - **Agent contract** (`<agent-naam>.<intent>.agent.md`): beschrijft input, output, foutafhandeling en volledige interface-instructies. Dit bestand is verplicht en mag nooit worden overgeslagen.
+       - **Prompt bestand** (`mandarin.<agent-naam>.<intent>.prompt.md`): bevat alleen YAML front matter met verwijzing naar charter. Ook dit bestand is verplicht.
+    - Agent contract definieert input (verplicht/optioneel), output (vaste deliverables) en foutafhandeling.
+    - **Governance wordt NIET benoemd in agent bestanden** - dit is een concern van charters.
+    - Prompt bestand volgt altijd dit formaat:
+       ```yaml
+       ---
+       agent: mandarin.<agent-naam>
+       intent: <intent>
+       charter_ref: @main:exports/<value-stream>/charters-agents/<agent-naam>.charter.md
+       ---
+       ```
+    - **Locaties** (ALTIJD in exports/):
+       - Agent contracten: `exports/<value-stream>/agents/` (voor alle value streams, inclusief utility)
+       - Prompt bestanden: `exports/<value-stream>/prompts/` (voor alle value streams, inclusief utility)
+       - Charter bestanden: `exports/<value-stream>/charters-agents/` (voor alle value streams, inclusief utility)
 
 3. **Charter opstellen (interne werking)**
    - Schrijft een charter conform `grondslagen/globaal/agent-charter-normering.md` (normatief kader in mandarin-canon).
    - Maakt grenzen expliciet (WEL/NIET) en op B1-niveau.
    - Zorgt dat het charter traceerbaar is naar het agent bestand (input/output/foutafhandeling).
    - **Charter bevat governance-verwijzing** naar `beleid-mandarin-agents.md` en mandarin-canon repository.
-   - **Header bevat template-verwijzing**: `**Template**: <bestandsnaam>` wanneer een template is gebruikt, anders `—`.
-   - Bij definiëren van een prompt worden altijd twee artefacten aangemaakt: de YAML-prompt (volgens `templates/agent-prompt.template.yaml`) én het agent-contract (volgens `templates/agent-contract.template.md`).
+   - **Header bevat template-verwijzing**: `**Template**: <bestandsnaam>` deze is initieel `—`.
+   De template maker vult dit veld aan. 
+   - Bij definiëren van een prompt worden altijd twee artefacten aangemaakt: de YAML-prompt (volgens `templates/agent-prompt.template.yaml`, ALTIJD als `.md` bestand) én het agent-contract (volgens `templates/agent-contract.template.md`).
    - Charter beschrijft interne werkwijze, kerntaken, grenzen - agent bestanden beschrijven interface.
    - **Naamgeving**: `<agent-naam>.charter.md` (bijvoorbeeld "moeder.charter.md", "essayist.charter.md")
    - **Locatie charters** (ALTIJD in exports/): `exports/<value-stream>/charters-agents/` (voor alle value streams, inclusief utility)
@@ -125,30 +126,22 @@ Belangrijk: de Agent Smeder **beslist niet of** een agent nodig is. De Agent Sme
 - Controle op governance-conformiteit.
 - Prompt YAML wijst altijd correct naar charter bestand.
 
-## 5. Grenzen
 
-### Wat de Agent Smeder NIET doet
-- ❌ Beslist niet of een agent nodig is.
-- ❌ Neemt geen inhoudelijke domeinbeslissingen zonder aangeleverde intentie en boundary.
-- ❌ Publiceert geen documenten naar HTML/PDF of andere publicatieformaten (zie Publisher).
-- ❌ Past geen centrale governance-documenten aan.
-- ❌ Bouwt geen applicaties of productie-backends; alleen agent-artefacten (docs/prompt/runner-skelet).
-
-### Wat de Agent Smeder WEL doet
-- ✅ Ontwerpt agents binnen een expliciete capability boundary.
-- ✅ Schrijft/actualiseert agent bestanden (interface), prompt YAML (metadata), charters en runner-skeletten.
-- ✅ Borgt scheiding tussen betekenis (contract in agent bestand) en uitvoering (runner).
-- ✅ Borgt herleidbaarheid en consistente terminologie.
-- ✅ Stopt en vraagt verduidelijking bij onduidelijke scope of conflicten met governance.
 
 ## 6. Werkwijze
 
-Agent Smeder volgt drie stappen (contract-first) bij het maken van een nieuwe agent:
+De workflow voor het aanmaken van een nieuwe agent is als volgt:
 
-1. **Definieer prompt (contract)**
-   - Schrijf per intent een agent-contractbestand (`<agent>.<intent>.agent.md`) met input/output/foutafhandeling.
-   - Schrijf per intent een YAML-only promptbestand (`mandarin.<agent>.<intent>.prompt.md`) met `agent`, `intent`, `charter_ref`.
-   - Locatie prompt: `exports/<value-stream>/prompts/mandarin.<agent-naam>.prompt.md`.
+1. **Agent Curator** zet de boundary en doet advies over benodigde templates.
+2. **Template Maker** maakt de benodigde templates op basis van boundary en advies.
+3. **Agent Smeder** maakt per intent:
+   - een promptbestand (`mandarin.<agent>.<intent>.prompt.md`) met `agent`, `intent`, `charter_ref`.
+   - een agent-contractbestand (`<agent>.<intent>.agent.md`) waarin de gebruikte templates expliciet worden opgenomen in de header.
+   - Beide bestanden zijn verplicht en worden altijd samen aangemaakt.
+4. **Agent Smeder** schrijft de charter, conform normering en met traceerbare verwijzingen naar contracten en templates.
+5. Indien nodig wordt een runner aangemaakt (`scripts/runners/<agent-naam>.py`).
+
+Deze volgorde borgt dat boundary, templates, prompts, contracten en charter altijd consistent en traceerbaar zijn.
 
 2. **Schrijf charter (interne werking)**
    - Gebruik het charter-template: `template/.charter.template.md`.

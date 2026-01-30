@@ -1,29 +1,32 @@
 # Agents Publicatie Overzicht
 
-**Publicatiedatum**: 2026-01-22
-**Tijdstip**: 19:55:00
+**Publicatiedatum**: 2026-01-30
+**Tijdstip**: 16:30:55
+**Digest**: 78a52
 **Scope**: volledig
-**Totaal agents**: 18
+**Totaal agents**: 28
 
 ## Value Stream: agent-enablement
 
-**Aantal agents**: 2
+**Aantal agents**: 3
 
 | Agent | Domein | Prompts | Runners |
 |-------|--------|---------|----------|
 | agent-curator | Agent boundary-setting, value stream administratie, agent ecosysteem oversight | 4 | 1 |
 | agent-smeder | Agent-ontwerp, capability boundaries en contract-first uitvoering | 3 | 0 |
+| template-maker | template-generatie op basis van charters | 2 | 0 |
 
 ## Value Stream: architectuur-en-oplossingsontwerp
 
-**Aantal agents**: 4
+**Aantal agents**: 5
 
 | Agent | Domein | Prompts | Runners |
 |-------|--------|---------|----------|
 | archimate-modelleur | Enterprise architecture modellering | 2 | 0 |
-| bedrijfsarchitect | Business architecture modellering | 0 | 0 |
+| architectuur-regisseur | Architectuurdiscipline en besluitkwaliteit | 3 | 0 |
 | c4-modelleur | Software-architectuur modellering | 2 | 0 |
-| converter-md-to-archimate | ArchiMate format conversie | 1 | 0 |
+| c4-vertaler | C4-modeltransformatie en validatie | 2 | 0 |
+| data-duidingsarchitect | Data-interpretatie en objectpositionering | 5 | 0 |
 
 ## Value Stream: it-development
 
@@ -31,24 +34,22 @@
 
 | Agent | Domein | Prompts | Runners |
 |-------|--------|---------|----------|
-| pipeline-executor | Pipeline-uitvoering, workflow-orkestratie | 0 | 1 |
-| workflow-architect | Workflow-ontwerp, multi-agent orkestratie | 3 | 1 |
+| pipeline-executor | Pipeline-uitvoering, workflow-orkestratie | 1 | 0 |
+| workflow-architect | Workflow-ontwerp, multi-agent orkestratie | 3 | 0 |
 
 ## Value Stream: kennispublicatie
 
-**Aantal agents**: 7
+**Aantal agents**: 5
 
 | Agent | Domein | Prompts | Runners |
 |-------|--------|---------|----------|
-| agent-publisher | Kennispublicatie | 1 | 0 |
 | artikel-schrijver | Artikelproductie, kennisoverdracht | 6 | 0 |
 | de-schrijver | Narratieve tekstproductie, kennisoverdracht | 0 | 0 |
 | essayist | Essayproductie, reflectieve kennisoverdracht | 1 | 0 |
 | heraut | Canonieke aankondiging, governance communicatie | 2 | 0 |
-| presentatie-architect | Presentatie-ontwerp | 1 | 0 |
 | vertaler | Tekstvertaling, meertalige kennisoverdracht | 1 | 0 |
 
-## Value Stream: ondernemingsvorming
+## Value Stream: markt-en-investeringsvorming
 
 **Aantal agents**: 1
 
@@ -58,12 +59,36 @@
 
 ## Value Stream: utility
 
+**Aantal agents**: 8
+
+| Agent | Domein | Prompts | Runners |
+|-------|--------|---------|----------|
+| docker-steward | Docker, containers en lokale C4-visualisatie | 1 | 0 |
+| formaat-vertaler | Formaat-conversie voor documenten | 3 | 0 |
+| kort-schrijver | Tekstoptimalisatie voor interne communicatie | 8 | 0 |
+| layout-optimizer | Diagram-layout en visualisatie-optimalisatie | 1 | 0 |
+| moeder | Workspace-ordening, governance, agent-lifecycle | 11 | 0 |
+| presentatie-architect | Presentatie-ontwerp (design-assets voor publicatie) | 1 | 0 |
+| publicatie-agent | Publicatie en distributie (GitHub Pages) | 1 | 0 |
+| python-expert | Python-ontwikkeling, code-kwaliteit | 6 | 0 |
+
+## Value Stream: veranderverkenning
+
 **Aantal agents**: 2
 
 | Agent | Domein | Prompts | Runners |
 |-------|--------|---------|----------|
-| moeder | Workspace-ordening, governance, agent-lifecycle | 6 | 1 |
-| python-expert | Python-ontwikkeling, code-kwaliteit | 3 | 0 |
+| hypothese-vormer | Productontwikkeling – Verandering & Verkenning | 3 | 0 |
+| niam-analist | Informatieanalyse en conceptuele modellering | 5 | 0 |
+
+## Value Stream: werkvoorbereiding
+
+**Aantal agents**: 2
+
+| Agent | Domein | Prompts | Runners |
+|-------|--------|---------|----------|
+| thema-verwoorder | themavorming naar epic-statement | 2 | 0 |
+| verbeteringen-beschrijver | expliciete werkvoorbereiding volgens SAFe (THEMA, VERBETERING, WERKTAAK) | 2 | 0 |
 
 ## Metadata
 
@@ -75,28 +100,5 @@
   - `exports/*/prompts/` (value stream prompts)
   - `scripts/runners/` (runners)
 - **Value stream bron**: Charter header (`**Value Stream**:` veld)
+- **Digest**: 5-karakter SHA-256 hash van agents-lijst (gesorteerd) voor change-tracking
 - **Traceability**: Agent Curator charter, publiceer-agents-overzicht prompt
-
-## Samenvatting
-
-- **Totaal agents**: 18
-- **Totaal prompts**: 43
-- **Totaal runners**: 5
-- **Value streams**: 6
-
-### Per Value Stream
-
-| Value Stream | Agents | Prompts | Runners |
-|--------------|--------|---------|----------|
-| agent-enablement | 2 | 7 | 1 |
-| architectuur-en-oplossingsontwerp | 4 | 5 | 0 |
-| it-development | 2 | 3 | 2 |
-| kennispublicatie | 7 | 13 | 0 |
-| ondernemingsvorming | 1 | 1 | 0 |
-| utility | 2 | 9 | 1 |
-
-## Herkomstverantwoording
-
-Alle agents zijn gescand uit hun charter-headers. De `**Value Stream**:` metadata in elke charter is leidend voor toewijzing aan value stream. Prompts zijn geteld via wildcardmatching op agent-naam in `.github/prompts/` en `exports/*/prompts/`. Runners zijn geteld in `scripts/runners/` (zowel `.py` bestanden als module folders).
-
-Dit overzicht is gegenereerd door Agent Curator conform charter (versie 0.4.4) en prompt `agent-curator-publiceer-agents-overzicht.prompt.md`.

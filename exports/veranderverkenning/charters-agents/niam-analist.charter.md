@@ -7,7 +7,7 @@
 - [ ] Beheeragent
 - [x] Uitvoerend
 **Value Stream**: veranderverkenning
-**Template**: charter.template.md
+-
 
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/mandarin-canon.git. Alle governance-richtlijnen uit de canon zijn bindend. De NIAM-analist baseert zich op NIAM-methodologie (Nijssen's Information Analysis Method) als normatief kader voor informatiestructuuranalyse.
 

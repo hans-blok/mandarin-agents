@@ -1,0 +1,17 @@
+@startuml
+' PUML-template voor architectuurdiagrammen
+' Gebruik: gegenereerde code van c4-vertaler invullen tussen de secties
+
+' Titel en metadata
+' title <diagram titel>
+' caption <optionele toelichting>
+
+' Definieer de context, systemen, containers, componenten, relaties, enz.
+' ...
+
+' Optioneel: legenda of extra uitleg
+' legend
+'   <uitleg>
+' endlegend
+
+@enduml

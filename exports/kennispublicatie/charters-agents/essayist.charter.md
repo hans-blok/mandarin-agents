@@ -7,7 +7,7 @@
 - [ ] Beheeragent
 - [x] Uitvoerend
 **Value Stream**: kennispublicatie
-**Template**: charter.template.md
+-
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/mandarin-canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
 
 ## Doel en bestaansreden
@@ -101,5 +101,8 @@ De Essayist:
 
 ## Change Log
 
-- 2026-01-24: Charter-header aangepast naar checkbox agent-soort; herkomst/changelog secties toegevoegd waar ze ontbraken.
+| Datum       | Versie | Wijziging                | Auteur         |
+|-------------|--------|--------------------------|----------------|
+| 2026-01-30  | 1.0.0  | Charter conform template | GitHub Copilot |
+| 2026-01-24  | 0.9.0  | Charter-header aangepast naar checkbox agent-soort; herkomst/changelog secties toegevoegd waar ze ontbraken. | GitHub Copilot |
 

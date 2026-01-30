@@ -7,7 +7,7 @@
 - [x] Beheeragent
 - [ ] Uitvoerend
 **Value Stream**: utility
-**Template**: charter.template.md
+**Template**: -
 ---
 
 ## Rol en Verantwoordelijkheid
