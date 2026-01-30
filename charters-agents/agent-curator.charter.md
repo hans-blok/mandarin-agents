@@ -7,6 +7,7 @@
 - [x] Beheeragent
 - [ ] Uitvoerend
 **Value Stream**: agent-enablement
+**Template**: charter.template.md
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/mandarin-canon.git. Alle governance-richtlijnen uit de canon zijn bindend. De Curator baseert zich op de **agent-charter-normering** (`grondslagen/globaal/agent-charter-normering.md` in mandarin-canon) als bindend normatief kader.
 
 ---

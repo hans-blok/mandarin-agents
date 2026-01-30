@@ -16,6 +16,7 @@ Gebruik een value stream slug (lowercase, hyphens) die overeenkomt met `exports/
 - [ ] Beheeragent
 - [ ] Uitvoerend
 **Value Stream**: <value-stream>
+**Template**: <template-bestandsnaam of '—'>
 
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/mandarin-canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
 

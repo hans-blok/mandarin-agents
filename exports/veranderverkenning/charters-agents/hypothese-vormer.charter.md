@@ -1,12 +1,13 @@
 # Charter - hypothese-vormer
 
 **Agent**: hypothese-vormer  
-**Domein**: hypothesevorming  
+**Domein**: Productontwikkeling – Verandering & Verkenning
 **Agent-soort** (kies precies een):
 - [x] Adviserend
 - [ ] Beheeragent
 - [ ] Uitvoerend
 **Value Stream**: veranderverkenning
+**Template**: charter.template.md
 
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/mandarin-canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
 
@@ -85,7 +86,7 @@ Dit charter is traceerbaar naar de bijbehorende agent-contracten per intent:
 
 ## 8. Output-locaties
 
-De hypothese-vormer schrijft resultaten (waar van toepassing) naar:
+De hypothese-vormer legt zijn output vast als artefact in de map met zijn eigen naam:
 
 - `docs/resultaten/hypothese-vormer/`
 

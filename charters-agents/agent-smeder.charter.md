@@ -7,6 +7,7 @@
 - [ ] Beheeragent
 - [x] Uitvoerend
 **Value Stream**: agent-enablement
+**Template**: charter.template.md / agent-prompt.template.yaml
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/mandarin-canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
 
 ---
@@ -66,6 +67,8 @@ Belangrijk: de Agent Smeder **beslist niet of** een agent nodig is. De Agent Sme
    - Maakt grenzen expliciet (WEL/NIET) en op B1-niveau.
    - Zorgt dat het charter traceerbaar is naar het agent bestand (input/output/foutafhandeling).
    - **Charter bevat governance-verwijzing** naar `beleid-mandarin-agents.md` en mandarin-canon repository.
+   - **Header bevat template-verwijzing**: `**Template**: <bestandsnaam>` wanneer een template is gebruikt, anders `—`.
+   - Prompts zijn altijd pure YAML volgens het template `templates/agent-prompt.template.yaml`.
    - Charter beschrijft interne werkwijze, kerntaken, grenzen - agent bestanden beschrijven interface.
    - **Naamgeving**: `<agent-naam>.charter.md` (bijvoorbeeld "moeder.charter.md", "essayist.charter.md")
    - **Locatie charters** (ALTIJD in exports/): `exports/<value-stream>/charters-agents/` (voor alle value streams, inclusief utility)
@@ -149,6 +152,7 @@ Agent Smeder volgt drie stappen (contract-first) bij het maken van een nieuwe ag
 
 2. **Schrijf charter (interne werking)**
    - Gebruik het charter-template: `template/.charter.template.md`.
+   - Gebruik voor prompts altijd het YAML-template: `templates/agent-prompt.template.yaml`.
    - Maak WEL/NIET expliciet en borg traceerbaarheid naar de contracten.
    - Voeg governance-verwijzing toe (beleid-workspace + canon).
    - Charter bevat verplichte secties: Doel, Capability boundary, Rol en kerntaken, Grenzen (WEL/NIET), Werkwijze, Traceerbaarheid, Output-locaties, Change Log.
@@ -219,7 +223,7 @@ De Agent Smeder communiceert:
 
 ## 9. Herkomstverantwoording
 
-- Dit charter is afgeleid van het charter-template: `template/.charter.template.md`.
+- Dit charter is afgeleid van het charter-template: `template/.charter.template.md` en voor prompts van `templates/agent-prompt.template.yaml`.
 - Het charter is bedoeld om uitvoerbaar te zijn door Agent Smeder zelf, binnen de governance zoals vastgelegd in `beleid-mandarin-agents.md` en mandarin-canon.
 
 ## 10. Change Log

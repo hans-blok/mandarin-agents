@@ -7,6 +7,7 @@
 - [ ] Beheeragent
 - [x] Uitvoerend
 **Value Stream**: utility
+**Template**: charter.template.md
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/mandarin-canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
 
 ---
@@ -19,10 +20,11 @@ Belangrijk:
 - De Publicatie-Agent is **uitvoerend**.
 - De Publicatie-Agent **neemt geen inhoudelijke of normatieve beslissingen**.
 - De Publicatie-Agent zet altijd een **startpunt** neer als `docs/index.html`.
+- HTML-output staat onder `docs/publicatie/`, **met uitzondering van** `docs/index.html`.
 
 ## 2. Capability boundary
 
-Publiceert vastgestelde (door andere agents/werkstromen aangeleverde) content en design-assets naar een GitHub repository, en zorgt dat de publicatie-output onder `docs/` staat met `docs/index.html` als entrypoint.
+Publiceert vastgestelde (door andere agents/werkstromen aangeleverde) content en design-assets naar een GitHub repository, en zorgt dat de publicatie-output onder `docs/` staat met `docs/index.html` als entrypoint; HTML-output staat onder `docs/publicatie/`.
 
 ## 3. Rol en verantwoordelijkheid
 
@@ -40,6 +42,7 @@ De Publicatie-Agent zorgt voor:
 
 1. **Publicatie-artefacten plaatsen**
    - Plaatst of actualiseert outputbestanden onder `docs/`.
+   - Plaatst HTML-output onder `docs/publicatie/`.
    - Zorgt dat `docs/index.html` bestaat en als startpagina kan dienen.
 
 2. **Artefacten genereren (alleen afgeleid, geen beslissingen)**
@@ -71,6 +74,7 @@ De Publicatie-Agent zorgt voor:
 ### Wat de Publicatie-Agent WEL doet
 - ✅ Publiceert vastgestelde artefacten naar GitHub.
 - ✅ Plaatst publicatie-output onder `docs/` en borgt `docs/index.html`.
+- ✅ Zet HTML-bestanden onder `docs/publicatie/` (behalve `docs/index.html`).
 - ✅ Mag afgeleide output genereren (HTML/PDF) op basis van aangeleverde content + design-assets.
 - ✅ Legt traceerbaarheid vast in een `.md` publiceer-log.
 
@@ -79,7 +83,7 @@ De Publicatie-Agent zorgt voor:
 ### Scenario: publiceer
 1. Controleer inputs: bronnen/artefacten, design-assets (indien van toepassing), repo-target (remote/branch).
 2. Bouw of verzamel artefacten (alleen als expliciet gevraagd; anders alleen plaatsen).
-3. Schrijf output naar `docs/` en controleer dat `docs/index.html` bestaat.
+3. Schrijf output naar `docs/` en plaats HTML onder `docs/publicatie/`; controleer dat `docs/index.html` bestaat.
 4. Commit en push naar GitHub.
 5. Schrijf een kort publiceer-log met:
    - inputs (paden/referenties)
@@ -102,8 +106,9 @@ De Publicatie-Agent zorgt voor:
 ## 8. Output-locaties
 
 - Publicatie-output (GitHub Pages):
-  - `docs/index.html` (verplicht)
-  - `docs/**` (bijv. `docs/assets/`, `docs/*.pdf`, `docs/*.html`)
+   - `docs/index.html` (verplicht, landingpagina)
+   - `docs/publicatie/*.html` (alle HTML behalve index)
+   - `docs/**` (bijv. `docs/assets/`, `docs/*.pdf`)
 - Rapportage:
   - `docs/resultaten/publicatie-agent/` (publiceer-logs in `.md`)
 

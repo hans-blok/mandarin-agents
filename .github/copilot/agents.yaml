@@ -1,179 +1,71 @@
 agents:
-  # agent-enablement value stream
+  # .github workspace agents (niet exporteren)
   - id: agent-curator
     name: workspace.agent-curator
-    type: uitvoerend
+    type: beheeragent
     valueStream: agent-enablement
-    charter: agent-charters/charter.agent-curator.md
+    charter: charters-agents/agent-curator.charter.md
     prompts:
-      - .github/prompts/agent-curator-bepaal-agent-boundary.prompt.md
-      - .github/prompts/agent-curator-onderhoud-value-streams.prompt.md
-      - .github/prompts/agent-curator-publiceer-agents-overzicht.prompt.md
+      - .github/prompts/mandarin.agent-curator-analyseer.ecosysteem.prompt.md
+      - .github/prompts/mandarin.agent-curator.bepaal-agent.boundary.prompt.md
+      - .github/prompts/mandarin.agent-curator.onderhoud-value.streams.prompt.md
+      - .github/prompts/mandarin.agent-curator.publiceer-agents.overzicht.prompt.md
     runners: []
 
   - id: agent-smeder
     name: workspace.agent-smeder
     type: uitvoerend
     valueStream: agent-enablement
-    charter: agent-charters/charter.agent-smeder.md
+    charter: charters-agents/agent-smeder.charter.md
     prompts:
-      - .github/prompts/agent-smeder-1-definieer-prompt.prompt.md
-      - .github/prompts/agent-smeder-2-schrijf-charter.prompt.md
+      - .github/prompts/mandarin.agent-smeder-1-definieer.prompt.prompt.md
+      - .github/prompts/mandarin.agent-smeder-2-schrijf.charter.prompt.md
+      - .github/prompts/mandarin.agent-smeder-3-schrijf.runner.prompt.md
     runners: []
 
   - id: moeder
     name: workspace.moeder
-    type: uitvoerend
-    valueStream: agent-enablement
-    charter: agent-charters/charter-moeder.md
+    type: beheeragent
+    valueStream: utility
+    charter: charters-agents/moeder.charter.md
     prompts:
-      - exports/utility/prompts/moeder-beheer-git.prompt.md
-      - exports/utility/prompts/moeder-configureer-github.prompt.md
-      - exports/utility/prompts/moeder-fetch-agents.prompt.md
-      - exports/utility/prompts/moeder-orden-workspace.prompt.md
-      - exports/utility/prompts/moeder-schrijf-beleid.prompt.md
-      - exports/utility/prompts/moeder-valideer-governance.prompt.md
+      - .github/prompts/mandarin.moeder-beheer.git.prompt.md
+      - .github/prompts/mandarin.moeder-configureer.github.prompt.md
+      - .github/prompts/mandarin.moeder-orden.workspace.prompt.md
+      - .github/prompts/mandarin.moeder-schrijf.beleid.prompt.md
+      - .github/prompts/mandarin.moeder-valideer.governance.prompt.md
     runners:
       - scripts/runners/moeder.py
 
-  # architectuur-en-oplossingsontwerp value stream
-  - id: archimate-modelleur
-    name: workspace.archimate-modelleur
+  - id: python-expert
+    name: workspace.python-expert
     type: uitvoerend
-    valueStream: architectuur-en-oplossingsontwerp
-    charter: exports/architectuur-en-oplossingsontwerp/charters/charter.archimate-modelleur.md
+    valueStream: utility
+    charter: exports/utility/charters-agents/python-expert.charter.md
     prompts:
-      - exports/architectuur-en-oplossingsontwerp/prompts/archimate-modelleur-modelleer-bedrijfslaag.prompt.md
-      - exports/architectuur-en-oplossingsontwerp/prompts/archimate-modelleur-modelleer-motivatielaag.prompt.md
-    runners: []
-
-  - id: bedrijfsarchitect
-    name: workspace.bedrijfsarchitect
-    type: uitvoerend
-    valueStream: architectuur-en-oplossingsontwerp
-    charter: agent-charters/charter.bedrijfsarchitect.md
-    prompts: []
-    runners: []
-
-  - id: c4-modelleur
-    name: workspace.c4-modelleur
-    type: uitvoerend
-    valueStream: architectuur-en-oplossingsontwerp
-    charter: exports/architectuur-en-oplossingsontwerp/charters/charter.c4-modelleur.md
-    prompts:
-      - exports/architectuur-en-oplossingsontwerp/prompts/c4-modelleur-modelleer-components.prompt.md
-      - exports/architectuur-en-oplossingsontwerp/prompts/c4-modelleur-modelleer-context-en-containers.prompt.md
+      - .github/prompts/mandarin.python-expert-review.code.prompt.md
+      - .github/prompts/mandarin.python-expert-run.script.prompt.md
+      - .github/prompts/mandarin.python-expert-schrijf.script.prompt.md
     runners: []
 
   - id: converter-md-to-archimate
     name: workspace.converter-md-to-archimate
     type: uitvoerend
-    valueStream: architectuur-en-oplossingsontwerp
-    charter: agent-charters/charter.converter-md-to-archimate.md
-    prompts: []
-    runners: []
-
-  # it-development value stream
-  - id: archimate-modeler
-    name: workspace.archimate-modeler
-    type: uitvoerend
-    valueStream: it-development
-    charter: exports/it-development/charters-agents/charter..archimate-modeler.md
-    prompts: []
-    runners: []
-
-  - id: pipeline-executor
-    name: workspace.pipeline-executor
-    type: uitvoerend
-    valueStream: it-development
-    charter: exports/it-development/charters-agents/charter.pipeline-executor.md
-    prompts: []
-    runners:
-      - scripts/runners/pipeline-executor.py
-
-  - id: workflow-architect
-    name: workspace.workflow-architect
-    type: uitvoerend
-    valueStream: it-development
-    charter: exports/it-development/charters-agents/charter.workflow-architect.md
-    prompts: []
-    runners:
-      - scripts/runners/workflow-architect.py
-
-  # utility value stream
-  - id: publicatie-agent
-    name: workspace.publicatie-agent
-    type: uitvoerend
-    valueStream: utility
-    charter: exports/utility/charters-agents/publicatie-agent.charter.md
-    prompts: []
-    runners: []
-
-  - id: artikel-schrijver
-    name: workspace.artikel-schrijver
-    type: uitvoerend
-    valueStream: kennispublicatie
-    charter: exports/kennispublicatie/charters-agents/charter.artikel-schrijver.md
-    prompts: []
-    runners: []
-
-  - id: de-schrijver
-    name: workspace.de-schrijver
-    type: uitvoerend
-    valueStream: kennispublicatie
-    charter: exports/kennispublicatie/charters-agents/charter.de-schrijver.md
-    prompts: []
-    runners: []
-
-  - id: essayist
-    name: workspace.essayist
-    type: uitvoerend
-    valueStream: kennispublicatie
-    charter: exports/kennispublicatie/charters-agents/charter.essayist.md
-    prompts: []
-    runners: []
-
-  - id: heraut
-    name: workspace.heraut
-    type: uitvoerend
-    valueStream: kennispublicatie
-    charter: exports/kennispublicatie/charters-agents/charter.heraut.md
-    prompts: []
-    runners: []
-
-  - id: presentatie-architect
-    name: workspace.presentatie-architect
-    type: uitvoerend
-    valueStream: kennispublicatie
-    charter: exports/kennispublicatie/charters-agents/charter.presentatie-architect.md
-    prompts: []
-    runners: []
-
-  - id: vertaler
-    name: workspace.vertaler
-    type: uitvoerend
-    valueStream: kennispublicatie
-    charter: exports/kennispublicatie/charters-agents/charter.vertaler.md
-    prompts: []
-    runners: []
-
-  # ondernemingsvorming value stream
-  - id: mandarin-ea
-    name: workspace.mandarin-ea
-    type: uitvoerend
-    valueStream: ondernemingsvorming
-    charter: exports/ondernemingsvorming/charters-agents/charter.mandarin-ea.md
-    prompts: []
-    runners: []
-
-  # utility value stream
-  - id: python-expert
-    name: workspace.python-expert
-    type: uitvoerend
-    valueStream: utility
-    charter: exports/utility/charters-agents/charter.python-expert.md
+    valueStream: agent-enablement
+    charter: charters-agents/converter-md-to-archimate.charter.md
     prompts:
-      - exports/utility/prompts/python-expert-review-code.prompt.md
-      - exports/utility/prompts/python-expert-run-script.prompt.md
-      - exports/utility/prompts/python-expert-schrijf-script.prompt.md
+      - .github/prompts/mandarin.converter-md-to-archimate.converteer.prompt.md
+    runners: []
+
+  - id: template-maker
+    name: workspace.template-maker
+    type: uitvoerend
+    valueStream: agent-enablement
+    charter: charters-agents/template-maker.charter.md
+    prompts:
+      - .github/prompts/mandarin.template-maker.genereer-agent-template.prompt.md
+      - .github/prompts/mandarin.template-maker.genereer-prompt-template.prompt.md
+      - .github/prompts/mandarin.template-maker.exporteer-boundary-template.prompt.md
+      - .github/prompts/mandarin.template-maker.maak-agent-template.prompt.md
+      - .github/prompts/mandarin.template-maker.maak-divers-template.prompt.md
     runners: []
