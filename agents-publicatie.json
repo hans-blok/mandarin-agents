@@ -1,7 +1,7 @@
 {
   "versie": "2.0",
   "publicatiedatum": "2026-01-30",
-  "digest": "78a52",
+  "digest": "84fe2",
   "valueStreams": {
     "agent-enablement": {
       "agents": {
@@ -40,7 +40,7 @@
           "aantalTemplates": 0
         },
         "c4-vertaler": {
-          "aantalPrompts": 2,
+          "aantalPrompts": 4,
           "aantalRunners": 0,
           "aantalTemplates": 0
         },
