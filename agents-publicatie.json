@@ -1,7 +1,7 @@
 {
   "versie": "2.0",
-  "publicatiedatum": "2026-01-28",
-  "digest": "e55ec",
+  "publicatiedatum": "2026-01-30",
+  "digest": "92f00",
   "valueStreams": {
     "agent-enablement": {
       "agents": {
@@ -11,6 +11,10 @@
         },
         "agent-smeder": {
           "aantalPrompts": 3,
+          "aantalRunners": 0
+        },
+        "template-maker": {
+          "aantalPrompts": 2,
           "aantalRunners": 0
         }
       }
@@ -129,8 +133,12 @@
     },
     "werkvoorbereiding": {
       "agents": {
-        "werkvoorbereider": {
-          "aantalPrompts": 3,
+        "thema-verwoorder": {
+          "aantalPrompts": 2,
+          "aantalRunners": 0
+        },
+        "verbeteringen-beschrijver": {
+          "aantalPrompts": 2,
           "aantalRunners": 0
         }
       }
