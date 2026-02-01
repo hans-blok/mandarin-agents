@@ -1,5 +1,6 @@
 ﻿# Charter - <agent-naam>
 
+
 <!--
 Doel van dit template:
 - Laat Agent Smeder dit charter consistent invullen.
@@ -11,17 +12,31 @@ Gebruik een value stream slug (lowercase, hyphens) die overeenkomt met `exports/
 
 **Agent**: <agent-naam>  
 **Domein**: <domein>  
+## Classificatie-assen (vink aan wat van toepassing is)
+- **Inhoudelijke as**
+  - [ ] Beschrijvend
+  - [ ] Structuurrealiserend
+  - [ ] Structuur-normerend
+  - [ ] Curator
+  - [ ] Ecosysteem-normerend
+- **Inzet-as**
+  - [ ] Value-stream-specifiek
+  - [ ] Value-stream-overstijgend
+- **Vorm-as**
+  - [ ] Vormvast
+  - [ ] Representatieomvormend
+- **Werkingsas**
+  - [ ] Inhoudelijk
+  - [ ] Conditioneel
+
+**Agent**: <agent-naam>  
+**Domein**: <domein>  
 **Agent-soort** (kies precies een):
 - [ ] Adviserend
 - [ ] Beheeragent
 - [ ] Uitvoerend
 **Value Stream**: <value-stream>
 **Template**: <template-bestandsnaam of '—'>
-
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/mandarin-canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
-
----
-
 ## 1. Doel en bestaansreden
 
 <Leg in 2-5 zinnen uit waarom deze agent bestaat en welk probleem hij oplost.>

@@ -15,6 +15,16 @@ doel: <één zin: waarom bestaat deze agent>
 domein: <één woord of korte frase>
 
 ---
+## Is van agent soort
+- [ ] Adviserend
+- [ ] Beheeragent
+- [ ] Uitvoerend
+
+
+## Opereert in Value stream fasen
+- <value stream fase 1>
+- <value stream fase 2>
+
 
 ## Toelichting
 
@@ -22,7 +32,7 @@ domein: <één woord of korte frase>
 - Welke inputs verwacht de agent? (1–3 bullets)
 - Welke outputs levert de agent? (1–3 bullets)
 
-## Prompts (intents)
+## Voorstellen Prompts (intents)
 
 - <Prompt 1 naam>
 - <Prompt 2 naam>
@@ -42,9 +52,8 @@ domein: <één woord of korte frase>
 
 ## Consistentie-check
 
-- Value stream: <value-stream>
 - Geen overlap met: <rollen/agents die aangrenzende taken doen>
-- Past binnen governance/beleid: <korte toets: geen normatieve uitspraken, geen besluitvorming buiten scope>
+
 
 ## Overlaps en aanbevelingen (optioneel)
 

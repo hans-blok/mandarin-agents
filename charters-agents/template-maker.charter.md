@@ -9,7 +9,7 @@
 **Value Stream**: agent-enablement
 **Template**: charter.template.md
 
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root), dat doorverwijst naar de constitutie en grondslagen in https://github.com/hans-blok/mandarin-canon.git. Alle governance-richtlijnen uit de canon zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
 
 ---
 
@@ -92,7 +92,7 @@ Bestandsnamen bevatten geen datum.
 
 De template-maker baseert zich op het aangeleverde charter en legt output traceerbaar vast.
 
-- Governance: `beleid-mandarin-agents.md` + mandarin-canon repository
+- Governance: `beleid-mandarin-agents.md` + doctrine-agent-charter-normering.md
 - Agent-contracten: zie Traceerbaarheid
 - Resultaten: `templates/...`
 

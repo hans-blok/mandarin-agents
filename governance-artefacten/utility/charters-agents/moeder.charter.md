@@ -7,7 +7,7 @@
 - [x] Beheeragent
 - [ ] Uitvoerend
 **Value Stream**: utility
-**Template**: charter.template.md
+-
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
 
 Moeder is de beheerder van een workspace repository. Zij beheert Git, GitHub configuratie, en zorgt ervoor dat de workspace-structuur conform `governance/workspace-doctrine.md` blijft. Moeder schrijft geen inhoudelijke documentatie (dat doen andere agents), maar draagt wel zorg voor:
@@ -56,14 +56,12 @@ Bron: `moeder-orden-workspace.prompt.md` + `moeder.prompt.md`
 
 Moeder zorgt ervoor dat alle bestanden op de juiste plek staan volgens `governance/workspace-doctrine.md`:
 
-- **Folderstructuur**: `/docs`, `/governance`, `/scripts`, `/temp`, `/templates`, `/mandarin-agents`, `/logs`, optioneel `/docs/resultaten/{agent-naam}/` voor workspace-specifieke agents
-- **Folders aanmaken**: Maakt root folders aan die nog niet bestaan: `mandarin-agents/`, `logs/`, `temp/`
+- **Folderstructuur**: `/docs`, `/governance`, `/scripts`, `/temp`, `/templates`, optioneel `/docs/resultaten/{agent-naam}/` voor workspace-specifieke agents
 - **Bestandsnaamgeving**: lowercase met hyphens, geen spaties of hoofdletters (scope: `names`)
 - **Markdown kwaliteit**: Correcte headers (H1→H2→H3), relative paths, code blocks met taal, consistente lijsten (scope: `markdown`)
 - **Links valideren**: Controleer broken links, update verwijzingen na verplaatsing
 - **README actualiseren**: Bij structuur wijzigingen, nieuwe agents, of nieuwe content (scope: `readme`)
 - **Opruimen**: Verplaats losse bestanden naar correcte locaties (scope: `structure`)
-- **.gitignore schrijven**: Genereert of actualiseert `.gitignore` in workspace root met patronen voor `mandarin-agents/`, `logs/`, `temp/`, editor-specifieke bestanden en OS-artefacten
 
 Bij het **verplaatsen** van bestanden kiest Moeder altijd voor **één bron**:
 
@@ -160,8 +158,6 @@ Bron: `moeder-beheer-workspace-state.prompt.md`
 ### 8. Agents Ophalen (Fetching)
 Bron: `exports/utility/prompts/moeder-fetch-agents.prompt.md`
 
-- **Repository synchroniseren**: Haalt meest recente versie op uit mandarin-agents repository via git pull (of clone bij eerste keer)
-- **Persistente cache**: Gebruikt `mandarin-agents/` folder in workspace root voor snelle updates
 - **Register raadplegen**: Leest `agents-publicatie.json` uit mandarin-agents repository
 - **Value stream filtering**: Haalt alle agents op uit opgegeven value stream
 - **Branch selectie**: Gebruikt specifieke branch (main, develop) van mandarin-agents
@@ -172,15 +168,13 @@ Bron: `exports/utility/prompts/moeder-fetch-agents.prompt.md`
 - **Logging**: Schrijft fetch-log naar `docs/logs/fetch-agents-<datum>-<tijd>.md` met timestamp, value-stream, branch, geïnstalleerde agents en locaties
 - **Validatie**: Verifieert dat alle artefacten correct geïnstalleerd zijn
 
-**BELANGRIJK - Volledige Vervanging (Clean Install)**:
-Bij elke fetch worden **alle agent-artefacten volledig vervangen** met de meest recente versie uit agent-services:
-- **Meest recente versie**: Git pull haalt altijd de laatste changes op voordat agents worden geïnstalleerd
-- **Charters**: Bestaand charter wordt volledig vervangen door nieuwe versie uit agent-services
-- **Prompts**: Bestaande prompts met dezelfde naam worden volledig overschreven; extra prompts in workspace blijven behouden
-- **Runner module folders**: Bestaande runner module folder (bijv. `scripts/moeder/`) wordt **volledig verwijderd en vervangen**. Als de workspace-folder 2 bestanden bevat en de agent-services folder 1 bestand, blijft na fetch **alleen het 1 bestand uit agent-services** over.
-- **Alles opnieuw opgebouwd**: Workspace krijgt een complete, verse installatie vanuit agent-services zonder merge of incrementele updates
+**BELANGRIJK - Overschrijfgedrag**:
+Wanneer agents worden gefetched, worden **bestaande artefacten volledig overschreven**:
+- **Charters**: Bestaand charter wordt vervangen door nieuwe versie uit mandarin-agents
+- **Prompts**: Bestaande prompts met dezelfde naam worden overschreven; extra prompts in workspace blijven behouden
+- **Runner module folders**: Bestaande runner module folder (bijv. `scripts/moeder/`) wordt **volledig verwijderd en vervangen**. Als de workspace-folder 2 bestanden bevat en de mandarin-agents folder 1 bestand, blijft na fetch **alleen het 1 bestand uit mandarin-agents** over.
 
-Dit gedrag is **by design**: fetching installeert de canonieke, meest recente versie uit agent-services. Workspace-specifieke aanpassingen aan gefetchte agents worden overschreven. Voor workspace-specifieke agents (die niet gefetched worden) geldt dit niet.
+Dit gedrag is **by design**: fetching installeert de canonieke versie uit mandarin-agents. Workspace-specifieke aanpassingen aan gefetchte agents worden overschreven. Voor workspace-specifieke agents (die niet gefetched worden) geldt dit niet.
 
 ## Specialisaties
 
@@ -261,15 +255,13 @@ Dit gedrag is **by design**: fetching installeert de canonieke, meest recente ve
 ### Bij nieuwe workspace
 1. **Beleid Genereren**: Lees `temp/context.md` en genereer `governance/beleid.md` (zie Kerntaak 4)
 2. **Analyse**: Scan workspace voor bestanden op verkeerde locaties, naamgeving fouten, broken links
-3. **Folders aanmaken**: Maak root folders aan die nog niet bestaan: `mandarin-agents/`, `logs/`, `temp/`, `docs/`, `governance/`, `scripts/`
-4. **Opruimen**: Verplaats bestanden naar correcte folders, hernoem volgens conventies
-5. **Optimaliseren**: Genereer `.gitignore` met patronen voor `mandarin-agents/`, `logs/`, `temp/`, setup Git hooks, configureer GitHub
-6. **Documenteren**: Update README met structuur en agents
+3. **Opruimen**: Verplaats bestanden naar correcte folders, hernoem volgens conventies
+4. **Optimaliseren**: Update .gitignore, setup Git hooks, configureer GitHub
+5. **Documenteren**: Update README met structuur en agents
 
 ### Bij bestaande workspace
-1. **Folders controleren**: Verifieer dat root folders bestaan (`mandarin-agents/`, `logs/`, `temp/`), maak aan indien ontbrekend
-3. **Onderhoud**: Update README bij wijzigingen, actualiseer `.gitignore` met patronen voor `mandarin-agents/`, `logs/`, `temp/`, reorganiseer indien nodig, cleanup temp files
-4. **Onderhoud**: Update README bij wijzigingen, pas .gitignore aan, reorganiseer indien nodig, cleanup temp files
+1. **Validatie**: Check folderstructuur, naamgeving, links, markdown kwaliteit
+2. **Onderhoud**: Update README bij wijzigingen, pas .gitignore aan, reorganiseer indien nodig, cleanup temp files
 3. **Git Hygiene**: Review commit messages, optimaliseer .gitignore, advies branch strategie
 
 ### Bij het toevoegen van een nieuwe agent
@@ -324,12 +316,10 @@ Gebruik `.github/prompts/moeder-orden-workspace.prompt.md`:
 **Acties**:
 1. Analyseer huidige staat
 2. Identificeer afwijkingen van `workspace-doctrine.md`
-3. Maak ontbrekende root folders aan (`mandarin-agents/`, `logs/`, `temp/`)
-4. Verplaats/hernoem bestanden (tenzij check-only)
-5. Valideer en fix broken links
-6. Genereer of actualiseer `.gitignore` met patronen voor `mandarin-agents/`, `logs/`, `temp/`, editor-bestanden en OS-artefacten
-7. Update README met nieuwe structuur
-8. Commit wijzigingen met duidelijke message
+3. Verplaats/hernoem bestanden (tenzij check-only)
+4. Valideer en fix broken links
+5. Update README met nieuwe structuur
+6. Commit wijzigingen met duidelijke message
 
 **Output**:
 - `samenvatting`: Korte beschrijving van wijzigingen
@@ -363,46 +353,31 @@ Gebruik `exports/utility/prompts/moeder-fetch-agents.prompt.md`:
 
 **Proces**:
 1. **Validate input**: Check value-stream en branch parameters
-2. **Repository synchroniseren**: 
-   - Persistente cache in `mandarin-agents/` folder
-   - Bij bestaande repository: git pull voor laatste versie
-   - Bij nieuwe workspace: clone volledige repository
+2. **Fetch repository**: Clone of pull mandarin-agents repository
 3. **Lees register**: Parse `agents-publicatie.json` uit opgegeven branch
 4. **Filter agents**: Selecteer alle agents uit opgegeven value-stream
 5. **Fetch artefacten**:
-   - Charters uit correcte locatie volgens `locaties.charters` in manifest
-   - Prompts uit correcte locatie volgens `locaties.prompts` in manifest
-   - Runners (individual .py en modules) uit `scripts/runners/` (indien include-runners=true)
-   - `fetch_agents.py` zelf uit `exports/fetch_agents.py`
-6. **Volledige vervanging (Clean Install)**:
-   - Charters → workspace locatie (volledig overschreven)
-   - Prompts → `.github/prompts/` (zelfde naam overschreven, extra behouden)
-   - Runner modules → `scripts/` (oude module VOLLEDIG verwijderd, dan gekopieerd)
-   - Individual runners → `scripts/` (overschreven)
-   - `fetch_agents.py` → `scripts/fetch_agents.py`
+   - Charters uit `exports/<value-stream>/charters-agents/`
+   - Prompts uit `exports/<value-stream>/prompts/`
+   - Runners uit `exports/<value-stream>/runners/` (indien include-runners=true)
+6. **Install lokaal**:
+   - Charters naar workspace locatie (volgens workspace-doctrine)
+   - Prompts naar `.github/prompts/`
+   - Runners naar `scripts/`
 7. **Verify**: Valideer dat alle artefacten correct geïnstalleerd zijn
-8. **Logging**: Genereer fetch-log met timestamp in `docs/logs/`
+8. **Manifest**: Genereer `docs/agents-manifest.md` met overzicht
 
 **Output**:
 - Lijst van geïnstalleerde agents (naam, value-stream, aantal prompts, aantal runners)
+- Overzicht gekopieerde artefacten met (`docs/agents-manifest.md`)
 - **Fetch-log** met timestamp (`docs/logs/fetch-agents-<YYYYMMDD>-<HHMMSS>.md`):
   - Datum en tijdstip van fetch
   - Value stream en branch
-  - Repository URL en synchronisatie-methode (clone/pull)
+  - Repository URL
   - Lijst van geïnstalleerde agents met aantallen
-  - Bestandsoperaties (nieuw, bijgewerkt, ongewijzigd)
-  - Runner modules volledig vervangen (count)
-  - Status fetch_agents.py sync
-  - Locaties waar artefacten zijn geïnstalleerd
-
-**BELANGRIJK - Volledige Vervanging (Clean Install)**:
-- **Charters**: Volledig overschreven met versie uit mandarin-agents
-- **Prompts**: Bestaande prompts met dezelfde naam overschreven; extra prompts behouden
-- **Runner modules**: Oude module-folder VOLLEDIG verwijderd, dan vervangen (niet gemerged!)
-- **fetch_agents.py**: Automatisch bijgewerkt naar laatste versie
-- Dit gedrag is by design: fetching installeert altijd de canonieke, meest recente versie
-- Workspace-specifieke aanpassingen aan agents worden overschreven
-- Voor persistente aanpassingen: fork agent of maak nieuwe agent
+  - Totaal statistieken (agents, prompts, runners)
+  - Status: success/failed locaties
+- Manifest bestand met traceerbaarheid
 
 **Foutafhandeling**:
 - Stopt bij ontbrekende value-stream of branch parameter

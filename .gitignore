@@ -8,6 +8,8 @@
 # Agent cache en synchronisatie
 mandarin-agents/
 
+concepts/
+
 # Logs van fetch operaties en agent runs
 logs/
 
