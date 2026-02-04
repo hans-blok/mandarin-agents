@@ -2,7 +2,7 @@
 
 **Aangemaakt**: 2026-01-24  
 **Beheerd door**: Agent Curator  
-**Value Stream**: Veranderverkenning
+**Value Stream**: Softwareontwikkeling (SFW, fase 01 - Veranderkenning)
 
 ---
 

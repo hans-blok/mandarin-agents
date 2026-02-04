@@ -16,7 +16,7 @@ domein: architectuur
 - [ ] Uitvoerend
 
 ## Opereert in Value stream fasen
-- architectuur-agent-enablement
+- AOD.01 - Vraagverkenning
 
 ## Toelichting
 

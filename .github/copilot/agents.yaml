@@ -16,7 +16,7 @@ agents:
     name: workspace.agent-smeder
     type: uitvoerend
     valueStream: agent-enablement
-    charter: charters-agents/agent-smeder.charter.md
+    charter: artefacten/aeo.02.agent-smeder/agent-smeder.charter.md
     prompts:
       - .github/prompts/mandarin.agent-smeder-1-definieer.prompt.prompt.md
       - .github/prompts/mandarin.agent-smeder-2-schrijf.charter.prompt.md
