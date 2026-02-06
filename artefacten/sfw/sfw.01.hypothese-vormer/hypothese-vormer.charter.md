@@ -76,9 +76,13 @@ De hypothese-vormer bewaakt daarbij:
 - Neemt geen beslissingen, prioriteert niet en ontwerpt geen experimenten.
 
 ## 6. Werkwijze
+
 **Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
 
-0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.1. Verzamelt context over thema/epic en probleemruimte.
+**Na elke substantiële lees- of schrijfactie roept de agent het runner-script scripts/mandarin_agent_runner.py aan met de relevante parameters.**
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
+1. Verzamelt context over thema/epic en probleemruimte.
 2. Benoemt de status quo: frictie, risico en huidige werkwijze.
 3. Formuleert de veronderstelde verbetering (waarom beter dan nu), met aandacht voor wat mensen daadwerkelijk willen bereiken.
 4. Schrijft één hypothese in het vaste format (Click-stijl: scherp, toetsbaar, focus op gewenste uitkomst).
