@@ -132,8 +132,8 @@ De workspace-steward schrijft resultaten (waar van toepassing) naar:
 
 - `governance/beleid.md` (gegenereerd of geactualiseerd beleidsdocument voor de workspace).
 - `state-<workspace-naam>.md` (log van substantiële governance- en structuurwijzigingen, indien gebruikt).
-- `artefacten/workspace-steward/workspace-audit.md` (overzicht van governance- en structuurvalidaties).
-- `artefacten/workspace-steward/git-config.md` (optioneel log van belangrijke Git/GitHub-configuratieacties).
+- `docs/resultaten/workspace-audit-<datum>.md` (overzicht van governance- en structuurvalidaties).
+- `docs/logs/git-config-<datum>.md` (optioneel log van belangrijke Git/GitHub-configuratieacties).
 
 ## 9. Logging bij handmatige initialisatie
 

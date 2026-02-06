@@ -20,7 +20,7 @@ The script performs:
   * *.charter.md → agent-charters/
   * *.prompt.md → .github/prompts/
   * *.agent.md → .github/agents/
-  * runners → scripts/runners/
+  * <agent-naam>.py (runners) → scripts/runners/
 - *.boundary.md files are ignored
 
 Design decisions:
@@ -28,6 +28,8 @@ Design decisions:
 - mandarin-agents folder is kept for efficient git pull reuse
 - Boundary files are explicitly ignored
 - Type hints used throughout for maintainability
+- Runners detected as <agent-naam>.py in agent-folder (new normering)
+- Legacy runner detection (with "runner" in name) for backwards compatibility
 """
 
 from __future__ import annotations
@@ -163,12 +165,20 @@ class AgentScanner:
 		- *.charter.md → agent-charters/
 		- *.prompt.md → .github/prompts/
 		- *.agent.md → .github/agents/
-		- <agent>-runner.py or <agent>-runner/ → scripts/runners/
+		- <agent-naam>.py (runner) → scripts/runners/
 		
 		Ignores:
 		- *.boundary.md files
+		
+		Note: Runners are now located in agent-folder as <agent-naam>.py
+		      e.g., fnd.02.publicatie-steward/publicatie-steward.py
 		"""
 		operations: List[FileOperation] = []
+		
+		# Extract agent name from folder (pattern: <vs>.<fase>.<agent-naam>)
+		folder_name = folder.name
+		parts = folder_name.split(".", 2)  # Split into max 3 parts: vs, fase, agent-naam
+		agent_name = parts[2] if len(parts) == 3 else None
 		
 		for file_path in folder.iterdir():
 			filename = file_path.name
@@ -217,7 +227,20 @@ class AgentScanner:
 				))
 				continue
 			
-			# Runners (files or directories)
+			# Runners: detect as <agent-naam>.py in agent folder
+			# New pattern: runners are in agent-folder as <agent-naam>.py
+			# Example: fnd.02.publicatie-steward/publicatie-steward.py
+			if agent_name and filename == f"{agent_name}.py" and file_path.is_file():
+				dest = self.runners_dir / filename
+				operations.append(FileOperation(
+					source=file_path,
+					destination=dest,
+					file_type="runner"
+				))
+				continue
+			
+			# Legacy runner detection (for backwards compatibility)
+			# Old pattern: files/folders with "runner" in name
 			if "runner" in filename.lower():
 				if file_path.is_file() and filename.endswith(".py"):
 					dest = self.runners_dir / filename

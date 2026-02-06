@@ -93,10 +93,7 @@ De engineer-steward bewaakt daarbij:
 
 ## 6. Werkwijze
 
-**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
-
 ### Voor schrijven van scripts:
-0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Ontvangt doelbeschrijving, doelpad en optionele requirements/dependencies.
 2. Controleert of de opdracht binnen capability boundary valt.
 3. Ontwerpt de script-structuur met duidelijke scheiding van concerns.
@@ -143,8 +140,8 @@ Dit charter is traceerbaar naar de bijbehorende agent-contracten per intent:
 De engineer-steward schrijft resultaten (waar van toepassing) naar:
 
 - `scripts/` — nieuwe Python-scripts
-- `docs/resultaten/engineer-steward/code-review-<naam>-<datum>.md` — code reviews
-- `docs/resultaten/engineer-steward/executie-rapport-<script>-<datum>.md` — script-uitvoering rapporten
+- `artefacten/engineer-steward/code-review-<naam>.md` — code reviews
+- `artefacten/engineer-steward/executie-rapport-<script>.md` — script-uitvoering rapporten
 
 ## 9. Logging bij handmatige initialisatie
 

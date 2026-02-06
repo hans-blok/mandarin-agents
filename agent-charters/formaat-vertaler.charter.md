@@ -103,13 +103,8 @@ De Formaat-Vertaler transformeert documenten tussen formaten met focus op:
 
 ## 6. Werkwijze
 
-### Bij handmatige start
-
-Gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
-
 ### Algemene workflow (beide richtingen)
 
-0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Valideer input-bestand (bestaat, leesbaar, correct formaat)
 2. Parse document-structuur (kopjes, bullets, tabellen, opmaak)
 3. Detecteer anti-patronen en waarschuwingen
@@ -214,7 +209,7 @@ De Formaat-Vertaler schrijft resultaten naar:
 
 - **Geconverteerde documenten**: locatie zoals opgegeven in output-bestand parameter
 - **Conversie-rapporten**: console output met details, waarschuwingen en validatie
-- **Logboeken**: `docs/resultaten/formaat-vertaler/conversie-<datum>.log` (optioneel)
+- **Logboeken**: `artefacten/formaat-vertaler/conversie.log` (optioneel)
 
 ---
 

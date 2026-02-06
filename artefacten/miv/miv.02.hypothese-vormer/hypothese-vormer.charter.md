@@ -94,9 +94,9 @@ De hypothese-vormer leest verplicht de volgende bestanden voordat hij begint met
 
 ### Uitvoering
 
+
 **Bij handmatige start**:
-“De agent voert na elke substantiële lees- of schrijfactie het script 
-logging_utils.py uit met de relevante parameters (bestand, actie, timestamp), zodat alle acties centraal en uniform worden gelogd.”
+“De agent voert na elke substantiële lees- of schrijfactie het runner-script uit zoals gespecificeerd in de workspace settings (standaard: scripts/mandarin_agent_runner.py). Het pad en de modus (‘after-every-action’) worden uit .vscode/settings.json gehaald. De runner verzorgt centrale logging en andere workspace-brede acties.”
 
 0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Leest en internaliseert concept-definities en strategische intenties (zie Input-vereisten).

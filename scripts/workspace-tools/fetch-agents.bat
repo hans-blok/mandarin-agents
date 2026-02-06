@@ -4,32 +4,34 @@ REM Fetch Agents - Windows Wrapper
 REM ==============================================================================
 REM
 REM Wrapper voor fetch_mandarin_agents.py die agents ophaalt uit mandarin-agents
-REM repository (inclusief .github directory) op basis van gepubliceerd manifest 
-REM (agents-publicatie.json).
+REM repository op basis van value-stream.fase patroon.
 REM
 REM Gebruik:
-REM   fetch-agents.bat <value-stream>   - Fetch agents voor value stream
-REM   fetch-agents.bat utility          - Fetch utility agents
-REM   fetch-agents.bat kennispublicatie - Fetch kennispublicatie agents
-REM   fetch-agents.bat --list           - Toon beschikbare value streams
+REM   fetch-agents.bat <value-stream.fase>  - Fetch agents voor value stream fase
+REM
+REM Voorbeelden:
+REM   fetch-agents.bat miv.01   - Fetch MIV fase 01 agents
+REM   fetch-agents.bat aeo.02   - Fetch AEO fase 02 agents
+REM   fetch-agents.bat fnd.01   - Fetch FND fase 01 agents
+REM   fetch-agents.bat sfw.01   - Fetch SFW fase 01 agents
 REM
 REM Output:
 REM   - Console: Directe feedback over fetch proces
-REM   - Terminal log: logs\fetch-agents-YYYYMMDD-HHMMSS.log (wrapper output)
-REM   - Markdown log: logs\fetch-agents-YYYYMMDD-HHMMSS.md (script output)
+REM   - Terminal log: logs\fetch-agents-YYYYMMDD-HHMMSS.log
 REM
 REM ==============================================================================
 
-REM Check if argument provided (unless --list)
+REM Check if argument provided
 if "%~1"=="" (
-    echo [ERROR] Value stream argument is required
+    echo [ERROR] Value stream.fase pattern is required
     echo.
-    echo Gebruik: fetch-agents.bat ^<value-stream^>
+    echo Gebruik: fetch-agents.bat ^<value-stream.fase^>
     echo.
     echo Voorbeelden:
-    echo   fetch-agents.bat utility
-    echo   fetch-agents.bat kennispublicatie
-    echo   fetch-agents.bat --list
+    echo   fetch-agents.bat miv.01
+    echo   fetch-agents.bat aeo.02
+    echo   fetch-agents.bat fnd.01
+    echo   fetch-agents.bat sfw.01
     echo.
     pause
     exit /b 1
@@ -43,12 +45,12 @@ for /f "delims=" %%i in ('powershell -Command "Get-Date -Format 'yyyyMMdd-HHmmss
 set logfile=logs\fetch-agents-%timestamp%.log
 
 echo [INFO] Fetch agents wrapper gestart om %time%
-echo [INFO] Target value stream: %1
+echo [INFO] Pattern: %1
 echo [INFO] Output log: %logfile%
 echo.
 
-REM Run script with all arguments, log to file and console
-python scripts\fetch_mandarin_agents.py %* > %logfile% 2>&1
+REM Run script with pattern argument, log to file and console
+python scripts\workspace-tools\fetch_mandarin_agents.py %1 > %logfile% 2>&1
 set exit_code=%ERRORLEVEL%
 
 REM Show log content

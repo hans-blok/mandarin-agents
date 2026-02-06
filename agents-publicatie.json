@@ -1,7 +1,7 @@
 {
   "versie": "3.0",
   "publicatiedatum": "2026-02-06",
-  "digest": "fa897",
+  "digest": "c6532",
   "valueStreams": [
     {
       "naam": "Agent Ecosysteem Ontwikkeling",
@@ -130,6 +130,12 @@
               "aantalContracts": 3,
               "aantalTemplates": 0,
               "aantalRunners": 0
+            },
+            {
+              "naam": "publicatie-steward",
+              "aantalContracts": 4,
+              "aantalTemplates": 0,
+              "aantalRunners": 1
             }
           ]
         }

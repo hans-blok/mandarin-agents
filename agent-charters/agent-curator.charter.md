@@ -80,16 +80,13 @@ De agent-curator bewaakt daarbij:
 
 ## 6. Werkwijze
 
-**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
-
-0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Ontvangt een opdracht (bijvoorbeeld boundary-bepaling, value stream-lijst, validatie of publicatie) met de benodigde parameters.
 2. Raadpleegt de mandarin-canon voor value streams en relevante governance-/doctrine-documenten.
 3. Leest waar nodig bestaande agents, charters, prompts en runners in en extraheert relevante metadata.
 4. Voert de gevraagde administratieve taak uit: boundary opstellen, value streams overzicht maken, ecosysteem-validatie uitvoeren of agents-overzicht genereren.
 5. Bouwt gestructureerde tabellen en/of JSON-structuren met duidelijke kolommen en velden.
 6. Voert basisvalidaties uit (geldige value streams, consistente folderlocaties, compleetheid van artefacten).
-7. Schrijft resultaten weg naar de afgesproken outputlocaties in artefacten/ en/of agents-publicatie.json.
+7. Schrijft resultaten weg naar de afgesproken outputlocaties in docs/resultaten en/of agents-publicatie.json.
 8. Legt in elk rapport een korte herkomstverantwoording vast (bronnen, gescande folders, datum).
 9. Stopt en escaleert naar governance wanneer normatieve beslissingen, wijzigingen in canon of strategische keuzes worden gevraagd.
 
@@ -116,11 +113,11 @@ De gespecialiseerde analyse-intent is uitgewerkt in een eigen charter:
 
 De agent-curator legt alle resultaten vast in de workspace als markdown-bestanden:
 
-- `artefacten/agent-curator/value-streams-overzicht.md` (overzicht en validatie van value streams)
+- `docs/resultaten/agent-curator/value-streams-overzicht.md` (overzicht en validatie van value streams)
 - `artefacten/<value-stream>.<fase>.<agent-naam>/agent-boundary-<agent-naam>.md` (boundary-artefact in de per-agentfolder, bijvoorbeeld `artefacten/aeo.02.agent-curator/agent-boundary-agent-curator.md` of `artefacten/miv.01.strategische-duidingsagent/agent-boundary-strategische-duidingsagent.md`)
 wanneer de folder niet bestaat, maakt hij de folder aan.
-- `artefacten/agent-curator/agent-boundary-<agent-naam>.md` (optionele boundary-rapporten)
-- `artefacten/agent-curator/agents-publicatie.md` (Markdown agents-overzicht met metadata)
+- `docs/resultaten/agent-curator/agent-boundary-<agent-naam>.md` (optionele boundary-rapporten)
+- `docs/resultaten/agent-publicaties/agents-publicatie-<datum>.md` (Markdown agents-overzicht met metadata)
 - `agents-publicatie.json` (root JSON agents-overzicht voor fetching, met digest voor change-tracking)
 
 Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
@@ -153,7 +150,6 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 
 | Datum | Versie | Wijziging | Auteur |
 |------|--------|-----------|--------|
-| 2026-02-06 | 0.7.0 | Output-locaties gecorrigeerd volgens workspace-doctrine v1.4.0: docs/resultaten/ vervangen door artefacten/agent-curator/, datum-suffixen verwijderd | Agent Smeder |
 | 2026-02-05 | 0.6.2 | Naming-conventies voor per-agentfolders expliciet gemaakt (3-letter value-streamcode + 2-cijferige fase, bijv. `artefacten/miv.01.strategische-duidingsagent/`) en voorbeeld toegevoegd aan outputlocaties voor boundary-artefacten | Agent Smeder |
 | 2026-02-04 | 0.6.1 | Vastgelegd dat de agent-curator bij nieuwe agents de per-agentfolder onder `artefacten/` aanmaakt (bijv. `artefacten/aeo.02.agent-naam/`) en daar het boundary-artefact plaatst | Agent Smeder |
 | 2026-02-04 | 0.6.0 | Charter herschreven volgens `agent-charter.template.md` en gepositioneerd in `artefacten/aeo.02.agent-curator/` als bron, met charters-agents/ als publicatiekopie | Agent Smeder |

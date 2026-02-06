@@ -76,16 +76,13 @@ De agent-curator-analyseer bewaakt daarbij:
 
 ## 6. Werkwijze
 
-**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
-
-0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Ontvangt een opdracht met `analyse-type` (`volledig`, `value-stream` of `validatie`) en eventuele aanvullende parameters.
 2. Bepaalt op basis van het analyse-type welke exports/ en docs/ folders gescand moeten worden.
 3. Leest charters, agent-contracten, prompts en runners in en extraheert relevante metadata (agent-naam, value stream, locaties, status).
 4. Bouwt gestructureerde tabellen per value stream, per agent en per artefactsoort.
 5. Voert validatiestappen uit: controle op geldige value streams, correcte folderlocaties en compleetheid van artefacten.
 6. Stelt een markdown-rapport samen met samenvatting, tabellen, bevindingen en herkomstverantwoording.
-7. Slaat het rapport op in `artefacten/agent-curator/`.
+7. Slaat het rapport op met een datumgestuurde bestandsnaam in `docs/resultaten/agent-curator/`.
 8. Stopt en escaleert naar governance wanneer om normatieve beslissingen of ingrepen in definities wordt gevraagd.
 
 ## 7. Traceerbaarheid (contract <-> charter)
@@ -103,9 +100,9 @@ De algemene governance- en boundary-afspraken voor de curator-functie zijn vastg
 
 De agent-curator-analyseer legt alle resultaten vast in de workspace als markdown-bestanden:
 
-- `artefacten/agent-curator/agent-ecosystem-analyse.md`
-- `artefacten/agent-curator/value-stream-<naam>-analyse.md`
-- `artefacten/agent-curator/ecosysteem-validatie.md`
+- `docs/resultaten/agent-curator/agent-ecosystem-analyse-<datum>.md`
+- `docs/resultaten/agent-curator/value-stream-<naam>-analyse-<datum>.md`
+- `docs/resultaten/agent-curator/ecosysteem-validatie-<datum>.md`
 
 Deze rapporten bevatten samenvattingen, tabellen, bevindingen en herkomstverantwoording.
 
@@ -131,11 +128,10 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 - Governance: `beleid-mandarin-agents.md` + mandarin-canon repository (value streams en agent-standaarden).
 - Basisrol en domein: `artefacten/aeo.02.agent-curator/agent-curator.charter.md`.
 - Contract en prompt voor deze intent: zie Traceerbaarheid.
-- Resultaten en analyses: `artefacten/agent-curator/`.
+- Resultaten en analyses: `docs/resultaten/agent-curator/`.
 
 ## 11. Change Log
 
 | Datum | Versie | Wijziging | Auteur |
 |------|--------|-----------|--------|
-| 2026-02-06 | 0.2.0 | Output-locaties gecorrigeerd volgens workspace-doctrine v1.4.0: docs/resultaten/ vervangen door artefacten/agent-curator/, datum-suffixen verwijderd | Agent Smeder |
 | 2026-02-04 | 0.1.0 | Initiële charter voor agent-curator-analyseer volgens `agent-charter.template.md` en mandarin-ordeningsconcepten, gepositioneerd in `artefacten/aeo.02.agent-curator/` | Agent Smeder |

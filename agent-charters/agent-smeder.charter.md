@@ -77,25 +77,6 @@ Belangrijk: de Agent Smeder **beslist niet of** een agent nodig is. De Agent Sme
 
 ## 6. Werkwijze
 
-### Workspace-brede artefacten
-
-Bepalde artefacten zijn altijd beschikbaar op vaste locaties in de workspace en worden door meerdere agents gebruikt:
-
-- **Concept-artefacten**: `artefacten/fnd/fnd.02.concept-curator/`  
-  Bevat alle conceptdefinities die zijn vastgesteld door de concept-curator
-
-- **Strategische intenties**: `artefacten/strategisch-analist/strategische-intenties.md`  
-  Bevat de output van de strategisch-analist met geëxpliciteerde strategische intenties
-
-Agents die deze artefacten nodig hebben, verwijzen altijd naar deze vaste locaties.
-
-### Bij handmatige start
-
-Gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
-
-### Uitvoering
-
-0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Ontvangt van Agent Curator een uitgewerkte capability boundary en een voorstel voor value stream en skeleton.
 2. Toetst de boundary op overlap en scherpte; verduidelijkt waar nodig in overleg.
 3. Maakt (of bevestigt) per agent een eigen folder aan:
@@ -167,7 +148,7 @@ De agent-smeder legt alle resultaten vast in de workspace als markdown-bestanden
 - `artefacten/<value-stream>.<value-stream-fase>.<agent-naam>/<agent-naam>.charter.md` (charters)
 
 Eigen ondersteunende documentatie kan worden opgeslagen onder:
-- `artefacten/agent-smeder/` (bijvoorbeeld ontwerpnotities of migratierapporten).
+- `docs/resultaten/agent-smeder/` (bijvoorbeeld ontwerpnotities of migrierapporten).
 
 Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
@@ -195,9 +176,7 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 ## 11. Change Log
 
 | Datum | Versie | Wijziging | Auteur |
-|------|--------|-----------|--------|---|
-| 2026-02-06 | 2.2 | Output-locaties gecorrigeerd volgens workspace-doctrine v1.4.0: docs/resultaten/agent-smeder/ vervangen door artefacten/agent-smeder/ | Agent Smeder |
-| 2026-02-06 | 2.1 | Workspace-brede artefacten-locaties gedocumenteerd in werkwijze (concept-curator, strategisch-analist) | Agent Smeder |
+|------|--------|-----------|--------|
 | 2026-02-06 | 2.0 | Intent hernoemd: `1.definieer-prompt` → `1.leg-agent-contract-vast` om dual-file structuur (contract + prompt metadata) te benadrukken | Agent Smeder |
 | 2026-02-04 | 1.9 | Gedrag intent `4.orden-agent` aangepast: geen voorstel/dry-run meer, maar altijd daadwerkelijke ordening met gedocumenteerde aannames | Agent Smeder |
 | 2026-02-04 | 1.8 | Nieuwe intent `4.orden-agent` toegevoegd aan Agent Smeder (contract, YAML-prompt en traceerbaarheid) | Agent Smeder |

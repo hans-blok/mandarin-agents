@@ -214,35 +214,44 @@ def count_templates(agent_folder: Path) -> int:
         return 0
 
 
-def count_runners(agent_naam: str, workspace_root: Path) -> int:
-    """Count runners for an agent by scanning scripts/runners/.
+def count_runners(agent_naam: str, agent_folder: Path, workspace_root: Path) -> int:
+    """Count runners for an agent.
+    
+    Checks two locations:
+    1. New pattern: <agent-naam>.py in agent-folder itself
+    2. Legacy pattern: scripts/runners/<agent-naam>.py or scripts/runners/<agent-naam>/
     
     Args:
         agent_naam: Name of the agent
+        agent_folder: Path to agent's folder (where runner should be per new normering)
         workspace_root: Root directory of workspace
         
     Returns:
-        Total number of runners found for this agent (script + module = max 2)
+        Total number of runners found for this agent (max 2: new + legacy)
     """
     try:
-        runners_dir = workspace_root / "scripts" / "runners"
-        if not runners_dir.exists() or not runners_dir.is_dir():
-            return 0
-        
         count = 0
         
-        # Individual runner script
-        runner_file = runners_dir / f"{agent_naam}.py"
-        if runner_file.exists() and runner_file.is_file():
+        # NEW PATTERN: Runner in agent-folder as <agent-naam>.py
+        runner_in_folder = agent_folder / f"{agent_naam}.py"
+        if runner_in_folder.exists() and runner_in_folder.is_file():
             count += 1
         
-        # Runner module folder
-        runner_module = runners_dir / agent_naam
-        if runner_module.exists() and runner_module.is_dir():
-            # Verify it's a valid Python module (has __init__.py)
-            init_file = runner_module / "__init__.py"
-            if init_file.exists():
+        # LEGACY PATTERN: Runner in scripts/runners/
+        runners_dir = workspace_root / "scripts" / "runners"
+        if runners_dir.exists() and runners_dir.is_dir():
+            # Individual runner script
+            runner_file = runners_dir / f"{agent_naam}.py"
+            if runner_file.exists() and runner_file.is_file():
                 count += 1
+            
+            # Runner module folder
+            runner_module = runners_dir / agent_naam
+            if runner_module.exists() and runner_module.is_dir():
+                # Verify it's a valid Python module (has __init__.py)
+                init_file = runner_module / "__init__.py"
+                if init_file.exists():
+                    count += 1
         
         return count
     except OSError as e:
@@ -321,7 +330,7 @@ def scan_all_agents(workspace_root: Path) -> List[AgentMetadata]:
             # Count artifacts
             metadata.aantal_contracts = count_contracts(agent_naam, agent_folder)
             metadata.aantal_templates = count_templates(agent_folder)
-            metadata.aantal_runners = count_runners(agent_naam, workspace_root)
+            metadata.aantal_runners = count_runners(agent_naam, agent_folder, workspace_root)
             
             agents.append(metadata)
             scanned_names.add(metadata.naam)
