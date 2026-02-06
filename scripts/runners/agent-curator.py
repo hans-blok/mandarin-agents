@@ -3,28 +3,23 @@
 """
 Agent Curator Runner — Publiceer Agents Overzicht
 
-Deze runner scant alle agent-charters, leest metadata uit de headers,
-telt prompts, runners, en het aantal templates dat bij het script hoort, en publiceert een overzicht in JSON en Markdown.
-
-Aantal script-templates: 1 (mandarin.python-expert-schrijf.script.prompt.md)
+Deze runner scant alle agent-charters in de artefacten/ folder, leest metadata uit de headers
+en folder-structuur, telt contracts, templates en runners, en publiceert een overzicht in JSON en Markdown
+gestructureerd per value stream en fase.
 
 Usage:
-    python scripts/runners/agent-curator.py --scope volledig
-    python scripts/runners/agent-curator.py --scope value-stream --filter kennispublicatie
-    python scripts/runners/agent-curator.py --help
+    python scripts/runners/agent-curator.py
 
 Output:
     - agents-publicatie.json (root, voor fetching)
     - docs/resultaten/agent-publicaties/agents-publicatie-<datum>.md (archief)
 
 Traceability:
-    Charter: agent-charters/charter.agent-curator.md
-    Prompt: .github/prompts/agent-curator-publiceer-agents-overzicht.prompt.md
-    Script-template: .github/prompts/mandarin.python-expert-schrijf.script.prompt.md
+    Charter: artefacten/aeo.02.agent-curator/agent-curator.charter.md
+    Contract: artefacten/aeo.02.agent-curator/agent-curator.publiceer-agents.overzicht.agent.md
+    Prompt: .github/prompts/mandarin.agent-curator.publiceer-agents.overzicht.prompt.md
+    Schema: schemas/agents-publicatie-schema.json
 """
-
-# Aantal templates dat bij dit script hoort
-SCRIPT_TEMPLATES_COUNT = 1  # mandarin.python-expert-schrijf.script.prompt.md
 
 import argparse
 import hashlib
@@ -35,80 +30,119 @@ from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
+
+# Mapping van value stream codes naar volledige namen
+VALUE_STREAM_NAMES = {
+    "aeo": "Agent Ecosysteem Ontwikkeling",
+    "sfw": "Softwareontwikkeling",
+    "aod": "Architectuur- en Oplossingsontwerp",
+    "kvl": "Kennisvastlegging",
+    "miv": "Markt- en Investeringsvorming",
+    "fnd": "Foundational (value-stream-overstijgend)"
+}
+
+# Mapping van fasenummers naar namen per value stream
+FASE_NAMES = {
+    "aeo": {
+        "01": "Grondslagvorming",
+        "02": "Ecosysteeminrichting"
+    },
+    "sfw": {
+        "01": "Veranderkenning",
+        "02": "Werkvoorbereiding",
+        "03": "Behoefte- en requirements analyse",
+        "04": "Ontwerp",
+        "05": "Realisatie",
+        "06": "Validatie",
+        "07": "Vrijgave",
+        "08": "Beheer en Evolutie"
+    },
+    "aod": {
+        "01": "Vraagverkenning",
+        "02": "Architectuurkadering",
+        "03": "Oplossingsontwerp",
+        "04": "Besluitvorming en Borging"
+    },
+    "kvl": {
+        "01": "Kennisverkenning",
+        "02": "Structurering",
+        "03": "Vastlegging",
+        "04": "Publicatie en Onderhoud"
+    },
+    "miv": {
+        "01": "Strategische intentie expliciteren",
+        "02": "Waarde-hypotheses formuleren",
+        "03": "Positioneringsrichtingen verkennen",
+        "04": "Monetisatie-logica's scheiden",
+        "05": "Investering en kostenrealiteit expliciet maken",
+        "06": "Keuzeruimte structureren"
+    },
+    "fnd": {
+        "00": "Stewardship",
+        "01": "Technische ondersteuning"
+    }
+}
 
 
 @dataclass
 class AgentMetadata:
-    """Metadata extracted from agent charter header."""
+    """Metadata extracted from agent charter header and folder structure."""
     naam: str
-    value_stream: str
+    value_stream_code: str
+    fase_nummer: str
     domein: str = ""
-    agent_soort: str = ""
     charter_path: Optional[Path] = None
-    aantal_prompts: int = 0
-    aantal_runners: int = 0
+    aantal_contracts: int = 0
     aantal_templates: int = 0
+    aantal_runners: int = 0
 
 
-def extract_header_field(content: str, field_name: str) -> str:
-    """Extract a field value from charter header.
+def parse_folder_name(folder_name: str) -> Optional[Tuple[str, str, str]]:
+    """Parse agent folder name to extract value stream code, fase nummer en agent naam.
     
-    Looks for pattern: **FieldName**: value
+    Verwacht patroon: <vs-code>.<fase-nr>.<agent-naam>
+    Bijvoorbeeld: aeo.02.agent-curator, sfw.01.hypothese-vormer, fnd.01.workspace-steward
     
     Args:
-        content: Charter file content
-        field_name: Name of the header field to extract
+        folder_name: Name of the agent folder
         
     Returns:
-        Extracted field value, empty string if not found
+        Tuple van (value_stream_code, fase_nummer, agent_naam) of None bij ongeldige naam
     """
-    pattern = rf"\*\*{re.escape(field_name)}\*\*:\s*(.+?)(?:\n|$)"
-    match = re.search(pattern, content, re.IGNORECASE)
-    return match.group(1).strip() if match else ""
+    pattern = r"^([a-z]{3})\.(\d{2})\.(.+)$"
+    match = re.match(pattern, folder_name)
+    if match:
+        return match.group(1), match.group(2), match.group(3)
+    return None
 
 
-def scan_charter(charter_path: Path) -> Optional[AgentMetadata]:
-    """Scan a charter file and extract metadata from header.
+def scan_charter(charter_path: Path, folder_info: Tuple[str, str, str]) -> Optional[AgentMetadata]:
+    """Scan a charter file and extract metadata.
     
     Args:
         charter_path: Path to charter file
+        folder_info: Tuple van (value_stream_code, fase_nummer, agent_naam) uit folder naam
         
     Returns:
-        AgentMetadata if successful, None if charter is invalid or missing required fields
+        AgentMetadata if successful, None if charter is invalid
     """
     try:
         content = charter_path.read_text(encoding="utf-8")
         
-        # Extract required fields from header
-        naam = extract_header_field(content, "Agent")
-        value_stream = extract_header_field(content, "Value Stream")
+        vs_code, fase_nr, agent_naam = folder_info
         
-        if not naam or not value_stream:
-            print(f"[WARN] Charter missing required fields: {charter_path.name}")
-            return None
-
-        # Normalize value stream identifiers (slug form, used in folder names)
-        value_stream = re.sub(r"\s+", "-", value_stream.strip().lower())
+        # Extract domein from header
+        domein_pattern = r"\*\*Domein\*\*:\s*(.+?)(?:\n|$)"
+        domein_match = re.search(domein_pattern, content, re.IGNORECASE)
+        domein = domein_match.group(1).strip() if domein_match else ""
         
-        # Extract optional fields
-        domein = extract_header_field(content, "Domein")
-        agent_soort = extract_header_field(content, "Agent-soort")
-        
-        # Bepaal het aantal templates op basis van de header
-        template_name = extract_header_field(content, "Template")
-        aantal_templates = 0
-        if template_name and template_name != "—":
-            templates_dir = charter_path.parents[3] / "templates"
-            if (templates_dir / template_name).exists():
-                aantal_templates = 1
         return AgentMetadata(
-            naam=naam,
-            value_stream=value_stream,
+            naam=agent_naam,
+            value_stream_code=vs_code,
+            fase_nummer=fase_nr,
             domein=domein,
-            agent_soort=agent_soort,
-            charter_path=charter_path,
-            aantal_templates=aantal_templates
+            charter_path=charter_path
         )
     except UnicodeDecodeError as e:
         print(f"[ERROR] Encoding error in charter {charter_path}: {e}")
@@ -121,38 +155,66 @@ def scan_charter(charter_path: Path) -> Optional[AgentMetadata]:
         return None
 
 
-def count_prompts(agent_naam: str, workspace_root: Path) -> int:
-    """Count prompts for an agent by scanning .github/prompts/ and exports/.
+def count_contracts(agent_naam: str, agent_folder: Path) -> int:
+    """Count contract files (*.agent.md) for an agent in its folder.
     
     Args:
         agent_naam: Name of the agent
-        workspace_root: Root directory of workspace
+        agent_folder: Path to agent's folder
         
     Returns:
-        Total number of prompts found for this agent
+        Total number of contract files found
     """
-    count = 0
-    
     try:
-        # Scan .github/prompts/
-        prompts_dir = workspace_root / ".github" / "prompts"
-        if prompts_dir.exists() and prompts_dir.is_dir():
-            pattern = f"mandarin.{agent_naam}*.prompt.md"
-            count += len(list(prompts_dir.glob(pattern)))
-        
-        # Scan exports/*/prompts/
-        exports_dir = workspace_root / "exports"
-        if exports_dir.exists() and exports_dir.is_dir():
-            for value_stream_dir in exports_dir.iterdir():
-                if value_stream_dir.is_dir():
-                    vs_prompts = value_stream_dir / "prompts"
-                    if vs_prompts.exists() and vs_prompts.is_dir():
-                        pattern = f"mandarin.{agent_naam}*.prompt.md"
-                        count += len(list(vs_prompts.glob(pattern)))
+        pattern = f"{agent_naam}.*.agent.md"
+        return len(list(agent_folder.glob(pattern)))
     except OSError as e:
-        print(f"[WARN] Error scanning prompts for {agent_naam}: {e}")
+        print(f"[WARN] Error scanning contracts for {agent_naam}: {e}")
+        return 0
+
+
+def count_templates(agent_folder: Path) -> int:
+    """Count templates referenced in the charter's Template field.
     
-    return count
+    Args:
+        agent_folder: Path to agent's folder
+        
+    Returns:
+        1 if a valid template is referenced, 0 otherwise
+    """
+    try:
+        # Find charter in folder
+        charter_files = list(agent_folder.glob("*.charter.md"))
+        if not charter_files:
+            return 0
+        
+        charter_path = charter_files[0]
+        content = charter_path.read_text(encoding="utf-8")
+        
+        # Extract Template field
+        template_pattern = r"\*\*Template\*\*:\s*(.+?)(?:\n|$)"
+        template_match = re.search(template_pattern, content, re.IGNORECASE)
+        
+        if not template_match:
+            return 0
+        
+        template_name = template_match.group(1).strip()
+        
+        # Check if it's a valid template (not "-" or "—")
+        if template_name in ["-", "—", ""]:
+            return 0
+        
+        # Check if template exists in templates/ folder
+        workspace_root = agent_folder.parents[1]
+        templates_dir = workspace_root / "templates"
+        
+        if (templates_dir / template_name).exists():
+            return 1
+        
+        return 0
+    except Exception as e:
+        print(f"[WARN] Error counting templates in {agent_folder}: {e}")
+        return 0
 
 
 def count_runners(agent_naam: str, workspace_root: Path) -> int:
@@ -192,7 +254,11 @@ def count_runners(agent_naam: str, workspace_root: Path) -> int:
 
 
 def scan_all_agents(workspace_root: Path) -> List[AgentMetadata]:
-    """Scan all agent charters under repo conventions.
+    """Scan all agent folders under artefacten/.
+    
+    Verwacht structuur: 
+    - artefacten/<vs-code>.<fase-nr>.<agent-naam>/  (flat)
+    - artefacten/<vs-code>/<vs-code>.<fase-nr>.<agent-naam>/  (nested)
     
     Args:
         workspace_root: Root directory of workspace
@@ -204,39 +270,65 @@ def scan_all_agents(workspace_root: Path) -> List[AgentMetadata]:
     scanned_names = set()  # Track duplicates
     
     try:
-        # Scan root charters-agents/ (agent-enablement style)
-        charters_dir = workspace_root / "charters-agents"
-        if charters_dir.exists() and charters_dir.is_dir():
-            for charter_file in charters_dir.glob("*.charter.md"):
-                metadata = scan_charter(charter_file)
-                if metadata and metadata.naam not in scanned_names:
-                    metadata.aantal_prompts = count_prompts(metadata.naam, workspace_root)
-                    metadata.aantal_runners = count_runners(metadata.naam, workspace_root)
-                    agents.append(metadata)
-                    scanned_names.add(metadata.naam)
-                elif metadata and metadata.naam in scanned_names:
-                    print(f"[WARN] Duplicate agent found: {metadata.naam} in {charter_file}")
+        artefacten_dir = workspace_root / "artefacten"
+        if not artefacten_dir.exists() or not artefacten_dir.is_dir():
+            print(f"[ERROR] artefacten/ folder not found")
+            return []
         
-        # Scan exports/*/(charters|charters-agents)/
-        exports_dir = workspace_root / "exports"
-        if exports_dir.exists() and exports_dir.is_dir():
-            for value_stream_dir in exports_dir.iterdir():
-                if not value_stream_dir.is_dir():
-                    continue
-                
-                # Try both charters/ and charters-agents/
-                for charter_subdir in ["charters", "charters-agents"]:
-                    charters_vs = value_stream_dir / charter_subdir
-                    if charters_vs.exists() and charters_vs.is_dir():
-                        for charter_file in charters_vs.glob("*.charter.md"):
-                            metadata = scan_charter(charter_file)
-                            if metadata and metadata.naam not in scanned_names:
-                                metadata.aantal_prompts = count_prompts(metadata.naam, workspace_root)
-                                metadata.aantal_runners = count_runners(metadata.naam, workspace_root)
-                                agents.append(metadata)
-                                scanned_names.add(metadata.naam)
-                            elif metadata and metadata.naam in scanned_names:
-                                print(f"[WARN] Duplicate agent found: {metadata.naam} in {charter_file}")
+        # Scan all folders and subfolders in artefacten/
+        folders_to_scan = []
+        
+        for item in artefacten_dir.iterdir():
+            if not item.is_dir():
+                continue
+            
+            # Skip special folders
+            if item.name in ["__pycache__", "runners", "utility"]:
+                continue
+            
+            # Check if this is a valid agent folder
+            if parse_folder_name(item.name):
+                folders_to_scan.append(item)
+            else:
+                # This might be a parent folder (like 'aeo', 'sfw'), scan one level deeper
+                for subfolder in item.iterdir():
+                    if subfolder.is_dir() and parse_folder_name(subfolder.name):
+                        folders_to_scan.append(subfolder)
+        
+        # Now scan all collected agent folders
+        for agent_folder in folders_to_scan:
+            folder_info = parse_folder_name(agent_folder.name)
+            if not folder_info:
+                continue
+            
+            vs_code, fase_nr, agent_naam = folder_info
+            
+            # Find charter in folder
+            charter_files = list(agent_folder.glob("*.charter.md"))
+            if not charter_files:
+                print(f"[WARN] No charter found in {agent_folder.name}")
+                continue
+            
+            charter_path = charter_files[0]
+            
+            # Scan charter
+            metadata = scan_charter(charter_path, folder_info)
+            if not metadata:
+                continue
+            
+            # Check for duplicates
+            if metadata.naam in scanned_names:
+                print(f"[WARN] Duplicate agent found: {metadata.naam} in {agent_folder.name}")
+                continue
+            
+            # Count artifacts
+            metadata.aantal_contracts = count_contracts(agent_naam, agent_folder)
+            metadata.aantal_templates = count_templates(agent_folder)
+            metadata.aantal_runners = count_runners(agent_naam, workspace_root)
+            
+            agents.append(metadata)
+            scanned_names.add(metadata.naam)
+    
     except OSError as e:
         print(f"[ERROR] Error scanning agents: {e}")
     
@@ -246,7 +338,7 @@ def scan_all_agents(workspace_root: Path) -> List[AgentMetadata]:
 def calculate_digest(agents: List[AgentMetadata]) -> str:
     """Calculate 5-character SHA-256 digest of agents list for change tracking.
     
-    Creates a deterministic hash based on agent names, value streams, and artifact counts.
+    Creates a deterministic hash based on agent names, value streams, fases and artifact counts.
     Sorted by agent name to ensure consistent results.
     
     Args:
@@ -256,16 +348,17 @@ def calculate_digest(agents: List[AgentMetadata]) -> str:
         First 5 characters of SHA-256 hash (hex format)
     """
     # Sort by name for deterministic results
-    sorted_agents = sorted(agents, key=lambda a: a.naam)
+    sorted_agents = sorted(agents, key=lambda a: (a.value_stream_code, a.fase_nummer, a.naam))
     
     # Create deterministic string representation
-    # Include all relevant fields that indicate agent state changes
     agent_data = json.dumps(
         [
             {
                 "naam": agent.naam,
-                "valueStream": agent.value_stream,
-                "aantalPrompts": agent.aantal_prompts,
+                "valueStreamCode": agent.value_stream_code,
+                "faseNummer": agent.fase_nummer,
+                "aantalContracts": agent.aantal_contracts,
+                "aantalTemplates": agent.aantal_templates,
                 "aantalRunners": agent.aantal_runners
             }
             for agent in sorted_agents
@@ -279,44 +372,67 @@ def calculate_digest(agents: List[AgentMetadata]) -> str:
     return hash_obj.hexdigest()[:5]
 
 
-def generate_json(agents: List[AgentMetadata], workspace_root: Path) -> Dict:
-    """Generate JSON structure for agents-publicatie.json.
+def generate_json(agents: List[AgentMetadata]) -> Dict:
+    """Generate JSON structure for agents-publicatie.json volgens schema.
     
     Args:
         agents: List of agent metadata
-        workspace_root: Root directory of workspace
         
     Returns:
-        Dictionary with complete publication structure
+        Dictionary with complete publication structure per schema
     """
-    # Collect unique value streams
-    value_streams = sorted(set(agent.value_stream for agent in agents))
-
-    # Build normalized valueStreams -> agents structure
-    value_streams_obj: Dict[str, Dict] = {vs: {"agents": {}} for vs in value_streams}
-    for agent in sorted(agents, key=lambda a: a.naam):
-        agent_obj = {
-            "aantalPrompts": agent.aantal_prompts,
-            "aantalRunners": agent.aantal_runners,
-            "aantalTemplates": agent.aantal_templates
-        }
-        value_streams_obj[agent.value_stream]["agents"][agent.naam] = agent_obj
-
+    # Group agents by value stream and fase
+    by_stream_fase: Dict[str, Dict[str, List[AgentMetadata]]] = defaultdict(lambda: defaultdict(list))
+    
+    for agent in agents:
+        by_stream_fase[agent.value_stream_code][agent.fase_nummer].append(agent)
+    
+    # Build value streams list
+    value_streams_list = []
+    
+    for vs_code in sorted(by_stream_fase.keys()):
+        vs_naam = VALUE_STREAM_NAMES.get(vs_code, vs_code.upper())
+        
+        fases_list = []
+        for fase_nr in sorted(by_stream_fase[vs_code].keys()):
+            fase_naam = FASE_NAMES.get(vs_code, {}).get(fase_nr, f"Fase {fase_nr}")
+            
+            agents_list = []
+            for agent in sorted(by_stream_fase[vs_code][fase_nr], key=lambda a: a.naam):
+                agent_obj = {
+                    "naam": agent.naam,
+                    "aantalContracts": agent.aantal_contracts,
+                    "aantalTemplates": agent.aantal_templates,
+                    "aantalRunners": agent.aantal_runners
+                }
+                
+                agents_list.append(agent_obj)
+            
+            fases_list.append({
+                "naam": fase_naam,
+                "volgnummer": fase_nr,
+                "agents": agents_list
+            })
+        
+        value_streams_list.append({
+            "naam": vs_naam,
+            "code": vs_code,
+            "fases": fases_list
+        })
+    
     return {
-        "versie": "2.0",
+        "versie": "3.0",
         "publicatiedatum": datetime.now().strftime("%Y-%m-%d"),
         "digest": calculate_digest(agents),
-        "valueStreams": value_streams_obj
+        "valueStreams": value_streams_list
     }
 
 
-def generate_markdown(agents: List[AgentMetadata], scope: str, filter_waarde: Optional[str] = None) -> str:
-    """Generate Markdown archive with full metadata.
+def generate_markdown(agents: List[AgentMetadata]) -> str:
+    """Generate Markdown archive with full metadata per value stream en fase.
     
     Args:
         agents: List of agent metadata
-        scope: Publication scope (volledig, value-stream, agent-soort)
-        filter_waarde: Optional filter value for scoped publications
         
     Returns:
         Markdown content as string
@@ -328,85 +444,75 @@ def generate_markdown(agents: List[AgentMetadata], scope: str, filter_waarde: Op
     lines.append(f"**Publicatiedatum**: {datetime.now().strftime('%Y-%m-%d')}\n")
     lines.append(f"**Tijdstip**: {datetime.now().strftime('%H:%M:%S')}\n")
     lines.append(f"**Digest**: {calculate_digest(agents)}\n")
-    lines.append(f"**Scope**: {scope}\n")
-    if filter_waarde:
-        lines.append(f"**Filter**: {filter_waarde}\n")
     lines.append(f"**Totaal agents**: {len(agents)}\n\n")
     
-    # Group by value stream
-    by_stream = defaultdict(list)
-    for agent in agents:
-        by_stream[agent.value_stream].append(agent)
+    # Group by value stream and fase
+    by_stream_fase: Dict[str, Dict[str, List[AgentMetadata]]] = defaultdict(lambda: defaultdict(list))
     
-    # Generate tables per value stream
-    for stream in sorted(by_stream.keys()):
-        stream_agents = sorted(by_stream[stream], key=lambda a: a.naam)
-        lines.append(f"## Value Stream: {stream}\n\n")
-        lines.append(f"**Aantal agents**: {len(stream_agents)}\n\n")
+    for agent in agents:
+        by_stream_fase[agent.value_stream_code][agent.fase_nummer].append(agent)
+    
+    # Generate tables per value stream and fase
+    for vs_code in sorted(by_stream_fase.keys()):
+        vs_naam = VALUE_STREAM_NAMES.get(vs_code, vs_code.upper())
+        lines.append(f"## Value Stream: {vs_naam} ({vs_code.upper()})\n\n")
         
-        # Table
-        lines.append("| Agent | Domein | Prompts | Runners | Templates |\n")
-        lines.append("|-------|--------|---------|----------|-----------|\n")
-        for agent in stream_agents:
-            lines.append(f"| {agent.naam} | {agent.domein} | {agent.aantal_prompts} | {agent.aantal_runners} | {agent.aantal_templates} |\n")
-        lines.append("\n")
+        for fase_nr in sorted(by_stream_fase[vs_code].keys()):
+            fase_naam = FASE_NAMES.get(vs_code, {}).get(fase_nr, f"Fase {fase_nr}")
+            fase_agents = sorted(by_stream_fase[vs_code][fase_nr], key=lambda a: a.naam)
+            
+            lines.append(f"### Fase {fase_nr}: {fase_naam}\n\n")
+            lines.append(f"**Aantal agents**: {len(fase_agents)}\n\n")
+            
+            # Table
+            lines.append("| Agent | Domein | Contracts | Templates | Runners |\n")
+            lines.append("|-------|--------|-----------|-----------|----------|\n")
+            for agent in fase_agents:
+                lines.append(f"| {agent.naam} | {agent.domein} | {agent.aantal_contracts} | {agent.aantal_templates} | {agent.aantal_runners} |\n")
+            lines.append("\n")
     
     # Metadata
     lines.append("## Metadata\n\n")
     lines.append(f"- **Gescande folders**:\n")
-    lines.append(f"  - `agent-charters/` (utility & agent-enablement)\n")
-    lines.append(f"  - `exports/*/charters/` (value streams)\n")
-    lines.append(f"  - `exports/*/charters-agents/` (value streams)\n")
-    lines.append(f"  - `.github/prompts/` (prompts)\n")
-    lines.append(f"  - `exports/*/prompts/` (value stream prompts)\n")
-    lines.append(f"  - `scripts/runners/` (runners)\n")
-    lines.append(f"- **Value stream bron**: Charter header (`**Value Stream**:` veld)\n")
+    lines.append(f"  - `artefacten/<vs-code>.<fase-nr>.<agent-naam>/` (alle agent folders)\n")
+    lines.append(f"- **Folder naamgevingsconventie**: `<vs-code>.<fase-nr>.<agent-naam>`\n")
+    lines.append(f"  - `vs-code`: 3-letter value stream code (aeo, sfw, aod, kvl, miv, fnd)\n")
+    lines.append(f"  - `fase-nr`: 2-cijferig fasenummer (01, 02, ...)\n")
+    lines.append(f"  - `agent-naam`: agent identifier (lowercase met hyphens)\n")
+    lines.append(f"- **Contracts**: `<agent-naam>.*.agent.md` bestanden in agent folder\n")
+    lines.append(f"- **Templates**: Template veld in charter (niet '-' of '—')\n")
+    lines.append(f"- **Runners**: `scripts/runners/<agent-naam>.py` of `scripts/runners/<agent-naam>/__init__.py`\n")
     lines.append(f"- **Digest**: 5-karakter SHA-256 hash van agents-lijst (gesorteerd) voor change-tracking\n")
-    lines.append(f"- **Traceability**: Agent Curator charter, publiceer-agents-overzicht prompt\n")
+    lines.append(f"- **Schema**: `schemas/agents-publicatie-schema.json`\n")
+    lines.append(f"- **Traceability**: Agent Curator charter, publiceer-agents-overzicht contract & prompt\n")
     
     return "".join(lines)
 
 
-def write_outputs(
-    json_data: Dict,
-    markdown_content: str,
-    workspace_root: Path,
-    scope: str,
-    filter_waarde: Optional[str] = None
-) -> None:
+def write_outputs(json_data: Dict, markdown_content: str, workspace_root: Path) -> None:
     """Write JSON and Markdown outputs.
     
     Args:
         json_data: JSON publication data
         markdown_content: Markdown archive content
         workspace_root: Root directory of workspace
-        scope: Publication scope
-        filter_waarde: Optional filter value
         
     Raises:
         OSError: If file writing fails
     """
     try:
-        # Write JSON to root (only for volledig scope)
-        if scope == "volledig":
-            json_path = workspace_root / "agents-publicatie.json"
-            json_content = json.dumps(json_data, indent=2, ensure_ascii=False)
-            json_path.write_text(json_content, encoding="utf-8")
-            print(f"[JSON] {json_path.relative_to(workspace_root)}")
+        # Write JSON to root
+        json_path = workspace_root / "agents-publicatie.json"
+        json_content = json.dumps(json_data, indent=2, ensure_ascii=False)
+        json_path.write_text(json_content, encoding="utf-8")
+        print(f"[JSON] {json_path.relative_to(workspace_root)}")
         
         # Write Markdown to archive
         archive_dir = workspace_root / "docs" / "resultaten" / "agent-publicaties"
         archive_dir.mkdir(parents=True, exist_ok=True)
         
         timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-        if scope == "volledig":
-            md_filename = f"agents-publicatie-{timestamp}.md"
-        elif scope == "value-stream" and filter_waarde:
-            md_filename = f"agents-publicatie-{filter_waarde}-{timestamp}.md"
-        elif scope == "agent-soort" and filter_waarde:
-            md_filename = f"agents-publicatie-{filter_waarde}-{timestamp}.md"
-        else:
-            md_filename = f"agents-publicatie-{scope}-{timestamp}.md"
+        md_filename = f"agents-publicatie-{timestamp}.md"
         
         md_path = archive_dir / md_filename
         md_path.write_text(markdown_content, encoding="utf-8")
@@ -422,88 +528,49 @@ def main() -> int:
     Returns:
         Exit code (0 for success, 1 for error)
     """
-    parser = argparse.ArgumentParser(
-        description="Agent Curator — Publiceer Agents Overzicht",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
-  %(prog)s --scope volledig
-  %(prog)s --scope value-stream --filter kennispublicatie
-  %(prog)s --scope agent-soort --filter "Uitvoerend Agent"
-        """
-    )
-    parser.add_argument(
-        "--scope",
-        required=True,
-        choices=["volledig", "value-stream", "agent-soort"],
-        help="Publicatie scope"
-    )
-    parser.add_argument(
-        "--filter",
-        dest="filter_waarde",
-        help="Filter waarde (value stream of agent-soort naam)"
-    )
-    parser.add_argument(
-        "--include-drafts",
-        action="store_true",
-        help="Include agents in draft status (not yet implemented)"
-    )
-    
-    args = parser.parse_args()
-    
-    # Validate filter requirement
-    if args.scope in ["value-stream", "agent-soort"] and not args.filter_waarde:
-        print(f"[ERROR] --filter is required when scope is '{args.scope}'", file=sys.stderr)
-        return 1
-    
     workspace_root = Path(__file__).parent.parent.parent
     
     print("Agent Curator — Publiceer Agents Overzicht")
     print("=" * 60)
-    print(f"Scope: {args.scope}")
-    if args.filter_waarde:
-        print(f"Filter: {args.filter_waarde}")
     print()
     
     try:
         # Scan all agents
-        print("[INFO] Scanning agent charters...")
-        all_agents = scan_all_agents(workspace_root)
+        print("[INFO] Scanning agent folders in artefacten/...")
+        agents = scan_all_agents(workspace_root)
         
-        if not all_agents:
+        if not agents:
             print("[ERROR] No agents found", file=sys.stderr)
             return 1
         
-        print(f"[INFO] Found {len(all_agents)} agents")
+        print(f"[INFO] Found {len(agents)} agents")
         
-        # Filter based on scope
-        if args.scope == "value-stream":
-            agents = [a for a in all_agents if a.value_stream == args.filter_waarde]
-            if not agents:
-                print(f"[WARN] No agents found for value stream '{args.filter_waarde}'")
-                return 1
-        elif args.scope == "agent-soort":
-            agents = [a for a in all_agents if a.agent_soort == args.filter_waarde]
-            if not agents:
-                print(f"[WARN] No agents found for agent-soort '{args.filter_waarde}'")
-                return 1
-        else:
-            agents = all_agents
+        # Group counts per value stream
+        vs_counts: Dict[str, int] = defaultdict(int)
+        for agent in agents:
+            vs_counts[agent.value_stream_code] += 1
         
-        print(f"[INFO] Publishing {len(agents)} agents")
+        for vs_code in sorted(vs_counts.keys()):
+            vs_naam = VALUE_STREAM_NAMES.get(vs_code, vs_code.upper())
+            print(f"  - {vs_naam} ({vs_code.upper()}): {vs_counts[vs_code]} agents")
+        
+        print()
         
         # Generate outputs
-        json_data = generate_json(agents, workspace_root)
-        markdown_content = generate_markdown(agents, args.scope, args.filter_waarde)
+        print("[INFO] Generating outputs...")
+        json_data = generate_json(agents)
+        markdown_content = generate_markdown(agents)
         
         # Write outputs
-        write_outputs(json_data, markdown_content, workspace_root, args.scope, args.filter_waarde)
+        write_outputs(json_data, markdown_content, workspace_root)
         
         print("\n[SUCCESS] Agents overzicht gepubliceerd")
         return 0
         
     except Exception as e:
         print(f"\n[ERROR] Unexpected error: {e}", file=sys.stderr)
+        import traceback
+        traceback.print_exc()
         return 1
 
 

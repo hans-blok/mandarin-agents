@@ -91,6 +91,8 @@ Belangrijk: de Agent Smeder **beslist niet of** een agent nodig is. De Agent Sme
 9. Noteert wijzigingen in het Change Log en draagt de agent over aan Publisher of uitvoerende agents.
 10. ordent agents. Eventueel wordt een folder aangemaakt <value stream code>.<fase>.<naam-agent>: voorbeeld: sfw.01.hypothese-vormer. Vervolgens worden de prompt-files, de agent-contracten, de charter en 
 eventueel de runner het template en de boundary die betrekking hebben op deze agent in deze folder gezet.
+10. 4.orden-agent betekent dat een folder aan wordt gemaakt conform normering <value stream>.<fase>.<agent-naam>. Vervolgens worden alle bestanden de betrekking hebben op die agent daar ingezet. Eventueel de boudary, template en runner.
+Bij het ordenen worden alle bestanden VERPLAATST dus de bestanden worden op de bronlocatie verwijder nadat ze correct in de doellocatie zijn vastgelegd.
 
 Specifiek voor de intent **`4.orden-agent`** geldt aanvullend:
 - Agent Smeder voert de ordening daadwerkelijk uit: maakt per-agentfolders aan, verplaatst en/of hernoemt artefacten en actualiseert paden en verwijzingen.

@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agents Publicatie Overzicht",
+  "description": "Schema voor het overzicht van agents georganiseerd per value stream en fase",
+  "type": "object",
+  "required": ["versie", "publicatiedatum", "digest", "valueStreams"],
+  "properties": {
+    "versie": {
+      "type": "string",
+      "description": "Versienummer van het publicatie-formaat",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+    "publicatiedatum": {
+      "type": "string",
+      "description": "Datum van publicatie (YYYY-MM-DD)",
+      "format": "date"
+    },
+    "digest": {
+      "type": "string",
+      "description": "5-karakter SHA-256 hash voor change-tracking",
+      "pattern": "^[a-f0-9]{5}$"
+    },
+    "valueStreams": {
+      "type": "array",
+      "description": "Lijst van value streams met hun fases en agents",
+      "items": {
+        "$ref": "#/definitions/ValueStream"
+      }
+    }
+  },
+  "definitions": {
+    "ValueStream": {
+      "type": "object",
+      "required": ["naam", "code", "fases"],
+      "properties": {
+        "naam": {
+          "type": "string",
+          "description": "Volledige naam van de value stream",
+          "examples": ["Agent Enablement & Orchestration", "Software-ontwikkeling"]
+        },
+        "code": {
+          "type": "string",
+          "description": "3-letter code van de value stream (lowercase)",
+          "pattern": "^[a-z]{3}$",
+          "examples": ["aeo", "sfw", "aod", "kvl", "miv"]
+        },
+        "fases": {
+          "type": "array",
+          "description": "Lijst van fases binnen deze value stream",
+          "items": {
+            "$ref": "#/definitions/Fase"
+          }
+        }
+      }
+    },
+    "Fase": {
+      "type": "object",
+      "required": ["naam", "volgnummer", "agents"],
+      "properties": {
+        "naam": {
+          "type": "string",
+          "description": "Naam van de fase",
+          "examples": ["Grondslagvorming", "Ecosysteeminrichting", "Exploratie"]
+        },
+        "volgnummer": {
+          "type": "string",
+          "description": "2-cijferig volgnummer van de fase",
+          "pattern": "^[0-9]{2}$",
+          "examples": ["01", "02", "03"]
+        },
+        "agents": {
+          "type": "array",
+          "description": "Lijst van agents in deze fase",
+          "items": {
+            "$ref": "#/definitions/Agent"
+          }
+        }
+      }
+    },
+    "Agent": {
+      "type": "object",
+      "required": ["naam", "aantalContracts", "aantalTemplates", "aantalRunners"],
+      "properties": {
+        "naam": {
+          "type": "string",
+          "description": "Naam van de agent",
+          "examples": ["agent-curator", "workspace-steward", "niam-analist"]
+        },
+        "aantalContracts": {
+          "type": "integer",
+          "description": "Aantal agent-contracten (*.agent.md bestanden)",
+          "minimum": 0
+        },
+        "aantalTemplates": {
+          "type": "integer",
+          "description": "Aantal templates die de agent gebruikt",
+          "minimum": 0
+        },
+        "aantalRunners": {
+          "type": "integer",
+          "description": "Aantal runners (scripts) voor deze agent",
+          "minimum": 0
+        },
+        "domein": {
+          "type": "string",
+          "description": "Optioneel: domein van de agent"
+        }
+      }
+    }
+  }
+}

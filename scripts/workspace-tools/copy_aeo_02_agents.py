@@ -1,13 +1,13 @@
-"""Copy aeo.02 agents into root .github/agents, .github/prompts, agent-charters and templates.
+"""Copy AEO and FND agents into root .github/agents, .github/prompts, agent-charters and templates.
 
-This script scans artefacten/ for agent folders that start with "aeo.02." and copies:
+This script scans artefacten/aeo/ and artefacten/fnd/ for all agent folders and copies:
 
 - *.agent.md files (agent contracts) to .github/agents/
 - *.prompt.md files (prompt metadata) to .github/prompts/
 - *.charter.md files (charters) to agent-charters/
 - *template*.md files (agent-specific templates) to templates/
 
-Existing files with the same name will be overwritten.
+The source agents remain in their original location. Existing files in destination folders will be overwritten.
 """
 
 from __future__ import annotations
@@ -18,11 +18,10 @@ from pathlib import Path
 
 def copy_aeo_02_agents(repo_root: Path) -> None:
 
-	rel_artefacten = Path("artefacten")
-	artefacten_dir = repo_root / rel_artefacten
-	if not artefacten_dir.is_dir():
-		raise SystemExit(f"Artefacten-map niet gevonden: {artefacten_dir}")
-
+	# Bronmappen: AEO en FND agents
+	aeo_dir = repo_root / "artefacten" / "aeo"
+	fnd_dir = repo_root / "artefacten" / "fnd"
+	
 	# Doelmap-paden
 	agents_dst = repo_root / ".github" / "agents"
 	prompts_dst = repo_root / ".github" / "prompts"
@@ -32,7 +31,7 @@ def copy_aeo_02_agents(repo_root: Path) -> None:
 	for dst in (agents_dst, prompts_dst, charters_dst, templates_dst):
 		dst.mkdir(parents=True, exist_ok=True)
 
-	print("[copy_aeo_02_agents] Start kopiëren van aeo.02-agents...")
+	print("[copy_aeo_02_agents] Start kopiëren van AEO en FND agents...")
 
 	# Tel-counters voor korte samenvatting aan het eind
 	total_agents = 0
@@ -40,48 +39,61 @@ def copy_aeo_02_agents(repo_root: Path) -> None:
 	total_charters = 0
 	total_templates = 0
 
-	# Zoek folders die starten met "aeo.02." (toelatend dat "ae0.02" een type is)
-	for agent_dir in artefacten_dir.iterdir():
-		name = agent_dir.name
-		if not agent_dir.is_dir():
-			continue
-		if not (name.startswith("aeo.02.") or name.startswith("ae0.02.")):
-			continue
+	# Scan beide bronmappen: AEO en FND
+	# Folders volgen patroon: <vs-code>.<fase-nr>.<agent-naam>
+	source_dirs = []
+	if aeo_dir.is_dir():
+		source_dirs.append(("AEO", aeo_dir, "aeo."))
+	if fnd_dir.is_dir():
+		source_dirs.append(("FND", fnd_dir, "fnd."))
+	
+	if not source_dirs:
+		raise SystemExit("Geen AEO of FND mappen gevonden in artefacten/")
 
-		print(f"[copy_aeo_02_agents] Verwerk agent-folder: {name}")
-
-		for path in agent_dir.iterdir():
-			if not path.is_file():
+	for vs_name, vs_dir, prefix in source_dirs:
+		print(f"[copy_aeo_02_agents] Scan {vs_name} agents in {vs_dir}...")
+		
+		for agent_dir in vs_dir.iterdir():
+			name = agent_dir.name
+			if not agent_dir.is_dir():
+				continue
+			if not name.startswith(prefix):
 				continue
 
-			lower_name = path.name.lower()
+			print(f"[copy_aeo_02_agents] Verwerk agent-folder: {name}")
 
-			# Contracts
-			if lower_name.endswith(".agent.md"):
-				shutil.copy2(path, agents_dst / path.name)
-				print(f"  → agent-contract gekopieerd: {path} -> {agents_dst / path.name}")
-				total_agents += 1
-				continue
+			for path in agent_dir.iterdir():
+				if not path.is_file():
+					continue
 
-			# Prompts
-			if lower_name.endswith(".prompt.md"):
-				shutil.copy2(path, prompts_dst / path.name)
-				print(f"  → prompt gekopieerd:        {path} -> {prompts_dst / path.name}")
-				total_prompts += 1
-				continue
+				lower_name = path.name.lower()
 
-			# Charters
-			if lower_name.endswith(".charter.md"):
-				shutil.copy2(path, charters_dst / path.name)
-				print(f"  → charter gekopieerd:       {path} -> {charters_dst / path.name}")
-				total_charters += 1
-				continue
+				# Contracts
+				if lower_name.endswith(".agent.md"):
+					shutil.copy2(path, agents_dst / path.name)
+					print(f"  → agent-contract gekopieerd: {path.name}")
+					total_agents += 1
+					continue
 
-			# Templates (ruim: alle markdown-bestanden met "template" in de naam)
-			if "template" in lower_name and lower_name.endswith(".md"):
-				shutil.copy2(path, templates_dst / path.name)
-				print(f"  → template gekopieerd:      {path} -> {templates_dst / path.name}")
-				total_templates += 1
+				# Prompts
+				if lower_name.endswith(".prompt.md"):
+					shutil.copy2(path, prompts_dst / path.name)
+					print(f"  → prompt gekopieerd:        {path.name}")
+					total_prompts += 1
+					continue
+
+				# Charters
+				if lower_name.endswith(".charter.md"):
+					shutil.copy2(path, charters_dst / path.name)
+					print(f"  → charter gekopieerd:       {path.name}")
+					total_charters += 1
+					continue
+
+				# Templates (ruim: alle markdown-bestanden met "template" in de naam)
+				if "template" in lower_name and lower_name.endswith(".md"):
+					shutil.copy2(path, templates_dst / path.name)
+					print(f"  → template gekopieerd:      {path.name}")
+					total_templates += 1
 
 	total_files = total_agents + total_prompts + total_charters + total_templates
 	print("[copy_aeo_02_agents] Kopiëren afgerond.")

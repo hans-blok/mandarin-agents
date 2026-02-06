@@ -1,179 +1,241 @@
 {
-  "versie": "2.0",
-  "publicatiedatum": "2026-01-30",
-  "digest": "84fe2",
-  "valueStreams": {
-    "agent-enablement": {
-      "agents": {
-        "agent-curator": {
-          "aantalPrompts": 4,
-          "aantalRunners": 1,
-          "aantalTemplates": 0
+  "versie": "3.0",
+  "publicatiedatum": "2026-02-06",
+  "digest": "f1dc5",
+  "valueStreams": [
+    {
+      "naam": "Agent Ecosysteem Ontwikkeling",
+      "code": "aeo",
+      "fases": [
+        {
+          "naam": "Grondslagvorming",
+          "volgnummer": "01",
+          "agents": [
+            {
+              "naam": "canon-curator",
+              "aantalContracts": 4,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            },
+            {
+              "naam": "constitutioneel-auteur",
+              "aantalContracts": 1,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            }
+          ]
         },
-        "agent-smeder": {
-          "aantalPrompts": 3,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
+        {
+          "naam": "Ecosysteeminrichting",
+          "volgnummer": "02",
+          "agents": [
+            {
+              "naam": "agent-curator",
+              "aantalContracts": 4,
+              "aantalTemplates": 0,
+              "aantalRunners": 1
+            },
+            {
+              "naam": "agent-smeder",
+              "aantalContracts": 0,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            }
+          ]
         },
-        "template-maker": {
-          "aantalPrompts": 2,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
+        {
+          "naam": "Fase 03",
+          "volgnummer": "03",
+          "agents": [
+            {
+              "naam": "pipeline-executor",
+              "aantalContracts": 1,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            },
+            {
+              "naam": "workflow-architect",
+              "aantalContracts": 3,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            }
+          ]
         }
-      }
+      ]
     },
-    "architectuur-en-oplossingsontwerp": {
-      "agents": {
-        "archimate-modelleur": {
-          "aantalPrompts": 2,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
+    {
+      "naam": "Architectuur- en Oplossingsontwerp",
+      "code": "aod",
+      "fases": [
+        {
+          "naam": "Vraagverkenning",
+          "volgnummer": "01",
+          "agents": [
+            {
+              "naam": "mandarin-architect",
+              "aantalContracts": 2,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            }
+          ]
         },
-        "architectuur-regisseur": {
-          "aantalPrompts": 3,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
-        },
-        "c4-modelleur": {
-          "aantalPrompts": 2,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
-        },
-        "c4-vertaler": {
-          "aantalPrompts": 4,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
-        },
-        "data-duidingsarchitect": {
-          "aantalPrompts": 5,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
+        {
+          "naam": "Architectuurkadering",
+          "volgnummer": "02",
+          "agents": [
+            {
+              "naam": "archimate-modelleur",
+              "aantalContracts": 2,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            }
+          ]
         }
-      }
+      ]
     },
-    "it-development": {
-      "agents": {
-        "pipeline-executor": {
-          "aantalPrompts": 1,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
+    {
+      "naam": "Foundational (value-stream-overstijgend)",
+      "code": "fnd",
+      "fases": [
+        {
+          "naam": "Technische ondersteuning",
+          "volgnummer": "01",
+          "agents": [
+            {
+              "naam": "engineer-steward",
+              "aantalContracts": 3,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            },
+            {
+              "naam": "workspace-steward",
+              "aantalContracts": 5,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            }
+          ]
         },
-        "workflow-architect": {
-          "aantalPrompts": 3,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
+        {
+          "naam": "Fase 02",
+          "volgnummer": "02",
+          "agents": [
+            {
+              "naam": "formaat-vertaler",
+              "aantalContracts": 3,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            }
+          ]
         }
-      }
+      ]
     },
-    "kennispublicatie": {
-      "agents": {
-        "artikel-schrijver": {
-          "aantalPrompts": 6,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
+    {
+      "naam": "Kennisvastlegging",
+      "code": "kvl",
+      "fases": [
+        {
+          "naam": "Vastlegging",
+          "volgnummer": "03",
+          "agents": [
+            {
+              "naam": "artikel-schrijver",
+              "aantalContracts": 6,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            },
+            {
+              "naam": "de-schrijver",
+              "aantalContracts": 0,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            },
+            {
+              "naam": "essayist",
+              "aantalContracts": 1,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            }
+          ]
         },
-        "de-schrijver": {
-          "aantalPrompts": 0,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
-        },
-        "essayist": {
-          "aantalPrompts": 1,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
-        },
-        "heraut": {
-          "aantalPrompts": 2,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
-        },
-        "vertaler": {
-          "aantalPrompts": 1,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
+        {
+          "naam": "Publicatie en Onderhoud",
+          "volgnummer": "04",
+          "agents": [
+            {
+              "naam": "heraut",
+              "aantalContracts": 2,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            },
+            {
+              "naam": "vertaler",
+              "aantalContracts": 1,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            }
+          ]
         }
-      }
+      ]
     },
-    "markt-en-investeringsvorming": {
-      "agents": {
-        "mandarin-ea": {
-          "aantalPrompts": 1,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
+    {
+      "naam": "Markt- en Investeringsvorming",
+      "code": "miv",
+      "fases": [
+        {
+          "naam": "Strategische intentie expliciteren",
+          "volgnummer": "01",
+          "agents": [
+            {
+              "naam": "strategisch-analist",
+              "aantalContracts": 3,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            }
+          ]
         }
-      }
+      ]
     },
-    "utility": {
-      "agents": {
-        "docker-steward": {
-          "aantalPrompts": 1,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
+    {
+      "naam": "Softwareontwikkeling",
+      "code": "sfw",
+      "fases": [
+        {
+          "naam": "Veranderkenning",
+          "volgnummer": "01",
+          "agents": [
+            {
+              "naam": "hypothese-vormer",
+              "aantalContracts": 3,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            },
+            {
+              "naam": "niam-analist",
+              "aantalContracts": 5,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            }
+          ]
         },
-        "formaat-vertaler": {
-          "aantalPrompts": 3,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
-        },
-        "kort-schrijver": {
-          "aantalPrompts": 8,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
-        },
-        "layout-optimizer": {
-          "aantalPrompts": 1,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
-        },
-        "moeder": {
-          "aantalPrompts": 11,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
-        },
-        "presentatie-architect": {
-          "aantalPrompts": 1,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
-        },
-        "publicatie-agent": {
-          "aantalPrompts": 1,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
-        },
-        "python-expert": {
-          "aantalPrompts": 6,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
+        {
+          "naam": "Werkvoorbereiding",
+          "volgnummer": "02",
+          "agents": [
+            {
+              "naam": "thema-verwoorder",
+              "aantalContracts": 2,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            },
+            {
+              "naam": "verbeteringen-beschrijver",
+              "aantalContracts": 2,
+              "aantalTemplates": 0,
+              "aantalRunners": 0
+            }
+          ]
         }
-      }
-    },
-    "veranderverkenning": {
-      "agents": {
-        "hypothese-vormer": {
-          "aantalPrompts": 3,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
-        },
-        "niam-analist": {
-          "aantalPrompts": 5,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
-        }
-      }
-    },
-    "werkvoorbereiding": {
-      "agents": {
-        "thema-verwoorder": {
-          "aantalPrompts": 2,
-          "aantalRunners": 0,
-          "aantalTemplates": 1
-        },
-        "verbeteringen-beschrijver": {
-          "aantalPrompts": 2,
-          "aantalRunners": 0,
-          "aantalTemplates": 0
-        }
-      }
+      ]
     }
-  }
+  ]
 }
