@@ -1,7 +1,7 @@
 {
   "versie": "3.0",
   "publicatiedatum": "2026-02-06",
-  "digest": "f1dc5",
+  "digest": "68f0b",
   "valueStreams": [
     {
       "naam": "Agent Ecosysteem Ontwikkeling",
@@ -14,7 +14,7 @@
             {
               "naam": "canon-curator",
               "aantalContracts": 4,
-              "aantalTemplates": 0,
+              "aantalTemplates": 1,
               "aantalRunners": 0
             },
             {
@@ -38,7 +38,7 @@
             {
               "naam": "agent-smeder",
               "aantalContracts": 0,
-              "aantalTemplates": 0,
+              "aantalTemplates": 2,
               "aantalRunners": 0
             }
           ]
@@ -119,6 +119,12 @@
           "naam": "Fase 02",
           "volgnummer": "02",
           "agents": [
+            {
+              "naam": "concept-curator",
+              "aantalContracts": 2,
+              "aantalTemplates": 1,
+              "aantalRunners": 0
+            },
             {
               "naam": "formaat-vertaler",
               "aantalContracts": 3,

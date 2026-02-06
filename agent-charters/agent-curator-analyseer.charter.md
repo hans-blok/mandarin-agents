@@ -98,13 +98,15 @@ De algemene governance- en boundary-afspraken voor de curator-functie zijn vastg
 
 ## 8. Output-locaties
 
-De agent-curator-analyseer schrijft resultaten naar:
+De agent-curator-analyseer legt alle resultaten vast in de workspace als markdown-bestanden:
 
 - `docs/resultaten/agent-curator/agent-ecosystem-analyse-<datum>.md`
 - `docs/resultaten/agent-curator/value-stream-<naam>-analyse-<datum>.md`
 - `docs/resultaten/agent-curator/ecosysteem-validatie-<datum>.md`
 
 Deze rapporten bevatten samenvattingen, tabellen, bevindingen en herkomstverantwoording.
+
+Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
 ## 9. Herkomstverantwoording
 

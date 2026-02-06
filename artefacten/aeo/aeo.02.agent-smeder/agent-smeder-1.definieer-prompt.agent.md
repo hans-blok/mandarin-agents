@@ -12,15 +12,11 @@ De Agent Smeder ontwerpt en stelt nieuwe agents samen op basis van een expliciet
 
 **Verplichte parameters**:
 - agent-naam: Unieke identifier voor de nieuwe agent (type: string, lowercase met hyphens).
-- doel: Wat de nieuwe agent doet in één zin (type: string).
-- domein: Kennisgebied of specialisatie (type: string).
-- capability-boundary: De expliciete afbakening in één zin (type: string). Deze boundary is aangeleverd door Agent Curator.
 
-**Optionele parameters**:
-- workspace: Waar de agent hoort (type: string, default: workspace).
-- type: Agent type (type: string, bijvoorbeeld technisch, domein of utility).
-- input-parameters: Lijst van verplichte en optionele inputs (type: string of lijst).
-- output-afspraken: Lijst van vaste output bullets (type: string of lijst).
+De agent leest het agent-boundary-bestand van de nieuwe agent op de standaardlocactie:
+- artefacten/<value stream code>/<value-stream code>.<volgnummer value stream fase>/ <agent-naam>-boundary.md
+Dit bestand bevat een duidelijke beschrijving van de capability boundary van de nieuwe agent, inclusief wat deze WEL en NIET doet, en welke input/output het heeft.
+De voorstellen voor de agent-contract worden overgenomen. 
 
 ### Output (Wat komt eruit)
 

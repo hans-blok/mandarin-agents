@@ -108,7 +108,7 @@ Voor toekomstige intents en eventuele herstructurering gelden de governance-afsp
 
 ## 8. Output-locaties
 
-De archimate-modelleur schrijft resultaten (waar van toepassing) naar:
+De archimate-modelleur legt alle resultaten vast in de workspace als markdown-bestanden:
 
 - `docs/resultaten/archimate-modelleur/motivatielaag-<output-naam>.md` (views en validatierapporten voor de motivatielaag)
 - `docs/resultaten/archimate-modelleur/bedrijfslaag-<output-naam>.md` (views en validatierapporten voor de bedrijfslaag)
@@ -116,6 +116,8 @@ De archimate-modelleur schrijft resultaten (waar van toepassing) naar:
 - `docs/resultaten/archimate-modelleur/technologielaag-<output-naam>.md` (views en validatierapporten voor de technologielaag)
 - `docs/resultaten/archimate-modelleur/strategie-migratie-<output-naam>.md` (views en validatierapporten voor strategie en implementatie/migratie)
 - `docs/resultaten/archimate-modelleur/analyse-<output-naam>.md` (algemene model- en kwaliteitsanalyses)
+
+Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
 ## 9. Herkomstverantwoording
 

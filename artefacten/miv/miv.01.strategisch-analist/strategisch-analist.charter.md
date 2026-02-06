@@ -120,11 +120,13 @@ Dit charter is traceerbaar naar de bijbehorende agent-contracten per intent:
 
 ## 8. Output-locaties
 
-De strategisch-analist schrijft resultaten (waar van toepassing) naar:
+De strategisch-analist legt alle resultaten vast in de workspace als markdown-bestanden:
 
 - `docs/resultaten/strategisch-analist/strategische-intenties-<datum>.md` (overzicht van geëxpliciteerde intenties)
 - `docs/resultaten/strategisch-analist/spanningsvelden-<datum>.md` (kaart van strategische spanningsvelden)
 - `docs/resultaten/strategisch-analist/aannames-en-onzekerheden-<datum>.md` (explicitering van aannames per intentie)
+
+Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
 ## 9. Herkomstverantwoording
 

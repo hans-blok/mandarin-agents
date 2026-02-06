@@ -174,13 +174,18 @@ def count_contracts(agent_naam: str, agent_folder: Path) -> int:
 
 
 def count_templates(agent_folder: Path) -> int:
-    """Count templates referenced in the charter's Template field.
+    """Count templates that exist as files in agent folder AND are mentioned in charter.
+    
+    Strategie:
+    1. Vind alle *template*.md bestanden in de agent folder
+    2. Check of de exacte bestandsnaam voorkomt in de charter
+    3. Tel alleen templates die aan beide voorwaarden voldoen
     
     Args:
         agent_folder: Path to agent's folder
         
     Returns:
-        1 if a valid template is referenced, 0 otherwise
+        Total number of templates found (exist as file + mentioned in charter)
     """
     try:
         # Find charter in folder
@@ -189,29 +194,21 @@ def count_templates(agent_folder: Path) -> int:
             return 0
         
         charter_path = charter_files[0]
-        content = charter_path.read_text(encoding="utf-8")
+        charter_content = charter_path.read_text(encoding="utf-8")
         
-        # Extract Template field
-        template_pattern = r"\*\*Template\*\*:\s*(.+?)(?:\n|$)"
-        template_match = re.search(template_pattern, content, re.IGNORECASE)
+        # Find all template files in agent folder
+        template_files = list(agent_folder.glob("*template*.md"))
         
-        if not template_match:
-            return 0
+        # Count only templates that are also mentioned in charter
+        count = 0
+        for template_file in template_files:
+            if template_file.is_file():
+                # Check if exact filename appears in charter
+                if template_file.name in charter_content:
+                    count += 1
         
-        template_name = template_match.group(1).strip()
+        return count
         
-        # Check if it's a valid template (not "-" or "—")
-        if template_name in ["-", "—", ""]:
-            return 0
-        
-        # Check if template exists in templates/ folder
-        workspace_root = agent_folder.parents[1]
-        templates_dir = workspace_root / "templates"
-        
-        if (templates_dir / template_name).exists():
-            return 1
-        
-        return 0
     except Exception as e:
         print(f"[WARN] Error counting templates in {agent_folder}: {e}")
         return 0

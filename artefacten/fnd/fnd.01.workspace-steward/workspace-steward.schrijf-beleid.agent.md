@@ -1,10 +1,15 @@
 # workspace-steward: Schrijf Beleid
 
+
+
 ## Rolbeschrijving
 
 workspace-steward genereert `governance/beleid.md` op basis van `temp/context.md` bij nieuwe workspaces.
 
 **VERPLICHT**: Lees agent-charters/workspace-steward.charter.md voor volledige context en verantwoordelijkheden.
+
+## Toe te passen template
+beleid-workspace.template.md
 
 ## Contract
 

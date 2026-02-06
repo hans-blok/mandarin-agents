@@ -214,7 +214,7 @@ Dit charter is traceerbaar naar de bijbehorende agent-contracten per intent:
 
 ## 8. Output-locaties
 
-De NIAM-analist schrijft resultaten (waar van toepassing) naar:
+De NIAM-analist legt alle resultaten vast in de workspace als markdown-bestanden:
 
 - `docs/resultaten/niam-analist/`
 
@@ -223,6 +223,8 @@ Bestandsnamen/patronen:
 - `bronnenverzameling-<scope>-<datum>.md`
 - `begripsverkenning-<scope>-<datum>.md`
 - `feitenanalyse-<scope>-<datum>.md`
+
+Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 - `consistentiecheck-<scope>-<datum>.md`
 - `methodische-onderbouwing-<scope>-<datum>.md`
 

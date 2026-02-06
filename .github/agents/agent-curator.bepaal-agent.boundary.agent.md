@@ -11,9 +11,9 @@ De Agent Curator bepaalt agent-boundaries op basis van gewenste capability en va
 ### Input (Wat gaat erin)
 
 **Verplichte parameters**:
-- aanleiding: Waarom is een nieuwe agent nodig? (type: string, 1–3 zinnen)
-- gewenste-capability: Wat moet de agent kunnen? (type: string, 1 zin)
-- value-stream: Voor welke value stream is deze agent bedoeld? (type: string, bijv. 'kennispublicatie', 'it-development', 'utility')
+- naam-agent: Unieke identifier voor de nieuwe agent (type: string, lowercase met hyphens).
+- gewenste-capability: Wat moet de agent kunnen? (type: string, 3 zinnnen)
+- value-stream: Voor welke value stream is deze agent bedoeld en welke fase? (type: string, bijv. 'miv.01', 'sfw.02')
 
 **Optionele parameters**:
 - voorbeelden: 1–3 voorbeelden van typische vragen/opdrachten voor de nieuwe agent (type: string of lijst)
@@ -39,6 +39,7 @@ agent-naam: <lowercase-hyphens>
 capability-boundary: <één zin>
 Doel: <één zin>
 domein: <één woord of korte frase>
+Voorstellen voor prompts: <1-3 voorbeelden van typische vragen/opdrachten>. Geformuleerd in gebiedende wijs, gericht op de capability-boundary.
 ```
 
 **Aanvullende output**:

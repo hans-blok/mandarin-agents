@@ -59,7 +59,11 @@ class WorkspaceConfig:
         if self.required_folders is None:
             self.required_folders = [
                 ".github/prompts",
-                "charters-agents",
+                ".github/agents",
+                "agent-charters",
+                "artefacten",
+                "templates",
+                "scripts",
                 "scripts/runners",
                 "docs/resultaten",
                 "logs",
@@ -107,7 +111,10 @@ def fetch_scripts_from_github(
     github_base_url: str
 ) -> None:
     """
-    Download fetch__mandarin_agents.py and fetch-agents.bat from mandarin-agents repository.
+    Download required files from mandarin-agents repository:
+    - fetch_mandarin_agents.py -> scripts/
+    - fetch-agents.bat -> root
+    - beleid-workspace.template.md -> templates/
     
     Args:
         workspace: Workspace root directory
@@ -116,19 +123,24 @@ def fetch_scripts_from_github(
     Raises:
         InitializationError: If download fails
     """
-    print("[INFO] Downloading fetch scripts from mandarin-agents...")
+    print("[INFO] Downloading workspace files from mandarin-agents...")
     
     # Define files to download and their destinations
     files_to_fetch = [
         {
-            "url": f"{github_base_url}/scripts/workspace-tools/fetch__mandarin_agents.py",
-            "destination": workspace / "scripts" / "fetch__mandarin_agents.py",
-            "name": "fetch__mandarin_agents.py"
+            "url": f"{github_base_url}/scripts/fetch_mandarin_agents.py",
+            "destination": workspace / "scripts" / "fetch_mandarin_agents.py",
+            "name": "fetch_mandarin_agents.py"
         },
         {
-            "url": f"{github_base_url}/scripts/workspace-tools/fetch-agents.bat",
+            "url": f"{github_base_url}/fetch-agents.bat",
             "destination": workspace / "fetch-agents.bat",
             "name": "fetch-agents.bat"
+        },
+        {
+            "url": f"{github_base_url}/templates/beleid-workspace.template.md",
+            "destination": workspace / "templates" / "beleid-workspace.template.md",
+            "name": "beleid-workspace.template.md"
         }
     ]
     
@@ -169,7 +181,7 @@ def fetch_scripts_from_github(
                 f"Failed to write {name} to {destination}: {e}"
             ) from e
     
-    print(f"[OK] Fetch scripts downloaded successfully")
+    print(f"[OK] Workspace files downloaded successfully")
 
 
 def create_gitignore(workspace: Path) -> None:
@@ -290,6 +302,55 @@ def fetch_beleid_template(
         ) from e
 
 
+def cleanup_initialization_files(workspace: Path) -> None:
+    """
+    Clean up initialization files after successful workspace setup.
+    
+    Moves fetch_mandarin_agents.py from scripts/workspace-tools/ to scripts/
+    and removes init-workspace.py and init-workspace.bat files.
+    
+    Args:
+        workspace: Workspace root directory
+    """
+    print("[CLEANUP] Moving and removing initialization files...")
+    
+    # Move fetch_mandarin_agents.py to scripts/
+    fetch_source = workspace / "scripts" / "workspace-tools" / "fetch_mandarin_agents.py"
+    fetch_dest = workspace / "scripts" / "fetch_mandarin_agents.py"
+    
+    if fetch_source.exists():
+        try:
+            shutil.move(str(fetch_source), str(fetch_dest))
+            print(f"  [MOVE] fetch_mandarin_agents.py -> scripts/")
+        except (OSError, IOError) as e:
+            print(f"  [WARN] Could not move fetch_mandarin_agents.py: {e}")
+    
+    # Remove init-workspace files
+    files_to_remove = [
+        workspace / "init-workspace.py",
+        workspace / "init-workspace.bat",
+        workspace / "scripts" / "workspace-tools" / "init-workspace.py",
+    ]
+    
+    for file_path in files_to_remove:
+        if file_path.exists():
+            try:
+                file_path.unlink()
+                print(f"  [REMOVE] {file_path.name}")
+            except (OSError, IOError) as e:
+                print(f"  [WARN] Could not remove {file_path.name}: {e}")
+    
+    # Remove scripts/workspace-tools/ if empty
+    workspace_tools_dir = workspace / "scripts" / "workspace-tools"
+    if workspace_tools_dir.exists() and workspace_tools_dir.is_dir():
+        try:
+            if not list(workspace_tools_dir.iterdir()):
+                workspace_tools_dir.rmdir()
+                print(f"  [REMOVE] scripts/workspace-tools/ (empty)")
+        except (OSError, IOError):
+            pass  # Directory not empty or error, leave it
+
+
 def initialize_workspace(config: WorkspaceConfig) -> None:
     """
     Main initialization workflow.
@@ -314,13 +375,13 @@ def initialize_workspace(config: WorkspaceConfig) -> None:
     create_folder_structure(workspace, config.required_folders)
     print()
     
-    # Step 2: Download fetch scripts
-    print("[STEP 2] Downloading fetch scripts...")
+    # Step 2: Download workspace files
+    print("[STEP 2] Downloading workspace files...")
     try:
         fetch_scripts_from_github(workspace, config.github_base_url)
     except InitializationError as e:
         raise InitializationError(
-            f"Failed to download fetch scripts: {e}\n"
+            f"Failed to download workspace files: {e}\n"
             f"The workspace can function without these, but you'll need to add them manually."
         ) from e
     print()
@@ -330,16 +391,10 @@ def initialize_workspace(config: WorkspaceConfig) -> None:
     create_gitignore(workspace)
     print()
     
-    # Step 4: Fetch workspace policy template (only if value stream specified)
-    if config.value_stream:
-        print("[STEP 4] Fetching workspace policy template...")
-        # Use workspace directory name as workspace name
-        workspace_name = workspace.name if workspace.name else config.value_stream
-        fetch_beleid_template(workspace, workspace_name)
-        print()
-    else:
-        print("[STEP 4] Skipping workspace policy (no value stream specified)...")
-        print()
+    # Step 4: Cleanup initialization files
+    print("[STEP 4] Cleanup initialization files...")
+    cleanup_initialization_files(workspace)
+    print()
     
     # Success summary
     print("=" * 70)
@@ -347,33 +402,29 @@ def initialize_workspace(config: WorkspaceConfig) -> None:
     print("=" * 70)
     print()
     print("Workspace structure created:")
-    print(f"  .github/prompts/       - Agent prompts")
-    print(f"  charters-agents/       - Agent charters")
+    print(f"  .github/")
+    print(f"    prompts/             - Agent prompts")
+    print(f"    agents/              - Agent contracts")
+    print(f"  agent-charters/        - Agent charters")
+    print(f"  artefacten/            - Agent development workspace")
+    print(f"  templates/")
+    print(f"    beleid-workspace.template.md - Workspace policy template")
     print(f"  scripts/")
-    print(f"    fetch__mandarin_agents.py - Fetch agents script")
+    print(f"    fetch_mandarin_agents.py - Fetch agents script")
     print(f"    runners/             - Agent runner scripts")
     print(f"  docs/resultaten/       - Output van agents")
     print(f"  logs/                  - Log bestanden (ignored by Git)")
     print(f"  temp/                  - Tijdelijke bestanden (ignored by Git)")
     print(f"  fetch-agents.bat       - Windows wrapper for fetch script")
     print(f"  .gitignore             - Git ignore configuration")
-    if config.value_stream:
-        workspace_name = workspace.name if workspace.name else config.value_stream
-        print(f"  beleid-{workspace_name}.md - Workspace policy (template)")
     print()
     print("Next steps:")
-    print("  1. Fetch utility agents: fetch-agents.bat utility")
-    if config.value_stream:
-        workspace_name = workspace.name if workspace.name else config.value_stream
-        print(f"  2. Review and customize beleid-{workspace_name}.md")
-        print(f"  3. Fetch value stream agents: fetch-agents.bat {config.value_stream}")
-        print(f"  4. Add your scripts and documentation")
-        print(f"  5. Initialize Git repository if needed: git init")
-    else:
-        print(f"  2. Create workspace policy: beleid-<workspace-name>.md")
-        print(f"  3. Fetch agents when ready: fetch-agents.bat <value-stream>")
-        print(f"  4. Add your scripts and documentation")
-        print(f"  5. Initialize Git repository if needed: git init")
+    print("  1. Create workspace policy from template:")
+    print(f"     Copy templates/beleid-workspace.template.md to beleid-<workspace-name>.md")
+    print(f"     Fill in the placeholders and customize for your workspace")
+    print("  2. Fetch agents: python scripts/fetch_mandarin_agents.py <vs-code>.<fase>")
+    print("     Example: python scripts/fetch_mandarin_agents.py miv.01")
+    print("  3. Initialize Git repository if needed: git init")
     print()
 
 
@@ -390,19 +441,16 @@ def main() -> int:
         epilog="""
 Examples:
   python init-workspace.py
-  python init-workspace.py kennispublicatie
-  python init-workspace.py architectuur-en-oplossingsontwerp
   
 The script will:
-  1. Create required folder structure (.github/prompts, scripts/runners, etc.)
-  2. Download fetch__mandarin_agents.py and fetch-agents.bat from mandarin-agents
-  3. Download beleid-workspace.template from mandarin-canon (renamed to beleid-<workspace-name>.md)
-  4. Create .gitignore with logs/ and temp/
+  1. Create required folder structure (.github/prompts, .github/agents, scripts/runners, etc.)
+  2. Download fetch_mandarin_agents.py, fetch-agents.bat and beleid-workspace.template.md
+  3. Create .gitignore with logs/ and temp/
+  4. Clean up initialization files (moves fetch script to scripts/, removes init-workspace files)
   
 After initialization:
-  - Fetch utility agents first: fetch-agents.bat utility
-  - Customize the beleid-<workspace-name>.md file
-  - Fetch value stream agents: fetch-agents.bat <value-stream>
+  - Create workspace policy from templates/beleid-workspace.template.md
+  - Fetch agents: python scripts/fetch_mandarin_agents.py <vs-code>.<fase>
         """
     )
     
@@ -410,7 +458,7 @@ After initialization:
         "value_stream",
         nargs="?",
         default=None,
-        help="Value stream name for this workspace (e.g., kennispublicatie). Optional."
+        help="(Deprecated) Value stream name - no longer used, kept for compatibility"
     )
     
     args = parser.parse_args()

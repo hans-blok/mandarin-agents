@@ -111,7 +111,7 @@ De gespecialiseerde analyse-intent is uitgewerkt in een eigen charter:
 
 ## 8. Output-locaties
 
-De agent-curator schrijft resultaten (waar van toepassing) naar:
+De agent-curator legt alle resultaten vast in de workspace als markdown-bestanden:
 
 - `docs/resultaten/agent-curator/value-streams-overzicht.md` (overzicht en validatie van value streams)
 - `artefacten/<value-stream>.<fase>.<agent-naam>/agent-boundary-<agent-naam>.md` (boundary-artefact in de per-agentfolder, bijvoorbeeld `artefacten/aeo.02.agent-curator/agent-boundary-agent-curator.md` of `artefacten/miv.01.strategische-duidingsagent/agent-boundary-strategische-duidingsagent.md`)
@@ -119,6 +119,8 @@ wanneer de folder niet bestaat, maakt hij de folder aan.
 - `docs/resultaten/agent-curator/agent-boundary-<agent-naam>.md` (optionele boundary-rapporten)
 - `docs/resultaten/agent-publicaties/agents-publicatie-<datum>.md` (Markdown agents-overzicht met metadata)
 - `agents-publicatie.json` (root JSON agents-overzicht voor fetching, met digest voor change-tracking)
+
+Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
 ## 9. Herkomstverantwoording
 

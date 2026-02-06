@@ -85,13 +85,15 @@ Dit charter is traceerbaar naar de bijbehorende agent-contracten per intent:
 
 ## 8. Output-locaties
 
-De thema-verwoorder schrijft resultaten (waar van toepassing) naar:
+De thema-verwoorder legt alle resultaten vast in de workspace als markdown-bestanden:
 
 - `docs/resultaten/thema-verwoorder/`
 
 Voorbeelden:
 - `docs/resultaten/thema-verwoorder/thema-statement-<thema>-<datum>.md`
 - `docs/resultaten/thema-verwoorder/validatie-epic-<thema>-<datum>.md`
+
+Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
 ## 9. Herkomstverantwoording
 

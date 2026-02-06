@@ -99,11 +99,13 @@ Dit charter is traceerbaar naar de volgende agent-contracten en prompt-metadata 
 
 ## 8. Output-locaties
 
-De constitutioneel-auteur schrijft resultaten (waar van toepassing) naar:
+De constitutioneel-auteur legt alle resultaten vast in de workspace als markdown-bestanden:
 
 - `docs/resultaten/constitutioneel-auteur/doctrine-<onderwerp>.md` (nieuwe of bijgewerkte doctrines)
 - `docs/resultaten/constitutioneel-auteur/definitie-<term>.md` (normatieve definities)
 - `docs/resultaten/constitutioneel-auteur/charter-<agent-naam>.md` (normatieve charters of stage-charters)
+
+Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
 ## 9. Herkomstverantwoording
 

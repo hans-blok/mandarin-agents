@@ -12,7 +12,6 @@ Gebruik een value stream slug (lowercase, hyphens) die overeenkomt met `exports/
 **Agent**: <agent-naam>  
 **Domein**: <domein>  
 **Value Stream**: <value-stream>
-**Template**: agent-charter.template.md
 
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` en de relevante doctrine(s) voor agent-charters.
 
@@ -112,7 +111,19 @@ De <agent-naam> schrijft resultaten (waar van toepassing) naar:
 
 <Noem hier 2–4 concrete bestandsnamen of patronen die bij het domein van de agent passen.>
 
-## 9. Herkomstverantwoording
+## 9. Templates
+
+Deze agent gebruikt de volgende templates voor het structureren van output per intent:
+
+- **Intent `<intent-1>`**: [`templates/<product-1>.template.md`](../templates/<product-1>.template.md)  
+  _Template voor <korte beschrijving deliverable van intent 1>_
+
+- **Intent `<intent-2>`**: [`templates/<product-2>.template.md`](../templates/<product-2>.template.md)  
+  _Template voor <korte beschrijving deliverable van intent 2>_
+
+<Als een intent geen specifieke template heeft, gebruik: "Geen specifieke template (vrije markdown-structuur)">
+
+## 10. Herkomstverantwoording
 
 <Beschrijf welke bronnen/artefacten als basis dienen en waar output traceerbaar wordt opgeslagen.>
 

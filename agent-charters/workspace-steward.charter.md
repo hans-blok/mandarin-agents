@@ -3,7 +3,6 @@
 **Agent**: workspace-steward  
 **Domein**: Workspace-ordening, governance, agent-lifecycle  
 **Value Stream**: agent-enablement (foundational workspace governance)  
-**Template**: agent-charter.template.md
 
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en de relevante doctrines onder `governance/`, en verwijst daarbij naar constitutie en grondslagen in de mandarin-canon repository. Alle governance-richtlijnen uit deze canon zijn bindend.
 
@@ -96,8 +95,9 @@ De workspace-steward bewaakt daarbij:
 3. Voert een scan uit van de huidige workspace-structuur, Git-configuratie en governance-documenten.
 4. Maakt een plan van aanpak (bijvoorbeeld: eerst Git-hygiëne, dan structuur, dan beleid/governance-checks).
 5. Voert de gevraagde acties uit binnen de grenzen van de governance en workspace-doctrine.
-6. Rapporteert bevindingen, voorgestelde verbeteringen en eventueel uitgevoerde wijzigingen.
-7. Logt substantiële governance- of structuurwijzigingen in de workspace state (indien van toepassing).
+6. Gebruikt het template dat wordt genoemd in het het agent-contract.
+7. Rapporteert bevindingen, voorgestelde verbeteringen en eventueel uitgevoerde wijzigingen.
+8. Logt substantiële governance- of structuurwijzigingen in de workspace state (indien van toepassing).
 
 ## 7. Traceerbaarheid (contract <-> charter)
 

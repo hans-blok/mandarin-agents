@@ -103,9 +103,9 @@ Specifiek voor de intent **`4.orden-agent`** geldt aanvullend:
 
 Dit charter is traceerbaar naar de eigen contracten en prompt-metadata van Agent Smeder (lokale agent-enablement agent):
 
-- Intent: `1.definieer-prompt`
-  - Agent-contract: `artefacten/aeo.02.agent-smeder/agent-smeder-1.definieer-prompt.agent.md`
-  - Prompt-metadata: `artefacten/aeo.02.agent-smeder/mandarin.agent-smeder-1-definieer.prompt.prompt.md`
+- Intent: `1.leg-agent-contract-vast`
+  - Agent-contract: `artefacten/aeo.02.agent-smeder/agent-smeder-1.leg-agent-contract-vast.agent.md`
+  - Prompt-metadata: `artefacten/aeo.02.agent-smeder/mandarin.agent-smeder-1.leg-agent-contract-vast.prompt.md`
 - Intent: `2.schrijf-charter`
   - Agent-contract: `artefacten/aeo.02.agent-smeder/agent-smeder-2.schrijf-charter.agent.md`
   - Prompt-metadata: `artefacten/aeo.02.agent-smeder/mandarin.agent-smeder-2-schrijf.charter.prompt.md`
@@ -141,7 +141,7 @@ Samengevatte mapping van input naar artefacten en locatie:
 
 ## 8. Output-locaties
 
-De agent-smeder schrijft resultaten (direct of indirect) naar:
+De agent-smeder legt alle resultaten vast in de workspace als markdown-bestanden:
 
 - `artefacten/<value-stream>.<value-stream-fase>.<agent-naam>/<agent-naam>.<intent>.agent.md` (agent-contracten)
 - `artefacten/<value-stream>.<value-stream-fase>.<agent-naam>/mandarin.<agent-naam>.<intent>.prompt.md` (prompt-metadata)
@@ -149,6 +149,8 @@ De agent-smeder schrijft resultaten (direct of indirect) naar:
 
 Eigen ondersteunende documentatie kan worden opgeslagen onder:
 - `docs/resultaten/agent-smeder/` (bijvoorbeeld ontwerpnotities of migrierapporten).
+
+Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
 ## 9. Herkomstverantwoording
 
@@ -160,6 +162,7 @@ Eigen ondersteunende documentatie kan worden opgeslagen onder:
 
 | Datum | Versie | Wijziging | Auteur |
 |------|--------|-----------|--------|
+| 2026-02-06 | 2.0 | Intent hernoemd: `1.definieer-prompt` → `1.leg-agent-contract-vast` om dual-file structuur (contract + prompt metadata) te benadrukken | Agent Smeder |
 | 2026-02-04 | 1.9 | Gedrag intent `4.orden-agent` aangepast: geen voorstel/dry-run meer, maar altijd daadwerkelijke ordening met gedocumenteerde aannames | Agent Smeder |
 | 2026-02-04 | 1.8 | Nieuwe intent `4.orden-agent` toegevoegd aan Agent Smeder (contract, YAML-prompt en traceerbaarheid) | Agent Smeder |
 | 2026-02-04 | 1.7 | Charter herschreven volgens `agent-charter.template.md` en assen ingevuld op basis van mandarin-ordeningsconcepten | Agent Smeder |

@@ -65,7 +65,11 @@ De Mandarin Architect:
 
 ## 8. Output-locaties
 
+De mandarin-architect legt alle resultaten vast in de workspace als markdown-bestanden:
+
 - artefacten/aod.01.mandarin-architect/ (charter, agent-contracten en prompts)
+
+Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
 ## 9. Change Log
 

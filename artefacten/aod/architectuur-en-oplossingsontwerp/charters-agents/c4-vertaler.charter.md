@@ -77,9 +77,14 @@ De c4-vertaler zet Markdown-beschrijvingen van architectuurmodellen om naar C4 D
 
 
 ## 8. Output-locaties
+
+De c4-vertaler legt alle resultaten vast in de workspace als markdown-bestanden:
+
 - Contract: `exports/architectuur-en-oplossingsontwerp/agents/`
 - Prompt: `exports/architectuur-en-oplossingsontwerp/prompts/`
 - Charter: `exports/architectuur-en-oplossingsontwerp/charters-agents/`
+
+Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
 
 ## 9. Change Log

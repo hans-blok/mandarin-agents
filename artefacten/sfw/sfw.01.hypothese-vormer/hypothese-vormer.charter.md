@@ -86,7 +86,7 @@ Dit charter is traceerbaar naar de bijbehorende agent-contracten per intent:
 
 ## 8. Output-locaties
 
-De hypothese-vormer legt zijn output vast als artefact in de map met zijn eigen naam:
+De hypothese-vormer legt alle resultaten vast in de workspace als markdown-bestanden:
 
 - `docs/resultaten/hypothese-vormer/`
 
@@ -94,6 +94,8 @@ Voorbeelden:
 - `docs/resultaten/hypothese-vormer/hypothese-YYYY-MM-DD.md`
 - `docs/resultaten/hypothese-vormer/hypothese-<thema>.md`
 - `docs/resultaten/hypothese-vormer/aannames-<thema>.md`
+
+Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
 ## 9. Herkomstverantwoording
 
