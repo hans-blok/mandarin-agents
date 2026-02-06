@@ -1,259 +1,347 @@
 {
-  "versie": "3.0",
-  "publicatiedatum": "2026-02-06",
-  "digest": "c6532",
-  "valueStreams": [
+  "metadata": {
+    "gegenereerd_op": "2026-02-06T22:15:30.374127",
+    "aantal_agents": 25,
+    "versie": "1.0"
+  },
+  "agents": [
     {
-      "naam": "Agent Ecosysteem Ontwikkeling",
-      "code": "aeo",
-      "fases": [
-        {
-          "naam": "Grondslagvorming",
-          "volgnummer": "01",
-          "agents": [
-            {
-              "naam": "canon-curator",
-              "aantalContracts": 4,
-              "aantalTemplates": 1,
-              "aantalRunners": 0
-            },
-            {
-              "naam": "constitutioneel-auteur",
-              "aantalContracts": 1,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            }
-          ]
-        },
-        {
-          "naam": "Ecosysteeminrichting",
-          "volgnummer": "02",
-          "agents": [
-            {
-              "naam": "agent-curator",
-              "aantalContracts": 4,
-              "aantalTemplates": 0,
-              "aantalRunners": 1
-            },
-            {
-              "naam": "agent-smeder",
-              "aantalContracts": 0,
-              "aantalTemplates": 2,
-              "aantalRunners": 0
-            }
-          ]
-        },
-        {
-          "naam": "Fase 03",
-          "volgnummer": "03",
-          "agents": [
-            {
-              "naam": "pipeline-executor",
-              "aantalContracts": 1,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            },
-            {
-              "naam": "workflow-architect",
-              "aantalContracts": 3,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            }
-          ]
-        }
-      ]
+      "naam": "canon-curator",
+      "value_stream": "aeo",
+      "fase": "01",
+      "folder": "artefacten\\aeo\\aeo.01.canon-curator",
+      "charter": true,
+      "intents": [
+        "onderhoud-overzicht",
+        "publiceer-normatieve-wijziging",
+        "stel-voor-canonwijziging",
+        "valideer-handoff"
+      ],
+      "runner": false,
+      "contracten": 4
     },
     {
-      "naam": "Architectuur- en Oplossingsontwerp",
-      "code": "aod",
-      "fases": [
-        {
-          "naam": "Vraagverkenning",
-          "volgnummer": "01",
-          "agents": [
-            {
-              "naam": "mandarin-architect",
-              "aantalContracts": 2,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            }
-          ]
-        },
-        {
-          "naam": "Architectuurkadering",
-          "volgnummer": "02",
-          "agents": [
-            {
-              "naam": "archimate-modelleur",
-              "aantalContracts": 2,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            }
-          ]
-        }
-      ]
+      "naam": "constitutioneel-auteur",
+      "value_stream": "aeo",
+      "fase": "01",
+      "folder": "artefacten\\aeo\\aeo.01.constitutioneel-auteur",
+      "charter": true,
+      "intents": [
+        "schrijf-normatief-artefact"
+      ],
+      "runner": false,
+      "contracten": 1
     },
     {
-      "naam": "Foundational (value-stream-overstijgend)",
-      "code": "fnd",
-      "fases": [
-        {
-          "naam": "Technische ondersteuning",
-          "volgnummer": "01",
-          "agents": [
-            {
-              "naam": "engineer-steward",
-              "aantalContracts": 3,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            },
-            {
-              "naam": "workspace-steward",
-              "aantalContracts": 5,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            }
-          ]
-        },
-        {
-          "naam": "Fase 02",
-          "volgnummer": "02",
-          "agents": [
-            {
-              "naam": "concept-curator",
-              "aantalContracts": 2,
-              "aantalTemplates": 1,
-              "aantalRunners": 0
-            },
-            {
-              "naam": "formaat-vertaler",
-              "aantalContracts": 3,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            },
-            {
-              "naam": "publicatie-steward",
-              "aantalContracts": 4,
-              "aantalTemplates": 0,
-              "aantalRunners": 1
-            }
-          ]
-        }
-      ]
+      "naam": "agent-curator",
+      "value_stream": "aeo",
+      "fase": "02",
+      "folder": "artefacten\\aeo\\aeo.02.agent-curator",
+      "charter": true,
+      "intents": [
+        "analyseer-ecosysteem",
+        "bepaal-agent.boundary",
+        "onderhoud-value.streams",
+        "publiceer-agents.overzicht"
+      ],
+      "runner": false,
+      "contracten": 4
     },
     {
-      "naam": "Kennisvastlegging",
-      "code": "kvl",
-      "fases": [
-        {
-          "naam": "Vastlegging",
-          "volgnummer": "03",
-          "agents": [
-            {
-              "naam": "artikel-schrijver",
-              "aantalContracts": 6,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            },
-            {
-              "naam": "de-schrijver",
-              "aantalContracts": 0,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            },
-            {
-              "naam": "essayist",
-              "aantalContracts": 1,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            }
-          ]
-        },
-        {
-          "naam": "Publicatie en Onderhoud",
-          "volgnummer": "04",
-          "agents": [
-            {
-              "naam": "heraut",
-              "aantalContracts": 2,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            },
-            {
-              "naam": "vertaler",
-              "aantalContracts": 1,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            }
-          ]
-        }
-      ]
+      "naam": "agent-smeder",
+      "value_stream": "aeo",
+      "fase": "02",
+      "folder": "artefacten\\aeo\\aeo.02.agent-smeder",
+      "charter": true,
+      "intents": [],
+      "runner": true,
+      "contracten": 0
     },
     {
-      "naam": "Markt- en Investeringsvorming",
-      "code": "miv",
-      "fases": [
-        {
-          "naam": "Strategische intentie expliciteren",
-          "volgnummer": "01",
-          "agents": [
-            {
-              "naam": "strategisch-analist",
-              "aantalContracts": 3,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            }
-          ]
-        },
-        {
-          "naam": "Waarde-hypotheses formuleren",
-          "volgnummer": "02",
-          "agents": [
-            {
-              "naam": "hypothese-vormer",
-              "aantalContracts": 3,
-              "aantalTemplates": 1,
-              "aantalRunners": 0
-            }
-          ]
-        }
-      ]
+      "naam": "pipeline-executor",
+      "value_stream": "aeo",
+      "fase": "03",
+      "folder": "artefacten\\aeo\\aeo.03.pipeline-executor",
+      "charter": true,
+      "intents": [
+        "voer-uit"
+      ],
+      "runner": false,
+      "contracten": 1
     },
     {
-      "naam": "Softwareontwikkeling",
-      "code": "sfw",
-      "fases": [
-        {
-          "naam": "Veranderkenning",
-          "volgnummer": "01",
-          "agents": [
-            {
-              "naam": "niam-analist",
-              "aantalContracts": 5,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            }
-          ]
-        },
-        {
-          "naam": "Werkvoorbereiding",
-          "volgnummer": "02",
-          "agents": [
-            {
-              "naam": "thema-verwoorder",
-              "aantalContracts": 2,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            },
-            {
-              "naam": "verbeteringen-beschrijver",
-              "aantalContracts": 2,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            }
-          ]
-        }
-      ]
+      "naam": "workflow-architect",
+      "value_stream": "aeo",
+      "fase": "03",
+      "folder": "artefacten\\aeo\\aeo.03.workflow-architect",
+      "charter": true,
+      "intents": [
+        "1-ontwerp-workflow",
+        "2-ontwerp-pipeline",
+        "3.definieer-artefact-flow"
+      ],
+      "runner": false,
+      "contracten": 3
+    },
+    {
+      "naam": "mandarin-architect",
+      "value_stream": "aod",
+      "fase": "01",
+      "folder": "artefacten\\aod\\aod.01.mandarin-architect",
+      "charter": true,
+      "intents": [
+        "schrijf-concept",
+        "werk-cdm-uit-conform-archimate"
+      ],
+      "runner": false,
+      "contracten": 2
+    },
+    {
+      "naam": "archimate-modelleur",
+      "value_stream": "aod",
+      "fase": "02",
+      "folder": "artefacten\\aod\\aod.02.archimate-modelleur",
+      "charter": true,
+      "intents": [
+        "modelleer-bedrijfslaag",
+        "modelleer-motivatielaag"
+      ],
+      "runner": false,
+      "contracten": 2
+    },
+    {
+      "naam": "engineer-steward",
+      "value_stream": "fnd",
+      "fase": "01",
+      "folder": "artefacten\\fnd\\fnd.01.engineer-steward",
+      "charter": true,
+      "intents": [
+        "review-code",
+        "run-script",
+        "schrijf-script"
+      ],
+      "runner": false,
+      "contracten": 3
+    },
+    {
+      "naam": "workspace-steward",
+      "value_stream": "fnd",
+      "fase": "01",
+      "folder": "artefacten\\fnd\\fnd.01.workspace-steward",
+      "charter": true,
+      "intents": [
+        "beheer-git",
+        "configureer-github",
+        "orden-workspace",
+        "schrijf-beleid",
+        "valideer-governance"
+      ],
+      "runner": false,
+      "contracten": 5
+    },
+    {
+      "naam": "concept-curator",
+      "value_stream": "fnd",
+      "fase": "02",
+      "folder": "artefacten\\fnd\\fnd.02.concept-curator",
+      "charter": true,
+      "intents": [
+        "stel-concept-vast",
+        "toets-concept-consistentie"
+      ],
+      "runner": false,
+      "contracten": 2
+    },
+    {
+      "naam": "formaat-vertaler",
+      "value_stream": "fnd",
+      "fase": "02",
+      "folder": "artefacten\\fnd\\fnd.02.formaat-vertaler",
+      "charter": true,
+      "intents": [
+        "maak-netjes-op-in-markdown",
+        "vertaal-naar-markdown",
+        "vertaal-naar-word"
+      ],
+      "runner": false,
+      "contracten": 3
+    },
+    {
+      "naam": "presentatie-architect",
+      "value_stream": "fnd",
+      "fase": "02",
+      "folder": "artefacten\\fnd\\fnd.02.presentatie-architect",
+      "charter": true,
+      "intents": [
+        "definieer-design-tokens",
+        "ontwerp-html-templates",
+        "ontwerp-stylesheet"
+      ],
+      "runner": false,
+      "contracten": 3
+    },
+    {
+      "naam": "publicatie-steward",
+      "value_stream": "fnd",
+      "fase": "02",
+      "folder": "artefacten\\fnd\\fnd.02.publicatie-steward",
+      "charter": true,
+      "intents": [
+        "actualiseer-mkdocs-configuratie",
+        "rapporteer-publicatiestatus",
+        "schrijf-publicatiestructuur",
+        "valideer-publicatiestructuur"
+      ],
+      "runner": false,
+      "contracten": 4
+    },
+    {
+      "naam": "artikel-schrijver",
+      "value_stream": "kvl",
+      "fase": "03",
+      "folder": "artefacten\\kvl\\kvl.03.artikel-schrijver",
+      "charter": true,
+      "intents": [
+        "1-afbakening-intentie",
+        "2-kernboodschap",
+        "3-structuur",
+        "4-artikeldefinitie",
+        "5-tekstproductie",
+        "6-redactie-afronding"
+      ],
+      "runner": false,
+      "contracten": 6
+    },
+    {
+      "naam": "de-schrijver",
+      "value_stream": "kvl",
+      "fase": "03",
+      "folder": "artefacten\\kvl\\kvl.03.de-schrijver",
+      "charter": true,
+      "intents": [],
+      "runner": false,
+      "contracten": 0
+    },
+    {
+      "naam": "essayist",
+      "value_stream": "kvl",
+      "fase": "03",
+      "folder": "artefacten\\kvl\\kvl.03.essayist",
+      "charter": true,
+      "intents": [
+        "schrijf-essay"
+      ],
+      "runner": false,
+      "contracten": 1
+    },
+    {
+      "naam": "heraut",
+      "value_stream": "kvl",
+      "fase": "04",
+      "folder": "artefacten\\kvl\\kvl.04.heraut",
+      "charter": true,
+      "intents": [
+        "schrijf-korte-post",
+        "schrijf-orientatiedocument"
+      ],
+      "runner": false,
+      "contracten": 2
+    },
+    {
+      "naam": "vertaler",
+      "value_stream": "kvl",
+      "fase": "04",
+      "folder": "artefacten\\kvl\\kvl.04.vertaler",
+      "charter": true,
+      "intents": [
+        "vertaal"
+      ],
+      "runner": false,
+      "contracten": 1
+    },
+    {
+      "naam": "strategisch-analist",
+      "value_stream": "miv",
+      "fase": "01",
+      "folder": "artefacten\\miv\\miv.01.strategisch-analist",
+      "charter": true,
+      "intents": [
+        "expliciteer-strategische-intenties",
+        "kaart-strategische-spanningsvelden",
+        "maak-strategische-aannames-zichtbaar"
+      ],
+      "runner": false,
+      "contracten": 3
+    },
+    {
+      "naam": "hypothese-vormer",
+      "value_stream": "miv",
+      "fase": "02",
+      "folder": "artefacten\\miv\\miv.02.hypothese-vormer",
+      "charter": true,
+      "intents": [
+        "formuleer-hypothese",
+        "toets-richting",
+        "vergelijk-met-nietsdoen"
+      ],
+      "runner": false,
+      "contracten": 3
+    },
+    {
+      "naam": "hypothese-vormer",
+      "value_stream": "sfw",
+      "fase": "01",
+      "folder": "artefacten\\sfw\\sfw.01.hypothese-vormer",
+      "charter": true,
+      "intents": [
+        "formuleer-hypothese",
+        "toets-richting",
+        "vergelijk-met-nietsdoen"
+      ],
+      "runner": false,
+      "contracten": 3
+    },
+    {
+      "naam": "niam-analist",
+      "value_stream": "sfw",
+      "fase": "01",
+      "folder": "artefacten\\sfw\\sfw.01.niam-analist",
+      "charter": true,
+      "intents": [
+        "analyseer-feiten",
+        "onderbouw-methodiek",
+        "valideer-consistentie",
+        "verken-begrippen",
+        "verzamel-bronnen"
+      ],
+      "runner": false,
+      "contracten": 5
+    },
+    {
+      "naam": "thema-verwoorder",
+      "value_stream": "sfw",
+      "fase": "02",
+      "folder": "artefacten\\sfw\\sfw.02.thema-verwoorder",
+      "charter": true,
+      "intents": [
+        "doe-voorstel-verbeteringen",
+        "schrijf-thema-statement"
+      ],
+      "runner": false,
+      "contracten": 2
+    },
+    {
+      "naam": "verbeteringen-beschrijver",
+      "value_stream": "sfw",
+      "fase": "02",
+      "folder": "artefacten\\sfw\\sfw.02.verbeteringen-beschrijver",
+      "charter": true,
+      "intents": [
+        "beschrijf-verbetering",
+        "beschrijf-werktaak"
+      ],
+      "runner": false,
+      "contracten": 2
     }
   ]
 }

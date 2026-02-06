@@ -1,4 +1,9 @@
 @echo off
+setlocal
+
+REM Zet working directory naar de locatie van dit batch-bestand
+cd /d "%~dp0"
+
 REM ==============================================================================
 REM Publiceer Agents Overzicht
 REM ==============================================================================
@@ -15,7 +20,7 @@ REM Gebruik:
 REM   publiceer-agents.bat
 REM
 REM Traceability:
-REM   - Runner: scripts/runners/agent-curator.py
+REM   - Runner: scripts/agent-curator.runner.py
 REM   - Charter: agent-charters/charter.agent-curator.md
 REM
 REM ==============================================================================
@@ -35,8 +40,17 @@ if errorlevel 1 (
 )
 
 REM Controleer of runner script bestaat
-if not exist "scripts\runners\agent-curator.py" (
-    echo [ERROR] Runner niet gevonden: scripts\runners\agent-curator.py
+if not exist "scripts\agent-curator.runner.py" (
+    echo [ERROR] Runner niet gevonden: scripts\agent-curator.runner.py
+    pause
+    exit /b 1
+)
+
+REM Controleer of artefacten folder bestaat
+if not exist "artefacten" (
+    echo [ERROR] Folder niet gevonden: artefacten
+    echo [DEBUG] Verwachte locatie: %CD%\artefacten
+    echo.
     pause
     exit /b 1
 )
@@ -45,7 +59,7 @@ REM Voer agent-curator uit met volledige scope
 echo [INFO] Start volledige agents publicatie...
 echo.
 
-python scripts\runners\agent-curator.py --scope volledig
+python scripts\agent-curator.runner.py --scope volledig
 
 REM Controleer exit code
 if errorlevel 1 (

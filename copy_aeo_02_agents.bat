@@ -1,4 +1,9 @@
 @echo off
+setlocal
+
+REM Zet working directory naar de locatie van dit batch-bestand
+cd /d "%~dp0"
+
 REM ============================================================================
 REM Copy AEO.02 Agents
 REM ============================================================================
@@ -15,8 +20,7 @@ REM Gebruik:
 REM   copy_aeo_02_agents.bat
 REM
 REM Vereisten:
-REM   - Uitvoeren vanuit de workspace root (waar scripts/workspace-tools/
-REM     bestaat).
+REM   - Uitvoeren vanuit de workspace root (waar scripts/ bestaat).
 REM   - Python 3.9+ in PATH.
 REM ============================================================================
 
@@ -36,11 +40,11 @@ if errorlevel 1 (
 )
 
 REM Controleer of script bestaat op de verwachte locatie
-if not exist "scripts\workspace-tools\copy_aeo_02_agents.py" (
-    echo [ERROR] Script niet gevonden: scripts\workspace-tools\copy_aeo_02_agents.py
+if not exist "scripts\copy_aeo_02_agents.py" (
+    echo [ERROR] Script niet gevonden: scripts\copy_aeo_02_agents.py
     echo.
     echo Dit script moet worden uitgevoerd vanuit de workspace root,
-    echo waar scripts\workspace-tools\copy_aeo_02_agents.py bestaat.
+    echo waar scripts\copy_aeo_02_agents.py bestaat.
     echo.
     pause
     exit /b 1
@@ -49,7 +53,7 @@ if not exist "scripts\workspace-tools\copy_aeo_02_agents.py" (
 echo [INFO] Start kopie van aeo.02 agents naar .github/agents, .github/prompts, agent-charters en templates
 echo.
 
-python scripts\workspace-tools\copy_aeo_02_agents.py
+python scripts\copy_aeo_02_agents.py
 
 if errorlevel 1 (
     echo.
