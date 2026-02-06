@@ -132,13 +132,28 @@ De workspace-steward schrijft resultaten (waar van toepassing) naar:
 - `docs/resultaten/workspace-audit-<datum>.md` (overzicht van governance- en structuurvalidaties).
 - `docs/logs/git-config-<datum>.md` (optioneel log van belangrijke Git/GitHub-configuratieacties).
 
-## 9. Herkomstverantwoording
+## 9. Logging bij handmatige initialisatie
+
+Wanneer de **workspace-steward** handmatig wordt geïnitieerd (dus niet via een geautomatiseerde pipeline of runner), wordt een logbestand weggeschreven naar:
+
+- **Locatie**: `logs/`
+- **Bestandsnaam**: `yyyyddmm.HHmm workspace-steward.log`  
+  _(jaar, dag, maand, 24-uurs tijd zonder dubbele punt, gevolgd door een spatie en de canonieke agent-naam)_
+
+Het logbestand bevat ten minste:
+1. **Gelezen bestanden**: Lijst met paden van alle bestanden die zijn gelezen tijdens de uitvoering
+2. **Aangepaste bestanden**: Lijst met paden van alle bestanden die zijn gewijzigd
+3. **Aangemaakte bestanden**: Lijst met paden van alle bestanden die nieuw zijn aangemaakt
+
+Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt voor alle mandarin-agents bij handmatige initialisatie.
+
+## 10. Herkomstverantwoording
 
 - Deze charter is gebaseerd op de oorspronkelijke Moeder-charter en boundary (`agent-boundaries/moeder.boundary.md`), maar hernoemd en hergepositioneerd als foundational workspace-steward-agent in deze workspace.
 - Governance-bronnen: `beleid-workspace.md`, `governance/workspace-doctrine.md`, `governance/gedragscode.md` en relevante normen in de mandarin-canon repository.
 - Agent-contracten en prompt-metadata: zie sectie Traceerbaarheid.
 
-## 10. Change Log
+## 11. Change Log
 
 | Datum      | Versie | Wijziging                                                      | Auteur        |
 |-----------|--------|----------------------------------------------------------------|---------------|

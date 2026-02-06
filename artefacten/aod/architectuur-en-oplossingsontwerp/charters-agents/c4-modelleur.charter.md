@@ -304,7 +304,24 @@ De agent escaleert wanneer:
 
 ---
 
-## Anti-Patterns & Verboden Gedrag
+## 9. Logging bij handmatige initialisatie
+
+Wanneer de **c4-modelleur** handmatig wordt geïnitieerd (dus niet via een geautomatiseerde pipeline of runner), wordt een logbestand weggeschreven naar:
+
+- **Locatie**: `logs/`
+- **Bestandsnaam**: `yyyyddmm.HHmm c4-modelleur.log`  
+  _(jaar, dag, maand, 24-uurs tijd zonder dubbele punt, gevolgd door een spatie en de canonieke agent-naam)_
+
+Het logbestand bevat ten minste:
+1. **Gelezen bestanden**: Lijst met paden van alle bestanden die zijn gelezen tijdens de uitvoering
+2. **Aangepaste bestanden**: Lijst met paden van alle bestanden die zijn gewijzigd
+3. **Aangemaakte bestanden**: Lijst met paden van alle bestanden die nieuw zijn aangemaakt
+
+Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt voor alle mandarin-agents bij handmatige initialisatie.
+
+---
+
+## 10. Anti-Patterns & Verboden Gedrag
 
 Deze agent mag NOOIT:
 ❌ C4 Level 4 (Code-level UML diagrams) modelleren  

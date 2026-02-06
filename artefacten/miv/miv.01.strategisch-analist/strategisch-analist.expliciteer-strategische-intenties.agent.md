@@ -31,7 +31,7 @@ Bij een geldige opdracht levert de Strategisch Analist altijd:
 - **Relaties tussen intenties**: Waar intenties elkaar versterken of uitsluiten (1-3 alinea's)
 - **Bronverwijzingen**: Welke uitspraken of passages uit het bronmateriaal tot welke intentie leiden
 
-**Deliverable bestand**: `docs/resultaten/strategisch-analist/strategische-intenties-<datum>.md`
+**Deliverable bestand**: `artefacten/strategisch-analist/strategische-intenties.md` (overschrijft bestaand bestand)
 
 **Outputformaat** (standaard structuur):
 ```markdown

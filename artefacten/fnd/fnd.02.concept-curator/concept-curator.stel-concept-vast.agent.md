@@ -35,7 +35,7 @@ Bij een geldige opdracht levert de Concept-Curator altijd:
   - Traceerbaarheid (bron, datum, vaststeller)
 - **Kwaliteitscontrole**: Bevestiging dat definitie eenduidig, normatief en B1-taalniveau is
 
-**Deliverable bestand**: `docs/resultaten/concept-curator/concept-<concept-naam>-<datum>.md`
+**Deliverable bestand**: `artefacten/concept-curator/concept-<concept-naam>.md` (zonder datum; overschrijft bestaand bestand)
 
 **Outputformaat** (standaard structuur):
 ```markdown

@@ -99,7 +99,7 @@ De strategisch-analist bewaakt daarbij:
 6. Identificeert spanningsvelden: waar intenties elkaar tegenspreken of waar keuzes nodig zijn.
 7. Expliciteert per intentie de onderliggende aannames (markt, timing, resources) en onzekerheden.
 8. Structureert bevindingen in een overzichtelijk artefact zonder voorkeursrichting of prioritering.
-9. Levert het artefact op als basis voor vervolgagents (waarde-hypothesevorming, positionering).
+9. Schrijft het artefact naar `artefacten/strategisch-analist/` (overschrijft bestaande versie) als basis voor vervolgagents.
 10. Stopt en escaleert wanneer om keuzes, prioritering of optimalisatie wordt gevraagd.
 
 ## 7. Traceerbaarheid (contract <-> charter)
@@ -122,13 +122,28 @@ Dit charter is traceerbaar naar de bijbehorende agent-contracten per intent:
 
 De strategisch-analist legt alle resultaten vast in de workspace als markdown-bestanden:
 
-- `docs/resultaten/strategisch-analist/strategische-intenties-<datum>.md` (overzicht van geëxpliciteerde intenties)
-- `docs/resultaten/strategisch-analist/spanningsvelden-<datum>.md` (kaart van strategische spanningsvelden)
-- `docs/resultaten/strategisch-analist/aannames-en-onzekerheden-<datum>.md` (explicitering van aannames per intentie)
+- `artefacten/strategisch-analist/strategische-intenties.md` (overzicht van geëxpliciteerde intenties, overschrijft bestaand)
+- `artefacten/strategisch-analist/spanningsvelden.md` (kaart van strategische spanningsvelden, overschrijft bestaand)
+- `artefacten/strategisch-analist/aannames-en-onzekerheden.md` (explicitering van aannames per intentie, overschrijft bestaand)
 
 Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
-## 9. Herkomstverantwoording
+## 9. Logging bij handmatige initialisatie
+
+Wanneer de **strategisch-analist** handmatig wordt geïnitieerd (dus niet via een geautomatiseerde pipeline of runner), wordt een logbestand weggeschreven naar:
+
+- **Locatie**: `logs/`
+- **Bestandsnaam**: `yyyyddmm.HHmm strategisch-analist.log`  
+  _(jaar, dag, maand, 24-uurs tijd zonder dubbele punt, gevolgd door een spatie en de canonieke agent-naam)_
+
+Het logbestand bevat ten minste:
+1. **Gelezen bestanden**: Lijst met paden van alle bestanden die zijn gelezen tijdens de uitvoering
+2. **Aangepaste bestanden**: Lijst met paden van alle bestanden die zijn gewijzigd
+3. **Aangemaakte bestanden**: Lijst met paden van alle bestanden die nieuw zijn aangemaakt
+
+Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt voor alle mandarin-agents bij handmatige initialisatie.
+
+## 10. Herkomstverantwoording
 
 - Governance: `beleid-mandarin-agents.md` + mandarin-canon repository
 - Value stream definitie: `temp/mandarin-value-streams-en-fasen.md` (MIV fase 01: Strategische intentie expliciteren)
@@ -136,7 +151,7 @@ Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagb
 - Agent-contracten: zie Traceerbaarheid
 - Bron-locatie in deze workspace: `artefacten/miv/miv.01.strategisch-analist/strategisch-analist.charter.md`
 
-## 10. Change Log
+## 11. Change Log
 
 | Datum | Versie | Wijziging | Auteur |
 |------|--------|-----------|--------|

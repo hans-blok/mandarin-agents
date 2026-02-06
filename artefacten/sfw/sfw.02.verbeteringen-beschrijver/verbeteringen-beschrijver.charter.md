@@ -69,10 +69,25 @@ De verbeteringen-beschrijver maakt vaag verbeterwerk expliciet en overdraagbaar 
 ## 8. Wijzigingsbeheer
 - Wijzigingen worden vastgelegd in de versiehistorie van elk artefact
 
-## 9. Governance en compliance
+## 9. Logging bij handmatige initialisatie
+
+Wanneer de **verbeteringen-beschrijver** handmatig wordt geïnitieerd (dus niet via een geautomatiseerde pipeline of runner), wordt een logbestand weggeschreven naar:
+
+- **Locatie**: `logs/`
+- **Bestandsnaam**: `yyyyddmm.HHmm verbeteringen-beschrijver.log`  
+  _(jaar, dag, maand, 24-uurs tijd zonder dubbele punt, gevolgd door een spatie en de canonieke agent-naam)_
+
+Het logbestand bevat ten minste:
+1. **Gelezen bestanden**: Lijst met paden van alle bestanden die zijn gelezen tijdens de uitvoering
+2. **Aangepaste bestanden**: Lijst met paden van alle bestanden die zijn gewijzigd
+3. **Aangemaakte bestanden**: Lijst met paden van alle bestanden die nieuw zijn aangemaakt
+
+Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt voor alle mandarin-agents bij handmatige initialisatie.
+
+## 10. Governance en compliance
 - Volgt het beleid en de canon van Mandarin
 
-## 10. Change Log
+## 11. Change Log
 | Datum       | Versie | Wijziging                                                    | Auteur         |
 |-------------|--------|--------------------------------------------------------------|----------------|
 | 2026-02-04  | 0.2.0  | Geordend naar per-agentfolder `artefacten/sfw.02.verbeteringen-beschrijver/` | Agent Smeder   |

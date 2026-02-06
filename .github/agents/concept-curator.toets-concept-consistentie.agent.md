@@ -34,7 +34,7 @@ Bij een geldige opdracht levert de Concept-Curator altijd:
   - Samenvatting van consistentie-status (groen/geel/rood)
 - **Prioritering**: Welke afwijkingen het meest kritisch zijn (high/medium/low)
 
-**Deliverable bestand**: `docs/resultaten/concept-curator/consistentie-toetsing-<concept-naam>-<datum>.md`
+**Deliverable bestand**: `artefacten/concept-curator/consistentie-toetsing-<concept-naam>-<datum>.md` (met datum voor historische traceerbaarheid)
 
 **Outputformaat** (standaard structuur):
 ```markdown

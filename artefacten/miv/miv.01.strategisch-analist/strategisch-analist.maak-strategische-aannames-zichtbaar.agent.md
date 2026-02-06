@@ -28,7 +28,7 @@ Bij een geldige opdracht levert de Strategisch Analist altijd:
 - **Onzekerheden en risico's**: Waar aannames onzeker zijn en wat het risico is als aanname niet klopt
 - **Afhankelijkheden**: Welke aannames voorwaardelijk zijn voor andere aannames
 
-**Deliverable bestand**: `docs/resultaten/strategisch-analist/aannames-en-onzekerheden-<datum>.md`
+**Deliverable bestand**: `artefacten/strategisch-analist/aannames-en-onzekerheden.md` (overschrijft bestaand bestand)
 
 **Outputformaat** (standaard structuur):
 ```markdown

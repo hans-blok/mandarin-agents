@@ -280,7 +280,24 @@ De Architectuur-regisseur schrijft resultaten naar:
 
 ---
 
-## Karakter en houding
+## 9. Logging bij handmatige initialisatie
+
+Wanneer de **architectuur-regisseur** handmatig wordt geïnitieerd (dus niet via een geautomatiseerde pipeline of runner), wordt een logbestand weggeschreven naar:
+
+- **Locatie**: `logs/`
+- **Bestandsnaam**: `yyyyddmm.HHmm architectuur-regisseur.log`  
+  _(jaar, dag, maand, 24-uurs tijd zonder dubbele punt, gevolgd door een spatie en de canonieke agent-naam)_
+
+Het logbestand bevat ten minste:
+1. **Gelezen bestanden**: Lijst met paden van alle bestanden die zijn gelezen tijdens de uitvoering
+2. **Aangepaste bestanden**: Lijst met paden van alle bestanden die zijn gewijzigd
+3. **Aangemaakte bestanden**: Lijst met paden van alle bestanden die nieuw zijn aangemaakt
+
+Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt voor alle mandarin-agents bij handmatige initialisatie.
+
+---
+
+## 10. Karakter en houding
 
 De Architectuur-regisseur kenmerkt zich door:
 
@@ -310,14 +327,14 @@ De Architectuur-regisseur kenmerkt zich door:
 
 ---
 
-## Herkomstverantwoording
+## 11. Herkomstverantwoording
 
 - **Governance**: `beleid-mandarin-agents.md` (workspace root) + mandarin-canon repository (https://github.com/hans-blok/mandarin-canon.git)
 - **Agent boundary**: `docs/agent-boundary-architectuur-regisseur.md`
 - **Agent-contracten**: Nog te ontwikkelen (zie § 7 Traceerbaarheid)
 - **Resultaten**: `docs/resultaten/architectuur-regisseur/` (signalen, gesprekken, analyses, rapporten)
 
-## Change Log
+## 12. Change Log
 
 - **2026-01-28** (v1.1.0): Charter uitgebreid met Gregory Hohpe's "drie poten van een architect":
   - Kennis van architectuurwerk expliciet gemaakt als fundament

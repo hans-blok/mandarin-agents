@@ -55,6 +55,7 @@ De concept-curator bewaakt daarbij:
    - Expliciteert kenmerken (3-6 bullets) en wat het concept niet is (2-4 bullets)
    - Verzamelt voorbeelden uit de workspace (2-5 concrete gevallen)
    - Registreert synoniemen, afgeleide termen en traceerbaarheid
+   - Gebruikt `concept-template.md` als verplichte structuur voor alle concept-artefacten
 
 2. **Consistentie toetsen**
    - Analyseert gebruik van concept over meerdere artefacten heen
@@ -102,6 +103,8 @@ De concept-curator bewaakt daarbij:
 
 ### Voor intent: stel-concept-vast
 
+**Basis**: Alle concept-artefacten worden opgesteld volgens de vaste structuur van `concept-template.md` (zie sectie 9 Templates).
+
 1. **Ontvang concept-verzoek**: naam, context, gebruik, eventuele verwarring
 2. **Analyseer context**: waar en hoe wordt het begrip gebruikt in workspace
 3. **Formuleer canonieke definitie**: max. 2 zinnen, normatief, B1-niveau
@@ -111,7 +114,7 @@ De concept-curator bewaakt daarbij:
 7. **Registreer synoniemen**: afgeleide termen en alternatieve benamingen
 8. **Borg traceerbaarheid**: bron, vaststeller, datum, canon-referentie
 9. **Valideer kwaliteit**: normatief karakter, eenduidigheid, B1-taalniveau
-10. **Schrijf concept-artefact**: volgens concept-template.md naar docs/resultaten/concept-curator/
+10. **Schrijf concept-artefact**: Vul `concept-template.md` in met verzamelde informatie en schrijf naar `artefacten/concept-curator/concept-<naam>.md` (overschrijft bestaand bestand indien aanwezig)
 
 ### Voor intent: toets-concept-consistentie
 
@@ -123,7 +126,7 @@ De concept-curator bewaakt daarbij:
 6. **Formuleer aanbevelingen**: corrigeren, differentiëren, of nieuw concept
 7. **Detecteer alternatieve definities**: andere betekenissen in omloop
 8. **Samenvatten status**: groen (consistent), geel (afwijkingen), rood (inconsistent)
-9. **Schrijf toetsingsrapport**: naar docs/resultaten/concept-curator/
+9. **Schrijf toetsingsrapport**: naar `artefacten/concept-curator/consistentie-toetsing-<concept-naam>-<datum>.md` (met datum voor historische traceerbaarheid)
 10. **Escaleer indien nodig**: naar canon-curator bij workspace-overstijgende problematiek
 
 ## 7. Traceerbaarheid (contract <-> charter)
@@ -141,12 +144,12 @@ Dit charter is traceerbaar naar de bijbehorende agent-contracten per intent:
 
 De concept-curator legt alle resultaten vast in de workspace als markdown-bestanden:
 
-- `docs/resultaten/concept-curator/`
+- `artefacten/concept-curator/`
 
 Bestandsnamen/patronen:
 
-- `concept-<concept-naam>-<datum>.md` (vastgesteld concept-artefact)
-- `consistentie-toetsing-<concept-naam>-<datum>.md` (toetsingsrapport)
+- `concept-<concept-naam>.md` (vastgesteld concept-artefact, zonder datum)
+- `consistentie-toetsing-<concept-naam>-<datum>.md` (toetsingsrapport, met datum voor historisch overzicht)
 
 Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 

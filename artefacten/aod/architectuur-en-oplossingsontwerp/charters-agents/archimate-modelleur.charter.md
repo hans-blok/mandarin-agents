@@ -117,14 +117,29 @@ De archimate-modelleur schrijft resultaten (waar van toepassing) naar:
 - `docs/resultaten/archimate-modelleur/strategie-migratie-<output-naam>.md` (views en validatierapporten voor strategie en implementatie/migratie)
 - `docs/resultaten/archimate-modelleur/analyse-<output-naam>.md` (algemene model- en kwaliteitsanalyses)
 
-## 9. Herkomstverantwoording
+## 9. Logging bij handmatige initialisatie
+
+Wanneer de **archimate-modelleur** handmatig wordt geïnitieerd (dus niet via een geautomatiseerde pipeline of runner), wordt een logbestand weggeschreven naar:
+
+- **Locatie**: `logs/`
+- **Bestandsnaam**: `yyyyddmm.HHmm archimate-modelleur.log`  
+  _(jaar, dag, maand, 24-uurs tijd zonder dubbele punt, gevolgd door een spatie en de canonieke agent-naam)_
+
+Het logbestand bevat ten minste:
+1. **Gelezen bestanden**: Lijst met paden van alle bestanden die zijn gelezen tijdens de uitvoering
+2. **Aangepaste bestanden**: Lijst met paden van alle bestanden die zijn gewijzigd
+3. **Aangemaakte bestanden**: Lijst met paden van alle bestanden die nieuw zijn aangemaakt
+
+Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt voor alle mandarin-agents bij handmatige initialisatie.
+
+## 10. Herkomstverantwoording
 
 - Boundary: `agent-boundaries/archimate-modelleur.boundary.md` beschrijft de capability boundary en WEL/NIET-gebied van deze agent.
 - Governance: `beleid-mandarin-agents.md` en de relevante normen onder `governance-artefacten/architectuur-en-oplossingsontwerp/` (waaronder de agent-charter-normering).
 - Externe referentie: The Open Group ArchiMate® 3.x specificatie (officiële standaard).
 - Agent-contracten en prompt-metadata: zie sectie Traceerbaarheid.
 
-## 10. Change Log
+## 11. Change Log
 
 | Datum      | Versie | Wijziging                                                                                 | Auteur        |
 |-----------|--------|-------------------------------------------------------------------------------------------|---------------|

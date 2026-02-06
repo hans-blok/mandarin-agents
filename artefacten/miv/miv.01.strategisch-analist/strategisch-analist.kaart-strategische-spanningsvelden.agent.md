@@ -28,7 +28,7 @@ Bij een geldige opdracht levert de Strategisch Analist altijd:
 - **Typologie van spanningen**: Categorisering van spanningsvelden (bijvoorbeeld strategisch vs operationeel, kort- vs langetermijn, intern vs extern)
 - **Kritische keuzemomenten**: Waar uitstel niet mogelijk is en waar wel (zonder prioriteit)
 
-**Deliverable bestand**: `docs/resultaten/strategisch-analist/spanningsvelden-<datum>.md`
+**Deliverable bestand**: `artefacten/strategisch-analist/spanningsvelden.md` (overschrijft bestaand bestand)
 
 **Outputformaat** (standaard structuur):
 ```markdown
