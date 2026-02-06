@@ -119,6 +119,10 @@ De Formaat-Vertaler bewaakt daarbij:
 
 ## 6. Werkwijze
 
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
+
 ### Algemene workflow (alle intents)
 
 1. **Valideer input**

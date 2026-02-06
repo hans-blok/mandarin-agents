@@ -198,6 +198,10 @@ Workflow Architect definieert de artefact-flow: welke agent-outputs worden input
 
 ## Werkwijze
 
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
+
 ### Bij workflow ontwerp (Stap 1)
 Gebruik `.github/prompts/workflow-architect-1-ontwerp-workflow.prompt.md`:
 

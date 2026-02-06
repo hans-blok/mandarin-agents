@@ -80,6 +80,9 @@ De constitutioneel-auteur bewaakt daarbij:
 
 ## 6. Werkwijze
 
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Leest de opdracht en controleert of het om een normatief artefact gaat (en niet om ordening of toepassing).
 2. Verzamelt en leest de relevante passages uit constitutie en doctrines, plus eventuele referentiedocumenten.
 3. Bepaalt of het om een nieuw document of een bijwerking gaat en kiest een passende structuur.

@@ -80,6 +80,9 @@ De agent-curator bewaakt daarbij:
 
 ## 6. Werkwijze
 
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Ontvangt een opdracht (bijvoorbeeld boundary-bepaling, value stream-lijst, validatie of publicatie) met de benodigde parameters.
 2. Raadpleegt de mandarin-canon voor value streams en relevante governance-/doctrine-documenten.
 3. Leest waar nodig bestaande agents, charters, prompts en runners in en extraheert relevante metadata.

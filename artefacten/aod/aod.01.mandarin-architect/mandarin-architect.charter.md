@@ -53,6 +53,9 @@ De Mandarin Architect:
 
 ## 6. Werkwijze
 
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Ontvangt opdracht of vraag (prompt) voor concept of cdm-uitwerking
 2. Werkt canoniek domeinmodel uit conform ArchiMate (minimaal, zonder implementatiedetails)
 3. Schrijft concepten uit volgens het concept-template

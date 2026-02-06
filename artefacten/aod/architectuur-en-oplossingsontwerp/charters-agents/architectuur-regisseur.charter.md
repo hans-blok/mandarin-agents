@@ -161,6 +161,10 @@ De Architectuur-regisseur bewaakt daarbij:
 
 ## 6. Werkwijze
 
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
+
 De Architectuur-regisseur volgt deze werkwijze afhankelijk van de situatie:
 
 ### Bij besluitvorming

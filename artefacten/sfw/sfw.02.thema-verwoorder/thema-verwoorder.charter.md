@@ -63,8 +63,9 @@ De thema-verwoorder bewaakt daarbij:
 - Vertaalt niet naar backlog-items.
 
 ## 6. Werkwijze
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
 
-1. Ontvangt het vastgesteld thema en herkomst.
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.1. Ontvangt het vastgesteld thema en herkomst.
 2. Vat doel, context en richtinggevende uitkomst samen.
 3. Formuleert het epic statement in vast format.
 4. Noteert maximaal drie aannames als risico’s.
@@ -87,11 +88,11 @@ Dit charter is traceerbaar naar de bijbehorende agent-contracten per intent:
 
 De thema-verwoorder legt alle resultaten vast in de workspace als markdown-bestanden:
 
-- `docs/resultaten/thema-verwoorder/`
+- `artefacten/thema-verwoorder/`
 
 Voorbeelden:
-- `docs/resultaten/thema-verwoorder/thema-statement-<thema>-<datum>.md`
-- `docs/resultaten/thema-verwoorder/validatie-epic-<thema>-<datum>.md`
+- `artefacten/thema-verwoorder/thema-statement-<thema>.md`
+- `artefacten/thema-verwoorder/validatie-epic-<thema>.md`
 
 Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
@@ -116,7 +117,7 @@ De thema-verwoorder baseert zich op aangeleverde themacontext en legt output tra
 
 - Governance: `beleid-mandarin-agents.md` + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid
-- Resultaten: `docs/resultaten/thema-verwoorder/...`
+- Resultaten: `artefacten/thema-verwoorder/`
 
 ## 11. Change Log
 

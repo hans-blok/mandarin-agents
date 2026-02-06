@@ -118,8 +118,13 @@ De NIAM-analist heeft 5 kerntaken (één intent per agent-contract):
 
 ## 6. Werkwijze
 
+### Bij handmatige start
+
+Gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
 ### Standaard werkwijze voor alle analyses
 
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Intake: ontvang veranderingscontext, scope en (indien van toepassing) beschikbare bronnen
 2. Validatie: check scope tegen capability boundary (alleen informatiestructuuranalyse)
 3. Context verzamelen: lees bestaande bronnen, documenten en modellen
@@ -216,17 +221,17 @@ Dit charter is traceerbaar naar de bijbehorende agent-contracten per intent:
 
 De NIAM-analist legt alle resultaten vast in de workspace als markdown-bestanden:
 
-- `docs/resultaten/niam-analist/`
+- `artefacten/niam-analist/`
 
 Bestandsnamen/patronen:
 
-- `bronnenverzameling-<scope>-<datum>.md`
-- `begripsverkenning-<scope>-<datum>.md`
-- `feitenanalyse-<scope>-<datum>.md`
+- `bronnenverzameling-<scope>.md`
+- `begripsverkenning-<scope>.md`
+- `feitenanalyse-<scope>.md`
+- `consistentiecheck-<scope>.md`
+- `methodische-onderbouwing-<scope>.md`
 
 Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
-- `consistentiecheck-<scope>-<datum>.md`
-- `methodische-onderbouwing-<scope>-<datum>.md`
 
 Output-standaarden (B1 Nederlands):
 
@@ -259,7 +264,7 @@ Alle analyses, modellen en onderbouwingen zijn traceerbaar:
 
 - Governance: `beleid-mandarin-agents.md` + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid
-- Resultaten: `docs/resultaten/niam-analist/...` (zie Output-locaties)
+- Resultaten: `artefacten/niam-analist/` (zie Output-locaties)
 - Referentie naar bronnen: vermelding van documentnamen, locaties en versies in elk rapport
 
 ## 11. Change Log

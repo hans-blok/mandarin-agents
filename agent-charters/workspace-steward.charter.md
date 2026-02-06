@@ -90,6 +90,9 @@ De workspace-steward bewaakt daarbij:
 
 ## 6. Werkwijze
 
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Leest (waar aanwezig) `state-<workspace-naam>.md` en relevante governance-documenten voordat acties worden uitgevoerd.
 2. Verzamelt context van de gebruiker over gewenste wijziging of validatie.
 3. Voert een scan uit van de huidige workspace-structuur, Git-configuratie en governance-documenten.
@@ -129,8 +132,8 @@ De workspace-steward schrijft resultaten (waar van toepassing) naar:
 
 - `governance/beleid.md` (gegenereerd of geactualiseerd beleidsdocument voor de workspace).
 - `state-<workspace-naam>.md` (log van substantiële governance- en structuurwijzigingen, indien gebruikt).
-- `docs/resultaten/workspace-audit-<datum>.md` (overzicht van governance- en structuurvalidaties).
-- `docs/logs/git-config-<datum>.md` (optioneel log van belangrijke Git/GitHub-configuratieacties).
+- `artefacten/workspace-steward/workspace-audit.md` (overzicht van governance- en structuurvalidaties).
+- `artefacten/workspace-steward/git-config.md` (optioneel log van belangrijke Git/GitHub-configuratieacties).
 
 ## 9. Logging bij handmatige initialisatie
 

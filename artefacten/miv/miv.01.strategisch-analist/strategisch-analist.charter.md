@@ -91,6 +91,9 @@ De strategisch-analist bewaakt daarbij:
 
 ## 6. Werkwijze
 
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Ontvangt ruwe strategische uitspraken (visies, pitches, notities, memo's) en context (horizon, scope, partijen).
 2. Leest en analyseert bestaande documenten met strategische lading (position papers, decks, e-mails).
 3. Identificeert 2–5 impliciete strategische intenties uit het materiaal.

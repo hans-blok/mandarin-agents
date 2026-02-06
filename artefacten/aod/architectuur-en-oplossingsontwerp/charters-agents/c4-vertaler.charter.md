@@ -59,6 +59,9 @@ De c4-vertaler zet Markdown-beschrijvingen van architectuurmodellen om naar C4 D
 
 ## 6. Werkwijze
 
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Ontvangt Markdown, PUML-code en context.
 2. Parseert en valideert de input.
 3. Genereert PUML-code of DSL-bestand en waarschuwingen.

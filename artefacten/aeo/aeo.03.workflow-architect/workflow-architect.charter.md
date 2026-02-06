@@ -52,7 +52,7 @@ Workflow Architect ontwerpt de intentionele structuur van werk: welke agents, in
 - **Afhankelijkheden**: Welke stap hangt af van welke (blokkeert/wacht op)
 - **Kritieke paden**: Langste/belangrijkste stappen-sequentie
 
-**Output locatie**: `docs/resultaten/workflow-architect/<taak-naam>-workflow.md`
+**Output locatie**: `artefacten/workflow-architect/<taak-naam>-workflow.md`
 
 **Foutafhandeling**:
 - Stopt wanneer gevraagde agents niet bestaan in workspace
@@ -95,7 +95,7 @@ Workflow Architect ontwerpt de pipeline: hoe de workflow uitvoerbaar wordt met c
 - **Foutafhandeling**: Wat gebeurt bij failures in specifieke stappen
 - **Rollback strategie**: Hoe ongedaan maken bij kritieke fouten (indien van toepassing)
 
-**Output locatie**: `docs/resultaten/workflow-architect/<taak-naam>-pipeline.md`
+**Output locatie**: `artefacten/workflow-architect/<taak-naam>-pipeline.md`
 
 **Foutafhandeling**:
 - Stopt wanneer workflow-bestand niet bestaat of ongeldig is
@@ -111,7 +111,7 @@ Workflow Architect definieert de artefact-flow: welke agent-outputs worden input
 **Input**:
 - `workflow-bestand`: Pad naar workflow-document uit stap 1 (vereist)
 - `pipeline-bestand`: Pad naar pipeline-document uit stap 2 (vereist)
-- `artefact-locaties`: Waar artefacten opgeslagen worden (optioneel, default: `docs/resultaten/<agent-naam>/`)
+- `artefact-locaties`: Waar artefacten opgeslagen worden (optioneel, default: `artefacten/<agent-naam>/`)
 - `naming-conventions`: Naamgevingsconventies voor artefacten (optioneel)
 
 **Proces**:
@@ -136,7 +136,7 @@ Workflow Architect definieert de artefact-flow: welke agent-outputs worden input
 - **Artefact levenscyclus**: Wanneer worden artefacten aangemaakt, gebruikt, opgeruimd
 - **Naamgevingsconventies**: Consistente naming voor alle artefacten
 
-**Output locatie**: `docs/resultaten/workflow-architect/<taak-naam>-artefact-flow.md`
+**Output locatie**: `artefacten/workflow-architect/<taak-naam>-artefact-flow.md`
 
 **Foutafhandeling**:
 - Stopt wanneer workflow of pipeline bestand niet bestaat of ongeldig is
@@ -219,7 +219,7 @@ Gebruik `.github/prompts/workflow-architect-1-ontwerp-workflow.prompt.md`:
 
 **Output produceren**:
 - Document met Samenvatting, Stappen (agent/wat/input/output), Afhankelijkheden, Kritieke paden
-- Opslaan in `docs/resultaten/workflow-architect/<taak-naam>-workflow.md`
+- Opslaan in `artefacten/workflow-architect/<taak-naam>-workflow.md`
 
 **Voorbeeld workflow**:
 ```markdown
@@ -283,7 +283,7 @@ Gebruik `.github/prompts/workflow-architect-2-ontwerp-pipeline.prompt.md`:
 
 **Output produceren**:
 - Document met Samenvatting, Uitvoeringsketen (run-modes), Kwaliteitsgates, Foutafhandeling, Rollback
-- Opslaan in `docs/resultaten/workflow-architect/<taak-naam>-pipeline.md`
+- Opslaan in `artefacten/workflow-architect/<taak-naam>-pipeline.md`
 
 **Voorbeeld pipeline**:
 ```markdown
@@ -337,7 +337,7 @@ Gebruik `.github/prompts/workflow-architect-3-definieer-artefact-flow.prompt.md`
 **Input verzamelen**:
 - `workflow-bestand`: Pad naar output van stap 1
 - `pipeline-bestand`: Pad naar output van stap 2
-- `artefact-locaties` (optioneel): Default `docs/resultaten/<agent-naam>/`
+- `artefact-locaties` (optioneel): Default `artefacten/<agent-naam>/`
 - `naming-conventions` (optioneel): Specifieke naamgeving
 
 **Artefact-flow definiëren**:
@@ -355,7 +355,7 @@ Gebruik `.github/prompts/workflow-architect-3-definieer-artefact-flow.prompt.md`
 
 **Output produceren**:
 - Document met Samenvatting, Artefact mapping (input/output per stap), Lifecycle, Naming conventions
-- Opslaan in `docs/resultaten/workflow-architect/<taak-naam>-artefact-flow.md`
+- Opslaan in `artefacten/workflow-architect/<taak-naam>-artefact-flow.md`
 
 **Voorbeeld artefact-flow**:
 ```markdown
@@ -370,12 +370,12 @@ Data stroomt van user story → requirements → code → tests → docs → web
 - **Input artefacten**:
   - user-story.md (extern, user-provided, temp/user-story.md)
 - **Output artefacten**:
-  - requirements.md (→ stap 2, 4, docs/resultaten/requirements-agent/requirements.md)
+  - requirements.md (→ stap 2, 4, artefacten/requirements-agent/requirements.md)
 - **Transformatie**: Vertaalt user story naar gestructureerde functionele en non-functionele requirements
 
 ### Stap 2: Code Generator
 - **Input artefacten**:
-  - requirements.md (← stap 1, docs/resultaten/requirements-agent/requirements.md)
+  - requirements.md (← stap 1, artefacten/requirements-agent/requirements.md)
 - **Output artefacten**:
   - source code (→ stap 3, src/feature-x/)
 - **Transformatie**: Implementeert requirements als werkende code met proper structuur
@@ -384,20 +384,20 @@ Data stroomt van user story → requirements → code → tests → docs → web
 - **Input artefacten**:
   - source code (← stap 2, src/feature-x/)
 - **Output artefacten**:
-  - test-rapport.md (→ stap 4, docs/resultaten/test-agent/test-rapport.md)
+  - test-rapport.md (→ stap 4, artefacten/test-agent/test-rapport.md)
 - **Transformatie**: Valideert code met tests en produceert coverage rapport
 
 ### Stap 4: Documentation Agent
 - **Input artefacten**:
-  - requirements.md (← stap 1, docs/resultaten/requirements-agent/requirements.md)
-  - test-rapport.md (← stap 3, docs/resultaten/test-agent/test-rapport.md)
+  - requirements.md (← stap 1, artefacten/requirements-agent/requirements.md)
+  - test-rapport.md (← stap 3, artefacten/test-agent/test-rapport.md)
 - **Output artefacten**:
-  - user-guide.md (→ stap 5, docs/resultaten/docs-agent/user-guide.md)
+  - user-guide.md (→ stap 5, artefacten/docs-agent/user-guide.md)
 - **Transformatie**: Schrijft gebruikersdocumentatie gebaseerd op requirements en test resultaten
 
 ### Stap 5: Publisher
 - **Input artefacten**:
-  - user-guide.md (← stap 4, docs/resultaten/docs-agent/user-guide.md)
+  - user-guide.md (← stap 4, artefacten/docs-agent/user-guide.md)
 - **Output artefacten**:
   - website HTML (eindresultaat, dist/website/index.html)
 - **Transformatie**: Converteert markdown naar gepubliceerde website
@@ -405,11 +405,11 @@ Data stroomt van user story → requirements → code → tests → docs → web
 ## Artefact Levenscyclus
 - **Aangemaakt**: Elke stap produceert artefacten direct na completion
 - **Gebruikt**: Volgende stap leest artefacten bij start
-- **Opgeruimd**: temp/ artefacten na pipeline success, docs/resultaten/ blijft
+- **Opgeruimd**: temp/ artefacten na pipeline success, artefacten/ blijft
 
 ## Naamgevingsconventies
 - Agent outputs: `<agent-naam>-<artefact-type>.md` (bijv. requirements-agent-requirements.md)
-- Locaties: `docs/resultaten/<agent-naam>/` (per workspace-standaard)
+- Locaties: `artefacten/<agent-naam>/` (per workspace-standaard)
 - Interim bestanden: `temp/<taak-naam>-<stap>.md` (wordt opgeruimd)
 ```
 
@@ -443,7 +443,7 @@ Actie:
   2. Agents: Code Parser → API Analyzer → Documentation Agent
   3. Afhankelijkheden: 1 → 2 → 3 (sequential)
   4. Kritieke pad: Hele keten (3 stappen)
-Output: docs/resultaten/workflow-architect/api-docs-workflow.md
+Output: artefacten/workflow-architect/api-docs-workflow.md
 ```
 
 ### Scenario 2: Complexe workflow met parallellisatie
@@ -460,8 +460,8 @@ Actie:
   2. Pipeline: Stap 3 en 4 parallel (Tests en Docs onafhankelijk)
   3. Gates: Na elke stap validatie
 Output:
-  - docs/resultaten/workflow-architect/feature-deployment-workflow.md
-  - docs/resultaten/workflow-architect/feature-deployment-pipeline.md
+  - artefacten/workflow-architect/feature-deployment-workflow.md
+  - artefacten/workflow-architect/feature-deployment-pipeline.md
 ```
 
 ### Scenario 3: Artefact-flow met orphaned artifact detectie
@@ -475,7 +475,7 @@ Actie:
   2. Detecteer: Stap B output "intermediate-data.json" heeft geen bestemming
   3. Waarschuwing: "Orphaned artifact: intermediate-data.json not used by step C"
   4. Advies: Verwijder uit workflow of voeg gebruiker toe
-Output: docs/resultaten/workflow-architect/taak-artefact-flow.md (met waarschuwing)
+Output: artefacten/workflow-architect/taak-artefact-flow.md (met waarschuwing)
 ```
 
 ### Scenario 4: Pipeline met kritieke gates
@@ -494,7 +494,7 @@ Actie:
      - Voor deploy: Manual approval gate
   2. Failure handling: Stop bij gate failure
   3. Rollback: Bij deploy failure, herstel vorige versie
-Output: docs/resultaten/workflow-architect/feature-deployment-pipeline.md
+Output: artefacten/workflow-architect/feature-deployment-pipeline.md
 ```
 
 ### Scenario 5: Circular dependency detectie
@@ -523,7 +523,7 @@ Actie:
   2. Waarschuwing: "Workflow has 8 steps (>5), consider splitting into sub-workflows"
   3. Advies: "Split into: (Idea → Requirements → Design) en (Code → Test → Docs → Review → Deploy)"
   4. Produceer workflow (met waarschuwing)
-Output: docs/resultaten/workflow-architect/sdlc-workflow.md (met complexity warning)
+Output: artefacten/workflow-architect/sdlc-workflow.md (met complexity warning)
 ```
 
 ### Scenario 7: Missing artifact detectie
@@ -537,7 +537,7 @@ Actie:
   2. Detecteer: Stap C input "config.json" heeft geen bron
   3. Waarschuwing: "Missing artifact: config.json required by step C but not produced"
   4. Advies: "Add step to generate config.json or provide as external input"
-Output: docs/resultaten/workflow-architect/taak-artefact-flow.md (met waarschuwing)
+Output: artefacten/workflow-architect/taak-artefact-flow.md (met waarschuwing)
 ```
 
 ## Referenties
@@ -582,9 +582,10 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 
 - Governance: beleid-mandarin-agents.md + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid (indien aanwezig)
-- Resultaten: docs/resultaten/<agent-naam>/... (waar van toepassing)
+- Resultaten: artefacten/<agent-naam>/ (waar van toepassing)
 
 ## Change Log
 
 - 2026-01-24: Charter-header aangepast naar checkbox agent-soort; herkomst/changelog secties toegevoegd waar ze ontbraken.
+
 

@@ -53,6 +53,15 @@ De Artikelschrijver's uitvoering volgt 6 gestructureerde stappen, traceerbaar na
 ✗ Produceert geen HTML/PDF (alleen Markdown)  
 ✗ Beslist niet zelf welk artikel nodig is (dat doet kennisarchitect)  
 
+## Werkwijze
+
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
+1. Volg de 6 gestructureerde stappen zoals beschreven in Kerntaken.
+2. Raadpleeg de mandarin-canon voor schrijfconventies en terminologie.
+3. Documenteer herkomst en bronnen in elk artikel.
+
 ## Traceerbaarheid (contract <-> charter)
 
 - Intent: `1-afbakening-intentie`
@@ -77,7 +86,7 @@ De Artikelschrijver's uitvoering volgt 6 gestructureerde stappen, traceerbaar na
 ## Output-locaties
 
 - Agent-contracten en prompts: `artefacten/kvl.03.artikel-schrijver/`
-- Resultaten (artikelen): `docs/resultaten/artikel-schrijver/`
+- Resultaten (artikelen): `artefacten/artikel-schrijver/`
 
 ## Logging bij handmatige initialisatie
 
@@ -98,7 +107,7 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 
 - Governance: beleid-mandarin-agents.md + mandarin-canon repository
 - Agent-contracten: zie bovenstaande traceerbaarheid
-- Resultaten: `docs/resultaten/artikel-schrijver/...`
+- Resultaten: `artefacten/artikel-schrijver/`
 
 ## Change Log
 

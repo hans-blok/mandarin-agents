@@ -51,7 +51,16 @@ De verbeteringen-beschrijver maakt vaag verbeterwerk expliciet en overdraagbaar 
 - Geen planning of sizing uitvoeren
 - Geen implementatietaken beschrijven
 
-## 6. Output-locaties
+## 6. Werkwijze
+
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
+1. Volg de kerntaken zoals beschreven in sectie 4.
+2. Raadpleeg templates en governance documenten.
+3. Documenteer herkomst en bronnen.
+
+## 7. Output-locaties
 - Agent-contracten en prompts: `artefacten/sfw.02.verbeteringen-beschrijver/`
 - Boundaries: `agent-boundaries/`
 - Templates: `templates/`

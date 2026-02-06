@@ -84,6 +84,9 @@ De archimate-modelleur bewaakt daarbij:
 
 ## 6. Werkwijze
 
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Leest het brondocument of model en bepaalt welke ArchiMate-lagen in scope zijn.
 2. Extraheert relevante elementen en relaties per laag volgens de ArchiMate 3.x specificatie.
 3. Modelleert deze elementen en relaties expliciet in een interne representatie en/of Markdown-structuur.
@@ -110,12 +113,12 @@ Voor toekomstige intents en eventuele herstructurering gelden de governance-afsp
 
 De archimate-modelleur legt alle resultaten vast in de workspace als markdown-bestanden:
 
-- `docs/resultaten/archimate-modelleur/motivatielaag-<output-naam>.md` (views en validatierapporten voor de motivatielaag)
-- `docs/resultaten/archimate-modelleur/bedrijfslaag-<output-naam>.md` (views en validatierapporten voor de bedrijfslaag)
-- `docs/resultaten/archimate-modelleur/applicatielaag-<output-naam>.md` (views en validatierapporten voor de applicatielaag)
-- `docs/resultaten/archimate-modelleur/technologielaag-<output-naam>.md` (views en validatierapporten voor de technologielaag)
-- `docs/resultaten/archimate-modelleur/strategie-migratie-<output-naam>.md` (views en validatierapporten voor strategie en implementatie/migratie)
-- `docs/resultaten/archimate-modelleur/analyse-<output-naam>.md` (algemene model- en kwaliteitsanalyses)
+- `artefacten/archimate-modelleur/motivatielaag.md` (views en validatierapporten voor de motivatielaag)
+- `artefacten/archimate-modelleur/bedrijfslaag.md` (views en validatierapporten voor de bedrijfslaag)
+- `artefacten/archimate-modelleur/applicatielaag.md` (views en validatierapporten voor de applicatielaag)
+- `artefacten/archimate-modelleur/technologielaag.md` (views en validatierapporten voor de technologielaag)
+- `artefacten/archimate-modelleur/strategie-migratie.md` (views en validatierapporten voor strategie en implementatie/migratie)
+- `artefacten/archimate-modelleur/analyse.md` (algemene model- en kwaliteitsanalyses)
 
 Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 

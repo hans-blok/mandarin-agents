@@ -76,8 +76,9 @@ De hypothese-vormer bewaakt daarbij:
 - Neemt geen beslissingen, prioriteert niet en ontwerpt geen experimenten.
 
 ## 6. Werkwijze
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
 
-1. Verzamelt context over thema/epic en probleemruimte.
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.1. Verzamelt context over thema/epic en probleemruimte.
 2. Benoemt de status quo: frictie, risico en huidige werkwijze.
 3. Formuleert de veronderstelde verbetering (waarom beter dan nu), met aandacht voor wat mensen daadwerkelijk willen bereiken.
 4. Schrijft één hypothese in het vaste format (Click-stijl: scherp, toetsbaar, focus op gewenste uitkomst).
@@ -145,12 +146,13 @@ De hypothese-vormer baseert zich op aangeleverde context en legt output traceerb
 
 - Governance: `beleid-mandarin-agents.md` + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid
-- Resultaten: `docs/resultaten/hypothese-vormer/...`
+- Resultaten: `artefacten/hypothese-vormer/`
 
 ## 12. Change Log
 
 | Datum | Versie | Wijziging | Auteur |
 |------|--------|-----------|--------|
+| 2026-02-06 | 0.4.0 | Output-locaties gecorrigeerd volgens workspace-doctrine v1.4.0: docs/resultaten/ vervangen door artefacten/hypothese-vormer/ | Agent Smeder |
 | 2026-02-06 | 0.3.0 | Templates-sectie toegevoegd met verwijzing naar hypothese-template.md voor intent formuleer-hypothese | Agent Smeder |
 | 2026-02-04 | 0.2.0 | Hypothese-vormer gepositioneerd als SFW fase 01 agent en paden bijgewerkt naar artefacten/sfw.01.hypothese-vormer/ | Agent Smeder |
 | 2026-01-28 | 0.1.0 | Initiële charter hypothese-vormer | Agent Smeder |

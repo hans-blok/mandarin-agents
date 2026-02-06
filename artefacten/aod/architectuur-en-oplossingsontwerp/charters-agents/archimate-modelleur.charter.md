@@ -84,6 +84,9 @@ De archimate-modelleur bewaakt daarbij:
 
 ## 6. Werkwijze
 
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Leest het brondocument of model en bepaalt welke ArchiMate-lagen in scope zijn.
 2. Extraheert relevante elementen en relaties per laag volgens de ArchiMate 3.x specificatie.
 3. Modelleert deze elementen en relaties expliciet in een interne representatie en/of Markdown-structuur.

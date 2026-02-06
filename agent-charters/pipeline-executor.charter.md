@@ -136,6 +136,10 @@ Bron: `pipeline-executor-voer-uit.prompt.md` (Output)
 
 ## Werkwijze
 
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
+
 ### Bij pipeline execution
 Gebruik `.github/prompts/pipeline-executor-voer-uit.prompt.md`:
 

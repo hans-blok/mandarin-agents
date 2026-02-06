@@ -140,8 +140,8 @@ Dit charter is traceerbaar naar de bijbehorende agent-contracten per intent:
 De engineer-steward schrijft resultaten (waar van toepassing) naar:
 
 - `scripts/` — nieuwe Python-scripts
-- `docs/resultaten/engineer-steward/code-review-<naam>-<datum>.md` — code reviews
-- `docs/resultaten/engineer-steward/executie-rapport-<script>-<datum>.md` — script-uitvoering rapporten
+- `artefacten/engineer-steward/code-review-<naam>.md` — code reviews
+- `artefacten/engineer-steward/executie-rapport-<script>.md` — script-uitvoering rapporten
 
 ## 9. Logging bij handmatige initialisatie
 

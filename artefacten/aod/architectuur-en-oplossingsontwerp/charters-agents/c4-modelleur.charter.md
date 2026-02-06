@@ -164,6 +164,10 @@ Valideert bestaande C4-modellen voor volledigheid en consistentie:
 
 ## Werkwijze
 
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
+
 ### Bij System Context en Container Modelleren (Level 1 & 2)
 1. Lees brondocument en scan voor systeem-beschrijving
 2. Identificeer centrale software-systeem

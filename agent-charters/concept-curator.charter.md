@@ -101,10 +101,13 @@ De concept-curator bewaakt daarbij:
 
 ## 6. Werkwijze
 
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
 ### Voor intent: stel-concept-vast
 
 **Basis**: Alle concept-artefacten worden opgesteld volgens de vaste structuur van `concept-template.md` (zie sectie 9 Templates).
 
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. **Ontvang concept-verzoek**: naam, context, gebruik, eventuele verwarring
 2. **Analyseer context**: waar en hoe wordt het begrip gebruikt in workspace
 3. **Formuleer canonieke definitie**: max. 2 zinnen, normatief, B1-niveau

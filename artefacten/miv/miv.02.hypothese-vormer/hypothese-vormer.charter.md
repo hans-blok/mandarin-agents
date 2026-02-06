@@ -88,12 +88,15 @@ De hypothese-vormer leest verplicht de volgende bestanden voordat hij begint met
 
 2. **Output van de strategisch-analist**
    - Bestand: `strategische-intenties.md`
-   - Locatie: `artefacten/miv/miv.01.strategisch-analist/`
+   - Locatie: `artefacten/strategisch-analist/`
    - Doel: Begrijpt de strategische context en intenties die ten grondslag liggen aan de probleemruimte
    - De agent valideert dat hypotheses aansluiten bij de geëxpliciteerde strategische richting
 
 ### Uitvoering
 
+**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+
+0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Leest en internaliseert concept-definities en strategische intenties (zie Input-vereisten).
 2. Verzamelt context over thema/epic en probleemruimte.
 3. Benoemt de status quo: frictie, risico en huidige werkwijze.
@@ -148,8 +151,8 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 
 Deze agent gebruikt de volgende templates voor het structureren van output per intent:
 
-- **Intent `formuleer-hypothese`**: [`artefacten/miv/miv.02.hypothese-vormer/hypothese-template.md`](hypothese-template.md)  
-  _Template voor het formuleren van toetsbare hypotheses volgens het Click-framework van Jake Knapp: probleemkader, hypothese-format, aannames (max 3), toetsbaarheid en context_
+- **Intent `formuleer-hypothese`**: [`hypothese-template.md`](hypothese-template.md)  
+  _Template voor het formuleren van toetsbare hypotheses volgens het Click-framework van Jake Knapp: probleemkader, hypothese-format, aannames (max 3), toetsbaarheid en context. Gebaseerd op het template in `artefacten/sfw/sfw.01.hypothese-vormer/hypothese-template.md`_
 
 - **Intent `toets-richting`**: Geen specifieke template (vrije markdown-structuur)  
   _Output volgt structuur zoals gespecificeerd in agent-contract: richting-analyse zonder solution-bias_
@@ -163,12 +166,14 @@ De hypothese-vormer baseert zich op aangeleverde context en legt output traceerb
 
 - Governance: `beleid-mandarin-agents.md` + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid
-- Resultaten: `docs/resultaten/hypothese-vormer/...`
+- Resultaten: `artefacten/hypothese-vormer/`
 
 ## 12. Change Log
 
 | Datum | Versie | Wijziging | Auteur |
 |------|--------|-----------|--------|
+| 2026-02-06 | 0.5.0 | Output-locaties gecorrigeerd volgens workspace-doctrine v1.4.0: docs/resultaten/ vervangen door artefacten/hypothese-vormer/ | Agent Smeder |
+| 2026-02-06 | 0.4.1 | Template-verwijzing bij intent formuleer-hypothese verduidelijkt met bron-referentie naar sfw.01 template | Agent Smeder |
 | 2026-02-06 | 0.4.0 | Input-vereisten toegevoegd: verplicht lezen van concept-curator artefacten en strategische-intenties.md van strategisch-analist. Paden gecorrigeerd naar miv.02.hypothese-vormer | Agent Smeder |
 | 2026-02-06 | 0.3.0 | Templates-sectie toegevoegd met verwijzing naar hypothese-template.md voor intent formuleer-hypothese | Agent Smeder |
 | 2026-02-04 | 0.2.0 | Hypothese-vormer gepositioneerd als SFW fase 01 agent en paden bijgewerkt naar artefacten/sfw.01.hypothese-vormer/ | Agent Smeder |

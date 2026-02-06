@@ -209,7 +209,7 @@ De Formaat-Vertaler schrijft resultaten naar:
 
 - **Geconverteerde documenten**: locatie zoals opgegeven in output-bestand parameter
 - **Conversie-rapporten**: console output met details, waarschuwingen en validatie
-- **Logboeken**: `docs/resultaten/formaat-vertaler/conversie-<datum>.log` (optioneel)
+- **Logboeken**: `artefacten/formaat-vertaler/conversie.log` (optioneel)
 
 ---
 
