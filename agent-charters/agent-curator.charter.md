@@ -122,7 +122,22 @@ wanneer de folder niet bestaat, maakt hij de folder aan.
 
 Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
-## 9. Herkomstverantwoording
+## 9. Logging bij handmatige initialisatie
+
+Wanneer de **agent-curator** handmatig wordt geïnitieerd (dus niet via een geautomatiseerde pipeline of runner), wordt een logbestand weggeschreven naar:
+
+- **Locatie**: `logs/`
+- **Bestandsnaam**: `yyyyddmm.HHmm agent-curator.log`  
+  _(jaar, dag, maand, 24-uurs tijd zonder dubbele punt, gevolgd door een spatie en de canonieke agent-naam)_
+
+Het logbestand bevat ten minste:
+1. **Gelezen bestanden**: Lijst met paden van alle bestanden die zijn gelezen tijdens de uitvoering
+2. **Aangepaste bestanden**: Lijst met paden van alle bestanden die zijn gewijzigd
+3. **Aangemaakte bestanden**: Lijst met paden van alle bestanden die nieuw zijn aangemaakt
+
+Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt voor alle mandarin-agents bij handmatige initialisatie.
+
+## 10. Herkomstverantwoording
 
 - Dit charter volgt de structuur uit `templates/agent-charter.template.md` en gebruikt `templates/agent-prompt.template.yaml` en `templates/agent-contract.template.md` als norm voor de door agent-curator ontworpen artefacten.
 - Het veld **Template** in de header verwijst alleen naar een **agent-specifiek uitvoertemplate** (bijvoorbeeld in `templates/`); als er geen eigen template is, wordt dit veld gevuld met `-`.
@@ -131,7 +146,7 @@ Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagb
 - Governance- en doctrines: `beleid-mandarin-agents.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en de norm `agent-charter-normering.md` onder `governance-artefacten/agent-enablement/`.
 - Agent-contracten en prompt-metadata: zie sectie Traceerbaarheid.
 
-## 10. Change Log
+## 11. Change Log
 
 | Datum | Versie | Wijziging | Auteur |
 |------|--------|-----------|--------|

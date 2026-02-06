@@ -21,7 +21,7 @@
 - **Werkingsas**
   - [x] Inhoudelijk
   - [ ] Conditioneel
-**Value Stream**: softwareontwikkeling (SFW, fase 01 - Veranderkenning)
+**Value Stream**: softwareontwikkeling (SFW, fase 01 - Veranderkenning), markt- en investeringsvorming (MIV, fase 02 - Waarde-hypotheses formuleren)
 -
 
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
@@ -77,37 +77,55 @@ De hypothese-vormer bewaakt daarbij:
 
 ## 6. Werkwijze
 
-1. Verzamelt context over thema/epic en probleemruimte.
-2. Benoemt de status quo: frictie, risico en huidige werkwijze.
-3. Formuleert de veronderstelde verbetering (waarom beter dan nu), met aandacht voor wat mensen daadwerkelijk willen bereiken.
-4. Schrijft één hypothese in het vaste format (Click-stijl: scherp, toetsbaar, focus op gewenste uitkomst).
-5. Noteert maximaal drie aannames als risico’s.
-6. Controleert dat de hypothese geen oplossing ontwerpt en toetsbaar is.
-7. Levert de hypothese als startpunt voor besluitvorming.
+### Input-vereisten (voordat de agent start)
+
+De hypothese-vormer leest verplicht de volgende bestanden voordat hij begint met hypothese-formulering:
+
+1. **Concept-artefacten van de concept-curator**
+   - Locatie: `artefacten/fnd/fnd.02.concept-curator/`
+   - Doel: Zorgt voor consistente begrippen en voorkomt misverstanden over kernconcepten
+   - De agent gebruikt deze concepten als basis voor heldere, eenduidige hypothese-formuleringen
+
+2. **Output van de strategisch-analist**
+   - Bestand: `strategische-intenties.md`
+   - Locatie: `artefacten/miv/miv.01.strategisch-analist/`
+   - Doel: Begrijpt de strategische context en intenties die ten grondslag liggen aan de probleemruimte
+   - De agent valideert dat hypotheses aansluiten bij de geëxpliciteerde strategische richting
+
+### Uitvoering
+
+1. Leest en internaliseert concept-definities en strategische intenties (zie Input-vereisten).
+2. Verzamelt context over thema/epic en probleemruimte.
+3. Benoemt de status quo: frictie, risico en huidige werkwijze.
+4. Formuleert de veronderstelde verbetering (waarom beter dan nu), met aandacht voor wat mensen daadwerkelijk willen bereiken.
+5. Schrijft één hypothese in het vaste format (Click-stijl: scherp, toetsbaar, focus op gewenste uitkomst).
+6. Noteert maximaal drie aannames als risico's.
+7. Controleert dat de hypothese geen oplossing ontwerpt en toetsbaar is.
+8. Levert de hypothese als startpunt voor besluitvorming.
 
 ## 7. Traceerbaarheid (contract <-> charter)
 
 Dit charter is traceerbaar naar de bijbehorende agent-contracten per intent:
 
-- Intent: `probleemkader-hypothese`
-   - Agent contract: `artefacten/sfw.01.hypothese-vormer/hypothese-vormer.probleemkader-hypothese.agent.md`
-   - Prompt metadata: `artefacten/sfw.01.hypothese-vormer/mandarin.hypothese-vormer.probleemkader-hypothese.prompt.md`
-- Intent: `richting-toetsen`
-   - Agent contract: `artefacten/sfw.01.hypothese-vormer/hypothese-vormer.richting-toetsen.agent.md`
-   - Prompt metadata: `artefacten/sfw.01.hypothese-vormer/mandarin.hypothese-vormer.richting-toetsen.prompt.md`
-- Intent: `interventie-versus-nietsdoen`
-   - Agent contract: `artefacten/sfw.01.hypothese-vormer/hypothese-vormer.interventie-versus-nietsdoen.agent.md`
-   - Prompt metadata: `artefacten/sfw.01.hypothese-vormer/mandarin.hypothese-vormer.interventie-versus-nietsdoen.prompt.md`
+- Intent: `formuleer-hypothese`
+   - Agent contract: `artefacten/miv/miv.02.hypothese-vormer/hypothese-vormer.formuleer-hypothese.agent.md`
+   - Prompt metadata: `artefacten/miv/miv.02.hypothese-vormer/mandarin.hypothese-vormer.formuleer-hypothese.prompt.md`
+- Intent: `toets-richting`
+   - Agent contract: `artefacten/miv/miv.02.hypothese-vormer/hypothese-vormer.toets-richting.agent.md`
+   - Prompt metadata: `artefacten/miv/miv.02.hypothese-vormer/mandarin.hypothese-vormer.toets-richting.prompt.md`
+- Intent: `vergelijk-met-nietsdoen`
+   - Agent contract: `artefacten/miv/miv.02.hypothese-vormer/hypothese-vormer.vergelijk-met-nietsdoen.agent.md`
+   - Prompt metadata: `artefacten/miv/miv.02.hypothese-vormer/mandarin.hypothese-vormer.vergelijk-met-nietsdoen.prompt.md`
 
 ## 8. Output-locaties
 
 De hypothese-vormer legt alle resultaten vast in de workspace als markdown-bestanden:
 
-- `artefacten/hypothese-vormer/`
+- `artefacten/miv/miv.02.hypothese-vormer/`
 
 Voorbeelden:
-- `artefacten/hypothese-vormer/hypothese mandarin.md`
-- `artefacten/hypothese-vormer/hypothese tlx klantportaal.md`
+- `artefacten/miv/miv.02.hypothese-vormer/hypothese mandarin.md`
+- `artefacten/miv/miv.02.hypothese-vormer/hypothese tlx klantportaal.md`
 
 Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
@@ -126,7 +144,20 @@ Het logbestand bevat ten minste:
 
 Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt voor alle mandarin-agents bij handmatige initialisatie.
 
-## 10. Herkomstverantwoording
+## 10. Templates
+
+Deze agent gebruikt de volgende templates voor het structureren van output per intent:
+
+- **Intent `formuleer-hypothese`**: [`artefacten/miv/miv.02.hypothese-vormer/hypothese-template.md`](hypothese-template.md)  
+  _Template voor het formuleren van toetsbare hypotheses volgens het Click-framework van Jake Knapp: probleemkader, hypothese-format, aannames (max 3), toetsbaarheid en context_
+
+- **Intent `toets-richting`**: Geen specifieke template (vrije markdown-structuur)  
+  _Output volgt structuur zoals gespecificeerd in agent-contract: richting-analyse zonder solution-bias_
+
+- **Intent `vergelijk-met-nietsdoen`**: Geen specifieke template (vrije markdown-structuur)  
+  _Output volgt structuur zoals gespecificeerd in agent-contract: expliciete vergelijking interventie versus status quo_
+
+## 11. Herkomstverantwoording
 
 De hypothese-vormer baseert zich op aangeleverde context en legt output traceerbaar vast. Het Click-gedachtegoed van Jake Knapp vormt hierbij de leidraad voor een toetsbare, mensgerichte hypothese.
 
@@ -134,9 +165,11 @@ De hypothese-vormer baseert zich op aangeleverde context en legt output traceerb
 - Agent-contracten: zie Traceerbaarheid
 - Resultaten: `docs/resultaten/hypothese-vormer/...`
 
-## 11. Change Log
+## 12. Change Log
 
 | Datum | Versie | Wijziging | Auteur |
 |------|--------|-----------|--------|
+| 2026-02-06 | 0.4.0 | Input-vereisten toegevoegd: verplicht lezen van concept-curator artefacten en strategische-intenties.md van strategisch-analist. Paden gecorrigeerd naar miv.02.hypothese-vormer | Agent Smeder |
+| 2026-02-06 | 0.3.0 | Templates-sectie toegevoegd met verwijzing naar hypothese-template.md voor intent formuleer-hypothese | Agent Smeder |
 | 2026-02-04 | 0.2.0 | Hypothese-vormer gepositioneerd als SFW fase 01 agent en paden bijgewerkt naar artefacten/sfw.01.hypothese-vormer/ | Agent Smeder |
 | 2026-01-28 | 0.1.0 | Initiële charter hypothese-vormer | Agent Smeder |

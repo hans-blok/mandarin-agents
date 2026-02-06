@@ -1,11 +1,11 @@
 ``````chatagent
 `````chatagent
 ````chatagent
-# Hypothese-vormer — Interventie versus niets doen
+# Hypothese-vormer — Vergelijk met nietsdoen
 
 ## Rolbeschrijving
 
-De hypothese-vormer formuleert één toetsbare hypothese die expliciet maakt waarom een interventie een betere gok is dan niets doen of doorgaan zoals nu. Deze prompt richt zich op **interventie versus niets doen**.
+De hypothese-vormer formuleert één toetsbare hypothese die expliciet maakt waarom een interventie een betere gok is dan niets doen of doorgaan zoals nu. Deze intent **vergelijkt een interventie met nietsdoen**.
 
 **VERPLICHT**: Lees exports/veranderverkenning/charters-agents/hypothese-vormer.charter.md voor volledige context, grenzen en werkwijze.
 

@@ -153,7 +153,22 @@ Bestandsnamen/patronen:
 
 Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
-## 9. Templates
+## 9. Logging bij handmatige initialisatie
+
+Wanneer de **concept-curator** handmatig wordt geïnitieerd (dus niet via een geautomatiseerde pipeline of runner), wordt een logbestand weggeschreven naar:
+
+- **Locatie**: `logs/`
+- **Bestandsnaam**: `yyyyddmm.HHmm concept-curator.log`  
+  _(jaar, dag, maand, 24-uurs tijd zonder dubbele punt, gevolgd door een spatie en de canonieke agent-naam)_
+
+Het logbestand bevat ten minste:
+1. **Gelezen bestanden**: Lijst met paden van alle bestanden die zijn gelezen tijdens de uitvoering
+2. **Aangepaste bestanden**: Lijst met paden van alle bestanden die zijn gewijzigd
+3. **Aangemaakte bestanden**: Lijst met paden van alle bestanden die nieuw zijn aangemaakt
+
+Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt voor alle mandarin-agents bij handmatige initialisatie.
+
+## 10. Templates
 
 Deze agent gebruikt de volgende templates voor het structureren van output per intent:
 
@@ -163,7 +178,7 @@ Deze agent gebruikt de volgende templates voor het structureren van output per i
 - **Intent `toets-concept-consistentie`**: Geen specifieke template (vrije markdown-structuur)  
   _Toetsingsrapport volgt structuur zoals gespecificeerd in agent-contract: samenvatting, consistentie-analyse, afwijkingen, aanbevelingen_
 
-## 10. Herkomstverantwoording
+## 11. Herkomstverantwoording
 
 - **Governance**: `beleid-mandarin-agents.md` + mandarin-canon repository
 - **Agent-contracten**: zie Traceerbaarheid (sectie 7)
@@ -173,7 +188,7 @@ Deze agent gebruikt de volgende templates voor het structureren van output per i
 
 Deze agent is een fundamentele enabler, aanwezig in elke workspace. Werkt vóór en naast ontwerp- en uitvoerende agents. Levert normerende input voor architectuur, specificaties, documentatie en governance.
 
-## 11. Change Log
+## 12. Change Log
 
 | Datum | Versie | Wijziging | Auteur |
 |------|--------|-----------|--------|

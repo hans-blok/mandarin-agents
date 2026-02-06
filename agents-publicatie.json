@@ -1,7 +1,7 @@
 {
   "versie": "3.0",
   "publicatiedatum": "2026-02-06",
-  "digest": "68f0b",
+  "digest": "fa897",
   "valueStreams": [
     {
       "naam": "Agent Ecosysteem Ontwikkeling",
@@ -198,6 +198,18 @@
               "aantalRunners": 0
             }
           ]
+        },
+        {
+          "naam": "Waarde-hypotheses formuleren",
+          "volgnummer": "02",
+          "agents": [
+            {
+              "naam": "hypothese-vormer",
+              "aantalContracts": 3,
+              "aantalTemplates": 1,
+              "aantalRunners": 0
+            }
+          ]
         }
       ]
     },
@@ -209,12 +221,6 @@
           "naam": "Veranderkenning",
           "volgnummer": "01",
           "agents": [
-            {
-              "naam": "hypothese-vormer",
-              "aantalContracts": 3,
-              "aantalTemplates": 0,
-              "aantalRunners": 0
-            },
             {
               "naam": "niam-analist",
               "aantalContracts": 5,
