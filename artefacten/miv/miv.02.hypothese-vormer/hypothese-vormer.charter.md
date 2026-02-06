@@ -94,7 +94,9 @@ De hypothese-vormer leest verplicht de volgende bestanden voordat hij begint met
 
 ### Uitvoering
 
-**Bij handmatige start**: gebruik log_manual_start met de bestanden die deze agent leest, wijzigt of aanmaakt.
+**Bij handmatige start**:
+“De agent voert na elke substantiële lees- of schrijfactie het script 
+logging_utils.py uit met de relevante parameters (bestand, actie, timestamp), zodat alle acties centraal en uniform worden gelogd.”
 
 0. Verzamel paden van input/output-bestanden; roep logging-helper aan; ga daarna pas verder.
 1. Leest en internaliseert concept-definities en strategische intenties (zie Input-vereisten).
