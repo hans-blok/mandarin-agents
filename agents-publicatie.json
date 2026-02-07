@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "gegenereerd_op": "2026-02-06T22:15:30.374127",
-    "aantal_agents": 25,
+    "gegenereerd_op": "2026-02-07T09:47:33.012406",
+    "aantal_agents": 26,
     "versie": "1.0"
   },
   "agents": [
@@ -286,6 +286,19 @@
       ],
       "runner": false,
       "contracten": 3
+    },
+    {
+      "naam": "investerings-verteller",
+      "value_stream": "miv",
+      "fase": "02",
+      "folder": "artefacten\\miv\\miv.02.investerings-verteller",
+      "charter": true,
+      "intents": [
+        "schrijf-30-seconden-pitch",
+        "schrijf-uitgebreide-pitch"
+      ],
+      "runner": false,
+      "contracten": 2
     },
     {
       "naam": "hypothese-vormer",

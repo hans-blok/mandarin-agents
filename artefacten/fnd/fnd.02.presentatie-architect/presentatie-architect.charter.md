@@ -1,6 +1,6 @@
 # Agent Charter: presentatie-architect
 
-**Versie**: 1.0  
+**Versie**: 1.1  
 **Datum**: 2026-02-06  
 **Status**: Actief
 
@@ -62,7 +62,7 @@ Zorgt voor consistente, professionele en toegankelijke visuele presentatie van k
 - Breakpoint-specificaties voor responsive design
 
 **Output**:
-- CSS/SCSS bestanden in `templates/css/`
+- CSS/SCSS bestanden in `docs/styles/`
 - Stylesheet-documentatie met class-conventies
 
 **Validatie**:
@@ -205,7 +205,7 @@ Zorgt voor consistente, professionele en toegankelijke visuele presentatie van k
 | Artefact-type | Locatie | Naamgeving | Voorbeeld |
 |---------------|---------|------------|-----------|
 | HTML templates | `templates/html/` | `{template-doel}.html.jinja2` | `base.html.jinja2`, `article.html.jinja2` |
-| Stylesheets | `templates/css/` | `{stylesheet-doel}.{css\|scss}` | `main.scss`, `print.css` |
+| Stylesheets | `docs/styles/` | `{stylesheet-doel}.{css\|scss}` | `main.scss`, `print.css` |
 | Design tokens | `templates/` | `design-tokens.yml` | `design-tokens.yml` |
 | Documentatie | `templates/docs/` | `{asset-type}-guide.md` | `template-guide.md`, `stylesheet-guide.md` |
 
@@ -269,6 +269,7 @@ Zorgt voor consistente, professionele en toegankelijke visuele presentatie van k
 ## 12. Evolutie en Onderhoud
 
 **Versiehistorie**:
+- v1.1 (2026-02-06): Stylesheet-output verplaatst naar docs/styles/ voor betere integratie met mkdocs
 - v1.0 (2026-02-06): Initiële charter op basis van boundary en contracten
 
 **Review-cyclus**: Elk kwartaal of bij significante branding-wijzigingen
@@ -313,7 +314,7 @@ Zorgt voor consistente, professionele en toegankelijke visuele presentatie van k
 
 **Gegenereerd door**: agent-smeder (intent: `schrijf-charter`)  
 **Datum**: 2026-02-06  
-**Versie**: 1.0
+**Versie**: 1.1
 
 ---
 
