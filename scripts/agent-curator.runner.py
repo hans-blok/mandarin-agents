@@ -1,18 +1,15 @@
+#!/usr/bin/env python3
 """
 Agent Runner: agent-curator
 
-Beheert agent-lifecycle: cureert boundaries, publiceert overzichten, 
-archiveert en tracked agent-evolutie.
+Deterministic executor conforme agent-runner.template.md normen.
+Beheert agent-lifecycle via twee front doors: publiceer-json en publiceer-overzicht.
 
-Input: Command-line argumenten (--scope volledig|incrementeel)
-Output: agents-publicatie.json, markdown archief in docs/resultaten/
+Front Doors:
+- publiceer-json: Genereert agents-publicatie.json conform schema v2.0 (externe consumptie)
+- publiceer-overzicht: Genereert markdown overzichten in artefacten/agent-curator/ (interne documentatie)
 
-Intents:
-- publiceer-agents-overzicht: Genereert JSON + markdown conform schema v2.0
-- archiveer-agent-versie: Slaat agent-snapshot op in archief
-- cureer-boundary: Analyseert en valideert agent-boundary
-
-Conformiteit: agents-publicatie-schema.json v2.0
+Conformiteit: agents-publicatie-schema.json v2.0, runner-template.md normen
 Datum: 2026-02-08
 Versie: 2.0
 """
@@ -179,19 +176,30 @@ def publiceer_agents_json(data: Dict[str, Dict[str, List[Dict]]], output_path: P
             'fasen': fasen
         })
     
+    # Timestamp voor publicatie header
+    publicatie_timestamp = datetime.now()
+    
     # Bouw finale JSON structuur conform schema v2.0
     publicatie = {
         "metadata": {
-            "gegenereerd_op": datetime.now().isoformat(),
+            "publicatie_timestamp": publicatie_timestamp.isoformat(),
+            "publicatie_datum": publicatie_timestamp.strftime("%Y-%m-%d"),
+            "publicatie_tijd": publicatie_timestamp.strftime("%H:%M:%S"),
+            "gegenereerd_op": publicatie_timestamp.isoformat(),
             "versie": "2.0",
             "aantal_value_streams": len(value_streams),
-            "aantal_agents": total_agents
+            "aantal_agents": total_agents,
+            "generator": "agent-curator.runner.py v2.0"
         },
         "value_streams": value_streams
     }
     
     output_path.write_text(json.dumps(publicatie, indent=2, ensure_ascii=False), encoding="utf-8")
+    
+    # Log publicatie timestamp in output
+    timestamp_str = publicatie_timestamp.strftime("%Y-%m-%d %H:%M:%S")
     print(f"[INFO] JSON gepubliceerd: {output_path} (schema v2.0)")
+    print(f"[INFO] Publicatie timestamp: {timestamp_str}")
 
 
 def publiceer_agents_markdown(data: Dict[str, Dict[str, List[Dict]]], output_path: Path) -> None:
@@ -204,21 +212,66 @@ def publiceer_agents_markdown(data: Dict[str, Dict[str, List[Dict]]], output_pat
     """
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
-    # Calculate totals
+    # Calculate totals and statistics
     total_agents = sum(len(agents) for vs_data in data.values() for agents in vs_data.values())
+    total_value_streams = len(data)
     
-    # Genereer markdown
+    # Bouw overzichtstabel data
+    tabel_rijen = []
+    for vs_code in sorted(data.keys()):
+        vs_data = data[vs_code]
+        aantal_fasen = len(vs_data)
+        aantal_agents = sum(len(agents) for agents in vs_data.values())
+        
+        # Bereken totalen per artifact type per value stream
+        total_agent_files = sum(agent['aantal_agent_files'] for agents in vs_data.values() for agent in agents)
+        total_prompts = sum(agent['aantal_prompts'] for agents in vs_data.values() for agent in agents)
+        total_templates = sum(agent['aantal_templates'] for agents in vs_data.values() for agent in agents)
+        total_charters = sum(agent['aantal_charters'] for agents in vs_data.values() for agent in agents)
+        
+        tabel_rijen.append({
+            'vs': vs_code.upper(),
+            'fasen': aantal_fasen,
+            'agents': aantal_agents,
+            'files': total_agent_files,
+            'prompts': total_prompts,
+            'templates': total_templates,
+            'charters': total_charters
+        })
+
+    # Genereer markdown met overzichtstabel
     lines = [
-        f"# Agents Publicatie v2.0 - {timestamp}",
+        f"# Agents Overzicht - {timestamp}",
         "",
-        "**Samenvatting**:",
-        f"- Totaal aantal agents: {total_agents}",
-        f"- Value streams: {', '.join(sorted(data.keys()))}",
-        f"- Schema versie: 2.0",
+        "## Globaal Overzicht",
+        "",
+        "| Value Stream | Fasen | Agents | Agent Files | Prompts | Templates | Charters |",
+        "|--------------|-------|--------|-------------|---------|-----------|----------|",
+    ]
+    
+    # Voeg tabel rijen toe
+    for rij in tabel_rijen:
+        lines.append(f"| {rij['vs']} | {rij['fasen']} | {rij['agents']} | {rij['files']} | {rij['prompts']} | {rij['templates']} | {rij['charters']} |")
+    
+    # Voeg totaalrij toe
+    grand_total_files = sum(rij['files'] for rij in tabel_rijen)
+    grand_total_prompts = sum(rij['prompts'] for rij in tabel_rijen)
+    grand_total_templates = sum(rij['templates'] for rij in tabel_rijen)
+    grand_total_charters = sum(rij['charters'] for rij in tabel_rijen)
+    
+    lines.extend([
+        f"| **TOTAAL** | **{len(tabel_rijen)}** | **{total_agents}** | **{grand_total_files}** | **{grand_total_prompts}** | **{grand_total_templates}** | **{grand_total_charters}** |",
+        "",
+        "## Samenvatting",
+        "",
+        f"- **Totaal agents**: {total_agents}",
+        f"- **Value streams**: {total_value_streams} ({', '.join(sorted(data.keys()))})",
+        f"- **Detail niveau**: uitgebreid",
+        f"- **Scope**: volledig",
         "",
         "---",
         ""
-    ]
+    ])
     
     # Per value stream en fase
     for vs_code in sorted(data.keys()):
@@ -262,11 +315,11 @@ def publiceer_agents_markdown(data: Dict[str, Dict[str, List[Dict]]], output_pat
     print(f"[INFO] Markdown archief: {output_path}")
 
 
-def handle_publiceer_agents_overzicht(scope: str = "volledig") -> int:
+def handle_publiceer_json(scope: str = "volledig") -> int:
     """
-    Intent: publiceer-agents-overzicht
+    Intent: publiceer-json
     
-    Genereert agents-publicatie.json en markdown archief conform schema v2.0.
+    Genereert agents-publicatie.json conform schema v2.0 voor externe consumptie.
     
     Args:
         scope: "volledig" of "incrementeel" (voor nu alleen volledig)
@@ -274,18 +327,18 @@ def handle_publiceer_agents_overzicht(scope: str = "volledig") -> int:
     Returns:
         0 bij succes, 1 bij fout
     """
-    print("\nAgent Curator — Publiceer Agents Overzicht v2.0")
-    print("=" * 60)
+    print("\nAgent Curator — Publiceer JSON v2.0")
+    print("=" * 50)
     print()
     
     # Scan agents
     data = scan_agent_folders()
     
     if not data:
-        print("[ERROR] No agents found")
+        print("[ERROR] Geen agents gevonden")
         return 1
     
-    # Calculate statistics
+    # Calculate statistics  
     total_agents = sum(len(agents) for vs_data in data.values() for agents in vs_data.values())
     total_value_streams = len(data)
     
@@ -294,48 +347,151 @@ def handle_publiceer_agents_overzicht(scope: str = "volledig") -> int:
         vs_total = sum(len(agents) for agents in data[vs].values())
         print(f"  - {vs}: {len(data[vs])} fasen, {vs_total} agents")
     
-    # Publiceer JSON (root, voor externe consumptie)
+    # Publiceer JSON (workspace root voor externe consumptie)
     json_path = Path("agents-publicatie.json")
     publiceer_agents_json(data, json_path)
     
-    # Publiceer markdown archief
-    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-    md_path = Path(f"docs/resultaten/agent-publicaties/agents-publicatie-v2-{timestamp}.md")
-    publiceer_agents_markdown(data, md_path)
-    
-    print(f"\n[SUCCESS] Publicatie v2.0 voltooid!")
-    print(f"  - JSON: {json_path} (schema v2.0)")
-    print(f"  - Archief: {md_path}")
+    print(f"\n[SUCCESS] JSON publicatie voltooid!")
+    print(f"  - Bestand: {json_path} (schema v2.0)")
     print(f"  - Value streams: {total_value_streams}")
     print(f"  - Total agents: {total_agents}")
     
     return 0
 
 
-def main() -> int:
+def handle_publiceer_overzicht(scope: str = "volledig", detail_niveau: str = "uitgebreid") -> int:
     """
-    Main entry point voor agent-curator runner v2.0.
+    Intent: publiceer-overzicht
+    
+    Genereert markdown overzicht in artefacten/agent-curator/ voor interne documentatie.
+    
+    Args:
+        scope: "volledig", "value-stream", of "fase"
+        detail_niveau: "basis" of "uitgebreid"
     
     Returns:
         0 bij succes, 1 bij fout
     """
-    parser = argparse.ArgumentParser(description="Agent Curator v2.0 - Publiceer agents overzicht conform schema v2.0")
-    parser.add_argument("--scope", choices=["volledig", "incrementeel"], default="volledig",
-                       help="Publicatie scope (volledig = alle agents, incrementeel = alleen changes)")
-    parser.add_argument("--version", action="version", version="agent-curator v2.0 (schema v2.0)")
+    print("\nAgent Curator — Publiceer Overzicht")
+    print("=" * 50)
+    print()
+    
+    # Scan agents
+    data = scan_agent_folders()
+    
+    if not data:
+        print("[ERROR] Geen agents gevonden")
+        return 1
+    
+    # Calculate statistics
+    total_agents = sum(len(agents) for vs_data in data.values() for agents in vs_data.values())
+    total_value_streams = len(data)
+    
+    print(f"\n[INFO] Gevonden {total_agents} agents in {total_value_streams} value streams")
+    
+    # Create artefacten/agent-curator/ folder if not exists
+    output_dir = Path("artefacten/agent-curator")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Generate detailed markdown overview
+    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    md_path = output_dir / f"agents-overzicht-{timestamp}.md"
+    
+    # Gebruik de nieuwe publiceer_agents_markdown functie met overzichtstabel
+    publiceer_agents_markdown(data, md_path)
+
+    print(f"\n[SUCCESS] Overzicht publicatie voltooid!")
+    print(f"  - Bestand: {md_path}")
+    print(f"  - Detail niveau: {detail_niveau}")
+    print(f"  - Agents gedocumenteerd: {total_agents}")
+    
+    return 0
+
+
+def main() -> int:
+    """
+    Front Door: Main entry point voor agent-curator runner v2.0.
+    
+    Supports two intents:
+    - publiceer-json: Genereert JSON voor externe consumptie
+    - publiceer-overzicht: Genereert markdown voor interne documentatie
+    
+    Returns:
+        0 bij succes, 1-99 bij fouten (conform runner template)
+    """
+    parser = argparse.ArgumentParser(
+        description="Agent Curator v2.0 - Deterministic runner conform agent-runner template",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Intents:
+  publiceer-json      Genereert agents-publicatie.json (schema v2.0) 
+  publiceer-overzicht Genereert markdown overzichten in artefacten/
+
+Examples:
+  %(prog)s publiceer-json --scope volledig
+  %(prog)s publiceer-overzicht --detail-niveau uitgebreid
+"""
+    )
+    
+    # Front door: Intent selection (required)
+    parser.add_argument(
+        "intent", 
+        choices=["publiceer-json", "publiceer-overzicht"],
+        help="Intent to execute"
+    )
+    
+    # Common parameters
+    parser.add_argument(
+        "--scope", 
+        choices=["volledig", "incrementeel", "value-stream", "fase"], 
+        default="volledig",
+        help="Publicatie scope (default: volledig)"
+    )
+    
+    # Intent-specific parameters
+    parser.add_argument(
+        "--detail-niveau",
+        choices=["basis", "uitgebreid"],
+        default="uitgebreid", 
+        help="Detail niveau voor publiceer-overzicht (default: uitgebreid)"
+    )
+    
+    parser.add_argument(
+        "--version", 
+        action="version", 
+        version="agent-curator runner v2.0 (schema v2.0, deterministic)"
+    )
     
     args = parser.parse_args()
     
+    # Input Quality Gate
+    print(f"[INFO] Agent Curator Runner v2.0")
+    print(f"[INFO] Intent: {args.intent}")
+    print(f"[INFO] Scope: {args.scope}")
+    if args.intent == "publiceer-overzicht":
+        print(f"[INFO] Detail niveau: {args.detail_niveau}")
+    
     try:
-        return handle_publiceer_agents_overzicht(args.scope)
+        # Route to appropriate handler based on intent
+        if args.intent == "publiceer-json":
+            return handle_publiceer_json(args.scope)
+        elif args.intent == "publiceer-overzicht":
+            return handle_publiceer_overzicht(args.scope, args.detail_niveau)
+        else:
+            print(f"[ERROR] Onbekende intent: {args.intent}", file=sys.stderr)
+            return 1
+            
     except FileNotFoundError as e:
         print(f"\n[ERROR] Bestand/folder niet gevonden: {e}", file=sys.stderr)
         return 1
     except json.JSONDecodeError as e:
         print(f"\n[ERROR] JSON parsing fout: {e}", file=sys.stderr)
         return 2
+    except PermissionError as e:
+        print(f"\n[ERROR] Toegangsfout: {e}", file=sys.stderr)
+        return 3
     except Exception as e:
-        print(f"\n[ERROR] Onverwachte fout bij publiceren: {e}", file=sys.stderr)
+        print(f"\n[ERROR] Onverwachte fout bij {args.intent}: {e}", file=sys.stderr)
         import traceback
         traceback.print_exc()
         return 99

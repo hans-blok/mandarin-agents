@@ -1,14 +1,47 @@
+# Bootstrap-Header
+
+- Constitutie:
+  - Pad: `grondslagen/0.algemeen/constitutie.md`
+  - Versie/Digest: 2.0.0
+- Value Stream: Architectuur- en Oplossingsontwerp (AOD)
+- Geraadpleegde Grondslagen:
+  - `grondslagen/0.algemeen/*`
+  - `grondslagen/value-streams/aod/*`
+- Actor:
+  - Naam/ID: mandarin-architect
+  - Versie: 1.0.0
+- Bootstrapping Tijdstip: 2026-02-08T15:40:00Z
+
+---
+
 # Charter — Mandarin Architect
 
 **Agent**: mandarin-architect  
 **Domein**: architectuur  
-**Agent-soort**:
-- [x] Adviserend
-- [ ] Beheeragent
-- [ ] Uitvoerend
 **Value Stream**: Architectuur- en Oplossingsontwerp (AOD, fase 01 - Vraagverkenning)
 **Template**: agent-boundary.template.md
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
+
+## Classificatie van de agent
+
+- **Inhoudelijke as**
+  - [x] Ecosysteem-normerend
+  - [ ] Structuur-normerend
+  - [ ] Structuurrealiserend
+  - [ ] Beschrijvend
+  - [ ] Curator
+
+- **Inzet-as**
+  - [ ] Value-stream-specifiek
+  - [x] Value-stream-overstijgend
+
+- **Vorm-as**
+  - [x] Vormvast
+  - [ ] Representatieomvormend
+
+- **Werkingsas**
+  - [x] Inhoudelijk
+  - [ ] Conditioneel
 
 ---
 

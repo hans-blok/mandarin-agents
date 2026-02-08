@@ -1,3 +1,19 @@
+# Bootstrap-Header
+
+- Constitutie:
+  - Pad: `grondslagen/0.algemeen/constitutie.md`
+  - Versie/Digest: 2.0.0
+- Value Stream: Agent Ecosysteem Ontwikkeling (AEO)
+- Geraadpleegde Grondslagen:
+  - `grondslagen/0.algemeen/*`
+  - `grondslagen/value-streams/aeo/*`
+- Actor:
+  - Naam/ID: workflow-architect
+  - Versie: 1.0.0
+- Bootstrapping Tijdstip: 2026-02-08T15:40:00Z
+
+---
+
 # Charter — Workflow Architect
 
 **Agent**: workflow-architect  

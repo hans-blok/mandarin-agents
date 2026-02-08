@@ -1,3 +1,19 @@
+# Bootstrap-Header
+
+- Constitutie:
+  - Pad: `grondslagen/.algemeen/constitutie.md`
+  - Versie/Digest: a1c1997
+- Value Stream: kvl.kennisvastlegging
+- Geraadpleegde Grondslagen:
+  - `grondslagen/.algemeen/*`
+  - `grondslagen/kvl.kennisvastlegging`
+- Actor:
+  - Naam/ID: artikel-schrijver
+  - Versie: 1.0.0
+- Bootstrapping Tijdstip: 2026-02-08T16:10:00Z
+
+---
+
 # Charter — De Artikelschrijver
 
 **Agent**: artikel-schrijver  

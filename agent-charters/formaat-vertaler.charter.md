@@ -1,3 +1,18 @@
+# Bootstrap-Header
+
+- Constitutie:
+  - Pad: `grondslagen/0.algemeen/constitutie.md`
+  - Versie/Digest: 2.0.0
+- Value Stream: Foundation (FND) - Value-stream-overstijgend
+- Geraadpleegde Grondslagen:
+  - `grondslagen/0.algemeen/*`
+- Actor:
+  - Naam/ID: formaat-vertaler
+  - Versie: 1.0.0
+- Bootstrapping Tijdstip: 2026-02-08T15:40:00Z
+
+---
+
 # Charter — Formaat-Vertaler
 
 **Agent**: formaat-vertaler  

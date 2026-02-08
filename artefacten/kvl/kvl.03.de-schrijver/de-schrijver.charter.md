@@ -1,3 +1,18 @@
+# Bootstrap-Header
+
+- Constitutie:
+  - Pad: `grondslagen/0.algemeen/constitutie.md`
+  - Versie/Digest: 2.0.0
+- Value Stream: Kennisvastlegging (KNV)
+- Geraadpleegde Grondslagen:
+  - `grondslagen/0.algemeen/*`
+  - `grondslagen/value-streams/knv/*`
+- Actor:
+  - Naam/ID: de-schrijver
+  - Versie: 1.0.0
+- Bootstrapping Tijdstip: 2026-02-08T15:40:00Z
+
+---
 # Charter — De Schrijver
 
 **Agent**: de-schrijver  

@@ -1,5 +1,12 @@
 ---
-agent: <agent-naam>
+agent: mandarin.<agent-naam>
 intent: <intent-naam>
-charter_ref: @main:<pad-naar-charter>
+charter_ref: <pad-naar-charter.md>
+charter-acknowledgement:
+  charter-id: <agent-naam>
+  charter-versie: <charter-versie>
+  value-stream: <value-stream-code>
+  kritieke-grens: "<letterlijke tekst uit capability boundary sectie van charter>"
+  kritieke-output-eis: "<letterlijke tekst uit belangrijkste WEL-grens van charter>"
+  charter-evidence: "<Charter-Evidence phrase uit Bootstrap-Header van charter>"
 ---

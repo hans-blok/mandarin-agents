@@ -4,22 +4,22 @@ Agent Runner: agent-smeder
 Verantwoordelijk voor het smeden van nieuwe agents: legt agent-contracten vast,
 schrijft charters en genereert runners.
 
-Input: input/input.yml met YAML configuratie
+Input: input/input.md met YAML frontmatter
 Output: Agent-artefacten in artefacten/{value-stream}.{fase}.{agent-naam}/
 
 Intents:
-- leg-agent-contract-vast: Genereert agent-contracten en prompt-metadata (leest boundary)
+- leg-agent-contract-vast: Genereert agent-contracten en prompt-metadata
 - schrijf-charter: Creëert volledige agent-charter
 - schrijf-runner: Genereert Python runner-script
 
 Datum: 2026-02-06
-Versie: 1.2
+Versie: 1.0
 """
 
 import subprocess
 import sys
 from pathlib import Path
-from typing import List, Optional, Dict
+from typing import List, Optional
 import yaml
 import re
 
@@ -46,84 +46,35 @@ def log_agent_action(agent_naam: str, gelezen: Optional[List[str]] = None,
 
 def parse_input() -> dict:
     """
-    Leest input/input.yml en parseert YAML configuratie.
+    Leest input/input.md en parseert YAML frontmatter.
     
     Returns:
         Dictionary met intent, agent_naam en andere parameters
     
     Raises:
-        FileNotFoundError: Als input/input.yml niet bestaat
-        ValueError: Als YAML invalide is of verplichte velden ontbreken
+        FileNotFoundError: Als input/input.md niet bestaat
+        ValueError: Als YAML frontmatter invalide is
     """
-    input_file = Path("input/input.yml")
+    input_file = Path("input/input.md")
     
     if not input_file.exists():
         raise FileNotFoundError(f"Input bestand niet gevonden: {input_file}")
     
     content = input_file.read_text(encoding="utf-8")
-    params = yaml.safe_load(content)
     
-    if not params:
-        raise ValueError("Lege of invalide YAML in input.yml")
+    # Parse YAML frontmatter
+    yaml_match = re.match(r'^---\s*\n(.*?)\n---\s*\n', content, re.DOTALL)
+    if not yaml_match:
+        raise ValueError("Geen geldige YAML frontmatter gevonden in input.md")
     
-    # Controleer verplichte velden
+    frontmatter = yaml.safe_load(yaml_match.group(1))
+    
     required_fields = ["intent", "agent_naam"]
     for field in required_fields:
-        if field not in params:
-            raise ValueError(f"Verplicht veld '{field}' ontbreekt in input.yml")
+        if field not in frontmatter:
+            raise ValueError(f"Verplicht veld '{field}' ontbreekt in YAML frontmatter")
     
-    return params
-
-
-def parse_boundary_file(agent_naam: str) -> Dict:
-    """
-    Leest en parseert de boundary-file voor een agent.
-    
-    Args:
-        agent_naam: Naam van de agent
-    
-    Returns:
-        Dictionary met boundary-info: value_stream, fase, intents, etc.
-    
-    Raises:
-        FileNotFoundError: Als boundary-file niet bestaat
-    """
-    boundary_file = Path(f"agent-boundaries/{agent_naam}.boundary.md")
-    
-    if not boundary_file.exists():
-        raise FileNotFoundError(f"Boundary-file niet gevonden: {boundary_file}")
-    
-    content = boundary_file.read_text(encoding="utf-8")
-    
-    # Parse metadata
-    metadata = {}
-    
-    # Extract value stream en fase uit "Opereert in Value stream fasen" sectie
-    vs_match = re.search(r'## Opereert in Value stream fasen\s*\n- (\w+) \((\w+)\) - fase (\d+)', content)
-    if vs_match:
-        metadata['value_stream'] = vs_match.group(2).lower()  # FND -> fnd
-        metadata['fase'] = vs_match.group(3).zfill(2)  # 2 -> 02
-    
-    # Extract intents uit "Voorstellen agent contracten (intents)" sectie
-    intents = []
-    intent_section = re.search(r'## Voorstellen agent contracten \(intents\)\s*\n(.*?)(?=##|\Z)', content, re.DOTALL)
-    if intent_section:
-        intent_lines = intent_section.group(1).strip().split('\n')
-        for line in intent_lines:
-            # Format: - `intent-naam` - Omschrijving
-            intent_match = re.match(r'- `([^`]+)` - (.+)', line.strip())
-            if intent_match:
-                intents.append({
-                    'naam': intent_match.group(1),
-                    'omschrijving': intent_match.group(2),
-                    'input': 'Te specificeren op basis van boundary',
-                    'output': 'Te specificeren op basis van boundary',
-                    'foutafhandeling': 'Te specificeren'
-                })
-    
-    metadata['intents'] = intents
-    
-    return metadata
+    return frontmatter
 
 
 def handle_leg_agent_contract_vast(params: dict) -> None:
@@ -131,40 +82,22 @@ def handle_leg_agent_contract_vast(params: dict) -> None:
     Intent: leg-agent-contract-vast
     
     Genereert agent-contracten en prompt-metadata voor alle intents van een agent.
-    Leest boundary-file als intents niet expliciet in params staan.
     
     Args:
-        params: Dictionary met agent_naam, optioneel: value_stream, fase, intents
+        params: Dictionary met agent_naam, value_stream, fase, intents
     """
     agent_naam = params["agent_naam"]
-    
-    gelezen_bestanden = ["input/input.yml"]
-    aangemaakte_bestanden = []
-    
-    # Lees boundary-file als value_stream/fase/intents niet in params
-    if "value_stream" not in params or "fase" not in params or "intents" not in params:
-        print(f"[Info] Lees boundary-file voor {agent_naam}...")
-        boundary_file = Path(f"agent-boundaries/{agent_naam}.boundary.md")
-        gelezen_bestanden.append(str(boundary_file))
-        
-        boundary_data = parse_boundary_file(agent_naam)
-        
-        # Merge boundary data met params (params heeft voorrang)
-        params.setdefault("value_stream", boundary_data.get("value_stream", ""))
-        params.setdefault("fase", boundary_data.get("fase", ""))
-        params.setdefault("intents", boundary_data.get("intents", []))
-        
-        print(f"  ✓ Value stream: {params['value_stream']}")
-        print(f"  ✓ Fase: {params['fase']}")
-        print(f"  ✓ Intents: {len(params['intents'])}")
-    
     value_stream = params.get("value_stream", "")
     fase = params.get("fase", "")
     intents = params.get("intents", [])
     
-    if not intents:
-        print(f"⚠ Waarschuwing: Geen intents gevonden voor {agent_naam}")
-        return
+    gelezen_bestanden = ["input/input.md"]
+    aangemaakte_bestanden = []
+    
+    # Lees agent-boundary voor context
+    boundary_file = Path(f"agent-boundaries/{agent_naam}.boundary.md")
+    if boundary_file.exists():
+        gelezen_bestanden.append(str(boundary_file))
     
     # Bepaal agent folder
     agent_folder = Path(f"artefacten/{value_stream}.{fase}.{agent_naam}")
@@ -193,13 +126,11 @@ def handle_leg_agent_contract_vast(params: dict) -> None:
 
 ## Herkomstverantwoording
 - Gegenereerd door: agent-smeder
-- Bron: agent-boundaries/{agent_naam}.boundary.md
 - Datum: 2026-02-06
 - Versie: 1.0
 """
         contract_path.write_text(contract_content, encoding="utf-8")
         aangemaakte_bestanden.append(str(contract_path))
-        print(f"  ✓ Contract: {contract_path.name}")
         
         # Prompt-metadata
         prompt_path = agent_folder / f"mandarin.{agent_naam}.{intent_naam}.prompt.md"
@@ -216,9 +147,8 @@ Dit bestand bevat alleen YAML frontmatter voor agent-runner integratie.
 """
         prompt_path.write_text(prompt_content, encoding="utf-8")
         aangemaakte_bestanden.append(str(prompt_path))
-        print(f"  ✓ Prompt: {prompt_path.name}")
     
-    print(f"\n✓ Agent-contracten aangemaakt voor {agent_naam} ({len(intents)} intents)")
+    print(f"✓ Agent-contracten aangemaakt voor {agent_naam} ({len(intents)} intents)")
     
     # Log actie
     log_agent_action("agent-smeder", gelezen=gelezen_bestanden, aangemaakt=aangemaakte_bestanden)
@@ -237,7 +167,7 @@ def handle_schrijf_charter(params: dict) -> None:
     value_stream = params.get("value_stream", "")
     fase = params.get("fase", "")
     
-    gelezen_bestanden = ["input/input.yml"]
+    gelezen_bestanden = ["input/input.md"]
     aangemaakte_bestanden = []
     
     # Lees agent-boundary
@@ -290,7 +220,7 @@ def handle_schrijf_runner(params: dict) -> None:
     value_stream = params.get("value_stream", "")
     fase = params.get("fase", "")
     
-    gelezen_bestanden = ["input/input.yml"]
+    gelezen_bestanden = ["input/input.md"]
     aangemaakte_bestanden = []
     
     # Lees charter voor intent-informatie
@@ -307,11 +237,11 @@ def handle_schrijf_runner(params: dict) -> None:
                for f in contract_files if ".agent.md" in f.name]
     
     # Genereer runner
-    runner_path = agent_folder / f"{agent_naam}.runner.py"
+    runner_path = agent_folder / f"{agent_naam}.py"
     runner_content = f'''"""
 Agent Runner: {agent_naam}
 
-Input: input/input.yml met YAML configuratie
+Input: input/input.md met YAML frontmatter
 Output: Agent-artefacten in artefacten/{value_stream}.{fase}.{agent_naam}/
 
 Intents:
@@ -326,6 +256,7 @@ import sys
 from pathlib import Path
 from typing import List, Optional
 import yaml
+import re
 
 def log_agent_action(agent_naam: str, gelezen: Optional[List[str]] = None, 
                      aangepast: Optional[List[str]] = None, 
@@ -341,37 +272,33 @@ def log_agent_action(agent_naam: str, gelezen: Optional[List[str]] = None,
 
 
 def parse_input() -> dict:
-    """Leest input/input.yml en parseert YAML configuratie."""
-    input_file = Path("input/input.yml")
+    """Leest input/input.md en parseert YAML frontmatter."""
+    input_file = Path("input/input.md")
     
     if not input_file.exists():
         raise FileNotFoundError(f"Input bestand niet gevonden: {{input_file}}")
     
     content = input_file.read_text(encoding="utf-8")
-    params = yaml.safe_load(content)
     
-    if not params:
-        raise ValueError("Lege of invalide YAML in input.yml")
+    yaml_match = re.match(r'^---\\s*\\n(.*?)\\n---\\s*\\n', content, re.DOTALL)
+    if not yaml_match:
+        raise ValueError("Geen geldige YAML frontmatter gevonden in input.md")
     
-    return params
+    return yaml.safe_load(yaml_match.group(1))
 
 
 {chr(10).join(f"""def handle_{intent.replace("-", "_")}(params: dict) -> None:
     \"\"\"Intent: {intent}\"\"\"
     # TODO: Implementeer intent-logica
     print(f"✓ Intent '{intent}' uitgevoerd")
-    log_agent_action("{agent_naam}", gelezen=["input/input.yml"], aangemaakt=[])
+    log_agent_action("{agent_naam}", gelezen=["input/input.md"], aangemaakt=[])
 """ for intent in intents)}
 
 def main() -> int:
     """Main entry point voor agent-runner."""
     try:
         params = parse_input()
-        intent = params.get("intent")
-        
-        if not intent:
-            print("✗ Verplicht veld 'intent' ontbreekt in input.yml", file=sys.stderr)
-            return 1
+        intent = params["intent"]
         
         intent_handlers = {{
 {chr(10).join(f'            "{intent}": handle_{intent.replace("-", "_")},' for intent in intents)}

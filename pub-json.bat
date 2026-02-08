@@ -5,19 +5,18 @@ REM Zet working directory naar de locatie van dit batch-bestand
 cd /d "%~dp0"
 
 REM ==============================================================================
-REM Publiceer Agents Overzicht
+REM Publiceer Agents JSON
 REM ==============================================================================
 REM
 REM Doel:
-REM   Voert agent-curator runner uit voor volledige agents publicatie.
-REM   Genereert agents-publicatie.json en markdown archief met digest.
+REM   Voert agent-curator runner uit voor JSON publicatie (externe consumptie).
+REM   Genereert agents-publicatie.json conform schema v2.0.
 REM
 REM Output:
-REM   - agents-publicatie.json (root, voor fetch_agents.py)
-REM   - docs/resultaten/agent-publicaties/agents-publicatie-YYYYMMDD-HHMMSS.md
+REM   - agents-publicatie.json (root, voor fetch_agents.py en externe tools)
 REM
 REM Gebruik:
-REM   publiceer-agents.bat
+REM   pub-json.bat [volledig|incrementeel|value-stream|fase]
 REM
 REM Traceability:
 REM   - Runner: scripts/agent-curator.runner.py
@@ -27,7 +26,7 @@ REM ============================================================================
 
 echo.
 echo ========================================
-echo  Agent Curator - Publiceer Overzicht
+echo  Agent Curator - Publiceer JSON
 echo ========================================
 echo.
 
@@ -55,11 +54,15 @@ if not exist "artefacten" (
     exit /b 1
 )
 
-REM Voer agent-curator uit met volledige scope
-echo [INFO] Start volledige agents publicatie...
+REM Bepaal scope (default: volledig)
+set "SCOPE=%1"
+if "%SCOPE%"=="" set "SCOPE=volledig"
+
+REM Voer agent-curator uit voor JSON publicatie
+echo [INFO] Start JSON publicatie (scope: %SCOPE%)...
 echo.
 
-python scripts\agent-curator.runner.py --scope volledig
+python scripts\agent-curator.runner.py publiceer-json --scope %SCOPE%
 
 REM Controleer exit code
 if errorlevel 1 (
@@ -72,11 +75,10 @@ if errorlevel 1 (
 
 REM Succes
 echo.
-echo [SUCCESS] Publicatie voltooid!
+echo [SUCCESS] JSON publicatie voltooid!
 echo.
-echo Output bestanden:
-echo   - agents-publicatie.json
-echo   - docs\resultaten\agent-publicaties\agents-publicatie-[timestamp].md
+echo Output bestand:
+echo   - agents-publicatie.json (schema v2.0)
 echo.
 
 pause

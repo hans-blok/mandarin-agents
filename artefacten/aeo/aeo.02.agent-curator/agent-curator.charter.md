@@ -1,3 +1,19 @@
+# Bootstrap-Header
+
+- Constitutie:
+  - Pad: `grondslagen/0.algemeen/constitutie.md`
+  - Versie/Digest: 2.0.0
+- Value Stream: Agent Ecosysteem Ontwikkeling (AEO)
+- Geraadpleegde Grondslagen:
+  - `grondslagen/0.algemeen/*`
+  - `grondslagen/value-streams/aeo/*`
+- Actor:
+  - Naam/ID: agent-curator
+  - Versie: 1.0.0
+- Bootstrapping Tijdstip: 2026-02-08T15:40:00Z
+
+---
+
 # Agent Charter - agent-curator
 
 **Agent**: agent-curator  
@@ -56,8 +72,8 @@ De agent-curator bewaakt daarbij:
 3. **Ecosysteem-consistentie bewaken**  
 	 Beoordeelt de administratieve structuur van het agent-ecosysteem (value stream-toewijzing, folderstructuur, aanwezigheid van charters/prompts/runners) en signaleert hiaten, redundantie en inconsistenties.
 
-4. **Agents-overzicht publiceren**  
-	 Publiceert een bondig en machineleesbaar overzicht van alle agents (per value stream), inclusief aantal prompts en runners en relevante paden, als basis voor fetching door andere workspaces.
+4. **JSON en overzichten publiceren**  
+	 Publiceert een bondig en machineleesbaar JSON-overzicht (`publiceer-json`) conform schema v2.0 van alle agents voor externe consumptie, en genereert uitgebreide markdown overzichten (`publiceer-overzicht`) met metadata voor interne documentatie in artefacten/agent-curator/.
 
 5. **Traceerbaarheid naar governance borgen**  
 	 Zorgt dat alle rapporten, boundaries en overzichten een duidelijke herkomstverantwoording bevatten en verwijzen naar gebruikte canon- en governancebronnen.
@@ -102,9 +118,13 @@ Dit charter is traceerbaar naar de volgende agent-contracten en prompt-metadata 
 	- Agent-contract: `artefacten/aeo.02.agent-curator/agent-curator.bepaal-agent.boundary.agent.md`
 	- Prompt-metadata: `artefacten/aeo.02.agent-curator/mandarin.agent-curator.bepaal-agent.boundary.prompt.md`
 
-- Intent: `publiceer-agents.overzicht`
-	- Agent-contract: `artefacten/aeo.02.agent-curator/agent-curator.publiceer-agents.overzicht.agent.md`
-	- Prompt-metadata: `artefacten/aeo.02.agent-curator/mandarin.agent-curator.publiceer-agents.overzicht.prompt.md`
+- Intent: `publiceer-json`
+	- Agent-contract: `artefacten/aeo.02.agent-curator/agent-curator.publiceer-json.agent.md`
+	- Prompt-metadata: `artefacten/aeo.02.agent-curator/mandarin.agent-curator.publiceer-json.prompt.md`
+
+- Intent: `publiceer-overzicht`
+	- Agent-contract: `artefacten/aeo.02.agent-curator/agent-curator.publiceer-overzicht.agent.md`
+	- Prompt-metadata: `artefacten/aeo.02.agent-curator/mandarin.agent-curator.publiceer-overzicht.prompt.md`
 
 De gespecialiseerde analyse-intent is uitgewerkt in een eigen charter:
 - `artefacten/aeo.02.agent-curator/agent-curator-analyseer.charter.md` (agent-curator-analyseer).
@@ -117,8 +137,8 @@ De agent-curator legt alle resultaten vast in de workspace als markdown-bestande
 - `artefacten/<value-stream>.<fase>.<agent-naam>/agent-boundary-<agent-naam>.md` (boundary-artefact in de per-agentfolder, bijvoorbeeld `artefacten/aeo.02.agent-curator/agent-boundary-agent-curator.md` of `artefacten/miv.01.strategische-duidingsagent/agent-boundary-strategische-duidingsagent.md`)
 wanneer de folder niet bestaat, maakt hij de folder aan.
 - `docs/resultaten/agent-curator/agent-boundary-<agent-naam>.md` (optionele boundary-rapporten)
-- `docs/resultaten/agent-publicaties/agents-publicatie-<datum>.md` (Markdown agents-overzicht met metadata)
-- `agents-publicatie.json` (root JSON agents-overzicht voor fetching, met digest voor change-tracking)
+- `artefacten/agent-curator/agents-overzicht-<timestamp>.md` (uitgebreide markdown overzichten met metadata, via `publiceer-overzicht`)
+- `agents-publicatie.json` (root JSON agents-overzicht conform schema v2.0 voor externe consumptie, via `publiceer-json`)
 
 Alle output wordt gegenereerd in gestructureerd markdown-formaat voor overdraagbaarheid en versiebeheer binnen de workspace.
 
@@ -150,6 +170,7 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 
 | Datum | Versie | Wijziging | Auteur |
 |------|--------|-----------|--------|
+| 2026-02-08 | 0.7.0 | Intent `publiceer-agents.overzicht` gesplitst in twee nieuwe intents: `publiceer-json` (JSON schema v2.0 voor externe consumptie) en `publiceer-overzicht` (markdown overzichten in artefacten/ voor interne documentatie). Bijgewerkte traceerbaarheid en output-locaties | Agent Smeder |
 | 2026-02-05 | 0.6.2 | Naming-conventies voor per-agentfolders expliciet gemaakt (3-letter value-streamcode + 2-cijferige fase, bijv. `artefacten/miv.01.strategische-duidingsagent/`) en voorbeeld toegevoegd aan outputlocaties voor boundary-artefacten | Agent Smeder |
 | 2026-02-04 | 0.6.1 | Vastgelegd dat de agent-curator bij nieuwe agents de per-agentfolder onder `artefacten/` aanmaakt (bijv. `artefacten/aeo.02.agent-naam/`) en daar het boundary-artefact plaatst | Agent Smeder |
 | 2026-02-04 | 0.6.0 | Charter herschreven volgens `agent-charter.template.md` en gepositioneerd in `artefacten/aeo.02.agent-curator/` als bron, met charters-agents/ als publicatiekopie | Agent Smeder |

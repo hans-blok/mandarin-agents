@@ -1,4 +1,22 @@
-﻿# Agent Charter - <agent-naam>
+﻿# Bootstrap-Header
+
+- Constitutie:
+  - Pad: `grondslagen/.algemeen/constitutie.md`
+  - Branch: main
+- Value Stream: <value-stream-code>
+- Geraadpleegde Grondslagen:
+  - `grondslagen/.algemeen/*`
+  - `grondslagen/value-streams/<value-stream-code>/*`
+- Actor:
+  - Naam/ID: <agent-naam>
+  - Versie: <actor-versie>
+- Charter-Versie: <charter-versie>
+- Charter-Evidence: "<charter-evidence-phrase>"
+- Bootstrapping Tijdstip: <ISO-8601-timestamp>
+
+---
+
+# Agent Charter - <agent-naam>
 
 
 <!--

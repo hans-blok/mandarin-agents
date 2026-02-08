@@ -1,9 +1,13 @@
 {
   "metadata": {
-    "gegenereerd_op": "2026-02-08T13:28:08.769865",
+    "publicatie_timestamp": "2026-02-08T15:39:07.155825",
+    "publicatie_datum": "2026-02-08",
+    "publicatie_tijd": "15:39:07",
+    "gegenereerd_op": "2026-02-08T15:39:07.155825",
     "versie": "2.0",
     "aantal_value_streams": 6,
-    "aantal_agents": 26
+    "aantal_agents": 26,
+    "generator": "agent-curator.runner.py v2.0"
   },
   "value_streams": [
     {
@@ -33,8 +37,8 @@
           "agents": [
             {
               "naam": "agent-curator",
-              "aantal_agent_files": 4,
-              "aantal_prompts": 4,
+              "aantal_agent_files": 5,
+              "aantal_prompts": 5,
               "aantal_templates": 1,
               "aantal_charters": 2
             },
@@ -179,7 +183,7 @@
               "aantal_agent_files": 1,
               "aantal_prompts": 1,
               "aantal_templates": 0,
-               "aantal_charters": 1
+              "aantal_charters": 1
             }
           ]
         },
