@@ -44,7 +44,7 @@ Deze folder bevat hulpmiddelen voor het inrichten en onderhouden van workspaces.
   ├── logs/                 # Log bestanden (ignored)
   ├── temp/                 # Tijdelijke bestanden (ignored)
   ├── .gitignore            # Git ignore configuratie
-   └── beleid-mandarin-agents.md   # Workspace beleid
+   └── beleid-workspace.md   # Workspace beleid
 ```
 
 ### 2. Repository Clonen/Updaten

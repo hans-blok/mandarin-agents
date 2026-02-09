@@ -20,7 +20,7 @@
 **Domein**: Foundation (FND) - Conceptbeheer en taalconsistentie  
 **Value Stream**: FND 02 Conceptbeheer
 
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` en de relevante doctrine(s) voor agent-charters.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` en de relevante doctrine(s) voor agent-charters.
 
 ## Classificatie van de agent
 (vink aan wat van toepassing is)
@@ -196,7 +196,7 @@ Deze agent gebruikt de volgende templates voor het structureren van output per i
 
 ## 11. Herkomstverantwoording
 
-- **Governance**: `beleid-mandarin-agents.md` + mandarin-canon repository
+- **Governance**: `beleid-workspace.md` + mandarin-canon repository
 - **Agent-contracten**: zie Traceerbaarheid (sectie 7)
 - **Boundary**: `artefacten/fnd/fnd.02.concept-curator/agent-boundary-concept-curator.md`
 - **Canon-doctrine**: "Zonder expliciete concepten is elk ecosysteem stilzwijgend inconsistent"

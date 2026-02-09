@@ -21,7 +21,7 @@
 **Domein**: Agent boundary-setting, value stream administratie, agent-ecosysteem oversight  
 **Value Stream**: agent-enablement (fase 02 - Ecosysteeminrichting)  
 **Template**: agent-boundary.template.md  
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en de norm `agent-charter-normering.md` onder `governance-artefacten/agent-enablement/`. Alle governance-richtlijnen uit deze norm zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en de norm `agent-charter-normering.md` onder `governance-artefacten/agent-enablement/`. Alle governance-richtlijnen uit deze norm zijn bindend.
 
 ## Classificatie-assen (vink aan wat van toepassing is)
 - **Inhoudelijke as**
@@ -153,7 +153,7 @@ Wanneer de **agent-curator** handmatig wordt geïnitieerd (dus niet via een geau
 - Het veld **Template** in de header verwijst alleen naar een **agent-specifiek uitvoertemplate** (bijvoorbeeld in `templates/`); als er geen eigen template is, wordt dit veld gevuld met `-`.
 - Bron-locatie in deze workspace: `artefacten/aeo.02.agent-curator/agent-curator.charter.md` (per-agentfolder voor value stream agent-enablement, fase 02).
 - Publicatiekopie: `charters-agents/agent-curator.charter.md` (voor tooling die charters centraal scant).
-- Governance- en doctrines: `beleid-mandarin-agents.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en de norm `agent-charter-normering.md` onder `governance-artefacten/agent-enablement/`.
+- Governance- en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en de norm `agent-charter-normering.md` onder `governance-artefacten/agent-enablement/`.
 - Agent-contracten en prompt-metadata: zie sectie Traceerbaarheid.
 
 ## 10. Change Log

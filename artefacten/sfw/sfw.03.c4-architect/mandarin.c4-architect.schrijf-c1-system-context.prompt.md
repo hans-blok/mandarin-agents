@@ -4,7 +4,7 @@ boundary-bestand: "artefacten/sfw/sfw.03.c4-architect/agent-boundary-c4-architec
 
 agent: mandarin.c4-architect
 intent: schrijf-c1-system-context
-charter_ref: agent-charters/c4-architect.charter.md
+charter_ref: artefacten/sfw/sfw.03.c4-architect/c4-architect.charter.md
 charter-acknowledgement:
   charter-id: c4-architect
   charter-versie: 1.0.0

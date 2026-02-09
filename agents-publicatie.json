@@ -1,12 +1,12 @@
 {
   "metadata": {
-    "publicatie_timestamp": "2026-02-09T11:53:10.682960",
+    "publicatie_timestamp": "2026-02-09T13:45:10.870906",
     "publicatie_datum": "2026-02-09",
-    "publicatie_tijd": "11:53:10",
-    "gegenereerd_op": "2026-02-09T11:53:10.682960",
+    "publicatie_tijd": "13:45:10",
+    "gegenereerd_op": "2026-02-09T13:45:10.870906",
     "versie": "2.0",
     "aantal_value_streams": 6,
-    "aantal_agents": 27,
+    "aantal_agents": 28,
     "generator": "agent-curator.runner.py v2.0"
   },
   "value_streams": [
@@ -287,6 +287,13 @@
               "aantal_prompts": 3,
               "aantal_templates": 0,
               "aantal_charters": 1
+            },
+            {
+              "naam": "c4-representatie-vertaler",
+              "aantal_agent_files": 1,
+              "aantal_prompts": 1,
+              "aantal_templates": 0,
+              "aantal_charters": 0
             }
           ]
         },

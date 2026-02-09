@@ -26,7 +26,7 @@
 **Template**: -
 
 
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
 
 ---
 
@@ -327,7 +327,7 @@ Word-documenten bevatten geen macro's, VBA-scripts of embedded objecten (behalve
 
 ## 11. Herkomstverantwoording
 
-- Governance: beleid-mandarin-agents.md + mandarin-canon repository
+- Governance: beleid-workspace.md + mandarin-canon repository
 - Agent-boundaries: formaat-vertaler.boundary.md en agent-boundary-formaat-vertaler.md
 - Agent-contracten: zie Traceerbaarheid (sectie 7)
 - Markdown-conventies: gebaseerd op CommonMark/GitHub Flavored Markdown met strikte interpretatie

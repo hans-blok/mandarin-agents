@@ -26,7 +26,7 @@
 **Value Stream**: softwareontwikkeling (SFW, fase 02 - Werkvoorbereiding)
 **Template**: thema-statement.template.md
 
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
 
 ---
 
@@ -132,7 +132,7 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 
 De thema-verwoorder baseert zich op aangeleverde themacontext en legt output traceerbaar vast.
 
-- Governance: `beleid-mandarin-agents.md` + mandarin-canon repository
+- Governance: `beleid-workspace.md` + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid
 - Resultaten: `artefacten/thema-verwoorder/`
 

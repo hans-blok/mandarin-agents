@@ -23,7 +23,7 @@
 **Agent**: agent-smeder  
 **Domein**: Agent-ontwerp, capability boundaries en contract-first uitvoering  
 **Value Stream**: Agent Ecosysteem Ontwikkeling (AEO) 
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en de norm `agent-charter-normering.md`
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en de norm `agent-charter-normering.md`
  Alle governance-richtlijnen uit deze norm zijn bindend.
 
 ## Classificatie-assen (vink aan wat van toepassing is)
@@ -194,7 +194,7 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 
 - Dit charter volgt de structuur uit `templates/agent-charter.template.md` en gebruikt `templates/agent-prompt.template.yaml` en `templates/agent-contract.template.md` als norm voor de door Agent Smeder ontworpen artefacten.
 - Het veld **Template** in de header verwijst alleen naar een **agent-specifiek uitvoertemplate** (bijvoorbeeld in `templates/`); als er geen eigen template is, wordt dit veld gevuld met `-`.
-- Dit charter is bedoeld om uitvoerbaar te zijn door Agent Smeder zelf, binnen de governance zoals vastgelegd in `beleid-mandarin-agents.md` en de mandarin-canon repository.
+- Dit charter is bedoeld om uitvoerbaar te zijn door Agent Smeder zelf, binnen de governance zoals vastgelegd in `beleid-workspace.md` en de mandarin-canon repository.
 
 ## 11. Change Log
 

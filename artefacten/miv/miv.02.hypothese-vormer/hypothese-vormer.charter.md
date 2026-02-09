@@ -42,7 +42,7 @@
 **Value Stream**: softwareontwikkeling (SFW, fase 01 - Veranderkenning), markt- en investeringsvorming (MIV, fase 02 - Waarde-hypotheses formuleren)
 -
 
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
 
 ---
 
@@ -184,7 +184,7 @@ Deze agent gebruikt de volgende templates voor het structureren van output per i
 
 De hypothese-vormer baseert zich op aangeleverde context en legt output traceerbaar vast. Het Click-gedachtegoed van Jake Knapp vormt hierbij de leidraad voor een toetsbare, mensgerichte hypothese.
 
-- Governance: `beleid-mandarin-agents.md` + mandarin-canon repository
+- Governance: `beleid-workspace.md` + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid
 - Resultaten: `artefacten/hypothese-vormer/`
 

@@ -21,7 +21,7 @@
 **Domein**: Agent-ecosysteem analyse en administratieve overzichten  
 **Value Stream**: agent-enablement (fase 02 - Ecosysteeminrichting)  
 **Template**: -  
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
 
 ## Classificatie-assen (vink aan wat van toepassing is)
 - **Inhoudelijke as**
@@ -142,7 +142,7 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 
 ## 10. Herkomstverantwoording
 
-- Governance: `beleid-mandarin-agents.md` + mandarin-canon repository (value streams en agent-standaarden).
+- Governance: `beleid-workspace.md` + mandarin-canon repository (value streams en agent-standaarden).
 - Basisrol en domein: `artefacten/aeo.02.agent-curator/agent-curator.charter.md`.
 - Contract en prompt voor deze intent: zie Traceerbaarheid.
 - Resultaten en analyses: `docs/resultaten/agent-curator/`.

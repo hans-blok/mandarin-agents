@@ -33,7 +33,7 @@ Gebruik een value stream slug (lowercase, hyphens) die overeenkomt met `exports/
 **Domein**: <domein>  
 **Value Stream**: <value-stream>
 
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` en de relevante doctrine(s) voor agent-charters.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` en de relevante doctrine(s) voor agent-charters.
 
 ## Classificatie van de agent
 (vink aan wat van toepassing is)
@@ -147,7 +147,7 @@ Deze agent gebruikt de volgende templates voor het structureren van output per i
 
 <Beschrijf welke bronnen/artefacten als basis dienen en waar output traceerbaar wordt opgeslagen.>
 
-- Governance: `beleid-mandarin-agents.md` + mandarin-canon repository
+- Governance: `beleid-workspace.md` + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid
 
 ## 10. Change Log

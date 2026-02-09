@@ -8,8 +8,8 @@ Deze workspace hoort bij de waardestroom **AGENT ECOSYSTEEM ONTWIKKELING (AEO)**
 Elke geautomatiseerde rol, agent of runner hanteert bij aanvang van zijn functioneren de volgende verplichte leesvolgorde:
 
 **In de centrale canon repository** (`https://github.com/hans-blok/mandarin-canon.git`):
-1. `grondslagen/0.algemeen/constitutie.md`
-2. overige algemene grondslagen binnen `grondslagen/0.algemeen/`
+1. `grondslagen/.algemeen/constitutie.md`
+2. overige algemene grondslagen binnen `grondslagen/.algemeen/`
 3. grondslagen van de expliciet toegewezen value stream
 
 **In deze workspace**:

@@ -21,8 +21,8 @@
 **Agent**: c4-architect  
 **Domein**: Software-architectuur voorbereiding  
 **Value Stream**: Software uit de Voorraad (fase 03 - Architectuurontwerp)  
-**Template**: -  
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en de norm `agent-charter-normering.md`. Alle governance-richtlijnen uit deze norm zijn bindend.
+**Templates**: agent-charter.template.md
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en de norm `agent-charter-normering.md`. Alle governance-richtlijnen uit deze norm zijn bindend.
 
 ## Classificatie-assen (vink aan wat van toepassing is)
 - **Inhoudelijke as**

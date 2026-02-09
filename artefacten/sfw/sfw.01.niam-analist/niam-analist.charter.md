@@ -21,7 +21,7 @@
 **Domein**: Informatieanalyse en conceptuele modellering  
 **Value Stream**: softwareontwikkeling (SFW, fase 01 - Veranderkenning)
 
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend. De NIAM-analist baseert zich op NIAM-methodologie (Nijssen's Information Analysis Method) als normatief kader voor informatiestructuuranalyse.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend. De NIAM-analist baseert zich op NIAM-methodologie (Nijssen's Information Analysis Method) als normatief kader voor informatiestructuuranalyse.
 
 ## Classificatie van de agent
 
@@ -296,7 +296,7 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 
 Alle analyses, modellen en onderbouwingen zijn traceerbaar:
 
-- Governance: `beleid-mandarin-agents.md` + mandarin-canon repository
+- Governance: `beleid-workspace.md` + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid
 - Resultaten: `artefacten/niam-analist/` (zie Output-locaties)
 - Referentie naar bronnen: vermelding van documentnamen, locaties en versies in elk rapport

@@ -25,7 +25,7 @@
 - [ ] Uitvoerend
 **Value Stream**: it-development
 -
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
 
 Workflow Architect is de orkestrator-ontwerper voor complexe multi-agent taken. Bij werk dat meerdere agents in volgorde of parallel vraagt, ontwerpt Workflow Architect de complete workflow, pipeline en artefact-flow. De agent schrijft geen code en maakt geen domein-agents (dat is Agent Smeder domein), maar ontwerpt *hoe* agents samenwerken, *wanneer* ze draaien, *met welke gates*, en *welke data* tussen hen stroomt.
 
@@ -586,7 +586,7 @@ Output: docs/resultaten/workflow-architect/taak-artefact-flow.md (met waarschuwi
 
 ## Herkomstverantwoording
 
-- Governance: beleid-mandarin-agents.md + mandarin-canon repository
+- Governance: beleid-workspace.md + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid (indien aanwezig)
 - Resultaten: docs/resultaten/<agent-naam>/... (waar van toepassing)
 

@@ -24,7 +24,7 @@
 - [x] Uitvoerend
 **Value Stream**: it-development
 -
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
 
 Pipeline Executor is de runtime execution engine voor multi-agent workflows. De agent leest pipeline-documenten (ontworpen door Workflow Architect), voert agents in de juiste volgorde uit, valideert quality gates tussen stappen, en handelt failures af volgens de pipeline-specificatie.
 
@@ -440,7 +440,7 @@ Actie:
 
 ## Herkomstverantwoording
 
-- Governance: beleid-mandarin-agents.md + mandarin-canon repository
+- Governance: beleid-workspace.md + mandarin-canon repository
 - Agent-contracten: zie Traceerbaarheid (indien aanwezig)
 - Resultaten: docs/resultaten/<agent-naam>/... (waar van toepassing)
 

@@ -21,7 +21,7 @@
 **Domein**: Normatieve doctrine en governance  
 **Value Stream**: agent-enablement (fase 01 - Grondslagvorming)  
 **Template**: -  
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en de normering voor charters en normatieve artefacten in de mandarin-canon repository. Alle constitutionele en doctrinaire richtlijnen zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en de normering voor charters en normatieve artefacten in de mandarin-canon repository. Alle constitutionele en doctrinaire richtlijnen zijn bindend.
 
 ## Classificatie van de agent
 (vink aan wat van toepassing is)
@@ -127,7 +127,7 @@ De constitutioneel-auteur schrijft resultaten (waar van toepassing) naar:
 
 ## 9. Herkomstverantwoording
 
-- Governance: `beleid-mandarin-agents.md` en de mandarin-canon repository (constitutie, doctrine en agent-charter-normering).
+- Governance: `beleid-workspace.md` en de mandarin-canon repository (constitutie, doctrine en agent-charter-normering).
 - Externe referentie: de centrale constitutie- en doctrinedocumenten zoals vastgelegd in de canon.
 - Agent-contracten en prompt-metadata: zie sectie Traceerbaarheid.
 

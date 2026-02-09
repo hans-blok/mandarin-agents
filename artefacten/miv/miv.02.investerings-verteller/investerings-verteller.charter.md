@@ -22,7 +22,7 @@
 **Value Stream**: markt-en-investeringsvorming (MIV, fase 02)  
 **Template**: -
 
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` en de relevante doctrine(s) voor agent-charters. Alle governance-richtlijnen uit de mandarin-canon zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` en de relevante doctrine(s) voor agent-charters. Alle governance-richtlijnen uit de mandarin-canon zijn bindend.
 
 ## Classificatie van de agent
 (vink aan wat van toepassing is)
@@ -224,7 +224,7 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 
 ## 10. Herkomstverantwoording
 
-- Governance: `beleid-mandarin-agents.md` + mandarin-canon repository
+- Governance: `beleid-workspace.md` + mandarin-canon repository
 - Value stream definitie: MIV fase 02: Investeringsnarratief ontwikkelen
 - Agent boundary: `artefacten/miv/miv.02.investerings-verteller/agent-boundary-investerings-verteller.md`
 - Agent-contracten: zie Traceerbaarheid

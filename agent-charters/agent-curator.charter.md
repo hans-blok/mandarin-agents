@@ -21,7 +21,7 @@
 **Domein**: Agent boundary-setting, value stream administratie, agent-ecosysteem oversight  
 **Value Stream**: agent-enablement (fase 02 - Ecosysteeminrichting)  
 **Template**: agent-boundary.template.md  
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en de norm `agent-charter-normering.md` onder `governance-artefacten/agent-enablement/`. Alle governance-richtlijnen uit deze norm zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en de norm `agent-charter-normering.md` onder `governance-artefacten/agent-enablement/`. Alle governance-richtlijnen uit deze norm zijn bindend.
 
 ## Classificatie-assen (vink aan wat van toepassing is)
 - **Inhoudelijke as**

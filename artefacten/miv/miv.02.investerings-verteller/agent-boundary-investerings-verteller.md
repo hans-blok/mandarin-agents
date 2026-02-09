@@ -118,4 +118,4 @@
 - **Bron**: Aanleiding en capability-beschrijving van gebruiker
 - **Datum**: 2026-02-07
 - **Versie**: 1.0
-- **Governance**: `beleid-mandarin-agents.md`, MIV value stream-definitie uit mandarin-canon
+- **Governance**: `beleid-workspace.md`, MIV value stream-definitie uit mandarin-canon
