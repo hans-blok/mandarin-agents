@@ -1,11 +1,13 @@
 # Bootstrap-Header
 
 - Constitutie:
-  - Pad: `grondslagen/0.algemeen/constitutie.md`
-  - Versie/Digest: 2.0.0
-- Value Stream: Markt- en investeringsvorming (MIV)
+  - Pad: `grondslagen/.algemeen/constitutie.md`
+  - Branch: main
+- Canon:
+  - resolved_ref: <wordt-achteraf-gevuld>   # runtime resolved canon commit
+- Value Stream: miv
 - Geraadpleegde Grondslagen:
-  - `grondslagen/0.algemeen/*`
+  - `grondslagen/.algemeen/*`
   - `grondslagen/value-streams/miv/*`
 - Actor:
   - Naam/ID: hypothese-vormer

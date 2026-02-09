@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "publicatie_timestamp": "2026-02-08T15:39:07.155825",
-    "publicatie_datum": "2026-02-08",
-    "publicatie_tijd": "15:39:07",
-    "gegenereerd_op": "2026-02-08T15:39:07.155825",
+    "publicatie_timestamp": "2026-02-09T10:25:18.368191",
+    "publicatie_datum": "2026-02-09",
+    "publicatie_tijd": "10:25:18",
+    "gegenereerd_op": "2026-02-09T10:25:18.368191",
     "versie": "2.0",
     "aantal_value_streams": 6,
     "aantal_agents": 26,
@@ -41,13 +41,6 @@
               "aantal_prompts": 5,
               "aantal_templates": 1,
               "aantal_charters": 2
-            },
-            {
-              "naam": "agent-smeder",
-              "aantal_agent_files": 5,
-              "aantal_prompts": 4,
-              "aantal_templates": 2,
-              "aantal_charters": 1
             }
           ]
         },
@@ -282,6 +275,18 @@
               "aantal_prompts": 2,
               "aantal_templates": 0,
               "aantal_charters": 1
+            }
+          ]
+        },
+        {
+          "volgnummer": "04",
+          "agents": [
+            {
+              "naam": "logisch-datamodelleur",
+              "aantal_agent_files": 0,
+              "aantal_prompts": 0,
+              "aantal_templates": 0,
+              "aantal_charters": 0
             }
           ]
         }

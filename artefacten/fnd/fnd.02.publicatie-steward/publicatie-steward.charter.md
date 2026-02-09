@@ -1,11 +1,12 @@
 # Bootstrap-Header
 
 - Constitutie:
-  - Pad: `grondslagen/0.algemeen/constitutie.md`
-  - Versie/Digest: 2.0.0
-- Value Stream: Foundation (FND) - Value-stream-overstijgend
+  - Pad: `grondslagen/.algemeen/constitutie.md`
+  - Branch: main
+  - Canon: resolved_ref: <wordt-achteraf-gevuld>
+- Value Stream: fnd
 - Geraadpleegde Grondslagen:
-  - `grondslagen/0.algemeen/*`
+  - `grondslagen/.algemeen/*`
 - Actor:
   - Naam/ID: publicatie-steward
   - Versie: 1.0.0

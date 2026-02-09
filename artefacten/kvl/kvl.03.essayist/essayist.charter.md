@@ -2,11 +2,13 @@
 
 - Constitutie:
   - Pad: `grondslagen/.algemeen/constitutie.md`
-  - Versie/Digest: a1c1997
-- Value Stream: kvl.kennisvastlegging
+  - Branch: main
+- Canon:
+  - resolved_ref: <wordt-achteraf-gevuld>   # runtime resolved canon commit
+- Value Stream: kvl
 - Geraadpleegde Grondslagen:
   - `grondslagen/.algemeen/*`
-  - `grondslagen/kvl.kennisvastlegging`
+  - `grondslagen/value-streams/kvl/*`
 - Actor:
   - Naam/ID: essayist
   - Versie: 1.0.0

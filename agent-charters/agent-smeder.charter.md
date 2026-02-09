@@ -4,6 +4,8 @@
 - Constitutie:
   - Pad: `grondslagen/.algemeen/constitutie.md`
   - Branch: main
+- Canon:
+  - resolved_ref: a1c1997   # commit hash werkelijk gebruikt
 - Value Stream: aeo
 - Geraadpleegde Grondslagen:
   - `grondslagen/.algemeen/*`
@@ -11,9 +13,9 @@
 - Actor:
   - Naam/ID: agent-smeder
   - Versie: 1.0.0
-- Charter-Versie: 2.0
+- Charter-Versie: 2.3
 - Charter-Evidence: "Agent Smeder ontwerpt wél hoe een agent consistent, contract-first en uitvoerbaar wordt vormgegeven."
-- Bootstrapping Tijdstip: 2026-02-08T16:15:00Z
+- Bootstrapping Tijdstip: 2026-02-08T16:30:00Z
 ---
 
 # Agent Charter - agent-smeder
@@ -74,7 +76,7 @@ Belangrijk: de Agent Smeder **beslist niet of** een agent nodig is. De Agent Sme
   Maakt per intent altijd twee artefacten aan in dezelfde agentfolder: een agent-contract (`<agent>.<intent>.agent.md`) en een YAML-only promptbestand (`mandarin.<agent>.<intent>.prompt.md`), en legt in het contract input (verplicht/optioneel), output (vaste deliverables) en foutafhandeling vast.
 
 3. **Charters opstellen en actualiseren**  
-  Schrijft en onderhoudt charters conform `templates/agent-charter.template.md` en de norm `agent-charter-normering.md`, voegt Bootstrap-Headers toe met constitutional grounding (constitutie branch, value stream, Charter-Evidence), maakt grenzen expliciet (WEL/NIET) op B1-niveau en borgt traceerbaarheid naar het agent-contract.
+  Schrijft en onderhoudt charters conform `templates/agent-charter.template.md` en de norm `agent-charter-normering.md`, vult Bootstrap-Header templates in met constitutional grounding (constitutie branch, value stream), genereert Charter-Evidence phrases die capability boundary bevestigen, maakt grenzen expliciet (WEL/NIET) op B1-niveau, borgt traceerbaarheid naar het agent-contract, en werkt bij charter versie wijzigingen alle gerelateerde Charter-Acknowledgements in prompt-bestanden bij voor versie-consistentie.
 
 4. **Runner, traceability en samenwerking organiseren**  
   Ontwerpt waar nodig een minimale runner-skeletstructuur in Python, beschrijft welke bestanden de runner leest en schrijft, bewaakt consistentie in terminologie en bestandslocaties tussen contract, prompt, charter en runner, en werkt samen met Agent Curator, Template Maker, Publisher en uitvoerende agents voor overdracht.
@@ -85,8 +87,10 @@ Belangrijk: de Agent Smeder **beslist niet of** een agent nodig is. De Agent Sme
 - Ontwerpt nieuwe agents binnen een expliciet vastgelegde capability boundary.
 - Maakt per intent altijd zowel een agent-contract als een YAML-only promptbestand aan.
 - Schrijft en actualiseert charters conform normering en governance.
-- Voegt Bootstrap-Headers toe aan charters met constitutional grounding en Charter-Evidence.
+- Vult Bootstrap-Header templates in met constitutional grounding en genereert Charter-Evidence phrases.
 - Integreert Charter-Acknowledgement mechanisme in prompt-bestanden voor governance enforcement.
+- Bewaakt versie-consistentie tussen charters en Charter-Acknowledgements in gerelateerde prompt-bestanden.
+- Werkt canon resolved_ref bij na runtime resolution in charter en prompt bestanden.
 - Ontwerpt runners waar nodig, zonder semantiek uit contract of charter te wijzigen.
 
 ### Wat de agent-smeder NIET doet
@@ -104,20 +108,19 @@ Belangrijk: de Agent Smeder **beslist niet of** een agent nodig is. De Agent Sme
    - voor agents die niet operationeel zijn in een value stream: `artefacten/fnd.<nn>.<agent-naam>/`,
      waarbij `nn = 00` voor stewards en `nn = 01` voor overige niet-operationele agents.
 4. Ontwerpt per intent een agent-contract (`<agent>.<intent>.agent.md`) met input, output en foutafhandeling en plaatst dit in de agentfolder.
-5. Maakt bij elk contract een bijbehorend YAML-only promptbestand (`mandarin.<agent>.<intent>.prompt.md`) met `agent`, `intent`, `charter_ref` en Charter-Acknowledgement mechanisme en plaatst dit in dezelfde agentfolder.
-6. Schrijft of actualiseert de bijbehorende charter (`<agent>.charter.md`) volgens het charter-template en governance, voegt Bootstrap-Header toe met constitutional grounding en Charter-Evidence, en plaatst ook deze in dezelfde agentfolder.
-7. Ontwerpt een minimale runner-structuur (`scripts/runners/<agent>.py`) indien herhaalbare uitvoering nodig is.
-8. Voert een traceability-check uit: capability boundary → kerntaken → contract → prompt → charter → runner.
-9. Noteert wijzigingen in het Change Log en draagt de agent over aan Publisher of uitvoerende agents.
-10. ordent agents. Eventueel wordt een folder aangemaakt <value stream code>.<fase>.<naam-agent>: voorbeeld: sfw.01.hypothese-vormer. Vervolgens worden de prompt-files, de agent-contracten, de charter en 
-eventueel de runner het template en de boundary die betrekking hebben op deze agent in deze folder gezet.
-10. 4.orden-agent betekent dat een folder aan wordt gemaakt conform normering <value stream>.<fase>.<agent-naam>. Vervolgens worden alle bestanden de betrekking hebben op die agent daar ingezet. Eventueel de boudary, template en runner.
-Bij het ordenen worden alle bestanden VERPLAATST dus de bestanden worden op de bronlocatie verwijder nadat ze correct in de doellocatie zijn vastgelegd.
+5. Maakt bij elk contract een bijbehorend YAML-only promptbestand (`mandarin.<agent>.<intent>.prompt.md`) met `agent`, `intent`, `charter_ref` (verwijst naar de lokale charter in dezelfde per-agentfolder) en Charter-Acknowledgement mechanisme en plaatst dit in dezelfde agentfolder.
+6. Schrijft of actualiseert de bijbehorende charter (`<agent>.charter.md`) volgens `templates/agent-charter.template.md`, vult Bootstrap-Header placeholders in (constitutional grounding, Charter-Evidence phrase), en plaatst ook deze in dezelfde agentfolder.
+7. Bij charter versie wijzigingen werkt alle gerelateerde Charter-Acknowledgements in prompt-bestanden bij naar de nieuwe versie voor constitutional consistentie.
+8. Ontwerpt een minimale runner-structuur (`scripts/runners/<agent>.py`) indien herhaalbare uitvoering nodig is.
+9. Voert een traceability-check uit: capability boundary → kerntaken → contract → prompt → charter → runner.
+10. Post-execution: werkt canon resolved_ref bij in charter Bootstrap-Header en prompt Charter-Acknowledgement na runtime resolution.
+11. Noteert wijzigingen in het Change Log en draagt de agent over aan Publisher of uitvoerende agents.
 
-Specifiek voor de intent **`4.orden-agent`** geldt aanvullend:
-- Agent Smeder voert de ordening daadwerkelijk uit: maakt per-agentfolders aan, verplaatst en/of hernoemt artefacten en actualiseert paden en verwijzingen.
-- Er is geen dry-run-modus; de output in `docs/resultaten/agent-smeder/orden-agent-<agent-naam>.md` beschrijft wat feitelijk is uitgevoerd.
-- De agent mag zoveel aannames doen als nodig om de ordening te voltooien, mits deze aannames expliciet in het verslag worden vastgelegd.
+**Specifiek voor intent `4.orden-agent`:**
+- Voert daadwerkelijke ordening uit: maakt per-agentfolders aan conform normering `<value-stream>.<fase>.<agent-naam>/`, verplaatst alle agent-gerelateerde bestanden (boundary, contract, prompt, charter, runner), actualiseert paden en verwijzingen.
+- VERPLAATST bestanden (verwijdert op bronlocatie na correcte plaatsing in doelfolder).
+- Geen dry-run-modus; output in `docs/resultaten/agent-smeder/orden-agent-<agent-naam>.md` beschrijft feitelijke uitvoering.
+- Mag aannames doen om ordening te voltooien, mits expliciet vastgelegd in verslag.
 
 ## 7. Traceerbaarheid (contract <-> charter)
 
@@ -128,10 +131,10 @@ Dit charter is traceerbaar naar de eigen contracten en prompt-metadata van Agent
   - Prompt-metadata: `artefacten/aeo.02.agent-smeder/mandarin.agent-smeder-1.leg-agent-contract-vast.prompt.md`
 - Intent: `2.schrijf-charter`
   - Agent-contract: `artefacten/aeo.02.agent-smeder/agent-smeder-2.schrijf-charter.agent.md`
-  - Prompt-metadata: `artefacten/aeo.02.agent-smeder/mandarin.agent-smeder-2-schrijf.charter.prompt.md`
+  - Prompt-metadata: `artefacten/aeo.02.agent-smeder/mandarin.agent-smeder-2-schrijf-charter.prompt.md`
 - Intent: `3.schrijf-runner`
   - Agent-contract: `artefacten/aeo.02.agent-smeder/agent-smeder-3.schrijf-runner.agent.md`
-  - Prompt-metadata: `artefacten/aeo.02.agent-smeder/mandarin.agent-smeder-3-schrijf.runner.prompt.md`
+  - Prompt-metadata: `artefacten/aeo.02.agent-smeder/mandarin.agent-smeder-3-schrijf-runner.prompt.md`
  - Intent: `4.orden-agent`
   	- Agent-contract: `artefacten/aeo.02.agent-smeder/agent-smeder-4.orden-agent.agent.md`
   	- Prompt-metadata: `artefacten/aeo.02.agent-smeder/mandarin.agent-smeder-4-orden.agent.prompt.md`
@@ -197,6 +200,9 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 
 | Datum | Versie | Wijziging | Auteur |
 |------|--------|-----------|--------|
+| 2026-02-08 | 2.3 | Template compliance instructies toegevoegd: Bootstrap-Header template invulling, Charter-Evidence phrase generation, canon resolved_ref runtime resolution, werkwijze opgeschoond | Agent Smeder |
+| 2026-02-08 | 2.2 | Verantwoordelijkheid toegevoegd voor versie-consistentie tussen charters en Charter-Acknowledgements in prompt-bestanden | Agent Smeder |
+| 2026-02-08 | 2.1 | Bootstrap-Header beheer en Charter-Acknowledgement mechanisme toegevoegd aan verantwoordelijkheden | Agent Smeder |
 | 2026-02-06 | 2.0 | Intent hernoemd: `1.definieer-prompt` → `1.leg-agent-contract-vast` om dual-file structuur (contract + prompt metadata) te benadrukken | Agent Smeder |
 | 2026-02-04 | 1.9 | Gedrag intent `4.orden-agent` aangepast: geen voorstel/dry-run meer, maar altijd daadwerkelijke ordening met gedocumenteerde aannames | Agent Smeder |
 | 2026-02-04 | 1.8 | Nieuwe intent `4.orden-agent` toegevoegd aan Agent Smeder (contract, YAML-prompt en traceerbaarheid) | Agent Smeder |

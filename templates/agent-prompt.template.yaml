@@ -1,4 +1,7 @@
 ---
+# VERPLICHTE INPUT
+boundary-bestand: "<pad-naar-boundary-bestand>"
+
 agent: mandarin.<agent-naam>
 intent: <intent-naam>
 charter_ref: <pad-naar-charter.md>
@@ -6,6 +9,7 @@ charter-acknowledgement:
   charter-id: <agent-naam>
   charter-versie: <charter-versie>
   value-stream: <value-stream-code>
+  canon-resolved-ref: <wordt-achteraf-gevuld>   # runtime resolved canon commit
   kritieke-grens: "<letterlijke tekst uit capability boundary sectie van charter>"
   kritieke-output-eis: "<letterlijke tekst uit belangrijkste WEL-grens van charter>"
   charter-evidence: "<Charter-Evidence phrase uit Bootstrap-Header van charter>"

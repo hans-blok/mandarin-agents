@@ -2,7 +2,9 @@
 
 - Constitutie:
   - Pad: `grondslagen/.algemeen/constitutie.md`
-  - Versie/Digest: a1c1997
+  - Branch: main
+- Canon:
+  - resolved_ref: <wordt-achteraf-gevuld>   # runtime resolved canon commit
 - Value Stream: aeo
 - Geraadpleegde Grondslagen:
   - `grondslagen/.algemeen/*`

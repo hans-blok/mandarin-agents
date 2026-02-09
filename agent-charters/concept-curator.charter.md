@@ -2,7 +2,8 @@
 
 - Constitutie:
   - Pad: `grondslagen/0.algemeen/constitutie.md`
-  - Versie/Digest: 2.0.0
+  - Branch: main
+  - Canon: resolved_ref: <wordt-achteraf-gevuld>
 - Value Stream: Foundation (FND) - Value-stream-overstijgend
 - Geraadpleegde Grondslagen:
   - `grondslagen/0.algemeen/*`

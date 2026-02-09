@@ -19,8 +19,8 @@ agents:
     charter: artefacten/aeo.02.agent-smeder/agent-smeder.charter.md
     prompts:
       - .github/prompts/mandarin.agent-smeder-1-definieer.prompt.prompt.md
-      - .github/prompts/mandarin.agent-smeder-2-schrijf.charter.prompt.md
-      - .github/prompts/mandarin.agent-smeder-3-schrijf.runner.prompt.md
+      - .github/prompts/mandarin.agent-smeder-2-schrijf-charter.prompt.md
+      - .github/prompts/mandarin.agent-smeder-3-schrijf-runner.prompt.md
     runners: []
 
   - id: moeder

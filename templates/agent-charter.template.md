@@ -3,6 +3,8 @@
 - Constitutie:
   - Pad: `grondslagen/.algemeen/constitutie.md`
   - Branch: main
+- Canon:
+  - resolved_ref: <wordt-achteraf-gevuld>   # runtime resolved canon commit
 - Value Stream: <value-stream-code>
 - Geraadpleegde Grondslagen:
   - `grondslagen/.algemeen/*`

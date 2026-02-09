@@ -1,12 +1,13 @@
 # Bootstrap-Header
 
 - Constitutie:
-  - Pad: `grondslagen/0.algemeen/constitutie.md`
-  - Versie/Digest: 2.0.0
-- Value Stream: Agent Ecosysteem Ontwikkeling (AEO)
+  - Pad: `grondslagen/.algemeen/constitutie.md`
+  - Branch: main
+  - Canon: resolved_ref: <wordt-achteraf-gevuld>
+- Value Stream: aeo
 - Geraadpleegde Grondslagen:
-  - `grondslagen/0.algemeen/*`
-  - `grondslagen/value-streams/aeo/*`
+  - `grondslagen/.algemeen/*`
+  - `grondslagen/aeo/*`
 - Actor:
   - Naam/ID: constitutioneel-auteur
   - Versie: 1.0.0

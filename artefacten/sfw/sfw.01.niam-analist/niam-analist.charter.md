@@ -1,12 +1,13 @@
 # Bootstrap-Header
 
 - Constitutie:
-  - Pad: `grondslagen/0.algemeen/constitutie.md`
-  - Versie/Digest: 2.0.0
-- Value Stream: Softwareontwikkeling (SFW)
+  - Pad: `grondslagen/.algemeen/constitutie.md`
+  - Branch: main
+  - Canon: resolved_ref: <wordt-achteraf-gevuld>
+- Value Stream: sfw
 - Geraadpleegde Grondslagen:
-  - `grondslagen/0.algemeen/*`
-  - `grondslagen/value-streams/sfw/*`
+  - `grondslagen/.algemeen/*`
+  - `grondslagen/sfw/*`
 - Actor:
   - Naam/ID: niam-analist
   - Versie: 1.0.0

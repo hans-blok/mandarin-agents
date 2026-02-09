@@ -1,11 +1,13 @@
 # Bootstrap-Header
 
 - Constitutie:
-  - Pad: `grondslagen/0.algemeen/constitutie.md`
-  - Versie/Digest: 2.0.0
-- Value Stream: Architectuur- en oplossingsontwerp (AOD)
+  - Pad: `grondslagen/.algemeen/constitutie.md`
+  - Branch: main
+- Canon:
+  - resolved_ref: <wordt-achteraf-gevuld>   # runtime resolved canon commit
+- Value Stream: aod
 - Geraadpleegde Grondslagen:
-  - `grondslagen/0.algemeen/*`
+  - `grondslagen/.algemeen/*`
   - `grondslagen/value-streams/aod/*`
 - Actor:
   - Naam/ID: archimate-modelleur
