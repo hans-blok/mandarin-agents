@@ -108,7 +108,7 @@ Belangrijk: de Agent Smeder **beslist niet of** een agent nodig is. De Agent Sme
    - voor agents die niet operationeel zijn in een value stream: `artefacten/fnd.<nn>.<agent-naam>/`,
      waarbij `nn = 00` voor stewards en `nn = 01` voor overige niet-operationele agents.
 4. Ontwerpt per intent een agent-contract (`<agent>.<intent>.agent.md`) met input, output en foutafhandeling en plaatst dit in de agentfolder.
-5. Maakt bij elk contract een bijbehorend YAML-only promptbestand (`mandarin.<agent>.<intent>.prompt.md`) met `agent`, `intent`, `charter_ref` (verwijst naar de lokale charter in dezelfde per-agentfolder) en Charter-Acknowledgement mechanisme en plaatst dit in dezelfde agentfolder.
+5. Maakt bij elk contract een bijbehorend YAML-only promptbestand (`mandarin.<agent>.<intent>.prompt.md`) met `agent`, `intent`, `charter_ref` (verwijst naar de centrale charter in agent-charters/) en Charter-Acknowledgement mechanisme en plaatst dit in dezelfde agentfolder.
 6. Schrijft of actualiseert de bijbehorende charter (`<agent>.charter.md`) volgens `templates/agent-charter.template.md`, vult Bootstrap-Header placeholders in (constitutional grounding, Charter-Evidence phrase), en plaatst ook deze in dezelfde agentfolder.
 7. Bij charter versie wijzigingen werkt alle gerelateerde Charter-Acknowledgements in prompt-bestanden bij naar de nieuwe versie voor constitutional consistentie.
 8. Ontwerpt een minimale runner-structuur (`scripts/runners/<agent>.py`) indien herhaalbare uitvoering nodig is.

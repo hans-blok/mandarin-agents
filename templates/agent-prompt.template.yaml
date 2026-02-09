@@ -4,7 +4,7 @@ boundary-bestand: "<pad-naar-boundary-bestand>"
 
 agent: mandarin.<agent-naam>
 intent: <intent-naam>
-charter_ref: <pad-naar-charter.md>
+charter_ref: agent-charters/<agent-naam>.charter.md
 charter-acknowledgement:
   charter-id: <agent-naam>
   charter-versie: <charter-versie>
