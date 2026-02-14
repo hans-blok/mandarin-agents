@@ -1,32 +1,16 @@
 ---
-agent: verbeteringen-beschrijver
+# VERPLICHTE INPUT
+# boundary-bestand: "<wordt handmatig ingevuld, bijv. agent-smeder.boundary.md>"
+
+agent: mandarin.verbeteringen-beschrijver
 intent: beschrijf-verbetering
-charter_ref: @main:artefacten/sfw.02.verbeteringen-beschrijver/verbeteringen-beschrijver.charter.md
+charter_ref: "@main:mandarin-agents/artefacten/sfw/sfw.02.verbeteringen-beschrijver/verbeteringen-beschrijver.charter.md"
+charter-acknowledgement:
+  charter-id: verbeteringen-beschrijver
+  charter-versie: <charter-versie>
+  value-stream: sfw
+  canon-resolved-ref: <wordt-achteraf-gevuld>   # runtime resolved canon commit
+  kritieke-grens: "<capability boundary>"
+  kritieke-output-eis: "<belangrijkste WEL-grens>"
+  charter-evidence: "<Charter-Evidence phrase uit Bootstrap-Header van charter>"
 ---
-
-# Prompt — verbeteringen-beschrijver: beschrijf VERBETERING (SAFe Feature)
-
-**Doel**
-Beschrijf een VERBETERING volgens het SAFe-framework als onderdeel van één THEMA, zodanig dat deze geschikt is voor besluitvorming en verdere werkvoorbereiding.
-
-## Input
-- THEMA-statement
-- Probleem–oplossingshypothese
-- Context (organisatie en/of proces)
-
-## Output
-- VERBETERING met de volgende vaste onderdelen:
-  - Verbetering (kernachtig)
-  - Verbetering (toegelicht)
-  - Benefit hypothesis
-  - Scope
-  - Niet in scope
-  - Acceptatiecriteria
-  - Non-functional requirements
-
-## Regels
-- Beschrijf wat en waarom, niet hoe
-- Geen technische of implementatiekeuzes
-- Past binnen exact één THEMA
-- Taalniveau B1
-- Formuleringen zijn toetsbaar en overdraagbaar

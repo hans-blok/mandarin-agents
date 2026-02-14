@@ -1,71 +1,48 @@
 agents:
-  # .github workspace agents (niet exporteren)
-  - id: agent-curator
-    name: workspace.agent-curator
-    type: beheeragent
-    valueStream: agent-enablement
-    charter: charters-agents/agent-curator.charter.md
-    prompts:
-      - .github/prompts/mandarin.agent-curator-analyseer.ecosysteem.prompt.md
-      - .github/prompts/mandarin.agent-curator.bepaal-agent.boundary.prompt.md
-      - .github/prompts/mandarin.agent-curator.onderhoud-value.streams.prompt.md
-      - .github/prompts/mandarin.agent-curator.publiceer-agents.overzicht.prompt.md
-    runners: []
-
-  - id: agent-smeder
-    name: workspace.agent-smeder
-    type: uitvoerend
-    valueStream: agent-enablement
-    charter: artefacten/aeo.02.agent-smeder/agent-smeder.charter.md
-    prompts:
-      - .github/prompts/mandarin.agent-smeder-1-definieer.prompt.prompt.md
-      - .github/prompts/mandarin.agent-smeder-2-schrijf-charter.prompt.md
-      - .github/prompts/mandarin.agent-smeder-3-schrijf-runner.prompt.md
-    runners: []
-
-  - id: moeder
-    name: workspace.moeder
-    type: beheeragent
-    valueStream: utility
-    charter: charters-agents/moeder.charter.md
-    prompts:
-      - .github/prompts/mandarin.moeder-beheer.git.prompt.md
-      - .github/prompts/mandarin.moeder-configureer.github.prompt.md
-      - .github/prompts/mandarin.moeder-orden.workspace.prompt.md
-      - .github/prompts/mandarin.moeder-schrijf.beleid.prompt.md
-      - .github/prompts/mandarin.moeder-valideer.governance.prompt.md
-    runners:
-      - scripts/runners/moeder.py
-
-  - id: python-expert
-    name: workspace.python-expert
-    type: uitvoerend
-    valueStream: utility
-    charter: exports/utility/charters-agents/python-expert.charter.md
-    prompts:
-      - .github/prompts/mandarin.python-expert-review.code.prompt.md
-      - .github/prompts/mandarin.python-expert-run.script.prompt.md
-      - .github/prompts/mandarin.python-expert-schrijf.script.prompt.md
-    runners: []
-
-  - id: converter-md-to-archimate
-    name: workspace.converter-md-to-archimate
-    type: uitvoerend
-    valueStream: agent-enablement
-    charter: charters-agents/converter-md-to-archimate.charter.md
-    prompts:
-      - .github/prompts/mandarin.converter-md-to-archimate.converteer.prompt.md
-    runners: []
-
-  - id: template-maker
-    name: workspace.template-maker
-    type: uitvoerend
-    valueStream: agent-enablement
-    charter: charters-agents/template-maker.charter.md
-    prompts:
-      - .github/prompts/mandarin.template-maker.genereer-agent-template.prompt.md
-      - .github/prompts/mandarin.template-maker.genereer-prompt-template.prompt.md
-      - .github/prompts/mandarin.template-maker.exporteer-boundary-template.prompt.md
-      - .github/prompts/mandarin.template-maker.maak-agent-template.prompt.md
-      - .github/prompts/mandarin.template-maker.maak-divers-template.prompt.md
-    runners: []
+- id: agent-curator
+  name: workspace.agent-curator
+  type: uitvoerend
+  valueStream: aeo
+  charter: artefacten/aeo/aeo.02.agent-curator/agent-curator-analyseer.charter.md
+  prompts:
+  - .github/prompts/mandarin.agent-curator-analyseer.ecosysteem.prompt.md
+  - .github/prompts/mandarin.agent-curator.bepaal-agent-boundary.prompt.md
+  - .github/prompts/mandarin.agent-curator.onderhoud-value.streams.prompt.md
+  - .github/prompts/mandarin.agent-curator.publiceer-json.prompt.md
+  - .github/prompts/mandarin.agent-curator.publiceer-overzicht.prompt.md
+  runners: []
+- id: agent-smeder
+  name: workspace.agent-smeder
+  type: uitvoerend
+  valueStream: aeo
+  charter: artefacten/aeo/aeo.02.agent-smeder/agent-smeder.charter.md
+  prompts:
+  - .github/prompts/mandarin.agent-smeder.leg-vast-agent-charter.prompt.md
+  - .github/prompts/mandarin.agent-smeder.leg-vast-agent-contract.prompt.md
+  - .github/prompts/mandarin.agent-smeder.leg-vast-agent-prompt-versie.prompt.md
+  - .github/prompts/mandarin.agent-smeder.leg-vast-agent-prompt.prompt.md
+  - .github/prompts/mandarin.agent-smeder.leg-vast-agent-runner.prompt.md
+  - .github/prompts/mandarin.agent-smeder.leg-vast-templates.prompt.md
+  runners: []
+- id: engineer-steward
+  name: workspace.engineer-steward
+  type: uitvoerend
+  valueStream: fnd
+  charter: artefacten/fnd/fnd.01.engineer-steward/engineer-steward.charter.md
+  prompts:
+  - .github/prompts/mandarin.engineer-steward-review.code.prompt.md
+  - .github/prompts/mandarin.engineer-steward-run.script.prompt.md
+  - .github/prompts/mandarin.engineer-steward-schrijf.script.prompt.md
+  runners: []
+- id: workspace-steward
+  name: workspace.workspace-steward
+  type: uitvoerend
+  valueStream: fnd
+  charter: artefacten/fnd/fnd.01.workspace-steward/workspace-steward.charter.md
+  prompts:
+  - .github/prompts/mandarin.workspace-steward-beheer.git.prompt.md
+  - .github/prompts/mandarin.workspace-steward-configureer.github.prompt.md
+  - .github/prompts/mandarin.workspace-steward-orden.workspace.prompt.md
+  - .github/prompts/mandarin.workspace-steward-schrijf.beleid.prompt.md
+  - .github/prompts/mandarin.workspace-steward-valideer.governance.prompt.md
+  runners: []

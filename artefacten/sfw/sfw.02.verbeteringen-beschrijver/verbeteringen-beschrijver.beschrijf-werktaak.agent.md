@@ -23,5 +23,5 @@ De verbeteringenbeschrijver formuleert een WERKTAAK (Story) die bijdraagt aan é
 - Stopt als er implementatiekeuzes worden gevraagd
 
 ## Verwijzing
-- Boundary: `agent-boundaries/verbeteringen-beschrijver.boundary.md`
+- Boundary: `verbeteringen-beschrijver.boundary.md`
 - Template: `templates/verbeteringenbeschrijver-werktaak.template.md`

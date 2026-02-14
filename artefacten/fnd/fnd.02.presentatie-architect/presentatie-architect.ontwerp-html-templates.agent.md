@@ -50,7 +50,7 @@ De presentatie-architect:
 - Valideert dat er geen content-generatie plaatsvindt (templates bevatten alleen placeholders, geen vaste inhoud)
 
 ## Verwijzing
-- Boundary: agent-boundaries/presentatie-architect.boundary.md
+- Boundary: presentatie-architect.boundary.md
 - Charter: artefacten/fnd.02.presentatie-architect/presentatie-architect.charter.md
 - Template: -
 

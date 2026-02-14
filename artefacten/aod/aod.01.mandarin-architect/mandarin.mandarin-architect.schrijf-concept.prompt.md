@@ -1,18 +1,16 @@
 ---
-agent: mandarin-architect
+# VERPLICHTE INPUT
+# boundary-bestand: "<wordt handmatig ingevuld, bijv. agent-smeder.boundary.md>"
+
+agent: mandarin.mandarin-architect
 intent: schrijf-concept
-charter_ref: @main:artefacten/aod.01.mandarin-architect/mandarin-architect.charter.md
+charter_ref: "@main:mandarin-agents/artefacten/aod/aod.01.mandarin-architect/mandarin-architect.charter.md"
+charter-acknowledgement:
+  charter-id: mandarin-architect
+  charter-versie: <charter-versie>
+  value-stream: aod
+  canon-resolved-ref: <wordt-achteraf-gevuld>   # runtime resolved canon commit
+  kritieke-grens: "<capability boundary>"
+  kritieke-output-eis: "<belangrijkste WEL-grens>"
+  charter-evidence: "<Charter-Evidence phrase uit Bootstrap-Header van charter>"
 ---
-
-# Prompt — schrijf concept
-
-Deze prompt instrueert de mandarin-architect om een concept uit te werken volgens het concept-template:
-
-- Geef een heldere, canonieke definitie van het concept (maximaal 2 zinnen)
-- Benoem de belangrijkste kenmerken
-- Geef aan wat het concept expliciet niet is
-- Voeg voorbeelden toe
-- Benoem synoniemen en analogieën (optioneel)
-- Geef context, gebruik en traceerbaarheid
-
-Output: Markdown, strikt volgens het concept-template.

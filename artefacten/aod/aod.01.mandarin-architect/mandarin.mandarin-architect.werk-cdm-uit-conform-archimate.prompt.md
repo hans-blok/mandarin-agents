@@ -1,16 +1,16 @@
 ---
-agent: mandarin-architect
+# VERPLICHTE INPUT
+# boundary-bestand: "<wordt handmatig ingevuld, bijv. agent-smeder.boundary.md>"
+
+agent: mandarin.mandarin-architect
 intent: werk-cdm-uit-conform-archimate
-charter_ref: @main:artefacten/aod.01.mandarin-architect/mandarin-architect.charter.md
+charter_ref: "@main:mandarin-agents/artefacten/aod/aod.01.mandarin-architect/mandarin-architect.charter.md"
+charter-acknowledgement:
+  charter-id: mandarin-architect
+  charter-versie: <charter-versie>
+  value-stream: aod
+  canon-resolved-ref: <wordt-achteraf-gevuld>   # runtime resolved canon commit
+  kritieke-grens: "<capability boundary>"
+  kritieke-output-eis: "<belangrijkste WEL-grens>"
+  charter-evidence: "<Charter-Evidence phrase uit Bootstrap-Header van charter>"
 ---
-
-# Prompt — werk cdm uit conform ArchiMate
-
-Deze prompt instrueert de mandarin-architect om een canoniek domeinmodel (cdm) uit te werken volgens de ArchiMate-standaard:
-
-- Gebruik alleen de minimaal noodzakelijke ArchiMate-elementen (laag, view, relatie, element)
-- Leg de kernbegrippen, relaties en structuur van het domein vast
-- Vermijd implementatie- of oplossingsdetails
-- Output is machine-leesbaar en geschikt voor validatie
-
-Output: Markdown, met duidelijke secties voor elementen, relaties en toelichting.

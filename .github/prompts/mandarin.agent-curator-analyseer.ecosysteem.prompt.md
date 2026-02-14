@@ -1,5 +1,11 @@
 ---
-agent: mandarin.agent-curator-analyseer
-intent: ecosysteem
-charter_ref: @main:artefacten/aeo.02.agent-curator/agent-curator-analyseer.charter.md
+agent: mandarin.agent-curator
+intent: analyseer-ecosysteem
+value_stream: aeo
+
+bootstrap:
+  script: scripts/bootstrap_canon_consult.py
+  
+# Canon URL en grondslagen worden gelezen uit beleid-workspace.md
+# Agent-instructies staan in agent-curator.analyseer-ecosysteem.agent.md
 ---

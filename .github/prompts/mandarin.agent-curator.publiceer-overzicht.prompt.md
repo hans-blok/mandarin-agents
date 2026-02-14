@@ -1,5 +1,11 @@
 ---
 agent: mandarin.agent-curator
 intent: publiceer-overzicht
-charter_ref: artefacten/aeo.02.agent-curator/agent-curator.charter.md
+value_stream: aeo
+
+bootstrap:
+  script: scripts/bootstrap_canon_consult.py
+  
+# Canon URL en grondslagen worden gelezen uit beleid-workspace.md
+# Agent-instructies staan in agent-curator.publiceer-overzicht.agent.md
 ---

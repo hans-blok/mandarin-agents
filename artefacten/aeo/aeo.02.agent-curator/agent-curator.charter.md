@@ -1,27 +1,10 @@
-# Bootstrap-Header
-
-- Constitutie:
-  - Pad: `grondslagen/.algemeen/constitutie.md`
-  - Branch: main
-  - Canon: resolved_ref: <wordt-achteraf-gevuld>
-- Value Stream: aeo
-- Geraadpleegde Grondslagen:
-  - `grondslagen/.algemeen/*`
-  - `grondslagen/aeo/*`
-- Actor:
-  - Naam/ID: agent-curator
-  - Versie: 1.0.0
-- Bootstrapping Tijdstip: 2026-02-08T15:40:00Z
-
----
-
 # Agent Charter - agent-curator
 
-**Agent**: agent-curator  
+**Agent-ID**: `aeo.02.agent-curator`  
+**Versie**: 1.0.0  
 **Domein**: Agent boundary-setting, value stream administratie, agent-ecosysteem oversight  
 **Value Stream**: agent-enablement (fase 02 - Ecosysteeminrichting)  
-**Template**: agent-boundary.template.md  
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en de norm `agent-charter-normering.md` onder `governance-artefacten/agent-enablement/`. Alle governance-richtlijnen uit deze norm zijn bindend.
+**Governance**: Volgt `beleid-workspace.md` (inclusief canon-raadpleging zoals daar vastgelegd) en `agent-charter-normering.md`; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
 
 ## Classificatie-assen (vink aan wat van toepassing is)
 - **Inhoudelijke as**
@@ -97,6 +80,9 @@ De agent-curator bewaakt daarbij:
 
 ## 6. Werkwijze
 
+0. **Canon consultatie (verplicht)**  
+   Raadpleegt grondslagen conform `beleid-workspace.md` en logt consultatie via `scripts/bootstrap_canon_consult.py` voordat taken worden uitgevoerd. Deze architectuurkeuze (splitsing tussen proces en regels) zorgt ervoor dat governance centraal beheerd wordt. Specifieke grondslagen per intent staan in de bijbehorende prompt files. Bij handmatige uitvoering moet dit expliciet worden gedaan; bij runners/pipelines gebeurt dit automatisch. Consultaties worden gelogd in `audit/canon-consult.log.md`.
+
 1. Ontvangt een opdracht (bijvoorbeeld boundary-bepaling, value stream-lijst, validatie of publicatie) met de benodigde parameters.
 2. Raadpleegt de mandarin-canon voor value streams en relevante governance-/doctrine-documenten.
 3. Leest waar nodig bestaande agents, charters, prompts en runners in en extraheert relevante metadata.
@@ -114,18 +100,22 @@ Dit charter is traceerbaar naar de volgende agent-contracten en prompt-metadata 
 - Intent: `onderhoud-value.streams`
 	- Agent-contract: `artefacten/aeo.02.agent-curator/agent-curator.onderhoud-value.streams.agent.md`
 	- Prompt-metadata: `artefacten/aeo.02.agent-curator/mandarin.agent-curator.onderhoud-value.streams.prompt.md`
+	- Template: -
 
 - Intent: `bepaal-agent.boundary`
 	- Agent-contract: `artefacten/aeo.02.agent-curator/agent-curator.bepaal-agent.boundary.agent.md`
 	- Prompt-metadata: `artefacten/aeo.02.agent-curator/mandarin.agent-curator.bepaal-agent.boundary.prompt.md`
+	- Template: `templates/agent-boundary.template.md`
 
 - Intent: `publiceer-json`
 	- Agent-contract: `artefacten/aeo.02.agent-curator/agent-curator.publiceer-json.agent.md`
 	- Prompt-metadata: `artefacten/aeo.02.agent-curator/mandarin.agent-curator.publiceer-json.prompt.md`
+	- Template: - agent-prompt.template.yaml
 
 - Intent: `publiceer-overzicht`
 	- Agent-contract: `artefacten/aeo.02.agent-curator/agent-curator.publiceer-overzicht.agent.md`
 	- Prompt-metadata: `artefacten/aeo.02.agent-curator/mandarin.agent-curator.publiceer-overzicht.prompt.md`
+	- Template: -
 
 De gespecialiseerde analyse-intent is uitgewerkt in een eigen charter:
 - `artefacten/aeo.02.agent-curator/agent-curator-analyseer.charter.md` (agent-curator-analyseer).

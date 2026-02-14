@@ -1,3 +1,12 @@
+---
+workspace: mandarin-agents
+value_stream: aeo
+canon_github_url: https://github.com/hans-blok/mandarin-canon.git
+
+# Grondslagen-patronen per value stream voor canon consultatie
+grondslagen:
+  aeo: "grondslagen/.algemeen/*,grondslagen/aeo/*"
+---
 
 # Beleid voor de MANDARIN-AGENTS workspace
 
@@ -58,6 +67,13 @@ Andere domeinen vallen buiten deze workspace en horen in andere repositories. Vo
 ## Workspace-specifieke aanvullingen
 
 - **Agent-naamgeving**: Alle agents volgen de conventie `{value-stream}.{fase}.{agent-naam}` voor folder-structuur en een lowercase-hyphen-separated naamgeving voor agent-namen
+- **Agent-artefacten organisatie**: Normerende artefacten die agents beschrijven worden gestructureerd vastgelegd in de `/artefacten` folder volgens de volgende conventie:
+  - **Parent folder** (`artefacten/{vs}/{vs}.{fase}.{agent-naam}/`): Bevat charter (`.charter.md`), boundary (`.boundary.md`), doctrine en runner-scripts (`.runner.py`)
+  - **Subfolder `/templates`**: Bevat herbruikbare templates voor prompt, contract, charter en runner
+  - **Subfolder `/agent-contracten`**: Bevat alle agent-contract beschrijvingen (`.agent.md`) per intent
+  - **Subfolder `/prompts`**: Bevat alle prompt-bestanden (`.prompt.md`) per intent
+  - **Voorbeeld**: `artefacten/aeo/aeo.02.agent-smeder/` met subfolders `templates/`, `agent-contracten/` en `prompts/`
+  - Deze structuur zorgt ervoor dat gelijksoortige artefact-types bij elkaar staan en de parent folder overzichtelijk blijft
 - **Traceerbaarheid**: Elk agent-artefact (charter, contract, prompt) moet traceerbaar zijn naar governance-documenten en canonical bronnen via expliciete verwijzingen
 - **JSON Schema conformiteit**: Alle JSON-output (zoals agents-publicatie.json) moet valideren tegen de gedefinieerde schemas in de `/schemas` folder
 - **Markdown-kwaliteit**: Alle documentatie gebruikt B1-taalniveau en volgt de Mandarin-stijlgids voor leesbaarheid en consistentie

@@ -13,6 +13,19 @@ Deze folder bevat alle hulpmiddelen voor:
 - Agent fetching (agents ophalen voor value streams)
 - Repository management (clone/update repositories)
 
+## 🏗️ Architectuur & Principes
+
+**Voor het begrijpen van de prompt architectuur en SOLID principes**, zie:
+
+➡️ **[docs/README-PROMPT-ARCHITECTURE.md](docs/README-PROMPT-ARCHITECTURE.md)**
+
+Deze documentatie beschrijft:
+- Architectuur principes (SOLID, Single Source of Truth, Separation of Concerns)
+- Werkwijze en workflow voor agent-uitvoering
+- Minimale prompt structuur en conventies
+- Beleid-workspace.md configuratie
+- Anti-patterns en best practices
+
 ## Structuur
 
 ```

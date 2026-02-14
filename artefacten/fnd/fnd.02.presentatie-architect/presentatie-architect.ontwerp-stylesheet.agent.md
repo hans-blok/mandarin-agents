@@ -56,7 +56,7 @@ De presentatie-architect:
 - Valideert dat stylesheet geen JavaScript-afhankelijkheden introduceert (pure CSS/SCSS)
 
 ## Verwijzing
-- Boundary: agent-boundaries/presentatie-architect.boundary.md
+- Boundary: presentatie-architect.boundary.md
 - Charter: artefacten/fnd.02.presentatie-architect/presentatie-architect.charter.md
 - Template: -
 

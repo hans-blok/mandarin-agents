@@ -23,7 +23,7 @@ De C4-vertaler corrigeert bestaande C4 DSL-bestanden zodat deze syntactisch geld
 - Houd wijzigingen minimaal en uitlegbaar
 
 ## Verwijzing
-- Boundary: `agent-boundaries/c4-vertaler.boundary.md`
+- Boundary: `../../sfw/sfw.03.c4-representatievertaler/c4-vertaler.boundary.md`
 - Template: `templates/agent-contract.template.md`
 
 ## Versiehistorie

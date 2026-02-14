@@ -1,9 +1,9 @@
 # Bootstrap-Header
 
-- Constitutie:
-  - Pad: `grondslagen/.algemeen/constitutie.md`
+- Beleid (workspace):
+  - Pad: `beleid-workspace.md`
   - Branch: main
-  - Canon: resolved_ref: <wordt-achteraf-gevuld>
+  - Canon: logging: `audit/canon-consult.log.md`  # resolved_ref wordt centraal gelogd
 - Value Stream: aeo
 - Geraadpleegde Grondslagen:
   - `grondslagen/.algemeen/*`
@@ -21,7 +21,7 @@
 **Domein**: Normatieve doctrine en governance  
 **Value Stream**: agent-enablement (fase 01 - Grondslagvorming)  
 **Template**: -  
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en de normering voor charters en normatieve artefacten in de mandarin-canon repository. Alle constitutionele en doctrinaire richtlijnen zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root). Dit beleid verwijst naar de mandarin-canon voor constitutie en doctrine; alle constitutionele en doctrinaire richtlijnen zijn bindend.
 
 ## Classificatie van de agent
 (vink aan wat van toepassing is)
@@ -96,6 +96,9 @@ De constitutioneel-auteur bewaakt daarbij:
 - Beheert geen repository-structuur, exportpaden of publicatiemechanismen.
 
 ## 6. Werkwijze
+
+0. **Canon consultatie (verplicht)**  
+   Raadpleegt canon grondslagen en logt consultatie via `scripts/bootstrap_canon_consult.py` voordat taken worden uitgevoerd. Specifieke grondslagen per intent staan in de bijbehorende prompt files. Bij handmatige uitvoering moet dit expliciet worden gedaan; bij runners/pipelines gebeurt dit automatisch. Consultaties worden gelogd in `audit/canon-consult.log.md`.
 
 1. Leest de opdracht en controleert of het om een normatief artefact gaat (en niet om ordening of toepassing).
 2. Verzamelt en leest de relevante passages uit constitutie en doctrines, plus eventuele referentiedocumenten.

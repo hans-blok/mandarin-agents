@@ -97,7 +97,7 @@ De Mandarin Architect:
 
 ## 7. Traceerbaarheid
 
-- Boundary: agent-boundaries/mandarin-architect.boundary.md
+ - Boundary: mandarin-architect.boundary.md
 - Contracten/prompts: artefacten/aod.01.mandarin-architect/mandarin-architect.*.agent.md, artefacten/aod.01.mandarin-architect/mandarin.mandarin-architect.*.prompt.md
 
 ## 8. Output-locaties
@@ -126,7 +126,7 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 ## 10. Herkomstverantwoording
 
 - Governance: beleid-mandarin-agents.md + doctrine-agent-charter-normering.md
-- Agent-boundary: agent-boundaries/mandarin-architect.boundary.md
+ - Agent-boundary: mandarin-architect.boundary.md
 - Templates: concept-template.md, agent-boundary.template.md
 
 ## 11. Change Log

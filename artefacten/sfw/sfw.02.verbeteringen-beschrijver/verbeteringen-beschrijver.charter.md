@@ -79,7 +79,7 @@ De verbeteringen-beschrijver maakt vaag verbeterwerk expliciet en overdraagbaar 
 
 ## 7. Output-locaties
 - Agent-contracten en prompts: `artefacten/sfw.02.verbeteringen-beschrijver/`
-- Boundaries: `agent-boundaries/`
+- Boundary: `verbeteringen-beschrijver.boundary.md`
 - Templates: `templates/`
 
 ## 7. Traceerbaarheid
@@ -90,7 +90,7 @@ De verbeteringen-beschrijver maakt vaag verbeterwerk expliciet en overdraagbaar 
   - `artefacten/sfw.02.verbeteringen-beschrijver/mandarin.verbeteringen-beschrijver.beschrijf-verbetering.prompt.md`
   - `artefacten/sfw.02.verbeteringen-beschrijver/mandarin.verbeteringen-beschrijver.beschrijf-werktaak.prompt.md`
 - Boundary:
-  - `agent-boundaries/verbeteringen-beschrijver.boundary.md`
+  - `verbeteringen-beschrijver.boundary.md`
 
 ## 8. Wijzigingsbeheer
 - Wijzigingen worden vastgelegd in de versiehistorie van elk artefact

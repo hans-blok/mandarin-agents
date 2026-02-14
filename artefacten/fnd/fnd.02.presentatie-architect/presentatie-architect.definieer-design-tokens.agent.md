@@ -62,7 +62,7 @@ De presentatie-architect:
 - Valideert dat tokens geen implementatie-specifieke waarden bevatten (tokens zijn platform-agnostisch)
 
 ## Verwijzing
-- Boundary: agent-boundaries/presentatie-architect.boundary.md
+- Boundary: presentatie-architect.boundary.md
 - Charter: artefacten/fnd.02.presentatie-architect/presentatie-architect.charter.md
 - Template: -
 

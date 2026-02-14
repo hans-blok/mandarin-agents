@@ -28,5 +28,5 @@ De verbeteringenbeschrijver beschrijft een VERBETERING (SAFe Feature) als onderd
 - Stopt als er implementatiekeuzes worden gevraagd
 
 ## Verwijzing
-- Boundary: `agent-boundaries/verbeteringen-beschrijver.boundary.md`
+- Boundary: `verbeteringen-beschrijver.boundary.md`
 - Template: `templates/verbeteringenbeschrijver-verbetering.template.md`

@@ -156,7 +156,7 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 
 ## 10. Herkomstverantwoording
 
-- Boundary: `agent-boundaries/archimate-modelleur.boundary.md` beschrijft de capability boundary en WEL/NIET-gebied van deze agent.
+ - Boundary: `archimate-modelleur.boundary.md` beschrijft de capability boundary en WEL/NIET-gebied van deze agent.
 - Governance: `beleid-mandarin-agents.md` en de relevante normen onder `governance-artefacten/architectuur-en-oplossingsontwerp/` (waaronder de agent-charter-normering).
 - Externe referentie: The Open Group ArchiMate® 3.x specificatie (officiële standaard).
 - Agent-contracten en prompt-metadata: zie sectie Traceerbaarheid.

@@ -21,7 +21,7 @@
 **Domein**: Canonieke aankondiging, governance communicatie  
 **Value Stream**: Kennisvastlegging (KVL, fase 04 - Publicatie en Onderhoud)  
 **Template**: agent-charter.template.md  
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en de norm `agent-charter-normering.md` onder `grondslagen/`. Alle governance-richtlijnen uit de mandarin-canon zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en de norm `agent-charter-normering.md` onder `grondslagen/`. Alle governance-richtlijnen uit de mandarin-canon zijn bindend.
 
 ## Classificatie van de agent
 (vink aan wat van toepassing is)
@@ -119,7 +119,7 @@ De Heraut expliciteert en communiceert kennisproducten van de kennisvastlegging 
 
 ## 10. Herkomstverantwoording
 
-- **Governance**: `beleid-mandarin-agents.md` + mandarin-canon repository
+- **Governance**: `beleid-workspace.md` + mandarin-canon repository
 - **Agent-contracten**: Zie Traceerbaarheid (sectie 7)
 - **Boundary**: `artefacten/kvl/kvl.04.heraut/agent-boundary-heraut.md`
 - **Value stream**: KVL fase 04: Publicatie en Onderhoud

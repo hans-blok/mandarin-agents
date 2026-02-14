@@ -21,7 +21,7 @@
 **Domein**: Tekstvertaling, meertalige kennisoverdracht  
 **Value Stream**: kennisvastlegging (KVL, fase 04 - Publicatie)
 
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` en de relevante doctrine(s) voor agent-charters. Alle governance-richtlijnen uit de mandarin-canon zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` en de relevante doctrine(s) voor agent-charters. Alle governance-richtlijnen uit de mandarin-canon zijn bindend.
 
 ## Classificatie van de agent
 

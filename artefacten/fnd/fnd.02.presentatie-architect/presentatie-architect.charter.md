@@ -324,7 +324,7 @@ Zorgt voor consistente, professionele en toegankelijke visuele presentatie van k
 ## Herkomstverantwoording
 
 **Bronnen**:
-- `agent-boundaries/presentatie-architect.boundary.md` - Boundary-definitie
+- `presentatie-architect.boundary.md` - Boundary-definitie
 - `artefacten/fnd.02.presentatie-architect/presentatie-architect.*.agent.md` - Agent-contracten
 - `templates/agent-charter.template.md` - Charter-template
 

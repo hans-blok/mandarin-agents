@@ -20,7 +20,7 @@
 **Domein**: Publicatiestructuur, mkdocs.yml, content-ontsluiting  
 **Value Stream**: foundation (FND) - fase 02
 
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` en de relevante doctrine(s) voor agent-charters.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` en de relevante doctrine(s) voor agent-charters.
 
 ## Classificatie van de agent
 (vink aan wat van toepassing is)
@@ -200,7 +200,7 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 ## 11. Herkomstverantwoording
 
 - Deze charter is gebaseerd op de boundary `artefacten/fnd/fnd.02.publicatie-steward/publicatie-steward.boundary.md`.
-- Governance-bronnen: `beleid-mandarin-agents.md` en relevante normen in de mandarin-canon repository.
+- Governance-bronnen: `beleid-workspace.md` en relevante normen in de mandarin-canon repository.
 - Agent-contracten: zie sectie Traceerbaarheid.
 - Classificatie: Structuurrealiserend, value-stream-overstijgend, vormvast, inhoudelijk (zoals gedefinieerd in boundary).
 

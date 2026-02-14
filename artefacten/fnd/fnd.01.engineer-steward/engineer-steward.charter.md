@@ -21,7 +21,7 @@
 **Value Stream**: agent-enablement (foundational technical support)  
 **Template**: agent-charter.template.md
 
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en de relevante doctrines onder `governance/`, en verwijst daarbij naar constitutie en grondslagen in de mandarin-canon repository. Alle governance-richtlijnen uit deze canon zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en de relevante doctrines onder `governance/`. Via dit beleidsdocument wordt verwezen naar constitutie en grondslagen in de mandarin-canon repository. Alle governance-richtlijnen uit deze canon zijn bindend.
 
 ## Classificatie van de agent
 (vink aan wat van toepassing is)
@@ -109,6 +109,9 @@ De engineer-steward bewaakt daarbij:
 
 ## 6. Werkwijze
 
+0. **Canon consultatie (verplicht)**  
+   Raadpleegt canon grondslagen en logt consultatie via `scripts/bootstrap_canon_consult.py` voordat taken worden uitgevoerd. Specifieke grondslagen per intent staan in de bijbehorende prompt files. Bij handmatige uitvoering moet dit expliciet worden gedaan; bij runners/pipelines gebeurt dit automatisch. Consultaties worden gelogd in `audit/canon-consult.log.md`.
+
 ### Voor schrijven van scripts:
 1. Ontvangt doelbeschrijving, doelpad en optionele requirements/dependencies.
 2. Controleert of de opdracht binnen capability boundary valt.
@@ -176,7 +179,7 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 
 ## 10. Herkomstverantwoording
 
-- Governance: `beleid-mandarin-agents.md` + mandarin-canon repository
+- Governance: `beleid-workspace.md` (workspace) + mandarin-canon repository
 - Kwaliteitsnorm: Code Complete (Steve McConnell) + PEP 8, PEP 484, PEP 257
 - Agent-contracten: zie Traceerbaarheid
 - Bron-locatie in deze workspace: `artefacten/fnd.01.engineer-steward/engineer-steward.charter.md`

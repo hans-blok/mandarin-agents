@@ -25,7 +25,7 @@ De C4-vertaler zet C4-inhoud uit Markdown om naar één of meer geldige C4 DSL-b
 - Traceerbaarheid: elk DSL-element is herleidbaar naar een bronpassage
 
 ## Verwijzing
-- Boundary: `agent-boundaries/c4-vertaler.boundary.md`
+- Boundary: `../../sfw/sfw.03.c4-representatievertaler/c4-vertaler.boundary.md`
 - Template: `templates/agent-contract.template.md`
 
 ## Versiehistorie

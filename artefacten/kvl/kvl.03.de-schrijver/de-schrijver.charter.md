@@ -24,6 +24,6 @@
 - [x] Uitvoerend
 **Value Stream**: kennisvastlegging (KVL, fase 03 - Vastlegging)
 -
-**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-mandarin-agents.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
+**Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.
 
 <!-- Inhoud grotendeels overgenomen uit artefacten/kennisvastlegging/charters-agents/de-schrijver.charter.md, maar met geactualiseerde value stream-naamgeving. Voor volledige tekst, zie origineel; verdere inhoud kan later één-op-één gemigreerd worden. -->

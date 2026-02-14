@@ -38,7 +38,7 @@
 - **Vorm-as**
   - [x] Vormvast
   - [ ] Representatieomvormend
-- **Werkingsas**
+- **Werkingsas**ñ
   - [x] Inhoudelijk
   - [ ] Conditioneel
 
