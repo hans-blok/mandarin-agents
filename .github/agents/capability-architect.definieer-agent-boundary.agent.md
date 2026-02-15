@@ -36,38 +36,59 @@ De Capability-architect levert:
 
 **Deliverable bestand**: `artefacten/{vs}/{vs}.{fase}.{agent}/agent-boundary-{agent}.md`
 
-**Outputformaat** (standaard structuur per template):
+**VERPLICHT**: Het bestand MOET worden weggeschreven naar de workspace (niet alleen voorgesteld).
+
+**Bestandsformaat vereisten**:
+1. **Moet YAML frontmatter bevatten**: agent, value_stream, value_stream_fase, versie
+2. **value_stream en value_stream_fase**: Gebruik de waarden uit de INPUT parameter `value_stream_fase`, NIET van de executor agent
+3. **Moet template volgen**: Gebruik `agent-boundary.template.md` (beschikbaar als [TEMPLATE] placeholder)
+4. **Classificatie checkboxes**: Gebruik checkbox syntax `- [ ]` en `- [x]` uit template
+5. **Intent naming**: Alle voorgestelde intents MOETEN starten met canoniek werkwoord uit `doctrine-intent-naming.md` (meestal "definieer" voor structurerende definitie)
+
+**Outputformaat** (volgens [TEMPLATE] placeholder):
 ```markdown
+---
+agent: {agent_naam}
+value_stream: {vs}
+value_stream_fase: {vs}.{fase}
+versie: 1.0.0
+---
+
 # Agent Boundary: {Agent-naam}
 
-**Agent-naam**: {agent-naam}
-**Capability-boundary**: {één zin}
-**Doel**: {één zin}
-**Domein**: {domein}
+**agent-naam**: {agent-naam}
+**capability-boundary**: {één zin}
+**doel**: {één zin}
+**domein**: {domein}
 
-## Voorstellen voor prompts
-1. {Intent 1}
+---
 
-## Toelichting
-{Wat doet agent, wat niet}
+## Classificatie van de agent
+(vink aan wat van toepassing is)
 
-### Wat de {Agent} wel doet
-- {bullets}
+- **Inhoudelijke as**
+  - [ ] Ecosysteem-normerend
+  - [ ] Structuur-normerend
+  - [ ] Structuurrealiserend
+  - [ ] Beschrijvend
+  - [ ] Curator
 
-### Wat de {Agent} niet doet
-- {bullets}
+[...etc volgens template...]
 
-## Kernprincipe
-{Eén zin samenvattend principe}
+## Voorstellen agent contracten (intents)
 
-## Mogelijke raakvlakken (ter informatie)
-{Identificatie, geen validatie}
+- definieer-{intent-1}
+- definieer-{intent-2}
+- definieer-{intent-3}
+
+[...rest volgens template...]
 ```
 
 **Formaat-normering**: 
 - Default formaat: **Markdown** (.md), conform Principe 9
 - Alternatieve formaten alleen op expliciete verzoek
 - Markdown bevat structuur volgens agent-boundary.template.md
+- Template wordt automatisch geladen en beschikbaar gemaakt als [TEMPLATE] placeholder
 
 ### Foutafhandeling
 
@@ -87,21 +108,30 @@ De Capability-architect:
 ## Werkwijze
 
 ### Stappen
-1. **Analyseer input**: Begrijp korte_beschrijving en domein, extraheer vs en fase uit value_stream_fase
-2. **Definieer verantwoordelijkheid**: Formuleer externe verantwoordelijkheid in één zin
-3. **Bepaal boundary**: Expliciteer wat wél en níet binnen scope valt
-4. **Identificeer raakvlakken**: Lijst agents met mogelijke overlap (ter informatie)
-5. **Positioneer in ecosysteem**: Valideer consistentie van value_stream_fase met classificatie
-6. **Stel intents voor**: Voorlopige lijst van 1-3 intents
-7. **Schrijf boundary document**: Volgens template-structuur naar artefacten/{vs}/{vs}.{fase}.{agent}/
-8. **Valideer compleetheid**: Check template-checklist
+1. **Analyseer input**: Begrijp korte_beschrijving en domein, extraheer vs en fase uit value_stream_fase PARAMETER (niet van executor agent)
+2. **Laad template**: Gebruik [TEMPLATE] placeholder voor agent-boundary.template.md structuur
+3. **Raadpleeg doctrine**: Check doctrine-intent-naming.md voor canonieke werkwoorden (meestal "definieer")
+4. **Definieer verantwoordelijkheid**: Formuleer externe verantwoordelijkheid in één zin
+5. **Bepaal boundary**: Expliciteer wat wél en níet binnen scope valt (minimaal 3 bullets per sectie)
+6. **Classificeer agent**: Vink correcte checkboxes aan volgens template
+7. **Identificeer raakvlakken**: Lijst agents met mogelijke overlap (ter informatie, geen validatie)
+8. **Positioneer in ecosysteem**: Valideer consistentie van value_stream_fase met classificatie
+9. **Stel intents voor**: Voorlopige lijst van 1-3 intents, elk startend met canoniek werkwoord
+10. **Schrijf boundary document**: 
+    - Gebruik YAML frontmatter met value_stream en value_stream_fase uit INPUT parameter
+    - Volg template-structuur volledig (inclusief checkboxes)
+    - Schrijf weg naar artefacten/{vs}/{vs}.{fase}.{agent}/agent-boundary-{agent}.md
+11. **Valideer compleetheid**: Check template-checklist en kwaliteitsborging
 
 ### Kwaliteitsborging
-- Capability-boundary is exact één zin
-- WEL/NIET secties bevatten minimaal 3 bullets elk
-- Voorgestelde intents zijn concreet en actionable
-- Document volgt agent-boundary.template.md structuur
-- Mogelijke raakvlakken geïdentificeerd (zonder validatie)
+- **YAML frontmatter correct**: agent, value_stream (uit parameter!), value_stream_fase (uit parameter!), versie
+- **Capability-boundary** is exact één zin
+- **WEL/NIET secties** bevatten minimaal 3 bullets elk
+- **Voorgestelde intents** zijn concreet, actionable, en starten met canoniek werkwoord uit doctrine-intent-naming.md
+- **Template volledig gevolgd**: Alle secties uit agent-boundary.template.md aanwezig, inclusief checkboxes
+- **Classificatie checkboxes** correct aangevinkt met `- [x]` syntax
+- **Mogelijke raakvlakken** geïdentificeerd (zonder validatie)
+- **Bestand weggeschreven** naar correct pad: artefacten/{vs}/{vs}.{fase}.{agent}/agent-boundary-{agent}.md
 
 ---
 

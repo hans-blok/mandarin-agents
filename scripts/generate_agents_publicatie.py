@@ -4,10 +4,15 @@ Genereer vereenvoudigde agents-publicatie.json met aantallen.
 Dit script scant alle value_stream folders in artefacten/ en genereert een
 vereenvoudigd JSON-bestand met counts van agent artifacts per value stream en fase.
 
-Versie: 2.0.0
+Alleen agents MET agent-contracten/ EN prompts/ subfolders worden meegenomen.
+Dit zijn volwaardige agents (niet legacy of incomplete).
+
+Output volgt het schema gedefinieerd in: schemas/agents-publicatie-schema.json
+
+Versie: 2.1.0
 Auteur: engineer-steward
-Datum: 2024
-Herkomst: Herschrijven van copy_aeo_02_agents.py per gebruikerswens
+Datum: 2026-02-15
+
 """
 
 import json
@@ -41,20 +46,31 @@ def parse_agent_folder_name(folder_name: str) -> Tuple[str, str, str] | None:
     return None
 
 
-def count_agent_artifacts(agent_path: Path) -> Dict[str, int]:
+def count_agent_artifacts(agent_path: Path) -> Dict[str, int] | None:
     """
     Tel agent artifacts in een agent folder.
+    
+    Alleen agents MET agent-contracten/ EN prompts/ subfolders worden geteld.
+    Dit zijn volwaardige agents (niet legacy of incomplete).
     
     Args:
         agent_path: Path naar agent folder
         
     Returns:
-        Dictionary met counts:
-        - aantal_agent_files: *.agent.md bestanden
-        - aantal_prompts: *.prompt.md bestanden
-        - aantal_templates: *template*.md bestanden
-        - aantal_charters: *.charter.md bestanden (max 1)
+        Dictionary met counts of None als agent incomplete is:
+        - aantal_agent_files: *.agent.md bestanden in agent-contracten/
+        - aantal_prompts: *.prompt.md bestanden in prompts/
+        - aantal_templates: *.template.md bestanden in templates/ (optioneel)
+        - aantal_charters: *.charter.md bestanden in root (max 1)
     """
+    # Valideer dat de verplichte subfolders bestaan
+    agent_contracten_path = agent_path / 'agent-contracten'
+    prompts_path = agent_path / 'prompts'
+    
+    if not agent_contracten_path.exists() or not prompts_path.exists():
+        # Skip deze agent - incomplete structuur
+        return None
+    
     counts = {
         'aantal_agent_files': 0,
         'aantal_prompts': 0,
@@ -62,22 +78,28 @@ def count_agent_artifacts(agent_path: Path) -> Dict[str, int]:
         'aantal_charters': 0
     }
     
-    if not agent_path.exists() or not agent_path.is_dir():
-        return counts
+    # Tel agent-contracten in agent-contracten/
+    if agent_contracten_path.is_dir():
+        for file in agent_contracten_path.iterdir():
+            if file.is_file() and file.name.endswith('.agent.md'):
+                counts['aantal_agent_files'] += 1
     
+    # Tel prompts in prompts/
+    if prompts_path.is_dir():
+        for file in prompts_path.iterdir():
+            if file.is_file() and file.name.endswith('.prompt.md'):
+                counts['aantal_prompts'] += 1
+    
+    # Tel templates in templates/ (optioneel)
+    templates_path = agent_path / 'templates'
+    if templates_path.exists() and templates_path.is_dir():
+        for file in templates_path.iterdir():
+            if file.is_file() and file.name.endswith('.template.md'):
+                counts['aantal_templates'] += 1
+    
+    # Tel charter in root (max 1)
     for file in agent_path.iterdir():
-        if not file.is_file():
-            continue
-            
-        filename = file.name.lower()
-        
-        if filename.endswith('.agent.md'):
-            counts['aantal_agent_files'] += 1
-        elif filename.endswith('.prompt.md'):
-            counts['aantal_prompts'] += 1
-        elif 'template' in filename and filename.endswith('.md'):
-            counts['aantal_templates'] += 1
-        elif filename.endswith('.charter.md'):
+        if file.is_file() and file.name.endswith('.charter.md'):
             counts['aantal_charters'] += 1
     
     return counts
@@ -86,6 +108,9 @@ def count_agent_artifacts(agent_path: Path) -> Dict[str, int]:
 def scan_value_stream_folders(artefacten_path: Path) -> Dict[str, Dict[str, List[Dict]]]:
     """
     Scan alle value_stream folders en bouw hierarchische datastructuur.
+    
+    Alleen agents MET agent-contracten/ EN prompts/ subfolders worden meegenomen.
+    Dit zijn volwaardige agents (niet legacy of incomplete).
     
     Args:
         artefacten_path: Path naar artefacten/ folder
@@ -141,8 +166,13 @@ def scan_value_stream_folders(artefacten_path: Path) -> Dict[str, Dict[str, List
                 print(f"Waarschuwing: Mismatch value_stream in {agent_folder.name}")
                 continue
             
-            # Tel artifacts
+            # Tel artifacts (alleen volwaardige agents met agent-contracten/ en prompts/)
             counts = count_agent_artifacts(agent_folder)
+            
+            # Skip incomplete agents
+            if counts is None:
+                print(f"  Skip {agent_folder.name}: ontbrekende agent-contracten/ of prompts/ subfolder")
+                continue
             
             # Bouw agent record
             agent_record = {
@@ -193,6 +223,9 @@ def build_json_structure(data: Dict[str, Dict[str, List[Dict]]]) -> Dict:
     
     return {
         'metadata': {
+            'schema': 'schemas/agents-publicatie-schema.json',
+            'schema_versie': '2.0',
+            'beschrijving': 'Vereenvoudigde publicatie van Mandarin agents per value stream en fase. Alleen agents met agent-contracten/ en prompts/ subfolders worden meegenomen.',
             'gegenereerd_op': datetime.now().isoformat(),
             'versie': '2.0',
             'aantal_value_streams': len(value_streams),
