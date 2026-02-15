@@ -219,14 +219,32 @@ def find_boundary_file(agent_naam):
 
 
 def find_prompt_file(intent, agent=None):
-    """Zoek prompt file in .github/prompts/ voor gegeven intent.
+    """Zoek prompt file voor gegeven intent.
     
+    Zoekt eerst in artefacten structuur (modern), dan fallback naar .github/prompts/ (legacy).
     Zoekt naar mandarin.*.{intent}.prompt.md patronen.
     Als agent is opgegeven, zoekt specifiek naar mandarin.{agent}.{intent}.prompt.md
     
     Returns:
         Path object of None indien niet gevonden
     """
+    # Eerst zoeken in artefacten structuur (modern)
+    artefacten = Path("artefacten")
+    if artefacten.exists() and agent:
+        # Zoek recursief in artefacten/{vs}/{vs}.{fase}.{agent}/prompts/
+        pattern = f"**/prompts/mandarin.{agent}.{intent}.prompt.md"
+        matches = list(artefacten.glob(pattern))
+        if matches:
+            return matches[0]
+        
+        # Fallback: zoek naar alle prompt files met dit intent in prompts folders
+        pattern = f"**/prompts/*{intent}.prompt.md"
+        matches = list(artefacten.glob(pattern))
+        for match in matches:
+            if agent in str(match):
+                return match
+    
+    # Fallback naar .github/prompts/ (legacy structuur)
     prompts_dir = Path(".github/prompts")
     if not prompts_dir.exists():
         return None
@@ -847,7 +865,9 @@ def main():
             
         if not prompt_file:
             print(f"ERROR: Geen prompt file gevonden voor intent '{args.intent}'")
-            print(f"Verwacht: .github/prompts/*.{args.intent}.prompt.md")
+            print(f"Verwacht:")
+            print(f"  - artefacten/**/prompts/mandarin.*.{args.intent}.prompt.md")
+            print(f"  - .github/prompts/*.{args.intent}.prompt.md")
             sys.exit(1)
         print(f"  [OK] Gevonden: {prompt_file}")
         print()

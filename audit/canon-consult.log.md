@@ -1303,3 +1303,43 @@ Dit logbestand registreert alle canon-consultaties door agents. Elk entry bevat 
 | Folder | Bestand |
 |--------|---------|
 
+
+---
+
+## Canon Consultation — 2026-02-15T20:21::39
+
+- **Agent**: core-framework-architect
+- **Value Stream**: aod
+- **Workspace File**: `artefacten\aod\aod.02.core-framework-architect\prompts\mandarin.core-framework-architect.structureer-gedrag.prompt.md`
+- **Intent**: structureer-gedrag
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: e5032c4
+- **Grondslagen Patterns**: ``
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+
+
+---
+
+## Canon Consultation — 2026-02-15T20:26::20
+
+- **Agent**: core-framework-architect
+- **Value Stream**: aod
+- **Workspace File**: `artefacten\aod\aod.02.core-framework-architect\prompts\mandarin.core-framework-architect.structureer-gedrag.prompt.md`
+- **Intent**: structureer-gedrag
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: e5032c4
+- **Grondslagen Patterns**: ``
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+
