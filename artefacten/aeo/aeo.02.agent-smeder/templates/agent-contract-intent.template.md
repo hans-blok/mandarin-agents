@@ -1,4 +1,4 @@
----
+﻿---
 agent: agent-smeder
 intent: leg-vast-agent-contract
 versie: 1.0.0
@@ -144,7 +144,7 @@ Logging-formaat: Markdown append naar `audit/agent-instructions.log.md`
 - `{pad-naar-charter}`: Relatief pad (bijv. `artefacten/fnd/fnd.01.engineer-steward/engineer-steward.charter.md`)
 - `{value-stream-code}`: Drieletter code (aeo, sfw, aod, kvl, miv, fnd)
 - `{fase-nummer}`: Twee-cijfer fase (01, 02, 03)
-- `{value-stream-naam}`: Volledige naam (bijv. "Agent Enablement Orchestration")
+- `{value-stream-naam}`: Volledige naam (bijv. "Agent Ecosysteem Ontwikkeling")
 - `{fase-naam}`: Volledige fase-naam (bijv. "Ecosysteeminrichting")
 
 **Contract-specifiek:**

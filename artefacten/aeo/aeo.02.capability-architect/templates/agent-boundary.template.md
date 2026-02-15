@@ -39,11 +39,14 @@ Richtlijn: agents in value stream `agent-enablement` zijn in principe
 -->
 
 - **Inhoudelijke as**
+  - [ ] Architectuur-normerend
+	- [ ] Architectuur-structurerend
   - [ ] Ecosysteem-normerend
   - [ ] Structuur-normerend
   - [ ] Structuurrealiserend
   - [ ] Beschrijvend
   - [ ] Curator
+  - [ ] Geen--nulpunt-
 
 - **Inzet-as**
   - [ ] Value-stream-specifiek

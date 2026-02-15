@@ -16,6 +16,10 @@ logs/
 # Tijdelijke bestanden en workspaces
 temp/
 
+# Agent execution instructies (lokale runtime)
+agent-execution/*.md
+!agent-execution/README.md
+
 # Canon folder (experimenteel/draft)
 canon/
 
@@ -41,8 +45,7 @@ build/
 # ===================================
 # Editor / IDE
 # ===================================
-# VS Code
-.vscode/
+# VS Code workspace files (but keep settings/tasks)
 *.code-workspace
 
 # JetBrains (PyCharm, IntelliJ, etc.)

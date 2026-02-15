@@ -1,4 +1,4 @@
-# Agent Smeder — Beschrijf Agent Contract
+﻿# Agent Smeder — Beschrijf Agent Contract
 
 ## Rolbeschrijving (korte samenvatting)
 
@@ -139,7 +139,7 @@ Logging-formaat: Markdown append naar `audit/agent-instructions.log.md`
 
 **Intent-ID**: `aeo.02.agent-smeder.leg-vast-agent-contract`  
 **Versie**: 1.0.0  
-**Value Stream**: Agent Enablement Orchestration (aeo)  
+**Value Stream**: Agent Ecosysteem Ontwikkeling (aeo)  
 **Fase**: 02 — Ecosysteeminrichting  
 **Classificatie**: 
 - Inhoudelijk: ecosysteem-normerend, structuurrealiserend

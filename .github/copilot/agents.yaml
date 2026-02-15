@@ -24,6 +24,14 @@ agents:
   - .github/prompts/mandarin.agent-smeder.leg-vast-agent-runner.prompt.md
   - .github/prompts/mandarin.agent-smeder.leg-vast-templates.prompt.md
   runners: []
+- id: capability-architect
+  name: workspace.capability-architect
+  type: uitvoerend
+  valueStream: aeo
+  charter: artefacten/aeo/aeo.02.capability-architect/capability-architect.charter.md
+  prompts:
+  - .github/prompts/mandarin.capability-architect.definieer-agent-boundary.prompt.md
+  runners: []
 - id: engineer-steward
   name: workspace.engineer-steward
   type: uitvoerend

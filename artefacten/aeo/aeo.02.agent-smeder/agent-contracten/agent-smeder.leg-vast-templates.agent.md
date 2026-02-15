@@ -1,4 +1,4 @@
-# Agent Smeder — Leg Templates Vast Voor Agent
+﻿# Agent Smeder — Leg Templates Vast Voor Agent
 
 ## Rolbeschrijving (korte samenvatting)
 
@@ -21,12 +21,10 @@ De Agent Smeder creëert alle benodigde templates (prompt, agent-contract, chart
 ### Output (wat komt eruit)
 
 De Agent Smeder levert:
-- **Template-set per intent**: Voor elke intent in de boundary:
-  - Prompt template: `{agent-naam}.{intent}.prompt.md` (YAML frontmatter met placeholders)
-  - Agent-contract template: `{agent-naam}.{intent}.agent.md` (contract beschrijving met placeholders)
-- **Charter template**: `{agent-naam}.charter.md` (charter structuur met placeholders)
-- **Runner skeleton**: `{agent-naam}-{intent}.runner.py` (Python skeleton met placeholders)
-- **README**: `README-templates.md` met uitleg over invulling
+- **Output template per intent**: Voor elke intent in de boundary een template dat de **structuur van de output** beschrijft die de agent moet opleveren.
+  - *Context-specifiek*: Indien de agent een architect of modelleur is (bijv. "definieer-gedrag", "definieer-structuur"), bevat het template specifieke secties voor de verwachte modelelementen (bijv. ArchiMate Elementen, Relaties, Metadata) in plaats van generieke tekst.
+  - **Bestand**: `{agent-naam}.{intent}.template.md` (Structuur van het op te leveren artefact)
+- **README**: `README-templates.md` met uitleg over de templates en hoe ze gebruikt worden door de agent.
 
 **Deliverable locatie**: `artefacten/{value_stream}/{value_stream}.{fase}.{agent_naam}/templates/`
 
@@ -34,19 +32,19 @@ De Agent Smeder levert:
 ```
 artefacten/{vs}/{vs}.{fase}.{agent-naam}/
   templates/
-    {agent-naam}.{intent-1}.prompt.md
-    {agent-naam}.{intent-1}.agent.md
-    {agent-naam}.{intent-1}.runner.py
-    {agent-naam}.{intent-2}.prompt.md
-    {agent-naam}.{intent-2}.agent.md
-    {agent-naam}.{intent-2}.runner.py
-    {agent-naam}.charter.md
+    {agent-naam}.{intent-1}.template.md
+    {agent-naam}.{intent-2}.template.md
     README-templates.md
 ```
 
+**Wat deze intent NIET levert**:
+- Charter templates (die gebruikt agent-smeder bij intent `leg-vast-agent-charter`)
+- Runner skeletons (die maakt agent-smeder bij intent `leg-vast-agent-runner`)
+- Agent-contracten (die maakt agent-smeder bij intent `leg-vast-agent-contract`)
+
 **Formaat-normering**: 
-- Default formaat: **Markdown** (.md) voor templates, Python (.py) voor runners
-- Templates bevatten `{placeholders}` die in volgende stappen worden ingevuld
+- Default formaat: **Markdown** (.md) voor output templates
+- Templates bevatten **context-specifieke structuur** (afgeleid uit boundary) én `{placeholders}` voor invulling
 - Alternatieve formaten alleen op expliciete verzoek
 - Conform Principe 9 van doctrine-agent-charter-normering.md
 
@@ -83,7 +81,6 @@ Logging-formaat: Markdown append naar `audit/agent-instructions.log.md`
 
 **Escalatie-paden:**
 - → agent-curator: voor boundary-onduidelijkheden of wijzigingen
-- → engineer-steward: voor Python runner skeleton aanpassingen
 - STOP: bij bestaande templates folder (zonder expliciete overschrijf-instructie)
 
 ---
@@ -92,7 +89,7 @@ Logging-formaat: Markdown append naar `audit/agent-instructions.log.md`
 
 **Intent-ID**: `aeo.02.agent-smeder.leg-vast-templates`  
 **Versie**: 1.0.0  
-**Value Stream**: Agent Enablement Orchestration (aeo)  
+**Value Stream**: Agent Ecosysteem Ontwikkeling (aeo)  
 **Fase**: 02 — Ecosysteeminrichting  
 **Classificatie**: 
 - Inhoudelijk: ecosysteem-normerend, structuurrealiserend

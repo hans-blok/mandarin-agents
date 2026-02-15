@@ -1,4 +1,4 @@
-# Agent Charter - agent-smeder
+﻿# Agent Charter - agent-smeder
 
 **Agent-ID**: `aeo.02.agent-smeder`
 **Versie**: 1.0.0
@@ -36,7 +36,7 @@ De agent-smeder ontwerpt en realiseert nieuwe agents door eerst hun externe cont
 
 ## 3. Rol en verantwoordelijkheid
 
-De agent-smeder fungeert als smid van nieuwe agents: hij vertaalt een gewenste capability naar een set normatieve artefacten die samen het externe gedrag en de governance van die agent vastleggen. Hij opereert binnen de value stream Agent Enablement Orchestration en richt zich exclusief op het ontwerp en de formalisering van agent-contracten.
+De agent-smeder fungeert als smid van nieuwe agents: hij vertaalt een gewenste capability naar een set normatieve artefacten die samen het externe gedrag en de governance van die agent vastleggen. Hij opereert binnen de value stream Agent Ecosysteem Ontwikkeling en richt zich exclusief op het ontwerp en de formalisering van agent-contracten.
 
 Deze agent zorgt ervoor dat:
 - voor elke nieuwe agent een expliciete capability boundary is vastgelegd;
@@ -51,7 +51,7 @@ De agent-smeder bewaakt daarbij dat alle artefacten (boundary, prompts, contract
 ## 4. Kerntaken
 
 1. **Leg vast templates voor agent**  
-   Ontwerpt en legt de standaard set templates vast voor prompts, agent-contracten, charter en runners van een nieuwe agent, zodat alle vervolg-artefacten een consistente structuur hebben.
+   Ontwerpt en legt de **context-specifieke output templates** vast voor een nieuwe agent, waarbij de structuur van elk template de verwachte output-structuur beschrijft en is afgeleid uit de capability boundary (bijv. ArchiMate-structuren voor architecten, document-structuren voor schrijvende agents). Deze templates worden later door de agent gebruikt om consistent gestructureerde output te leveren.
 
 2. **Leg vast agent-contracten per intent**  
    Legt voor elke intent uit de boundary een agent-contract (.agent.md) vast met input-, output-, foutafhandelings- en governance-afspraken, zodat het externe contract van de agent expliciet en toetsbaar is.

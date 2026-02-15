@@ -1,4 +1,4 @@
-# Agent Boundary — Agent Smeder
+﻿# Agent Boundary — Agent Smeder
 
 agent-naam: agent-smeder  
 capability-boundary: Ontwerpt en realiseert nieuwe agents door eerst hun externe contract (prompt) te definiëren en te versioneren, en leidt daaruit het charter en bijbehorende artefacten af, zonder zelf inhoudelijke taken van die agents uit te voeren.  
@@ -106,6 +106,6 @@ Aanbevolen afbakening:
 
 ## Referentie naar criteria
 
-Nummering/positionering: `aeo.02.agent-smeder` — Agent Enablement Orchestration, fase 02 (Ecosysteeminrichting). De Smeder bouwt nieuwe agents op basis van boundaries die door de Curator zijn bepaald.
+Nummering/positionering: `aeo.02.agent-smeder` — Agent Ecosysteem Ontwikkeling, fase 02 (Ecosysteeminrichting). De Smeder bouwt nieuwe agents op basis van boundaries die door de Curator zijn bepaald.
 
 Canon-consistentie: Volgt `doctrine-agent-charter-normering.md` en `doctrine-handoff-creatie-en-overdrachtsdiscipline.md` voor structured agent-ontwerpproces.

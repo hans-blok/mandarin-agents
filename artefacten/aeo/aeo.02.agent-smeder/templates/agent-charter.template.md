@@ -16,11 +16,15 @@ versie: 1.0.0
 ## Classificatie-assen (vink aan wat van toepassing is)
 
 - **Inhoudelijke as**
-	- [ ] Beschrijvend
-	- [ ] Structuurrealiserend
-	- [ ] Structuur-normerend
-	- [ ] Curator
-	- [ ] Ecosysteem-normerend
+  - [ ] Architectuur-normerend
+  - [ ] Architectuur-structurerend
+  - [ ] Ecosysteem-normerend
+  - [ ] Structuur-normerend
+  - [ ] Structuurrealiserend
+  - [ ] Beschrijvend
+  - [ ] Curator
+  - [ ] Geen--nulpunt-
+
 - **Inzet-as**
 	- [ ] Value-stream-specifiek
 	- [ ] Value-stream-overstijgend
@@ -153,7 +157,7 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 - `{agent-naam}`: Kebab-case agent-naam (bijv. "engineer-steward", "hypothese-vormer")
 - `{value-stream-code}`: Drieletter code (aeo, sfw, aod, kvl, miv, fnd)
 - `{fase-nummer}`: Twee-cijfer fase (01, 02, 03)
-- `{value-stream-naam}`: Volledige naam (bijv. "Agent Enablement Orchestration")
+- `{value-stream-naam}`: Volledige naam (bijv. "Agent Ecosysteem Ontwikkeling")
 - `{fase-naam}`: Volledige fase-naam (bijv. "Ecosysteeminrichting", "Grondslagvorming")
 
 **Inhoudelijk:**

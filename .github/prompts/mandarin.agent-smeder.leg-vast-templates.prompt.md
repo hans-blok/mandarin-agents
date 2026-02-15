@@ -3,6 +3,9 @@ agent: mandarin.agent-smeder
 intent: leg-vast-templates
 value_stream_fase: aeo.02
 
+input_files:
+  boundary_file: "artefacten/{vs}/{vs}.{fase}.{agent}/agent-boundary-{agent}.md"
+
 bootstrap:
   script: scripts/bootstrap_canon_consult.py
 

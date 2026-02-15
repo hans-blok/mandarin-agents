@@ -1,4 +1,4 @@
-# Agent Smeder — Schrijf Runner
+﻿# Agent Smeder — Schrijf Runner
 
 ## Rolbeschrijving (korte samenvatting)
 
@@ -159,7 +159,7 @@ Logging-formaat: Markdown append naar `audit/agent-instructions.log.md`
 
 **Intent-ID**: `aeo.02.agent-smeder.leg-vast-agent-runner`  
 **Versie**: 1.0.0  
-**Value Stream**: Agent Enablement Orchestration (aeo)  
+**Value Stream**: Agent Ecosysteem Ontwikkeling (aeo)  
 **Fase**: 02 — Ecosysteeminrichting  
 **Classificatie**: 
 - Inhoudelijk: ecosysteem-normerend, structuurrealiserend
