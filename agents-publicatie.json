@@ -1,0 +1,119 @@
+{
+  "metadata": {
+    "schema": "schemas/agents-publicatie-schema.json",
+    "schema_versie": "2.0",
+    "beschrijving": "Vereenvoudigde publicatie van Mandarin agents per value stream en fase. Alleen agents met agent-contracten/ en prompts/ subfolders worden meegenomen.",
+<<<<<<< Updated upstream
+    "gegenereerd_op": "2026-02-27T16:15:12.152261",
+=======
+    "gegenereerd_op": "2026-02-25T15:37:31.015853",
+>>>>>>> Stashed changes
+    "versie": "2.0",
+    "aantal_value_streams": 4,
+    "aantal_agents": 7,
+    "agents_ref": "61db393"
+  },
+  "value_streams": [
+    {
+      "code": "aeo",
+      "fasen": [
+        {
+          "volgnummer": "02",
+          "agents": [
+            {
+              "naam": "agent-smeder",
+              "aantal_agent_files": 6,
+              "aantal_prompts": 6,
+              "aantal_templates": 3,
+              "aantal_charters": 1
+            },
+            {
+              "naam": "capability-architect",
+              "aantal_agent_files": 1,
+              "aantal_prompts": 1,
+              "aantal_templates": 1,
+              "aantal_charters": 1
+            },
+            {
+              "naam": "task-drafter",
+              "aantal_agent_files": 1,
+              "aantal_prompts": 1,
+              "aantal_templates": 0,
+              "aantal_charters": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "aod",
+      "fasen": [
+        {
+          "volgnummer": "02",
+          "agents": [
+            {
+              "naam": "core-framework-architect",
+              "aantal_agent_files": 4,
+              "aantal_prompts": 4,
+              "aantal_templates": 3,
+              "aantal_charters": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "fnd",
+      "fasen": [
+        {
+          "volgnummer": "02",
+          "agents": [
+            {
+              "naam": "concept-curator",
+              "aantal_agent_files": 4,
+              "aantal_prompts": 4,
+              "aantal_templates": 0,
+              "aantal_charters": 1
+            },
+            {
+              "naam": "documentvertaler",
+              "aantal_agent_files": 1,
+              "aantal_prompts": 1,
+              "aantal_templates": 0,
+              "aantal_charters": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "sfw",
+      "fasen": [
+        {
+          "volgnummer": "02",
+          "agents": [
+            {
+              "naam": "thema-verwoorder",
+              "aantal_agent_files": 3,
+              "aantal_prompts": 3,
+              "aantal_templates": 3,
+              "aantal_charters": 1
+            }
+          ]
+        },
+        {
+          "volgnummer": "03",
+          "agents": [
+            {
+              "naam": "gedragsspecificator",
+              "aantal_agent_files": 3,
+              "aantal_prompts": 3,
+              "aantal_templates": 3,
+              "aantal_charters": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

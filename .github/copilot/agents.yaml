@@ -1,0 +1,64 @@
+agents:
+- id: agent-curator
+  name: workspace.agent-curator
+  type: uitvoerend
+  valueStream: aeo
+  charter: artefacten/aeo/aeo.02.agent-curator/agent-curator-analyseer.charter.md
+  prompts:
+  - .github/prompts/mandarin.agent-curator-analyseer.ecosysteem.prompt.md
+  - .github/prompts/mandarin.agent-curator.bepaal-agent-boundary.prompt.md
+  - .github/prompts/mandarin.agent-curator.onderhoud-value.streams.prompt.md
+  - .github/prompts/mandarin.agent-curator.publiceer-json.prompt.md
+  - .github/prompts/mandarin.agent-curator.publiceer-overzicht.prompt.md
+  runners: []
+- id: agent-smeder
+  name: workspace.agent-smeder
+  type: uitvoerend
+  valueStream: aeo
+  charter: artefacten/aeo/aeo.02.agent-smeder/agent-smeder.charter.md
+  prompts:
+  - .github/prompts/mandarin.agent-smeder.leg-vast-agent-charter.prompt.md
+  - .github/prompts/mandarin.agent-smeder.leg-vast-agent-contract.prompt.md
+  - .github/prompts/mandarin.agent-smeder.leg-vast-agent-prompt-versie.prompt.md
+  - .github/prompts/mandarin.agent-smeder.leg-vast-agent-prompt.prompt.md
+  - .github/prompts/mandarin.agent-smeder.leg-vast-agent-runner.prompt.md
+  - .github/prompts/mandarin.agent-smeder.leg-vast-templates.prompt.md
+  runners: []
+- id: capability-architect
+  name: workspace.capability-architect
+  type: uitvoerend
+  valueStream: aeo
+  charter: artefacten/aeo/aeo.02.capability-architect/capability-architect.charter.md
+  prompts:
+  - .github/prompts/mandarin.capability-architect.definieer-agent-boundary.prompt.md
+  runners: []
+- id: task-drafter
+  name: workspace.task-drafter
+  type: uitvoerend
+  valueStream: aeo
+  charter: artefacten/aeo/aeo.02.task-drafter/task-drafter.charter.md
+  prompts:
+  - .github/prompts/mandarin.task-drafter.realiseer-vscode-tasks-json.prompt.md
+  runners: []
+- id: engineer-steward
+  name: workspace.engineer-steward
+  type: uitvoerend
+  valueStream: fnd
+  charter: artefacten/fnd/fnd.01.engineer-steward/engineer-steward.charter.md
+  prompts:
+  - .github/prompts/mandarin.engineer-steward-review.code.prompt.md
+  - .github/prompts/mandarin.engineer-steward-run.script.prompt.md
+  - .github/prompts/mandarin.engineer-steward-schrijf.script.prompt.md
+  runners: []
+- id: workspace-steward
+  name: workspace.workspace-steward
+  type: uitvoerend
+  valueStream: fnd
+  charter: artefacten/fnd/fnd.01.workspace-steward/workspace-steward.charter.md
+  prompts:
+  - .github/prompts/mandarin.workspace-steward-beheer.git.prompt.md
+  - .github/prompts/mandarin.workspace-steward-configureer.github.prompt.md
+  - .github/prompts/mandarin.workspace-steward-orden.workspace.prompt.md
+  - .github/prompts/mandarin.workspace-steward-schrijf.beleid.prompt.md
+  - .github/prompts/mandarin.workspace-steward-valideer.governance.prompt.md
+  runners: []

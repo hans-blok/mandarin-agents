@@ -1,0 +1,46 @@
+{
+  "tasks": [
+    {
+      "label": "AOD.02 - Core Framework: Structureer Gedrag",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'core-framework-architect'; $intent = 'structureer-gedrag'; $landschap = '${input:landschapNaam}'; $domein = '${input:domeinNaam}'; $lagen = '${input:archimateLagen}'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python scripts/generate_instructions.py --agent $agent --intent $intent -p landschap_naam=$landschap -p domein=$domein -p lagen=$lagen -p value_stream_fase=aod.02 --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "AOD.02 - Core Framework: Structureer Actieve Structuur",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'core-framework-architect'; $intent = 'structureer-actieve-structuur'; $landschap = '${input:landschapNaam}'; $domein = '${input:domeinNaam}'; $lagen = '${input:archimateLagen}'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python scripts/generate_instructions.py --agent $agent --intent $intent -p landschap_naam=$landschap -p domein=$domein -p lagen=$lagen -p value_stream_fase=aod.02 --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "AOD.02 - Core Framework: Structureer Totaal View",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'core-framework-architect'; $intent = 'structureer-totaal-view'; $landschap = '${input:landschapNaam}'; $domein = '${input:domeinNaam}'; $activeFile = '${input:activeStructuurFile}'; $gedragFile = '${input:gedragFile}'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python scripts/generate_instructions.py --agent $agent --intent $intent -p landschap_naam=$landschap -p domein=$domein -p active_structuur_file=$activeFile -p gedrag_file=$gedragFile -p value_stream_fase=aod.02 --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    }
+  ]
+}
