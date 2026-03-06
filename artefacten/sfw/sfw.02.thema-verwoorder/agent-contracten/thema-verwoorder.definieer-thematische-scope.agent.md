@@ -1,20 +1,22 @@
 # thema-verwoorder — definieer-thematische-scope
 
 ## Rolbeschrijving (korte samenvatting)
-Deze intent beschrijft het afbakenen en documenteren van de thematische scope binnen de value stream.
+Deze intent beschrijft het afbakenen en documenteren van de thematische scope binnen de value stream op basis van een hypothese-document. De agent analyseert de hypothese, bedenkt een geschikte titel en identificeert relevante epics.
 
 ## Contract
 ### Input (wat gaat erin)
 **Verplichte parameters**:
-- thema: string, naam van het thema
-- beschrijving: string, korte beschrijving van het thema
+- hypothese_bestand: string, bestandsnaam van de hypothese (volledige pad of relatieve pad)
+- auteur: string, naam van de auteur
 
 **Optionele parameters**:
-- onderwerpen: lijst van afgebakende onderwerpen
-- uitsluitingen: lijst van uitgesloten onderwerpen
-- relevante_epics: lijst van relevante epics
-- auteur: string
-- datum: datum
+- toelichting: string, aanvullende tekstuele toelichting
+
+**Opmerking**: De agent leest het hypothese-bestand, analyseert de inhoud, en bepaalt zelf:
+- Thema-code (korte unieke identificatiecode voor het thema)
+- Titel voor het thema
+- Relevante epics
+- Datum (wordt automatisch gegenereerd)
 
 ### Output (wat komt eruit)
 **Deliverables**: Markdown document met thematische scope volgens template
@@ -22,9 +24,10 @@ Deze intent beschrijft het afbakenen en documenteren van de thematische scope bi
 **Formaat**: Markdown (.md) volgens template
 
 ### Foutafhandeling
-- STOP: thema of beschrijving ontbreekt
-- STOP: thema niet uniek binnen value stream
-- STOP: beschrijving te vaag of te lang (>10 zinnen)
+- STOP: hypothese_bestand of auteur ontbreekt
+- STOP: hypothese_bestand niet gevonden of niet toegankelijk
+- STOP: hypothese_bestand bevat onvoldoende informatie voor thematische scope
+- STOP: titel niet uniek binnen value stream
 - Escaleer naar agent-curator bij overlap of onduidelijke scope
 
 ## Governance

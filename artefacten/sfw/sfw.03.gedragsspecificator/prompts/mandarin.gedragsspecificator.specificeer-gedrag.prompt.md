@@ -1,12 +1,13 @@
 ---
 agent: mandarin.gedragsspecificator
 intent: specificeer-gedrag
+versie: 1.0.0
+input_parameters:
+  - `context_bestand`
+  - `data_beschrijving_bestand`
+  - `proces_beschrijving_bestand`
 value_stream_fase: sfw.03
 
 bootstrap:
   script: scripts/bootstrap_canon_consult.py
-
-# Canon URL en grondslagen worden gelezen uit beleid-workspace.md
-# Agent-instructies staan in artefacten/sfw/sfw.03.gedragsspecificator/agent-contracten/gedragsspecificator.specificeer-gedrag.agent.md
-# Charter wordt automatisch geladen: artefacten/sfw/sfw.03.gedragsspecificator/gedragsspecificator.agent-boundary.md (boundary is proxy voor charter in vroege fase, of expliciet charter)
 ---

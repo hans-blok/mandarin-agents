@@ -13,8 +13,7 @@ REM   Voert agent-curator runner uit voor markdown overzichten (interne document
 REM   Genereert markdown rapporten in artefacten/agent-curator/.
 REM
 REM Output:
-REM   - artefacten/agent-curator/agents-overzicht-[timestamp].md
-REM   - artefacten/agent-curator/value-streams-overzicht-[timestamp].md
+REM   - docs\agents-overzicht.md
 REM
 REM Gebruik:
 REM   pub-overzicht.bat [scope] [detail-niveau]
@@ -93,7 +92,7 @@ echo.
 echo [SUCCESS] Overzicht publicatie voltooid!
 echo.
 echo Output locatie:
-echo   - artefacten\agent-curator\*.md (markdown rapporten)
+echo   - docs\agents-overzicht.md
 echo.
 
 pause

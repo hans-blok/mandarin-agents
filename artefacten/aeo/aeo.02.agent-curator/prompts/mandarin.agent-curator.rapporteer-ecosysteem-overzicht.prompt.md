@@ -1,0 +1,9 @@
+---
+agent: mandarin.agent-curator
+intent: rapporteer-ecosysteem-overzicht
+versie: 1.0.0
+value_stream_fase: aeo.02
+
+bootstrap:
+  script: scripts/bootstrap_canon_consult.py
+---

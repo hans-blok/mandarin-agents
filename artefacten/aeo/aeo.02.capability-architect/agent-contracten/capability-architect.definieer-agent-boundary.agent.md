@@ -22,6 +22,9 @@ De Capability-architect definieert de servicegrens van een agent als duurzame, e
 - value_stream_fase: Value stream en fase code (type: string, format: "{vs}.{fase}", bijv. "aeo.02", "fnd.01").
 - korte_beschrijving: Korte beschrijving van het doel van de agent (type: string, 1-3 zinnen).
 
+**Optionele parameters**:
+- template_file: Override voor template locatie (default: "artefacten/aeo/aeo.02.capability-architect/templates/agent-boundary.template.md").
+
 
 ### Output (wat komt eruit)
 
@@ -41,11 +44,11 @@ De Capability-architect levert:
 **Bestandsformaat vereisten**:
 1. **Moet YAML frontmatter bevatten**: agent, value_stream, value_stream_fase, versie
 2. **value_stream en value_stream_fase**: Gebruik de waarden uit de INPUT parameter `value_stream_fase`, NIET van de executor agent
-3. **Moet template volgen**: Gebruik `agent-boundary.template.md` (beschikbaar als [TEMPLATE] placeholder)
+3. **Moet template volgen**: Gebruik `agent-boundary.template.md` (beschikbaar als [TEMPLATE_FILE] placeholder, wordt automatisch geladen via template_file parameter)
 4. **Classificatie checkboxes**: Gebruik checkbox syntax `- [ ]` en `- [x]` uit template
 5. **Intent naming**: Alle voorgestelde intents MOETEN starten met canoniek werkwoord uit `doctrine-intent-naming.md` (meestal "definieer" voor structurerende definitie)
 
-**Outputformaat** (volgens [TEMPLATE] placeholder):
+**Outputformaat** (volgens [TEMPLATE_FILE] placeholder):
 ```markdown
 ---
 agent: {agent_naam}
@@ -102,8 +105,8 @@ versie: 1.0.0
 **Formaat-normering**: 
 - Default formaat: **Markdown** (.md), conform Principe 9
 - Alternatieve formaten alleen op expliciete verzoek
-- Markdown bevat structuur volgens agent-boundary.template.md
-- Template wordt automatisch geladen en beschikbaar gemaakt als [TEMPLATE] placeholder
+- Markdown bevat structuur volgens agent-boundary.template.md (geladen via template_file parameter)
+- Template wordt automatisch geladen en beschikbaar gemaakt als [TEMPLATE_FILE] placeholder
 
 ### Foutafhandeling
 
@@ -124,7 +127,7 @@ De Capability-architect:
 
 ### Stappen
 1. **Analyseer input**: Begrijp korte_beschrijving en domein, extraheer vs en fase uit value_stream_fase PARAMETER (niet van executor agent)
-2. **Laad template**: Gebruik [TEMPLATE] placeholder voor agent-boundary.template.md structuur
+2. **Raadpleeg template**: Gebruik [TEMPLATE_FILE] placeholder voor agent-boundary.template.md structuur (wordt automatisch geladen)
 3. **Raadpleeg doctrine**: Check doctrine-intent-naming.md voor canonieke werkwoorden (meestal "definieer")
 4. **Definieer verantwoordelijkheid**: Formuleer externe verantwoordelijkheid in één zin
 5. **Bepaal boundary**: Expliciteer wat wél en níet binnen scope valt (minimaal 3 bullets per sectie)

@@ -1,28 +1,40 @@
 ﻿# Agent Charter - capability-architect
 
 **Agent-ID**: `aeo.02.capability-architect`  
-**Versie**: 1.1.0  
+**Versie**: 1.4.0  
 **Domein**: Agent capability-definitie  
 **Value Stream**: Agent Ecosysteem Ontwikkeling (fase 02 - Ecosysteeminrichting)  
 **Governance**: Volgt `beleid-workspace.md` (inclusief canon-raadpleging zoals daar vastgelegd) en `doctrine-agent-charter-normering.md`; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
 
-## Classificatie-assen (vink aan wat van toepassing is)
+## Mandarin-agent-classificatie (4 orthogonale assen)
 
-- **Inhoudelijke as**
-	- [ ] Beschrijvend
-	- [ ] Structuurrealiserend
-	- [ ] Structuur-normerend
-	- [ ] Curator
-	- [x] Ecosysteem-normerend
-- **Inzet-as**
-	- [ ] Value-stream-specifiek
-	- [x] Value-stream-overstijgend
-- **Vorm-as**
-	- [x] Vormvast
-	- [ ] Representatieomvormend
-- **Werkingsas**
-	- [x] Inhoudelijk
-	- [ ] Conditioneel
+- **Betekeniseffect**
+   - [ ] Beschrijvend
+   - [ ] Realiserend
+   - [ ] Evaluerend
+   - [x] Normerend
+   - [ ] Geen
+
+- **Interventieniveau**
+   - [ ] Werk
+   - [ ] Ontwerp
+   - [x] Architectuur
+   - [ ] Ecosysteem
+
+- **Werking**
+   - [x] Inhoudelijk
+   - [ ] Representatie-omvormend
+   - [ ] Conditioneel
+
+- **Bron-houding**
+   - [ ] Input-gebonden
+   - [x] Canon-gebonden
+   - [ ] Externe-bron-gebonden
+   - [ ] Vrij
+
+**Classificatie-validatie (verplicht):**
+- [x] Gekozen as-posities zijn onderling compatibel volgens `mandarin-classificatie-matrices.md`
+- [x] Positionering volgt definities uit `mandarin-ordeningsconcepten.md` (geen eigen interpretatie van as-betekenissen)
 
 ## 1. Doel en bestaansreden
 
@@ -104,12 +116,14 @@ De capability-architect bewaakt daarbij dat boundaries niet overlappen met imple
 
 9. **Stelt intents voor**  
    Voorlopige lijst van 1-3 concrete, actionable intents die voortvloeien uit de gedefinieerde boundary.
+   
+   **Intent naming**: Alle voorgestelde intents MOETEN starten met canoniek werkwoord uit `doctrine-intent-naming.md` (meestal "definieer" voor structurerende definitie, "beschrijf" voor beschrijvende documentatie vooraf).
 
 10. **Schrijft boundary document**  
     Schrijft het agent-boundary document weg naar `artefacten/{vs}/{vs}.{fase}.{agent}/agent-boundary-{agent}.md` volgens template-structuur.
 
 11. **Valideert compleetheid**  
-    Checkt of boundary in één zin past, WEL/NIET minimaal 3 bullets bevatten, en of alle verplichte secties aanwezig zijn.
+    Checkt of boundary in één zin past, WEL/NIET minimaal 3 bullets bevatten, alle verplichte secties aanwezig zijn, en of alle voorgestelde intents starten met een canoniek werkwoord uit `doctrine-intent-naming.md`.
 
 12. **Stopt en escaleert bij onduidelijkheid**  
     Stopt wanneer korte_beschrijving te vaag is om een scherpe boundary te formuleren, of wanneer ecosysteem-positionering onduidelijk is, en escaleert naar agent-curator.
@@ -121,6 +135,7 @@ Dit charter is traceerbaar naar de volgende agent-contracten:
 - Intent: `definieer-agent-boundary`
 	- Agent-contract: `artefacten/aeo/aeo.02.capability-architect/agent-contracten/capability-architect.definieer-agent-boundary.agent.md`
 	- Prompt-metadata: `artefacten/aeo/aeo.02.capability-architect/prompts/mandarin.capability-architect.definieer-agent-boundary.prompt.md`
+	- Template: `artefacten/aeo/aeo.02.capability-architect/templates/agent-boundary.template.md`
 
 ## 8. Output-locaties
 
@@ -159,3 +174,6 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 |-------|--------|-----------|--------|
 | 2026-02-14 | 1.0.0 | Initiële charter capability-architect conform agent-charter.template.md | agent-smeder |
 | 2026-02-14 | 1.1.0 | Contract aangepast: vereenvoudigde input parameters (agent_naam, value_stream_fase, korte_beschrijving), werkwijze bijgewerkt | agent-smeder |
+| 2026-03-01 | 1.2.0 | Template-traceerbaarheid gecorrigeerd: template-locatie binnen capability-architect eigen templates folder | GitHub Copilot |
+| 2026-03-01 | 1.3.0 | Gemigreerd naar nieuwe classificatie-assen (Betekeniseffect, Interventieniveau, Werking, Bron-houding) volgens agent-charter.template.md | GitHub Copilot |
+| 2026-03-04 | 1.4.0 | Intent naming doctrine toegevoegd: alle voorgestelde intents moeten starten met canoniek werkwoord uit doctrine-intent-naming.md (stap 9 en 11 in werkwijze) | GitHub Copilot |

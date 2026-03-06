@@ -2,7 +2,7 @@
 
 **Agent-ID**: `sfw.03.gedragsspecificator`
 **Versie**: 1.0.0
-**Domein**: Requirements Engineering & BDD
+**Domein**: Requirements Engineering 
 **Value Stream**: sfw (fase 03 - Ontwerp/Specificatie)
 **Governance**: Volgt `beleid-workspace.md` en `doctrine-agent-charter-normering.md`.
 

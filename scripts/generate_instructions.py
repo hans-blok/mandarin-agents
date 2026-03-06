@@ -119,8 +119,8 @@ Voorbeelden:
     parser.add_argument(
         "--input-file",
         type=str,
-        default="input/input.md",
-        help="Pad naar het input-bestand met meerregelige tekst (default: input/input.md)"
+        default=None,
+        help="Pad naar het input-bestand met meerregelige tekst (bijv. input/input.md)"
     )
     parser.add_argument(
         "--method",
@@ -337,7 +337,7 @@ def load_workspace_config():
         return {}
 
 
-def run_bootstrap(metadata, prompt_file, method, params, workspace_config, quiet=False):
+def run_bootstrap(metadata, prompt_file, method, params, workspace_config, quiet=False, charter_path=None, template_paths=None):
     """Voer bootstrap_canon_consult.py uit."""
     bootstrap = metadata.get('bootstrap', {})
     
@@ -401,6 +401,13 @@ def run_bootstrap(metadata, prompt_file, method, params, workspace_config, quiet
         '--grondslagen', grondslagen,
         '--canon-github-url', canon_github_url
     ]
+
+    # Voeg charter en template info toe
+    if charter_path:
+        cmd.extend(['--charter', charter_path])
+    if template_paths:
+        templates_str = ','.join(template_paths)
+        cmd.extend(['--templates', templates_str])
 
     if quiet:
         cmd.append('--quiet')
@@ -533,6 +540,9 @@ def load_charter(prompt_file, metadata, params):
     """Laad charter uit conventie: {agent-naam}.charter.md.
     
     Zoekt eerst in de uitvoerende agent's folder (uit metadata), dan in doel-agent folder (params), dan prompt-folder.
+    
+    Returns:
+        tuple: (charter_content, charter_path) or (None, None) if not found
     """
     # Extract agent-naam uit metadata (bijv. 'mandarin.agent-curator' -> 'agent-curator')
     agent_full = metadata.get('agent', '')
@@ -540,7 +550,7 @@ def load_charter(prompt_file, metadata, params):
     
     if not agent_naam:
         print("INFO: Geen agent-naam gevonden in metadata, charter overgeslagen.")
-        return None
+        return None, None
     
     charter_file_name = f"{agent_naam}.charter.md"
     
@@ -554,7 +564,7 @@ def load_charter(prompt_file, metadata, params):
                 if charter_file.exists():
                     print(f"[OK] Charter geladen: {charter_file}")
                     with open(charter_file, 'r', encoding='utf-8') as f:
-                        return f.read()
+                        return f.read(), str(charter_file)
     
     # Strategie 2: Zoek in doel-agent folder (gebaseerd op vs, fase, agent uit params)
     vs = params.get('vs', params.get('value_stream', ''))
@@ -568,7 +578,7 @@ def load_charter(prompt_file, metadata, params):
         if charter_file.exists():
             print(f"[OK] Charter geladen: {charter_file}")
             with open(charter_file, 'r', encoding='utf-8') as f:
-                return f.read()
+                return f.read(), str(charter_file)
     
     # Strategie 3: Fallback - zoek in prompt folder (klassieke methode)
     prompt_path = Path(prompt_file)
@@ -578,7 +588,7 @@ def load_charter(prompt_file, metadata, params):
     if charter_file.exists():
         print(f"[OK] Charter geladen: {charter_file}")
         with open(charter_file, 'r', encoding='utf-8') as f:
-            return f.read()
+            return f.read(), str(charter_file)
 
     # Strategie 4: Fallback - zoek in repo_root/artefacten
     repo_root = Path(__file__).resolve().parent.parent
@@ -590,11 +600,11 @@ def load_charter(prompt_file, metadata, params):
                 if charter_file.exists():
                     print(f"[OK] Charter geladen: {charter_file}")
                     with open(charter_file, 'r', encoding='utf-8') as f:
-                        return f.read()
+                        return f.read(), str(charter_file)
 
     print(f"INFO: Charter niet gevonden (optioneel): {charter_file_name}")
     
-    return None
+    return None, None
 
 
 def load_and_process_input_files(metadata, params):
@@ -603,16 +613,18 @@ def load_and_process_input_files(metadata, params):
     Extraheert ook value_stream en value_stream_fase uit boundary_file YAML indien aanwezig.
     
     Returns:
-        tuple: (loaded_content, extracted_params)
+        tuple: (loaded_content, extracted_params, file_paths)
             - loaded_content: dict met key = uppercase bestandsnaam, value = inhoud
             - extracted_params: dict met value_stream, value_stream_fase uit boundary
+            - file_paths: dict met key = file type, value = absolute pad
     """
     input_files = metadata.get('input_files', {})
     loaded_content = {}
     extracted_params = {}
+    file_paths = {}
     
     if not input_files:
-        return loaded_content, extracted_params
+        return loaded_content, extracted_params, file_paths
     
     print("[Info] Verwerk input_files uit prompt metadata...")
     
@@ -640,6 +652,7 @@ def load_and_process_input_files(metadata, params):
                     # Maak placeholder: BOUNDARY_FILE, TEMPLATE_FILE, etc.
                     placeholder_key = key.upper()
                     loaded_content[placeholder_key] = content
+                    file_paths[key] = str(file_path.resolve())
                     print(f"  [OK] Geladen: {key} -> {path}")
                     
                     # Extraheer metadata uit boundary_file YAML frontmatter
@@ -673,7 +686,7 @@ def load_and_process_input_files(metadata, params):
     if loaded_content:
         print()
     
-    return loaded_content, extracted_params
+    return loaded_content, extracted_params, file_paths
 
 
 def replace_placeholders(content, params, input_content, input_files_content=None):
@@ -697,11 +710,15 @@ def replace_placeholders(content, params, input_content, input_files_content=Non
 
 
 def assemble_full_instructions(metadata, prompt_content, prompt_file, params, input_content, input_files_content):
-    """Stel volledige agent-instructies samen uit alle bronnen."""
+    """Stel volledige agent-instructies samen uit alle bronnen.
+    
+    Returns:
+        tuple: (final_instructions, charter_path)
+    """
     parts = []
     
     # 1. Charter (afgeleid uit conventie)
-    charter_content = load_charter(prompt_file, metadata, params)
+    charter_content, charter_path = load_charter(prompt_file, metadata, params)
     if charter_content:
         parts.append("# Agent Charter\n\n")
         parts.append(charter_content)
@@ -717,7 +734,9 @@ def assemble_full_instructions(metadata, prompt_content, prompt_file, params, in
     
     # 3. Voeg alles samen en vervang placeholders
     combined = ''.join(parts)
-    return replace_placeholders(combined, params, input_content, input_files_content)
+    final_instructions = replace_placeholders(combined, params, input_content, input_files_content)
+    
+    return final_instructions, charter_path
 
 
 def write_execution_file(filepath, metadata, params, final_prompt):
@@ -1139,26 +1158,36 @@ def main():
 
     input_content = ""
     input_files_content = {}
+    template_paths = []
+    charter_path = None
 
     # In minimal mode slaan we dure context-loading over voor snelheid.
     if not args.minimal:
-        # Laad input-bestand
-        input_content = load_input_file(args.input_file)
+        # Laad optioneel input-bestand
+        if args.input_file:
+            input_content = load_input_file(args.input_file)
 
         # Laad input_files uit metadata (boundary, templates, etc.)
         # Extraheer ook value_stream en fase uit boundary YAML
-        input_files_content, extracted_params = load_and_process_input_files(metadata, params)
+        input_files_content, extracted_params, file_paths = load_and_process_input_files(metadata, params)
+
+        # Extraheer template paths voor logging
+        template_paths = [path for key, path in file_paths.items() if 'template' in key.lower()]
 
         # Voeg geëxtraheerde params toe (boundary YAML heeft voorrang indien niet via command-line gegeven)
         for key, value in extracted_params.items():
             if key not in params or not params[key]:  # Alleen toevoegen als nog niet ingesteld
                 params[key] = value
+        
+        # Pre-load charter path voor bootstrap logging
+        _, charter_path = load_charter(args.prompt_file, metadata, params)
     
     # Voer verplichte bootstrap uit (tenzij expliciet overgeslagen)
     if args.skip_bootstrap:
         print("[Info] Bootstrap overgeslagen via --skip-bootstrap (experimenteel/snelle iteratie).")
     else:
-        run_bootstrap(metadata, args.prompt_file, args.method, params, workspace_config, quiet=args.bootstrap_quiet)
+        run_bootstrap(metadata, args.prompt_file, args.method, params, workspace_config, quiet=args.bootstrap_quiet, 
+                     charter_path=charter_path, template_paths=template_paths if template_paths else None)
     
     # Stel instructies samen
     if args.minimal:
@@ -1167,7 +1196,8 @@ def main():
         final_prompt = replace_placeholders(minimal_content, params, "", None)
     else:
         # Standaard flow: charter + agent.md + placeholders
-        final_prompt = assemble_full_instructions(metadata, prompt_content, args.prompt_file, params, input_content, input_files_content)
+        # Herlaad charter (content) en assemble
+        final_prompt, _ = assemble_full_instructions(metadata, prompt_content, args.prompt_file, params, input_content, input_files_content)
     
     # Log de gegenereerde instructies
     log_agent_instructions(metadata, params, final_prompt, args.prompt_file, args.log_mode)

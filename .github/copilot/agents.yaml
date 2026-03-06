@@ -3,26 +3,31 @@ agents:
   name: workspace.agent-curator
   type: uitvoerend
   valueStream: aeo
-  charter: artefacten/aeo/aeo.02.agent-curator/agent-curator-analyseer.charter.md
+  charter: artefacten/aeo/aeo.02.agent-curator/agent-curator.charter.md
   prompts:
-  - .github/prompts/mandarin.agent-curator-analyseer.ecosysteem.prompt.md
-  - .github/prompts/mandarin.agent-curator.bepaal-agent-boundary.prompt.md
-  - .github/prompts/mandarin.agent-curator.onderhoud-value.streams.prompt.md
-  - .github/prompts/mandarin.agent-curator.publiceer-json.prompt.md
-  - .github/prompts/mandarin.agent-curator.publiceer-overzicht.prompt.md
+  - .github/prompts/mandarin.agent-curator.rapporteer-ecosysteem-overzicht.prompt.md
+  - .github/prompts/mandarin.agent-curator.valideer-agent-consistentie.prompt.md
+  - .github/prompts/mandarin.agent-curator.valideer-boundary-overlap.prompt.md
   runners: []
-- id: agent-smeder
-  name: workspace.agent-smeder
+- id: agent-engineer
+  name: workspace.agent-engineer
   type: uitvoerend
   valueStream: aeo
-  charter: artefacten/aeo/aeo.02.agent-smeder/agent-smeder.charter.md
+  charter: artefacten/aeo/aeo.02.agent-engineer/agent-engineer.charter.md
   prompts:
-  - .github/prompts/mandarin.agent-smeder.leg-vast-agent-charter.prompt.md
-  - .github/prompts/mandarin.agent-smeder.leg-vast-agent-contract.prompt.md
-  - .github/prompts/mandarin.agent-smeder.leg-vast-agent-prompt-versie.prompt.md
-  - .github/prompts/mandarin.agent-smeder.leg-vast-agent-prompt.prompt.md
-  - .github/prompts/mandarin.agent-smeder.leg-vast-agent-runner.prompt.md
-  - .github/prompts/mandarin.agent-smeder.leg-vast-templates.prompt.md
+  - .github/prompts/mandarin.agent-engineer.realiseer-agent-prompts.prompt.md
+  - .github/prompts/mandarin.agent-engineer.realiseer-agent-runner.prompt.md
+  - .github/prompts/mandarin.agent-engineer.realiseer-agent-taskconfiguratie.prompt.md
+  runners: []
+- id: agent-ontwerper
+  name: workspace.agent-ontwerper
+  type: uitvoerend
+  valueStream: aeo
+  charter: artefacten/aeo/aeo.02.agent-ontwerper/agent-ontwerper.charter.md
+  prompts:
+  - .github/prompts/mandarin.agent-ontwerper.definieer-agent-charter.prompt.md
+  - .github/prompts/mandarin.agent-ontwerper.definieer-agent-contract.prompt.md
+  - .github/prompts/mandarin.agent-ontwerper.definieer-agent-template.prompt.md
   runners: []
 - id: capability-architect
   name: workspace.capability-architect
@@ -31,14 +36,6 @@ agents:
   charter: artefacten/aeo/aeo.02.capability-architect/capability-architect.charter.md
   prompts:
   - .github/prompts/mandarin.capability-architect.definieer-agent-boundary.prompt.md
-  runners: []
-- id: task-drafter
-  name: workspace.task-drafter
-  type: uitvoerend
-  valueStream: aeo
-  charter: artefacten/aeo/aeo.02.task-drafter/task-drafter.charter.md
-  prompts:
-  - .github/prompts/mandarin.task-drafter.realiseer-vscode-tasks-json.prompt.md
   runners: []
 - id: engineer-steward
   name: workspace.engineer-steward

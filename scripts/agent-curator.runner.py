@@ -7,7 +7,7 @@ Beheert agent-lifecycle via twee front doors: publiceer-json en publiceer-overzi
 
 Front Doors:
 - publiceer-json: Genereert agents-publicatie.json conform schema v2.0 (externe consumptie)
-- publiceer-overzicht: Genereert markdown overzichten in artefacten/agent-curator/ (interne documentatie)
+- publiceer-overzicht: Genereert markdown overzichten in docs/ (interne documentatie)
 
 Conformiteit: agents-publicatie-schema.json v2.0, runner-template.md normen
 Datum: 2026-02-08
@@ -97,53 +97,60 @@ def scan_agent_folders() -> Dict[str, Dict[str, List[Dict]]]:
             
             data[value_stream][fase].append(agent_record)
             
-            print(f"  ✓ {agent_naam} ({value_stream}.{fase}) - "
-                  f"files:{counts['aantal_agent_files']} prompts:{counts['aantal_prompts']} "
-                  f"templates:{counts['aantal_templates']} charters:{counts['aantal_charters']}")
+            print(f"  + {agent_naam} ({value_stream}.{fase}) - "
+                  f"contracten:{counts['aantal_agent_files']} prompts:{counts['aantal_prompts']} "
+                  f"templates:{counts['aantal_templates']} tasks:{counts['aantal_tasks']} "
+                  f"charter:{'ja' if counts['aantal_charters'] else '-'}")
     
     return data
 
 
 def _count_agent_artifacts(agent_path: Path, agent_naam: str) -> Dict[str, int]:
     """
-    Tel agent artifacts in een agent folder conform schema v2.0.
-    
-    Args:
-        agent_path: Path naar agent folder
-        agent_naam: Naam van de agent (voor filtering)
-        
-    Returns:
-        Dictionary met counts:
-        - aantal_agent_files: *.agent.md bestanden
-        - aantal_prompts: *.prompt.md bestanden  
-        - aantal_templates: *template*.md bestanden
-        - aantal_charters: *.charter.md bestanden (max 1)
+    Tel agent artifacts in een agent folder conform nieuwe submap-structuur.
+
+    Subfolders:
+        agent-contracten/  *.agent.md      → aantal_agent_files
+        prompts/           *.prompt.md     → aantal_prompts
+        templates/         *.md            → aantal_templates
+        tasks/             *.tasks.json    → aantal_tasks
+    Root:
+        *.charter.md                       → aantal_charters (max 1)
     """
     counts = {
         'aantal_agent_files': 0,
         'aantal_prompts': 0,
         'aantal_templates': 0,
-        'aantal_charters': 0
+        'aantal_charters': 0,
+        'aantal_tasks': 0,
     }
-    
+
     if not agent_path.exists() or not agent_path.is_dir():
         return counts
-    
-    for file in agent_path.iterdir():
-        if not file.is_file():
-            continue
-            
-        filename = file.name.lower()
-        
-        if filename.endswith('.agent.md'):
-            counts['aantal_agent_files'] += 1
-        elif filename.endswith('.prompt.md'):
-            counts['aantal_prompts'] += 1
-        elif 'template' in filename and filename.endswith('.md'):
-            counts['aantal_templates'] += 1
-        elif filename.endswith('.charter.md'):
-            counts['aantal_charters'] += 1
-    
+
+    # agent-contracten/
+    contracten_dir = agent_path / 'agent-contracten'
+    if contracten_dir.is_dir():
+        counts['aantal_agent_files'] = sum(1 for f in contracten_dir.glob('*.agent.md') if f.is_file())
+
+    # prompts/
+    prompts_dir = agent_path / 'prompts'
+    if prompts_dir.is_dir():
+        counts['aantal_prompts'] = sum(1 for f in prompts_dir.glob('*.prompt.md') if f.is_file())
+
+    # templates/
+    templates_dir = agent_path / 'templates'
+    if templates_dir.is_dir():
+        counts['aantal_templates'] = sum(1 for f in templates_dir.glob('*.md') if f.is_file())
+
+    # tasks/
+    tasks_dir = agent_path / 'tasks'
+    if tasks_dir.is_dir():
+        counts['aantal_tasks'] = sum(1 for f in tasks_dir.glob('*.tasks.json') if f.is_file())
+
+    # charter staat in de root van de agent-map
+    counts['aantal_charters'] = sum(1 for f in agent_path.glob('*.charter.md') if f.is_file())
+
     return counts
 
 
@@ -228,7 +235,8 @@ def publiceer_agents_markdown(data: Dict[str, Dict[str, List[Dict]]], output_pat
         total_prompts = sum(agent['aantal_prompts'] for agents in vs_data.values() for agent in agents)
         total_templates = sum(agent['aantal_templates'] for agents in vs_data.values() for agent in agents)
         total_charters = sum(agent['aantal_charters'] for agents in vs_data.values() for agent in agents)
-        
+        total_tasks = sum(agent.get('aantal_tasks', 0) for agents in vs_data.values() for agent in agents)
+
         tabel_rijen.append({
             'vs': vs_code.upper(),
             'fasen': aantal_fasen,
@@ -236,7 +244,8 @@ def publiceer_agents_markdown(data: Dict[str, Dict[str, List[Dict]]], output_pat
             'files': total_agent_files,
             'prompts': total_prompts,
             'templates': total_templates,
-            'charters': total_charters
+            'charters': total_charters,
+            'tasks': total_tasks,
         })
 
     # Genereer markdown met overzichtstabel
@@ -245,22 +254,23 @@ def publiceer_agents_markdown(data: Dict[str, Dict[str, List[Dict]]], output_pat
         "",
         "## Globaal Overzicht",
         "",
-        "| Value Stream | Fasen | Agents | Agent Files | Prompts | Templates | Charters |",
-        "|--------------|-------|--------|-------------|---------|-----------|----------|",
+        "| Value Stream | Fasen | Agents | Contracten | Prompts | Templates | Tasks | Charter |",
+        "|--------------|-------|--------|------------|---------|-----------|-------|--------|",
     ]
-    
+
     # Voeg tabel rijen toe
     for rij in tabel_rijen:
-        lines.append(f"| {rij['vs']} | {rij['fasen']} | {rij['agents']} | {rij['files']} | {rij['prompts']} | {rij['templates']} | {rij['charters']} |")
-    
+        lines.append(f"| {rij['vs']} | {rij['fasen']} | {rij['agents']} | {rij['files']} | {rij['prompts']} | {rij['templates']} | {rij['tasks']} | {rij['charters']} |")
+
     # Voeg totaalrij toe
     grand_total_files = sum(rij['files'] for rij in tabel_rijen)
     grand_total_prompts = sum(rij['prompts'] for rij in tabel_rijen)
     grand_total_templates = sum(rij['templates'] for rij in tabel_rijen)
     grand_total_charters = sum(rij['charters'] for rij in tabel_rijen)
-    
+    grand_total_tasks = sum(rij['tasks'] for rij in tabel_rijen)
+
     lines.extend([
-        f"| **TOTAAL** | **{len(tabel_rijen)}** | **{total_agents}** | **{grand_total_files}** | **{grand_total_prompts}** | **{grand_total_templates}** | **{grand_total_charters}** |",
+        f"| **TOTAAL** | **{len(tabel_rijen)}** | **{total_agents}** | **{grand_total_files}** | **{grand_total_prompts}** | **{grand_total_templates}** | **{grand_total_tasks}** | **{grand_total_charters}** |",
         "",
         "## Samenvatting",
         "",
@@ -290,10 +300,11 @@ def publiceer_agents_markdown(data: Dict[str, Dict[str, List[Dict]]], output_pat
             
             for agent in sorted(fase_agents, key=lambda a: a['naam']):
                 lines.append(f"**{agent['naam']}**")
-                lines.append(f"- Agent files: {agent['aantal_agent_files']}")
-                lines.append(f"- Prompt files: {agent['aantal_prompts']}")
-                lines.append(f"- Templates: {agent['aantal_templates']}")
-                lines.append(f"- Charter: {'✓' if agent['aantal_charters'] > 0 else '✗'}")
+                lines.append(f"- Contracten : {agent['aantal_agent_files']}")
+                lines.append(f"- Prompts    : {agent['aantal_prompts']}")
+                lines.append(f"- Templates  : {agent['aantal_templates']}")
+                lines.append(f"- Tasks      : {agent.get('aantal_tasks', 0)}")
+                lines.append(f"- Charter    : {'ja' if agent['aantal_charters'] > 0 else '-'}")
                 lines.append("")
             
             lines.append("---")
@@ -363,7 +374,7 @@ def handle_publiceer_overzicht(scope: str = "volledig", detail_niveau: str = "ui
     """
     Intent: publiceer-overzicht
     
-    Genereert markdown overzicht in artefacten/agent-curator/ voor interne documentatie.
+    Genereert markdown overzicht in docs/ voor interne documentatie.
     
     Args:
         scope: "volledig", "value-stream", of "fase"
@@ -389,13 +400,12 @@ def handle_publiceer_overzicht(scope: str = "volledig", detail_niveau: str = "ui
     
     print(f"\n[INFO] Gevonden {total_agents} agents in {total_value_streams} value streams")
     
-    # Create artefacten/agent-curator/ folder if not exists
-    output_dir = Path("artefacten/agent-curator")
+    # Create docs/ folder if not exists
+    output_dir = Path("docs")
     output_dir.mkdir(parents=True, exist_ok=True)
-    
+
     # Generate detailed markdown overview
-    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-    md_path = output_dir / f"agents-overzicht-{timestamp}.md"
+    md_path = output_dir / "agents-overzicht.md"
     
     # Gebruik de nieuwe publiceer_agents_markdown functie met overzichtstabel
     publiceer_agents_markdown(data, md_path)

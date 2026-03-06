@@ -1,7 +1,12 @@
 # Template: definieer-thematische-scope
 
+## Bronhypothese
+- **Bron**: {hypothese_bestand}
+- **Toelichting**: {toelichting}
+
 ## Thematische Scope
-- **Thema**: {thema}
+- **Thema-code**: {thema_code}
+- **Titel**: {titel}
 - **Beschrijving**: {beschrijving}
 - **Afgebakende onderwerpen**: {onderwerpen}
 - **Uitsluitingen**: {uitsluitingen}

@@ -102,7 +102,7 @@ def ensure_audit_dir(workspace_root: str) -> str:
     return audit_dir
 
 
-def append_markdown_entry(log_path: str, entry: dict, files_table: list[tuple[str, str]]) -> None:
+def append_markdown_entry(log_path: str, entry: dict, files_table: list[tuple[str, str]], charter_file: str = None, template_files: list[str] = None) -> None:
     """Append a consultation entry as Markdown."""
     lines = ["\n---\n\n"]
     lines.append(f"## Canon Consultation — {entry['ts']}\n\n")
@@ -115,6 +115,11 @@ def append_markdown_entry(log_path: str, entry: dict, files_table: list[tuple[st
     lines.append(f"- **Branch**: {entry['branch']}\n")
     lines.append(f"- **SHA**: {entry['shaShort']}\n")
     lines.append(f"- **Grondslagen Patterns**: `{entry['grondslagePatterns']}`\n")
+    if charter_file:
+        lines.append(f"- **Charter**: `{charter_file}`\n")
+    if template_files:
+        template_list = ", ".join([f"`{t}`" for t in template_files])
+        lines.append(f"- **Templates**: {template_list}\n")
     if entry.get('notes'):
         lines.append(f"- **Notes**: {entry['notes']}\n")
     
@@ -190,6 +195,8 @@ def main(argv: list[str]) -> int:
     parser.add_argument("--canon-github-url", required=False, help="GitHub URL to clone from if local canon not found")
     parser.add_argument("--canon-branch", required=False, default="main", help="Branch to clone (default: main)")
     parser.add_argument("--notes", required=False, help="Optional notes")
+    parser.add_argument("--charter", required=False, help="Path to charter file that was consulted (optional)")
+    parser.add_argument("--templates", required=False, help="Comma-separated paths to template files that were consulted (optional)")
     parser.add_argument("--quiet", action="store_true", help="Beperk terminaloutput tot een korte samenvatting")
 
     args = parser.parse_args(argv)
@@ -253,12 +260,18 @@ def main(argv: list[str]) -> int:
         "notes": args.notes,
     }
 
-    append_markdown_entry(log_path, entry, grondslagen["files_table"])
+    # Parse charter and template arguments
+    charter_file = args.charter if args.charter else None
+    template_files = [t.strip() for t in args.templates.split(",")] if args.templates else None
+
+    append_markdown_entry(log_path, entry, grondslagen["files_table"], charter_file, template_files)
 
     # Report to stdout
     if args.quiet:
+        charter_info = f" charter={os.path.basename(charter_file)}" if charter_file else ""
+        template_info = f" templates={len(template_files)}" if template_files else ""
         print(
-            f"[canon] ok agent={args.agent} sha={info['sha_short']} files={grondslagen['count']} "
+            f"[canon] ok agent={args.agent} sha={info['sha_short']} files={grondslagen['count']}{charter_info}{template_info} "
             f"log={os.path.relpath(log_path, workspace_root)}"
         )
     else:
@@ -269,6 +282,12 @@ def main(argv: list[str]) -> int:
         print(f"Timestamp:   {entry['ts']}")
         print(f"Canon SHA:   {info['sha_short']} (branch: {info['branch']})")
         print(f"Files read:  {grondslagen['count']}")
+        if charter_file:
+            print(f"Charter:     {charter_file}")
+        if template_files:
+            print(f"Templates:   {len(template_files)} file(s)")
+            for tmpl in template_files:
+                print(f"             - {tmpl}")
         print(f"Log:         {os.path.relpath(log_path, workspace_root)}")
         print()
         print("Consulted grondslagen:")
