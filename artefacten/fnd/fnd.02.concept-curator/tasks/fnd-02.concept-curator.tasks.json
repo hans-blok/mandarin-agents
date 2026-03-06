@@ -7,7 +7,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'concept-curator'; $intent = 'definieer-concept'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'concept-curator'; $intent = 'definieer-concept'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"term=${input:in_concept_curator_definieer_concept_term}\" -p \"definitie=${input:in_concept_curator_definieer_concept_definitie}\" -p \"domein=${input:in_concept_curator_definieer_concept_domein}\" -p \"synoniemen=${input:in_concept_curator_definieer_concept_synoniemen}\" -p \"relaties=${input:in_concept_curator_definieer_concept_relaties}\" -p \"bron=${input:in_concept_curator_definieer_concept_bron}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -21,7 +21,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'concept-curator'; $intent = 'rapporteer-concept-status'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'concept-curator'; $intent = 'rapporteer-concept-status'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"domein=${input:in_concept_curator_rapporteer_concept_status_domein}\" -p \"formaat=${input:in_concept_curator_rapporteer_concept_status_formaat}\" -p \"status_filter=${input:in_concept_curator_rapporteer_concept_status_status_filter}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -35,7 +35,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'concept-curator'; $intent = 'valideer-concept-coherentie'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'concept-curator'; $intent = 'valideer-concept-coherentie'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"artefact_bestand=${input:in_concept_curator_valideer_concept_coherentie_artefact_bestand}\" -p \"domein=${input:in_concept_curator_valideer_concept_coherentie_domein}\" -p \"striktheid=${input:in_concept_curator_valideer_concept_coherentie_striktheid}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -49,13 +49,85 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'concept-curator'; $intent = 'verweef-concepten'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'concept-curator'; $intent = 'verweef-concepten'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"concept_bestand=${input:in_concept_curator_verweef_concepten_concept_bestand}\" -p \"*Context*=${input:in_concept_curator_verweef_concepten_*Context*}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
         "panel": "shared"
       }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "in_concept_curator_definieer_concept_term",
+      "type": "promptString",
+      "description": "Waarde voor 'term' (definieer-concept)"
+    },
+    {
+      "id": "in_concept_curator_definieer_concept_definitie",
+      "type": "promptString",
+      "description": "Waarde voor 'definitie' (definieer-concept)"
+    },
+    {
+      "id": "in_concept_curator_definieer_concept_domein",
+      "type": "promptString",
+      "description": "Waarde voor 'domein' (definieer-concept)"
+    },
+    {
+      "id": "in_concept_curator_definieer_concept_synoniemen",
+      "type": "promptString",
+      "description": "Waarde voor 'synoniemen' (definieer-concept)"
+    },
+    {
+      "id": "in_concept_curator_definieer_concept_relaties",
+      "type": "promptString",
+      "description": "Waarde voor 'relaties' (definieer-concept)"
+    },
+    {
+      "id": "in_concept_curator_definieer_concept_bron",
+      "type": "promptString",
+      "description": "Waarde voor 'bron' (definieer-concept)"
+    },
+    {
+      "id": "in_concept_curator_rapporteer_concept_status_domein",
+      "type": "promptString",
+      "description": "Waarde voor 'domein' (rapporteer-concept-status)"
+    },
+    {
+      "id": "in_concept_curator_rapporteer_concept_status_formaat",
+      "type": "promptString",
+      "description": "Waarde voor 'formaat' (rapporteer-concept-status)"
+    },
+    {
+      "id": "in_concept_curator_rapporteer_concept_status_status_filter",
+      "type": "promptString",
+      "description": "Waarde voor 'status_filter' (rapporteer-concept-status)"
+    },
+    {
+      "id": "in_concept_curator_valideer_concept_coherentie_artefact_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'artefact_bestand' (valideer-concept-coherentie)"
+    },
+    {
+      "id": "in_concept_curator_valideer_concept_coherentie_domein",
+      "type": "promptString",
+      "description": "Waarde voor 'domein' (valideer-concept-coherentie)"
+    },
+    {
+      "id": "in_concept_curator_valideer_concept_coherentie_striktheid",
+      "type": "promptString",
+      "description": "Waarde voor 'striktheid' (valideer-concept-coherentie)"
+    },
+    {
+      "id": "in_concept_curator_verweef_concepten_concept_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'concept_bestand' (verweef-concepten)"
+    },
+    {
+      "id": "in_concept_curator_verweef_concepten_*Context*",
+      "type": "promptString",
+      "description": "Waarde voor '*Context*' (verweef-concepten)"
     }
   ]
 }

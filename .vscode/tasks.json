@@ -45,7 +45,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-curator'; $intent = 'valideer-agent-consistentie'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-curator'; $intent = 'valideer-agent-consistentie'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"agent_naam=${input:in_agent_curator_valideer_agent_consistentie_agent_naam}\" -p \"value_stream_fase=${input:in_agent_curator_valideer_agent_consistentie_value_stream_fase}\" -p \"scope=${input:in_agent_curator_valideer_agent_consistentie_scope}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -59,7 +59,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-curator'; $intent = 'valideer-boundary-overlap'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-curator'; $intent = 'valideer-boundary-overlap'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"value_stream_fase=${input:in_agent_curator_valideer_boundary_overlap_value_stream_fase}\" -p \"agent_namen=${input:in_agent_curator_valideer_boundary_overlap_agent_namen}\" -p \"canon_ref=${input:in_agent_curator_valideer_boundary_overlap_canon_ref}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -73,7 +73,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-engineer'; $intent = 'realiseer-agent-prompts'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-engineer'; $intent = 'realiseer-agent-prompts'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"agent_naam=${input:in_agent_engineer_realiseer_agent_prompts_agent_naam}\" -p \"intent=${input:in_agent_engineer_realiseer_agent_prompts_intent}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -87,7 +87,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-engineer'; $intent = 'realiseer-agent-runner'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-engineer'; $intent = 'realiseer-agent-runner'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"agent_naam=${input:in_agent_engineer_realiseer_agent_runner_agent_naam}\" -p \"contract_folder=${input:in_agent_engineer_realiseer_agent_runner_contract_folder}\" -p \"runner_output_folder=${input:in_agent_engineer_realiseer_agent_runner_runner_output_folder}\" -p \"overwrite_existing=${input:in_agent_engineer_realiseer_agent_runner_overwrite_existing}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -101,7 +101,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-engineer'; $intent = 'realiseer-agent-taskconfiguratie'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-engineer'; $intent = 'realiseer-agent-taskconfiguratie'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"agent_naam=${input:in_agent_engineer_realiseer_agent_taskconfiguratie_agent_naam}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -115,7 +115,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-ontwerper'; $intent = 'definieer-agent-charter'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-ontwerper'; $intent = 'definieer-agent-charter'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"agent_naam=${input:in_agent_ontwerper_definieer_agent_charter_agent_naam}\" -p \"boundary_file=${input:in_agent_ontwerper_definieer_agent_charter_boundary_file}\" -p \"value_stream_fase=${input:in_agent_ontwerper_definieer_agent_charter_value_stream_fase}\" -p \"template_file=${input:in_agent_ontwerper_definieer_agent_charter_template_file}\" -p \"referenties=${input:in_agent_ontwerper_definieer_agent_charter_referenties}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -129,7 +129,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-ontwerper'; $intent = 'definieer-agent-contract'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-ontwerper'; $intent = 'definieer-agent-contract'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"agent_naam=${input:in_agent_ontwerper_definieer_agent_contract_agent_naam}\" -p \"boundary_file=${input:in_agent_ontwerper_definieer_agent_contract_boundary_file}\" -p \"intent_naam=${input:in_agent_ontwerper_definieer_agent_contract_intent_naam}\" -p \"value_stream_fase=${input:in_agent_ontwerper_definieer_agent_contract_value_stream_fase}\" -p \"template_file=${input:in_agent_ontwerper_definieer_agent_contract_template_file}\" -p \"referenties=${input:in_agent_ontwerper_definieer_agent_contract_referenties}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -143,7 +143,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-ontwerper'; $intent = 'definieer-agent-template'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-ontwerper'; $intent = 'definieer-agent-template'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"agent_naam=${input:in_agent_ontwerper_definieer_agent_template_agent_naam}\" -p \"boundary_file=${input:in_agent_ontwerper_definieer_agent_template_boundary_file}\" -p \"template_naam=${input:in_agent_ontwerper_definieer_agent_template_template_naam}\" -p \"output_type=${input:in_agent_ontwerper_definieer_agent_template_output_type}\" -p \"value_stream_fase=${input:in_agent_ontwerper_definieer_agent_template_value_stream_fase}\" -p \"voorbeeldstructuur=${input:in_agent_ontwerper_definieer_agent_template_voorbeeldstructuur}\" -p \"referentie_templates=${input:in_agent_ontwerper_definieer_agent_template_referentie_templates}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -157,7 +157,259 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'capability-architect'; $intent = 'definieer-agent-boundary'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'capability-architect'; $intent = 'definieer-agent-boundary'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"agent_naam=${input:in_capability_architect_definieer_agent_boundary_agent_naam}\" -p \"value_stream_fase=${input:in_capability_architect_definieer_agent_boundary_value_stream_fase}\" -p \"korte_beschrijving=${input:in_capability_architect_definieer_agent_boundary_korte_beschrijving}\" -p \"template_file=${input:in_capability_architect_definieer_agent_boundary_template_file}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aod.02 - core-framework-architect: structureer-actieve-structuur",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'core-framework-architect'; $intent = 'structureer-actieve-structuur'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"archimate_laag=${input:in_core_framework_architect_structureer_actieve_structuur_archimate_laag}\" -p \"bestand=${input:in_core_framework_architect_structureer_actieve_structuur_bestand}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aod.02 - core-framework-architect: structureer-gedrag",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'core-framework-architect'; $intent = 'structureer-gedrag'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"archimate_laag=${input:in_core_framework_architect_structureer_gedrag_archimate_laag}\" -p \"bestand=${input:in_core_framework_architect_structureer_gedrag_bestand}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aod.02 - core-framework-architect: structureer-passieve-structuur",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'core-framework-architect'; $intent = 'structureer-passieve-structuur'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"archimate_laag=${input:in_core_framework_architect_structureer_passieve_structuur_archimate_laag}\" -p \"bestand=${input:in_core_framework_architect_structureer_passieve_structuur_bestand}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aod.02 - core-framework-architect: structureer-totaal-view",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'core-framework-architect'; $intent = 'structureer-totaal-view'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"archimate_laag=${input:in_core_framework_architect_structureer_totaal_view_archimate_laag}\" -p \"bestand=${input:in_core_framework_architect_structureer_totaal_view_bestand}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "fnd.02 - concept-curator: definieer-concept",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'concept-curator'; $intent = 'definieer-concept'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"term=${input:in_concept_curator_definieer_concept_term}\" -p \"definitie=${input:in_concept_curator_definieer_concept_definitie}\" -p \"domein=${input:in_concept_curator_definieer_concept_domein}\" -p \"synoniemen=${input:in_concept_curator_definieer_concept_synoniemen}\" -p \"relaties=${input:in_concept_curator_definieer_concept_relaties}\" -p \"bron=${input:in_concept_curator_definieer_concept_bron}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "fnd.02 - concept-curator: rapporteer-concept-status",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'concept-curator'; $intent = 'rapporteer-concept-status'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"domein=${input:in_concept_curator_rapporteer_concept_status_domein}\" -p \"formaat=${input:in_concept_curator_rapporteer_concept_status_formaat}\" -p \"status_filter=${input:in_concept_curator_rapporteer_concept_status_status_filter}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "fnd.02 - concept-curator: valideer-concept-coherentie",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'concept-curator'; $intent = 'valideer-concept-coherentie'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"artefact_bestand=${input:in_concept_curator_valideer_concept_coherentie_artefact_bestand}\" -p \"domein=${input:in_concept_curator_valideer_concept_coherentie_domein}\" -p \"striktheid=${input:in_concept_curator_valideer_concept_coherentie_striktheid}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "fnd.02 - concept-curator: verweef-concepten",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'concept-curator'; $intent = 'verweef-concepten'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"concept_bestand=${input:in_concept_curator_verweef_concepten_concept_bestand}\" -p \"*Context*=${input:in_concept_curator_verweef_concepten_*Context*}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "fnd.02 - documentvertaler: zet-om-naar-docx",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'documentvertaler'; $intent = 'zet-om-naar-docx'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"markdown_file=${input:in_documentvertaler_zet_om_naar_docx_markdown_file}\" -p \"output_path=${input:in_documentvertaler_zet_om_naar_docx_output_path}\" -p \"conversie_opties=${input:in_documentvertaler_zet_om_naar_docx_conversie_opties}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "sfw.01 - hypothese-vormer: beschrijf-aannames",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'hypothese-vormer'; $intent = 'beschrijf-aannames'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"hypothese_titel=${input:in_hypothese_vormer_beschrijf_aannames_hypothese_titel}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "sfw.01 - hypothese-vormer: beschrijf-hypothese",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'hypothese-vormer'; $intent = 'beschrijf-hypothese'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"probleemomschrijving=${input:in_hypothese_vormer_beschrijf_hypothese_probleemomschrijving}\" -p \"interventie_vermoeden=${input:in_hypothese_vormer_beschrijf_hypothese_interventie_vermoeden}\" -p \"auteur=${input:in_hypothese_vormer_beschrijf_hypothese_auteur}\" -p \"bron_referenties=${input:in_hypothese_vormer_beschrijf_hypothese_bron_referenties}\" -p \"context=${input:in_hypothese_vormer_beschrijf_hypothese_context}\" -p \"stakeholders=${input:in_hypothese_vormer_beschrijf_hypothese_stakeholders}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "sfw.01 - hypothese-vormer: beschrijf-toetsbaarheid",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'hypothese-vormer'; $intent = 'beschrijf-toetsbaarheid'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"hypothese_statement=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_statement}\" -p \"auteur=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_auteur}\" -p \"hypothese_bestand=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_bestand}\" -p \"toetsingscontext=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_toetsingscontext}\" -p \"beschikbare_metrics=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_beschikbare_metrics}\" -p \"acceptatie_drempel=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_acceptatie_drempel}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "sfw.02 - thema-verwoorder: definieer-epic-structuur",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'thema-verwoorder'; $intent = 'definieer-epic-structuur'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"thema_code=${input:in_thema_verwoorder_definieer_epic_structuur_thema_code}\" -p \"auteur=${input:in_thema_verwoorder_definieer_epic_structuur_auteur}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "sfw.02 - thema-verwoorder: definieer-thematische-scope",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'thema-verwoorder'; $intent = 'definieer-thematische-scope'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"hypothese_bestand=${input:in_thema_verwoorder_definieer_thematische_scope_hypothese_bestand}\" -p \"auteur=${input:in_thema_verwoorder_definieer_thematische_scope_auteur}\" -p \"toelichting=${input:in_thema_verwoorder_definieer_thematische_scope_toelichting}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "sfw.02 - thema-verwoorder: definieer-verbeter-voorstel",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'thema-verwoorder'; $intent = 'definieer-verbeter-voorstel'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"thema_code=${input:in_thema_verwoorder_definieer_verbeter_voorstel_thema_code}\" -p \"auteur=${input:in_thema_verwoorder_definieer_verbeter_voorstel_auteur}\" -p \"toelichting=${input:in_thema_verwoorder_definieer_verbeter_voorstel_toelichting}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "sfw.03 - gedragsspecificator: specificeer-gedrag",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'gedragsspecificator'; $intent = 'specificeer-gedrag'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"context_bestand=${input:in_gedragsspecificator_specificeer_gedrag_context_bestand}\" -p \"data_beschrijving_bestand=${input:in_gedragsspecificator_specificeer_gedrag_data_beschrijving_bestand}\" -p \"proces_beschrijving_bestand=${input:in_gedragsspecificator_specificeer_gedrag_proces_beschrijving_bestand}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "sfw.03 - gedragsspecificator: valideer-scenario-consistentie",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'gedragsspecificator'; $intent = 'valideer-scenario-consistentie'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"feature_files=${input:in_gedragsspecificator_valideer_scenario_consistentie_feature_files}\" -p \"specificatie_document=${input:in_gedragsspecificator_valideer_scenario_consistentie_specificatie_document}\" -p \"validation_rules=${input:in_gedragsspecificator_valideer_scenario_consistentie_validation_rules}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "sfw.03 - gedragsspecificator: vertaal-naar-gherkin",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'gedragsspecificator'; $intent = 'vertaal-naar-gherkin'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"specificatie_document=${input:in_gedragsspecificator_vertaal_naar_gherkin_specificatie_document}\" -p \"context=${input:in_gedragsspecificator_vertaal_naar_gherkin_context}\" -p \"extra_regels=${input:in_gedragsspecificator_vertaal_naar_gherkin_extra_regels}\" -p \"bestaande_feature_files=${input:in_gedragsspecificator_vertaal_naar_gherkin_bestaande_feature_files}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -216,6 +468,461 @@
       "id": "gedragFile",
       "type": "promptString",
       "description": "Pad naar gedrag bestand (bijv. artefacten/aod/aod.02.core-framework-architect/landschappen/transport/core-framework-architect.structureer-gedrag.md)"
+    },
+    {
+      "id": "in_agent_curator_valideer_agent_consistentie_agent_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'agent_naam' (valideer-agent-consistentie)"
+    },
+    {
+      "id": "in_agent_curator_valideer_agent_consistentie_value_stream_fase",
+      "type": "promptString",
+      "description": "Waarde voor 'value_stream_fase' (valideer-agent-consistentie)"
+    },
+    {
+      "id": "in_agent_curator_valideer_agent_consistentie_scope",
+      "type": "promptString",
+      "description": "Waarde voor 'scope' (valideer-agent-consistentie)"
+    },
+    {
+      "id": "in_agent_curator_valideer_boundary_overlap_value_stream_fase",
+      "type": "promptString",
+      "description": "Waarde voor 'value_stream_fase' (valideer-boundary-overlap)"
+    },
+    {
+      "id": "in_agent_curator_valideer_boundary_overlap_agent_namen",
+      "type": "promptString",
+      "description": "Waarde voor 'agent_namen' (valideer-boundary-overlap)"
+    },
+    {
+      "id": "in_agent_curator_valideer_boundary_overlap_canon_ref",
+      "type": "promptString",
+      "description": "Waarde voor 'canon_ref' (valideer-boundary-overlap)"
+    },
+    {
+      "id": "in_agent_engineer_realiseer_agent_prompts_agent_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'agent_naam' (realiseer-agent-prompts)"
+    },
+    {
+      "id": "in_agent_engineer_realiseer_agent_prompts_intent",
+      "type": "promptString",
+      "description": "Waarde voor 'intent' (realiseer-agent-prompts)"
+    },
+    {
+      "id": "in_agent_engineer_realiseer_agent_runner_agent_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'agent_naam' (realiseer-agent-runner)"
+    },
+    {
+      "id": "in_agent_engineer_realiseer_agent_runner_contract_folder",
+      "type": "promptString",
+      "description": "Waarde voor 'contract_folder' (realiseer-agent-runner)"
+    },
+    {
+      "id": "in_agent_engineer_realiseer_agent_runner_runner_output_folder",
+      "type": "promptString",
+      "description": "Waarde voor 'runner_output_folder' (realiseer-agent-runner)"
+    },
+    {
+      "id": "in_agent_engineer_realiseer_agent_runner_overwrite_existing",
+      "type": "promptString",
+      "description": "Waarde voor 'overwrite_existing' (realiseer-agent-runner)"
+    },
+    {
+      "id": "in_agent_engineer_realiseer_agent_taskconfiguratie_agent_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'agent_naam' (realiseer-agent-taskconfiguratie)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_charter_agent_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'agent_naam' (definieer-agent-charter)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_charter_boundary_file",
+      "type": "promptString",
+      "description": "Waarde voor 'boundary_file' (definieer-agent-charter)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_charter_value_stream_fase",
+      "type": "promptString",
+      "description": "Waarde voor 'value_stream_fase' (definieer-agent-charter)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_charter_template_file",
+      "type": "promptString",
+      "description": "Waarde voor 'template_file' (definieer-agent-charter)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_charter_referenties",
+      "type": "promptString",
+      "description": "Waarde voor 'referenties' (definieer-agent-charter)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_contract_agent_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'agent_naam' (definieer-agent-contract)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_contract_boundary_file",
+      "type": "promptString",
+      "description": "Waarde voor 'boundary_file' (definieer-agent-contract)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_contract_intent_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'intent_naam' (definieer-agent-contract)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_contract_value_stream_fase",
+      "type": "promptString",
+      "description": "Waarde voor 'value_stream_fase' (definieer-agent-contract)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_contract_template_file",
+      "type": "promptString",
+      "description": "Waarde voor 'template_file' (definieer-agent-contract)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_contract_referenties",
+      "type": "promptString",
+      "description": "Waarde voor 'referenties' (definieer-agent-contract)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_agent_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'agent_naam' (definieer-agent-template)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_boundary_file",
+      "type": "promptString",
+      "description": "Waarde voor 'boundary_file' (definieer-agent-template)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_template_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'template_naam' (definieer-agent-template)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_output_type",
+      "type": "promptString",
+      "description": "Waarde voor 'output_type' (definieer-agent-template)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_value_stream_fase",
+      "type": "promptString",
+      "description": "Waarde voor 'value_stream_fase' (definieer-agent-template)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_voorbeeldstructuur",
+      "type": "promptString",
+      "description": "Waarde voor 'voorbeeldstructuur' (definieer-agent-template)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_referentie_templates",
+      "type": "promptString",
+      "description": "Waarde voor 'referentie_templates' (definieer-agent-template)"
+    },
+    {
+      "id": "in_capability_architect_definieer_agent_boundary_agent_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'agent_naam' (definieer-agent-boundary)"
+    },
+    {
+      "id": "in_capability_architect_definieer_agent_boundary_value_stream_fase",
+      "type": "promptString",
+      "description": "Waarde voor 'value_stream_fase' (definieer-agent-boundary)"
+    },
+    {
+      "id": "in_capability_architect_definieer_agent_boundary_korte_beschrijving",
+      "type": "promptString",
+      "description": "Waarde voor 'korte_beschrijving' (definieer-agent-boundary)"
+    },
+    {
+      "id": "in_capability_architect_definieer_agent_boundary_template_file",
+      "type": "promptString",
+      "description": "Waarde voor 'template_file' (definieer-agent-boundary)"
+    },
+    {
+      "id": "in_core_framework_architect_structureer_actieve_structuur_archimate_laag",
+      "type": "promptString",
+      "description": "Waarde voor 'archimate_laag' (structureer-actieve-structuur)"
+    },
+    {
+      "id": "in_core_framework_architect_structureer_actieve_structuur_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'bestand' (structureer-actieve-structuur)"
+    },
+    {
+      "id": "in_core_framework_architect_structureer_gedrag_archimate_laag",
+      "type": "promptString",
+      "description": "Waarde voor 'archimate_laag' (structureer-gedrag)"
+    },
+    {
+      "id": "in_core_framework_architect_structureer_gedrag_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'bestand' (structureer-gedrag)"
+    },
+    {
+      "id": "in_core_framework_architect_structureer_passieve_structuur_archimate_laag",
+      "type": "promptString",
+      "description": "Waarde voor 'archimate_laag' (structureer-passieve-structuur)"
+    },
+    {
+      "id": "in_core_framework_architect_structureer_passieve_structuur_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'bestand' (structureer-passieve-structuur)"
+    },
+    {
+      "id": "in_core_framework_architect_structureer_totaal_view_archimate_laag",
+      "type": "promptString",
+      "description": "Waarde voor 'archimate_laag' (structureer-totaal-view)"
+    },
+    {
+      "id": "in_core_framework_architect_structureer_totaal_view_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'bestand' (structureer-totaal-view)"
+    },
+    {
+      "id": "in_concept_curator_definieer_concept_term",
+      "type": "promptString",
+      "description": "Waarde voor 'term' (definieer-concept)"
+    },
+    {
+      "id": "in_concept_curator_definieer_concept_definitie",
+      "type": "promptString",
+      "description": "Waarde voor 'definitie' (definieer-concept)"
+    },
+    {
+      "id": "in_concept_curator_definieer_concept_domein",
+      "type": "promptString",
+      "description": "Waarde voor 'domein' (definieer-concept)"
+    },
+    {
+      "id": "in_concept_curator_definieer_concept_synoniemen",
+      "type": "promptString",
+      "description": "Waarde voor 'synoniemen' (definieer-concept)"
+    },
+    {
+      "id": "in_concept_curator_definieer_concept_relaties",
+      "type": "promptString",
+      "description": "Waarde voor 'relaties' (definieer-concept)"
+    },
+    {
+      "id": "in_concept_curator_definieer_concept_bron",
+      "type": "promptString",
+      "description": "Waarde voor 'bron' (definieer-concept)"
+    },
+    {
+      "id": "in_concept_curator_rapporteer_concept_status_domein",
+      "type": "promptString",
+      "description": "Waarde voor 'domein' (rapporteer-concept-status)"
+    },
+    {
+      "id": "in_concept_curator_rapporteer_concept_status_formaat",
+      "type": "promptString",
+      "description": "Waarde voor 'formaat' (rapporteer-concept-status)"
+    },
+    {
+      "id": "in_concept_curator_rapporteer_concept_status_status_filter",
+      "type": "promptString",
+      "description": "Waarde voor 'status_filter' (rapporteer-concept-status)"
+    },
+    {
+      "id": "in_concept_curator_valideer_concept_coherentie_artefact_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'artefact_bestand' (valideer-concept-coherentie)"
+    },
+    {
+      "id": "in_concept_curator_valideer_concept_coherentie_domein",
+      "type": "promptString",
+      "description": "Waarde voor 'domein' (valideer-concept-coherentie)"
+    },
+    {
+      "id": "in_concept_curator_valideer_concept_coherentie_striktheid",
+      "type": "promptString",
+      "description": "Waarde voor 'striktheid' (valideer-concept-coherentie)"
+    },
+    {
+      "id": "in_concept_curator_verweef_concepten_concept_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'concept_bestand' (verweef-concepten)"
+    },
+    {
+      "id": "in_concept_curator_verweef_concepten_*Context*",
+      "type": "promptString",
+      "description": "Waarde voor '*Context*' (verweef-concepten)"
+    },
+    {
+      "id": "in_documentvertaler_zet_om_naar_docx_markdown_file",
+      "type": "promptString",
+      "description": "Waarde voor 'markdown_file' (zet-om-naar-docx)"
+    },
+    {
+      "id": "in_documentvertaler_zet_om_naar_docx_output_path",
+      "type": "promptString",
+      "description": "Waarde voor 'output_path' (zet-om-naar-docx)"
+    },
+    {
+      "id": "in_documentvertaler_zet_om_naar_docx_conversie_opties",
+      "type": "promptString",
+      "description": "Waarde voor 'conversie_opties' (zet-om-naar-docx)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_aannames_hypothese_titel",
+      "type": "promptString",
+      "description": "Waarde voor 'hypothese_titel' (beschrijf-aannames)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_hypothese_probleemomschrijving",
+      "type": "promptString",
+      "description": "Waarde voor 'probleemomschrijving' (beschrijf-hypothese)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_hypothese_interventie_vermoeden",
+      "type": "promptString",
+      "description": "Waarde voor 'interventie_vermoeden' (beschrijf-hypothese)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_hypothese_auteur",
+      "type": "promptString",
+      "description": "Waarde voor 'auteur' (beschrijf-hypothese)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_hypothese_bron_referenties",
+      "type": "promptString",
+      "description": "Waarde voor 'bron_referenties' (beschrijf-hypothese)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_hypothese_context",
+      "type": "promptString",
+      "description": "Waarde voor 'context' (beschrijf-hypothese)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_hypothese_stakeholders",
+      "type": "promptString",
+      "description": "Waarde voor 'stakeholders' (beschrijf-hypothese)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_statement",
+      "type": "promptString",
+      "description": "Waarde voor 'hypothese_statement' (beschrijf-toetsbaarheid)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_auteur",
+      "type": "promptString",
+      "description": "Waarde voor 'auteur' (beschrijf-toetsbaarheid)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'hypothese_bestand' (beschrijf-toetsbaarheid)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_toetsingscontext",
+      "type": "promptString",
+      "description": "Waarde voor 'toetsingscontext' (beschrijf-toetsbaarheid)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_beschikbare_metrics",
+      "type": "promptString",
+      "description": "Waarde voor 'beschikbare_metrics' (beschrijf-toetsbaarheid)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_acceptatie_drempel",
+      "type": "promptString",
+      "description": "Waarde voor 'acceptatie_drempel' (beschrijf-toetsbaarheid)"
+    },
+    {
+      "id": "in_thema_verwoorder_definieer_epic_structuur_thema_code",
+      "type": "promptString",
+      "description": "Waarde voor 'thema_code' (definieer-epic-structuur)"
+    },
+    {
+      "id": "in_thema_verwoorder_definieer_epic_structuur_auteur",
+      "type": "promptString",
+      "description": "Waarde voor 'auteur' (definieer-epic-structuur)"
+    },
+    {
+      "id": "in_thema_verwoorder_definieer_thematische_scope_hypothese_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'hypothese_bestand' (definieer-thematische-scope)"
+    },
+    {
+      "id": "in_thema_verwoorder_definieer_thematische_scope_auteur",
+      "type": "promptString",
+      "description": "Waarde voor 'auteur' (definieer-thematische-scope)"
+    },
+    {
+      "id": "in_thema_verwoorder_definieer_thematische_scope_toelichting",
+      "type": "promptString",
+      "description": "Waarde voor 'toelichting' (definieer-thematische-scope)"
+    },
+    {
+      "id": "in_thema_verwoorder_definieer_verbeter_voorstel_thema_code",
+      "type": "promptString",
+      "description": "Waarde voor 'thema_code' (definieer-verbeter-voorstel)"
+    },
+    {
+      "id": "in_thema_verwoorder_definieer_verbeter_voorstel_auteur",
+      "type": "promptString",
+      "description": "Waarde voor 'auteur' (definieer-verbeter-voorstel)"
+    },
+    {
+      "id": "in_thema_verwoorder_definieer_verbeter_voorstel_toelichting",
+      "type": "promptString",
+      "description": "Waarde voor 'toelichting' (definieer-verbeter-voorstel)"
+    },
+    {
+      "id": "in_gedragsspecificator_specificeer_gedrag_context_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'context_bestand' (specificeer-gedrag)"
+    },
+    {
+      "id": "in_gedragsspecificator_specificeer_gedrag_data_beschrijving_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'data_beschrijving_bestand' (specificeer-gedrag)"
+    },
+    {
+      "id": "in_gedragsspecificator_specificeer_gedrag_proces_beschrijving_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'proces_beschrijving_bestand' (specificeer-gedrag)"
+    },
+    {
+      "id": "in_gedragsspecificator_valideer_scenario_consistentie_feature_files",
+      "type": "promptString",
+      "description": "Waarde voor 'feature_files' (valideer-scenario-consistentie)"
+    },
+    {
+      "id": "in_gedragsspecificator_valideer_scenario_consistentie_specificatie_document",
+      "type": "promptString",
+      "description": "Waarde voor 'specificatie_document' (valideer-scenario-consistentie)"
+    },
+    {
+      "id": "in_gedragsspecificator_valideer_scenario_consistentie_validation_rules",
+      "type": "promptString",
+      "description": "Waarde voor 'validation_rules' (valideer-scenario-consistentie)"
+    },
+    {
+      "id": "in_gedragsspecificator_vertaal_naar_gherkin_specificatie_document",
+      "type": "promptString",
+      "description": "Waarde voor 'specificatie_document' (vertaal-naar-gherkin)"
+    },
+    {
+      "id": "in_gedragsspecificator_vertaal_naar_gherkin_context",
+      "type": "promptString",
+      "description": "Waarde voor 'context' (vertaal-naar-gherkin)"
+    },
+    {
+      "id": "in_gedragsspecificator_vertaal_naar_gherkin_extra_regels",
+      "type": "promptString",
+      "description": "Waarde voor 'extra_regels' (vertaal-naar-gherkin)"
+    },
+    {
+      "id": "in_gedragsspecificator_vertaal_naar_gherkin_bestaande_feature_files",
+      "type": "promptString",
+      "description": "Waarde voor 'bestaande_feature_files' (vertaal-naar-gherkin)"
     }
   ]
 }

@@ -7,7 +7,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-ontwerper'; $intent = 'definieer-agent-charter'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-ontwerper'; $intent = 'definieer-agent-charter'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"agent_naam=${input:in_agent_ontwerper_definieer_agent_charter_agent_naam}\" -p \"boundary_file=${input:in_agent_ontwerper_definieer_agent_charter_boundary_file}\" -p \"value_stream_fase=${input:in_agent_ontwerper_definieer_agent_charter_value_stream_fase}\" -p \"template_file=${input:in_agent_ontwerper_definieer_agent_charter_template_file}\" -p \"referenties=${input:in_agent_ontwerper_definieer_agent_charter_referenties}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -21,7 +21,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-ontwerper'; $intent = 'definieer-agent-contract'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-ontwerper'; $intent = 'definieer-agent-contract'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"agent_naam=${input:in_agent_ontwerper_definieer_agent_contract_agent_naam}\" -p \"boundary_file=${input:in_agent_ontwerper_definieer_agent_contract_boundary_file}\" -p \"intent_naam=${input:in_agent_ontwerper_definieer_agent_contract_intent_naam}\" -p \"value_stream_fase=${input:in_agent_ontwerper_definieer_agent_contract_value_stream_fase}\" -p \"template_file=${input:in_agent_ontwerper_definieer_agent_contract_template_file}\" -p \"referenties=${input:in_agent_ontwerper_definieer_agent_contract_referenties}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -35,13 +35,105 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-ontwerper'; $intent = 'definieer-agent-template'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-ontwerper'; $intent = 'definieer-agent-template'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"agent_naam=${input:in_agent_ontwerper_definieer_agent_template_agent_naam}\" -p \"boundary_file=${input:in_agent_ontwerper_definieer_agent_template_boundary_file}\" -p \"template_naam=${input:in_agent_ontwerper_definieer_agent_template_template_naam}\" -p \"output_type=${input:in_agent_ontwerper_definieer_agent_template_output_type}\" -p \"value_stream_fase=${input:in_agent_ontwerper_definieer_agent_template_value_stream_fase}\" -p \"voorbeeldstructuur=${input:in_agent_ontwerper_definieer_agent_template_voorbeeldstructuur}\" -p \"referentie_templates=${input:in_agent_ontwerper_definieer_agent_template_referentie_templates}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
         "panel": "shared"
       }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "in_agent_ontwerper_definieer_agent_charter_agent_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'agent_naam' (definieer-agent-charter)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_charter_boundary_file",
+      "type": "promptString",
+      "description": "Waarde voor 'boundary_file' (definieer-agent-charter)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_charter_value_stream_fase",
+      "type": "promptString",
+      "description": "Waarde voor 'value_stream_fase' (definieer-agent-charter)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_charter_template_file",
+      "type": "promptString",
+      "description": "Waarde voor 'template_file' (definieer-agent-charter)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_charter_referenties",
+      "type": "promptString",
+      "description": "Waarde voor 'referenties' (definieer-agent-charter)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_contract_agent_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'agent_naam' (definieer-agent-contract)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_contract_boundary_file",
+      "type": "promptString",
+      "description": "Waarde voor 'boundary_file' (definieer-agent-contract)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_contract_intent_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'intent_naam' (definieer-agent-contract)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_contract_value_stream_fase",
+      "type": "promptString",
+      "description": "Waarde voor 'value_stream_fase' (definieer-agent-contract)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_contract_template_file",
+      "type": "promptString",
+      "description": "Waarde voor 'template_file' (definieer-agent-contract)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_contract_referenties",
+      "type": "promptString",
+      "description": "Waarde voor 'referenties' (definieer-agent-contract)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_agent_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'agent_naam' (definieer-agent-template)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_boundary_file",
+      "type": "promptString",
+      "description": "Waarde voor 'boundary_file' (definieer-agent-template)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_template_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'template_naam' (definieer-agent-template)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_output_type",
+      "type": "promptString",
+      "description": "Waarde voor 'output_type' (definieer-agent-template)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_value_stream_fase",
+      "type": "promptString",
+      "description": "Waarde voor 'value_stream_fase' (definieer-agent-template)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_voorbeeldstructuur",
+      "type": "promptString",
+      "description": "Waarde voor 'voorbeeldstructuur' (definieer-agent-template)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_referentie_templates",
+      "type": "promptString",
+      "description": "Waarde voor 'referentie_templates' (definieer-agent-template)"
     }
   ]
 }

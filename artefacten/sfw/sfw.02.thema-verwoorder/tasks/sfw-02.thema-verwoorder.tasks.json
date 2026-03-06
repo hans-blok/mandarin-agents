@@ -7,7 +7,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'thema-verwoorder'; $intent = 'definieer-epic-structuur'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'thema-verwoorder'; $intent = 'definieer-epic-structuur'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"thema_code=${input:in_thema_verwoorder_definieer_epic_structuur_thema_code}\" -p \"auteur=${input:in_thema_verwoorder_definieer_epic_structuur_auteur}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -21,7 +21,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'thema-verwoorder'; $intent = 'definieer-thematische-scope'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'thema-verwoorder'; $intent = 'definieer-thematische-scope'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"hypothese_bestand=${input:in_thema_verwoorder_definieer_thematische_scope_hypothese_bestand}\" -p \"auteur=${input:in_thema_verwoorder_definieer_thematische_scope_auteur}\" -p \"toelichting=${input:in_thema_verwoorder_definieer_thematische_scope_toelichting}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -35,13 +35,55 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'thema-verwoorder'; $intent = 'definieer-verbeter-voorstel'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'thema-verwoorder'; $intent = 'definieer-verbeter-voorstel'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"thema_code=${input:in_thema_verwoorder_definieer_verbeter_voorstel_thema_code}\" -p \"auteur=${input:in_thema_verwoorder_definieer_verbeter_voorstel_auteur}\" -p \"toelichting=${input:in_thema_verwoorder_definieer_verbeter_voorstel_toelichting}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
         "panel": "shared"
       }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "in_thema_verwoorder_definieer_epic_structuur_thema_code",
+      "type": "promptString",
+      "description": "Waarde voor 'thema_code' (definieer-epic-structuur)"
+    },
+    {
+      "id": "in_thema_verwoorder_definieer_epic_structuur_auteur",
+      "type": "promptString",
+      "description": "Waarde voor 'auteur' (definieer-epic-structuur)"
+    },
+    {
+      "id": "in_thema_verwoorder_definieer_thematische_scope_hypothese_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'hypothese_bestand' (definieer-thematische-scope)"
+    },
+    {
+      "id": "in_thema_verwoorder_definieer_thematische_scope_auteur",
+      "type": "promptString",
+      "description": "Waarde voor 'auteur' (definieer-thematische-scope)"
+    },
+    {
+      "id": "in_thema_verwoorder_definieer_thematische_scope_toelichting",
+      "type": "promptString",
+      "description": "Waarde voor 'toelichting' (definieer-thematische-scope)"
+    },
+    {
+      "id": "in_thema_verwoorder_definieer_verbeter_voorstel_thema_code",
+      "type": "promptString",
+      "description": "Waarde voor 'thema_code' (definieer-verbeter-voorstel)"
+    },
+    {
+      "id": "in_thema_verwoorder_definieer_verbeter_voorstel_auteur",
+      "type": "promptString",
+      "description": "Waarde voor 'auteur' (definieer-verbeter-voorstel)"
+    },
+    {
+      "id": "in_thema_verwoorder_definieer_verbeter_voorstel_toelichting",
+      "type": "promptString",
+      "description": "Waarde voor 'toelichting' (definieer-verbeter-voorstel)"
     }
   ]
 }

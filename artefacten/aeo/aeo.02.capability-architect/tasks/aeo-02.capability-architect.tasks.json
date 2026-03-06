@@ -7,13 +7,35 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'capability-architect'; $intent = 'definieer-agent-boundary'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'capability-architect'; $intent = 'definieer-agent-boundary'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"agent_naam=${input:in_capability_architect_definieer_agent_boundary_agent_naam}\" -p \"value_stream_fase=${input:in_capability_architect_definieer_agent_boundary_value_stream_fase}\" -p \"korte_beschrijving=${input:in_capability_architect_definieer_agent_boundary_korte_beschrijving}\" -p \"template_file=${input:in_capability_architect_definieer_agent_boundary_template_file}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
         "panel": "shared"
       }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "in_capability_architect_definieer_agent_boundary_agent_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'agent_naam' (definieer-agent-boundary)"
+    },
+    {
+      "id": "in_capability_architect_definieer_agent_boundary_value_stream_fase",
+      "type": "promptString",
+      "description": "Waarde voor 'value_stream_fase' (definieer-agent-boundary)"
+    },
+    {
+      "id": "in_capability_architect_definieer_agent_boundary_korte_beschrijving",
+      "type": "promptString",
+      "description": "Waarde voor 'korte_beschrijving' (definieer-agent-boundary)"
+    },
+    {
+      "id": "in_capability_architect_definieer_agent_boundary_template_file",
+      "type": "promptString",
+      "description": "Waarde voor 'template_file' (definieer-agent-boundary)"
     }
   ]
 }

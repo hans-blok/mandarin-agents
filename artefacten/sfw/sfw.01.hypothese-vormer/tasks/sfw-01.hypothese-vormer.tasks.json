@@ -7,7 +7,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'hypothese-vormer'; $intent = 'beschrijf-aannames'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'hypothese-vormer'; $intent = 'beschrijf-aannames'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"hypothese_titel=${input:in_hypothese_vormer_beschrijf_aannames_hypothese_titel}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -21,7 +21,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'hypothese-vormer'; $intent = 'beschrijf-hypothese'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'hypothese-vormer'; $intent = 'beschrijf-hypothese'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"probleemomschrijving=${input:in_hypothese_vormer_beschrijf_hypothese_probleemomschrijving}\" -p \"interventie_vermoeden=${input:in_hypothese_vormer_beschrijf_hypothese_interventie_vermoeden}\" -p \"auteur=${input:in_hypothese_vormer_beschrijf_hypothese_auteur}\" -p \"bron_referenties=${input:in_hypothese_vormer_beschrijf_hypothese_bron_referenties}\" -p \"context=${input:in_hypothese_vormer_beschrijf_hypothese_context}\" -p \"stakeholders=${input:in_hypothese_vormer_beschrijf_hypothese_stakeholders}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -35,13 +35,80 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'hypothese-vormer'; $intent = 'beschrijf-toetsbaarheid'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'hypothese-vormer'; $intent = 'beschrijf-toetsbaarheid'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"hypothese_statement=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_statement}\" -p \"auteur=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_auteur}\" -p \"hypothese_bestand=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_bestand}\" -p \"toetsingscontext=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_toetsingscontext}\" -p \"beschikbare_metrics=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_beschikbare_metrics}\" -p \"acceptatie_drempel=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_acceptatie_drempel}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
         "panel": "shared"
       }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "in_hypothese_vormer_beschrijf_aannames_hypothese_titel",
+      "type": "promptString",
+      "description": "Waarde voor 'hypothese_titel' (beschrijf-aannames)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_hypothese_probleemomschrijving",
+      "type": "promptString",
+      "description": "Waarde voor 'probleemomschrijving' (beschrijf-hypothese)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_hypothese_interventie_vermoeden",
+      "type": "promptString",
+      "description": "Waarde voor 'interventie_vermoeden' (beschrijf-hypothese)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_hypothese_auteur",
+      "type": "promptString",
+      "description": "Waarde voor 'auteur' (beschrijf-hypothese)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_hypothese_bron_referenties",
+      "type": "promptString",
+      "description": "Waarde voor 'bron_referenties' (beschrijf-hypothese)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_hypothese_context",
+      "type": "promptString",
+      "description": "Waarde voor 'context' (beschrijf-hypothese)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_hypothese_stakeholders",
+      "type": "promptString",
+      "description": "Waarde voor 'stakeholders' (beschrijf-hypothese)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_statement",
+      "type": "promptString",
+      "description": "Waarde voor 'hypothese_statement' (beschrijf-toetsbaarheid)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_auteur",
+      "type": "promptString",
+      "description": "Waarde voor 'auteur' (beschrijf-toetsbaarheid)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'hypothese_bestand' (beschrijf-toetsbaarheid)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_toetsingscontext",
+      "type": "promptString",
+      "description": "Waarde voor 'toetsingscontext' (beschrijf-toetsbaarheid)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_beschikbare_metrics",
+      "type": "promptString",
+      "description": "Waarde voor 'beschikbare_metrics' (beschrijf-toetsbaarheid)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_acceptatie_drempel",
+      "type": "promptString",
+      "description": "Waarde voor 'acceptatie_drempel' (beschrijf-toetsbaarheid)"
     }
   ]
 }

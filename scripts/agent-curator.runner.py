@@ -283,33 +283,67 @@ def publiceer_agents_markdown(data: Dict[str, Dict[str, List[Dict]]], output_pat
         ""
     ])
     
-    # Per value stream en fase
+# Per value stream
     for vs_code in sorted(data.keys()):
         vs_data = data[vs_code]
         vs_total = sum(len(agents) for agents in vs_data.values())
-        
+
         lines.append(f"## Value Stream: {vs_code.upper()}")
         lines.append("")
         lines.append(f"**Totaal agents**: {vs_total}")
-        lines.append("")  
+        lines.append("")
         
+        # Matrix opzet: Agent Naam | Contracten | Prompts | Templates | Tasks | Charter
+        lines.append("| Agent | Contracten | Prompts | Templates | Tasks | Charter |")
+        lines.append("|-------|------------|---------|-----------|-------|---------|")
+
+        # Verzamel alle agents in deze value stream om ze netjes in de matrix te printen
+        alle_vs_agents = []
         for fase_nr in sorted(vs_data.keys()):
-            fase_agents = vs_data[fase_nr]
-            lines.append(f"### Fase {fase_nr}")
-            lines.append("")
-            
-            for agent in sorted(fase_agents, key=lambda a: a['naam']):
-                lines.append(f"**{agent['naam']}**")
-                lines.append(f"- Contracten : {agent['aantal_agent_files']}")
-                lines.append(f"- Prompts    : {agent['aantal_prompts']}")
-                lines.append(f"- Templates  : {agent['aantal_templates']}")
-                lines.append(f"- Tasks      : {agent.get('aantal_tasks', 0)}")
-                lines.append(f"- Charter    : {'ja' if agent['aantal_charters'] > 0 else '-'}")
-                lines.append("")
-            
-            lines.append("---")
-            lines.append("")
+            for agent in vs_data[fase_nr]:
+                agent['fase_weergave'] = fase_nr
+                alle_vs_agents.append(agent)
+                
+        # Sorteer agents op (fase, naam)
+        for agent in sorted(alle_vs_agents, key=lambda a: (a['fase_weergave'], a['naam'])):
+            charter_str = '1' if agent['aantal_charters'] > 0 else '0'
+            row = f"| **{agent['naam']}** ({vs_code}.{agent['fase_weergave']}) | {agent['aantal_agent_files']} | {agent['aantal_prompts']} | {agent['aantal_templates']} | {agent.get('aantal_tasks', 0)} | {charter_str} |"
+            lines.append(row)
+
+        lines.append("")
+        lines.append("---")
+        lines.append("")
+
+    # Canon Aanbevelingen
+    lines.append("## Canon Aanbevelingen")
+    lines.append("")
+    lines.append("Acties om volledig volgens de Mandarin agents canon te werken:")
+    lines.append("")
+    aanbevelingen_count = 0
+    for vs_code in sorted(data.keys()):
+        for fase_nr in sorted(data[vs_code].keys()):
+            for agent in sorted(data[vs_code][fase_nr], key=lambda a: a['naam']):
+                issues = []
+                if agent['aantal_charters'] == 0:
+                    issues.append("ontbrekend charter (`*.charter.md`)")
+                if agent['aantal_agent_files'] == 0:
+                    issues.append("ontbrekend contract (`*.agent.md`)")
+                if agent['aantal_prompts'] == 0:
+                    issues.append("ontbrekende prompt(s)")
+                if agent.get('aantal_tasks', 0) == 0:
+                    issues.append("ontbrekende tasks configuratie")
+                
+                if issues:
+                    aanbevelingen_count += 1
+                    lines.append(f"- **{agent['naam']}** ({vs_code}.{fase_nr}): {', '.join(issues)}")
     
+    if aanbevelingen_count == 0:
+        lines.append("- Alle agents voldoen aan de basis canon-richtlijnen.")
+    
+    lines.append("")
+    lines.append("---")
+    lines.append("")
+
     # Herkomstverantwoording
     lines.extend([
         "## Herkomstverantwoording",

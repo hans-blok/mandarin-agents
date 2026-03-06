@@ -7,7 +7,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'gedragsspecificator'; $intent = 'specificeer-gedrag'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'gedragsspecificator'; $intent = 'specificeer-gedrag'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"context_bestand=${input:in_gedragsspecificator_specificeer_gedrag_context_bestand}\" -p \"data_beschrijving_bestand=${input:in_gedragsspecificator_specificeer_gedrag_data_beschrijving_bestand}\" -p \"proces_beschrijving_bestand=${input:in_gedragsspecificator_specificeer_gedrag_proces_beschrijving_bestand}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -21,7 +21,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'gedragsspecificator'; $intent = 'valideer-scenario-consistentie'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'gedragsspecificator'; $intent = 'valideer-scenario-consistentie'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"feature_files=${input:in_gedragsspecificator_valideer_scenario_consistentie_feature_files}\" -p \"specificatie_document=${input:in_gedragsspecificator_valideer_scenario_consistentie_specificatie_document}\" -p \"validation_rules=${input:in_gedragsspecificator_valideer_scenario_consistentie_validation_rules}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -35,13 +35,65 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'gedragsspecificator'; $intent = 'vertaal-naar-gherkin'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'gedragsspecificator'; $intent = 'vertaal-naar-gherkin'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"specificatie_document=${input:in_gedragsspecificator_vertaal_naar_gherkin_specificatie_document}\" -p \"context=${input:in_gedragsspecificator_vertaal_naar_gherkin_context}\" -p \"extra_regels=${input:in_gedragsspecificator_vertaal_naar_gherkin_extra_regels}\" -p \"bestaande_feature_files=${input:in_gedragsspecificator_vertaal_naar_gherkin_bestaande_feature_files}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
         "panel": "shared"
       }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "in_gedragsspecificator_specificeer_gedrag_context_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'context_bestand' (specificeer-gedrag)"
+    },
+    {
+      "id": "in_gedragsspecificator_specificeer_gedrag_data_beschrijving_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'data_beschrijving_bestand' (specificeer-gedrag)"
+    },
+    {
+      "id": "in_gedragsspecificator_specificeer_gedrag_proces_beschrijving_bestand",
+      "type": "promptString",
+      "description": "Waarde voor 'proces_beschrijving_bestand' (specificeer-gedrag)"
+    },
+    {
+      "id": "in_gedragsspecificator_valideer_scenario_consistentie_feature_files",
+      "type": "promptString",
+      "description": "Waarde voor 'feature_files' (valideer-scenario-consistentie)"
+    },
+    {
+      "id": "in_gedragsspecificator_valideer_scenario_consistentie_specificatie_document",
+      "type": "promptString",
+      "description": "Waarde voor 'specificatie_document' (valideer-scenario-consistentie)"
+    },
+    {
+      "id": "in_gedragsspecificator_valideer_scenario_consistentie_validation_rules",
+      "type": "promptString",
+      "description": "Waarde voor 'validation_rules' (valideer-scenario-consistentie)"
+    },
+    {
+      "id": "in_gedragsspecificator_vertaal_naar_gherkin_specificatie_document",
+      "type": "promptString",
+      "description": "Waarde voor 'specificatie_document' (vertaal-naar-gherkin)"
+    },
+    {
+      "id": "in_gedragsspecificator_vertaal_naar_gherkin_context",
+      "type": "promptString",
+      "description": "Waarde voor 'context' (vertaal-naar-gherkin)"
+    },
+    {
+      "id": "in_gedragsspecificator_vertaal_naar_gherkin_extra_regels",
+      "type": "promptString",
+      "description": "Waarde voor 'extra_regels' (vertaal-naar-gherkin)"
+    },
+    {
+      "id": "in_gedragsspecificator_vertaal_naar_gherkin_bestaande_feature_files",
+      "type": "promptString",
+      "description": "Waarde voor 'bestaande_feature_files' (vertaal-naar-gherkin)"
     }
   ]
 }

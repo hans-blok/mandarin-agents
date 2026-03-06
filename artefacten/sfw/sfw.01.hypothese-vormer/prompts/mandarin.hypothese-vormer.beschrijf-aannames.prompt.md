@@ -9,4 +9,3 @@ value_stream_fase: sfw.01
 bootstrap:
   script: scripts/bootstrap_canon_consult.py
 ---
-push

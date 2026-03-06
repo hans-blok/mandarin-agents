@@ -45,6 +45,32 @@ def get_intents(agent_dir, agent_naam):
                 intents.append(intent)
     return intents
 
+def get_agent_parameters(contract_file):
+    input_params = []
+    if contract_file.exists():
+        content = contract_file.read_text(encoding='utf-8')
+
+        # Zoek verplichte parameters
+        m_verplicht = re.search(r'\*\*Verplichte parameters\*\*:?\n((?:-[^\n]+\n)+)', content)
+        if m_verplicht:
+            for line in m_verplicht.group(1).strip().split('\n'):
+                if line.startswith('- '):
+                    param = line[2:].split(':')[0].strip()
+                    param = param.replace('`', '').replace('"', '').replace("'", "")
+                    if param and param.lower() != 'geen':
+                        input_params.append(param)
+
+        # Zoek optionele parameters
+        m_optioneel = re.search(r'\*\*Optionele parameters\*\*:?\n((?:-[^\n]+\n)+)', content)
+        if m_optioneel:
+            for line in m_optioneel.group(1).strip().split('\n'):
+                if line.startswith('- '):
+                    param = line[2:].split(':')[0].strip()
+                    param = param.replace('`', '').replace('"', '').replace("'", "")
+                    if param and param.lower() != 'geen':
+                        input_params.append(param)
+    return input_params
+
 def realiseer_prompts(agent_dir, agent_naam, vs, fase, intents):
     prompts_dir = agent_dir / "prompts"
     prompts_dir.mkdir(exist_ok=True)
@@ -54,28 +80,8 @@ def realiseer_prompts(agent_dir, agent_naam, vs, fase, intents):
         contract_file = agent_dir / "agent-contracten" / f"{agent_naam}.{intent}.agent.md"
         
         # Extract inputs from contract
-        input_params = []
-        if contract_file.exists():
-            content = contract_file.read_text(encoding='utf-8')
-            
-            # Zoek verplichte parameters
-            m_verplicht = re.search(r'\*\*Verplichte parameters\*\*:?\n((?:-[^\n]+\n)+)', content)
-            if m_verplicht:
-                for line in m_verplicht.group(1).strip().split('\n'):
-                    if line.startswith('- '):
-                        param = line[2:].split(':')[0].strip()
-                        if param and param.lower() != 'geen':
-                            input_params.append(param)
-                            
-            # Zoek optionele parameters
-            m_optioneel = re.search(r'\*\*Optionele parameters\*\*:?\n((?:-[^\n]+\n)+)', content)
-            if m_optioneel:
-                for line in m_optioneel.group(1).strip().split('\n'):
-                    if line.startswith('- '):
-                        param = line[2:].split(':')[0].strip()
-                        if param and param.lower() != 'geen':
-                            input_params.append(param)
-        
+        input_params = get_agent_parameters(contract_file)
+
         inputs_yaml = ""
         if input_params:
             inputs_yaml = "\ninput_parameters:\n" + "\n".join([f"  - {p}" for p in input_params])
@@ -101,13 +107,31 @@ def realiseer_tasks(agent_dir, agent_naam, vs, fase, intents):
     
     task_json = {
         "version": "2.0.0",
-        "tasks": []
+        "tasks": [],
+        "inputs": []
     }
-    
+
+    added_inputs = set()
+
     for intent in intents:
         label = f"{vs}.{fase} - {agent_naam}: {intent}"
+        contract_file = agent_dir / "agent-contracten" / f"{agent_naam}.{intent}.agent.md"
+        params = get_agent_parameters(contract_file)
+        
+        param_flags = ""
+        for param in params:
+            input_id = f"in_{agent_naam}_{intent}_{param}".replace('-', '_')
+            if input_id not in added_inputs:
+                task_json["inputs"].append({
+                    "id": input_id,
+                    "type": "promptString",
+                    "description": f"Waarde voor '{param}' ({intent})"
+                })
+                added_inputs.add(input_id)
+            param_flags += f" -p \"{param}=${{input:{input_id}}}\""
+
         script_cmd = (
-            f"$generator = Join-Path $PWD 'scripts/generate_instructions.py'; "
+            f"$generator = Join-Path $PWD 'scripts/generate_instructions.py'; " 
             f"$timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = '{agent_naam}'; "
             f"$intent = '{intent}'; $hashInput = $timestamp + $agent; "
             f"$md5 = [System.Security.Cryptography.MD5]::Create(); "
@@ -116,7 +140,7 @@ def realiseer_tasks(agent_dir, agent_naam, vs, fase, intents):
             f"$filename = \"agent-execution/$hash.$agent.$intent.md\"; "
             f"[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; "
             f"$env:PYTHONIOENCODING='utf-8'; "
-            f"python $generator --agent $agent --intent $intent --execution-file $filename; "
+            f"python $generator --agent $agent --intent $intent{param_flags} --execution-file $filename; "
             f"if ($LASTEXITCODE -eq 0) {{ code $filename }}"
         )
         

@@ -112,6 +112,17 @@ def merge_tasks(tasks_folder: Path, workspace_root: Path, filter_fase: str = Non
         # Merge tasks
         if 'tasks' in data:
             merged['tasks'].extend(data['tasks'])
+            
+        # Merge inputs
+        if 'inputs' in data:
+            # Voorkom duplicaten op basis van "id"
+            bestaande_ids = {inp['id'] for inp in merged.get('inputs', [])}
+            for inp in data['inputs']:
+                if inp['id'] not in bestaande_ids:
+                    if 'inputs' not in merged:
+                        merged['inputs'] = []
+                    merged['inputs'].append(inp)
+                    bestaande_ids.add(inp['id'])
     
     print(f"\nTotaal: {len(merged['tasks'])} tasks")
     return merged

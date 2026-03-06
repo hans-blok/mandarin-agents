@@ -1,62 +1,83 @@
-﻿---
-agent: agent-curator
-intent: rapporteer-ecosysteem-overzicht
-value_stream_fase: aeo.02
-versie: 1.0.0
-datum: 2026-03-03
-canon_ref: 9675a6d
----
+# Agents Overzicht - 2026-03-06 13:52:07
 
-# Ecosysteem-overzicht: aeo.02
+## Globaal Overzicht
 
-**Gegenereerd door**: agent-curator  
-**Datum**: 2026-03-03  
-**Canon-referentie**: 9675a6d  
-**Scope**: aeo.02 — Agent Ecosysteem Ontwikkeling, fase 02 Ecosysteeminrichting
-
----
+| Value Stream | Fasen | Agents | Contracten | Prompts | Templates | Tasks | Charter |
+|--------------|-------|--------|------------|---------|-----------|-------|--------|
+| AEO | 1 | 4 | 10 | 10 | 7 | 4 | 4 |
+| AOD | 2 | 2 | 4 | 4 | 4 | 1 | 1 |
+| FND | 1 | 2 | 5 | 5 | 1 | 2 | 2 |
+| SFW | 3 | 3 | 9 | 9 | 9 | 3 | 3 |
+| **TOTAAL** | **4** | **11** | **28** | **28** | **21** | **10** | **10** |
 
 ## Samenvatting
 
-| Totaal agents | Compliant | Deels compliant | Non-compliant | Niet getoetst |
-|---------------|-----------|-----------------|---------------|---------------|
-| 4 | 2 | 2 | 0 | 0 |
+- **Totaal agents**: 11
+- **Value streams**: 4 (aeo, aod, fnd, sfw)
+- **Detail niveau**: uitgebreid
+- **Scope**: volledig
 
 ---
 
-## Agents per value stream fase
+## Value Stream: AEO
 
-### aeo.02 — Ecosysteeminrichting
+**Totaal agents**: 4
 
-| Agent | Boundary | Charter | Contracten | Prompts | Tasks | Status | Opmerking |
-|-------|----------|---------|------------|---------|-------|--------|-----------|
-| capability-architect | ✓ | ✓ | ✓ (1) | ✓ (1) | ✗ | DEELS-COMPLIANT | Tasks-map afwezig; agent niet aanroepbaar via task-pipeline |
-| agent-ontwerper | ✓ | ✓ | ✓ (3) | ✓ (3) | ✗ | DEELS-COMPLIANT | Tasks-map aanwezig maar leeg; agent niet aanroepbaar via task-pipeline |
-| agent-engineer | ✓ | ✓ | ✓ (3) | ✓ (3) | ✓ (1) | COMPLIANT | Volledig gerealiseerd incl. runners |
-| agent-curator | ✓ | ✓ | ✓ (3) | ✓ (3) | ✓ (1) | COMPLIANT | Volledig gerealiseerd; geen runners (buiten scope curator) |
-
-**Legenda**:  
-✓ = aanwezig en compliant  ✗ = ontbreekt  ⚠ = aanwezig maar afwijking gesignaleerd  — = niet van toepassing of niet getoetst
+| Agent | Contracten | Prompts | Templates | Tasks | Charter |
+|-------|------------|---------|-----------|-------|---------|
+| **agent-curator** (aeo.02) | 3 | 3 | 2 | 1 | 1 |
+| **agent-engineer** (aeo.02) | 3 | 3 | 1 | 1 | 1 |
+| **agent-ontwerper** (aeo.02) | 3 | 3 | 3 | 1 | 1 |
+| **capability-architect** (aeo.02) | 1 | 1 | 1 | 1 | 1 |
 
 ---
 
-## Gesignaleerde aandachtspunten
+## Value Stream: AOD
 
-| Agent | Artefact | Bevinding | Prioriteit | Actie |
-|-------|----------|-----------|------------|-------|
-| capability-architect | tasks/ | Tasks-map ontbreekt volledig; agent heeft geen VSCode task-configuratie | HOOG | Voer `agent-engineer realiseer-agent-taskconfiguratie` uit voor capability-architect |
-| agent-ontwerper | tasks/ | Tasks-map aanwezig maar leeg; geen `aeo-02.agent-ontwerper.tasks.json` | HOOG | Voer `agent-engineer realiseer-agent-taskconfiguratie` uit voor agent-ontwerper |
+**Totaal agents**: 2
 
----
-
-## Ecosysteem-lacunes
-
-| Lacune | Omschrijving | Aanbeveling |
-|--------|--------------|-------------|
-| agent-smeder | Meerdere agents verwijzen naar agent-smeder als escalatie-bestemming (voor artefact-correctie), maar deze agent heeft geen artefacten-map in aeo.02 | Stel vast of agent-smeder een eigen aeo.02-inrichting vereist, of dat deze rol buiten de value stream valt |
+| Agent | Contracten | Prompts | Templates | Tasks | Charter |
+|-------|------------|---------|-----------|-------|---------|
+| **strategy-framework-architect** (aod.01) | 0 | 0 | 0 | 0 | 0 |
+| **core-framework-architect** (aod.02) | 4 | 4 | 4 | 1 | 1 |
 
 ---
 
-## Volgende aanbevolen actie
+## Value Stream: FND
 
-Voer `agent-engineer realiseer-agent-taskconfiguratie` uit voor **capability-architect** en **agent-ontwerper** om de volledige task-pipeline te sluiten; daarna zijn alle 4 agents in aeo.02 aanroepbaar via VSCode Run Task.
+**Totaal agents**: 2
+
+| Agent | Contracten | Prompts | Templates | Tasks | Charter |
+|-------|------------|---------|-----------|-------|---------|
+| **concept-curator** (fnd.02) | 4 | 4 | 1 | 1 | 1 |
+| **documentvertaler** (fnd.02) | 1 | 1 | 0 | 1 | 1 |
+
+---
+
+## Value Stream: SFW
+
+**Totaal agents**: 3
+
+| Agent | Contracten | Prompts | Templates | Tasks | Charter |
+|-------|------------|---------|-----------|-------|---------|
+| **hypothese-vormer** (sfw.01) | 3 | 3 | 1 | 1 | 1 |
+| **thema-verwoorder** (sfw.02) | 3 | 3 | 4 | 1 | 1 |
+| **gedragsspecificator** (sfw.03) | 3 | 3 | 4 | 1 | 1 |
+
+---
+
+## Canon Aanbevelingen
+
+Acties om volledig volgens de Mandarin agents canon te werken:
+
+- **strategy-framework-architect** (aod.01): ontbrekend charter (`*.charter.md`), ontbrekend contract (`*.agent.md`), ontbrekende prompt(s), ontbrekende tasks configuratie
+
+---
+
+## Herkomstverantwoording
+
+- Gegenereerd door: agent-curator v2.0
+- Datum: 2026-03-06 13:52:07
+- Bron: artefacten/ (workspace scan)
+- Schema versie: 2.0
+- Conform: agents-publicatie-schema.json v2.0
