@@ -10,7 +10,7 @@
 site_name: "Mandaryn Architecture"
 site_description: "Documentatie van het Mandaryn Architecture ecosysteem"
 site_author: "Mandaryn Team"
-site_url: "https://hans-blok.github.io/mandarin-architecture/"
+site_url: "https://hans-blok.github.io/mandarin-agents/"
 
 # Optioneel: repository referentie
 # repo_name: "mandarin-startup"
@@ -113,6 +113,7 @@ markdown_extensions:
 # Primaire verantwoordelijkheid: Publicatie Steward
 # ------------------------------------------------------------
 nav:
+  - Home: index.md
   - Agents Overzicht: agents-overzicht.md
   - Agents Prompts Overzicht: agents-prompts-overzicht.md
 
