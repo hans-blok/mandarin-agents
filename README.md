@@ -1,135 +1,166 @@
 # Mandarin Agents
 
-Deze repository bevat agent definities, scripts en tools voor het Mandarin workspace ecosysteem.
+Deze repository bevat de **canonieke definitie van Mandarin agents**:
+charters, contracts, prompts, templates, runners en ondersteunende tooling
+voor het Mandarin workspace-ecosysteem.
 
-## 📚 Workspace Tools
+De inhoud van deze repo wordt geconsumeerd door andere workspaces (bijv.
+architectuur- of delivery-workspaces), maar is zelf het "bron-boek" van
+alle agents.
 
-**Voor het opzetten van een nieuwe workspace**, zie:
+## Globale structuur
 
-➡️ **[scripts/workspace-tools/README.md](scripts/workspace-tools/README.md)**
+De relevante top-level mappen zijn:
 
-Deze folder bevat alle hulpmiddelen voor:
-- Workspace initialisatie (folder structuur creëren)
-- Agent fetching (agents ophalen voor value streams)
-- Repository management (clone/update repositories)
-
-## 🏗️ Architectuur & Principes
-
-**Voor het begrijpen van de prompt architectuur en SOLID principes**, zie:
-
-➡️ **[docs/README-PROMPT-ARCHITECTURE.md](docs/README-PROMPT-ARCHITECTURE.md)**
-
-Deze documentatie beschrijft:
-- Architectuur principes (SOLID, Single Source of Truth, Separation of Concerns)
-- Werkwijze en workflow voor agent-uitvoering
-- Minimale prompt structuur en conventies
-- Beleid-workspace.md configuratie
-- Anti-patterns en best practices
-
-## Structuur
-
-```
+```text
 mandarin-agents/
-├── scripts/
-│   └── workspace-tools/         # 🔧 Tools voor workspace setup
-│       ├── README.md            # ← Start hier voor nieuwe workspaces
-│       ├── init-workspace.bat
-│       ├── fetch-agents.bat
-│       ├── fetch_agents.py
-│       ├── pull.bat
-│       └── pull-repo.ps1
-├── exports/                     # Gepubliceerde agents per value stream
-│   ├── utility/                 # Utility agents (alle workspaces)
-│   ├── kennispublicatie/
-│   ├── architectuur-en-oplossingsontwerp/
-│   └── ...
-├── .github/
-│   └── prompts/                 # Agent prompts
-├── charters-agents/             # Agent charters
-├── agents-publicatie.json       # Agent manifest
-└── init-workspace.py            # Python implementatie workspace init
+├── artefacten/           # Canonieke agent-artefacten per value stream
+│   ├── aeo/              # Agent Ecosysteem Ontwikkeling (aeo)
+│   ├── aod/              # Architectuur Ontwerp (aod)
+│   ├── fnd/              # Fundamenten (fnd)
+│   └── sfw/              # Software Fabricage (sfw)
+├── docs/                 # Gegenereerde overzichten (MkDocs bron)
+│   ├── agents-overzicht.md
+│   ├── agents-prompts-overzicht.md
+│   └── assets/
+├── scripts/              # Ondersteunende scripts
+│   └── copy_prompts_mandarin_agents.py
+├── prompt-instructions/  # Execution-ready prompts voor runners/LLM
+├── audit/                # Logfiles (canon consult, agent-instructions)
+├── concepts/             # Conceptuele documentatie (domein- en ordeningsconcepten)
+├── mkdocs.yml            # Site-configuratie voor GitHub Pages / MkDocs
+├── requirements.txt      # Python dependencies voor runners/tools
+└── requirements-docs.txt # Extra dependencies voor documentatie build
 ```
 
-## Quick Start
+Binnen `artefacten/` is de structuur verder per value stream en agent
+gestandaardiseerd. Voorbeeld voor `aeo.02.agent-curator`:
 
-### Nieuwe Workspace Maken
-
-```cmd
-# 1. Kopieer workspace tools naar je nieuwe workspace
-copy scripts\workspace-tools\init-workspace.bat <nieuwe-workspace>\
-copy scripts\workspace-tools\fetch-agents.bat <nieuwe-workspace>\
-copy scripts\workspace-tools\fetch_agents.py <nieuwe-workspace>\scripts\
-
-# 2. Initialiseer workspace
-cd <nieuwe-workspace>
-init-workspace.bat kennispublicatie
-
-# 3. Workspace is klaar!
+```text
+artefacten/aeo/aeo.02.agent-curator/
+├── agent-curator.agent-boundary.md
+├── agent-curator.charter.md
+├── agent-contracten/
+├── prompts/
+├── templates/
+├── tasks/
+└── runner/
+		└── agent-curator.runner.py
 ```
 
-Zie [scripts/workspace-tools/README.md](scripts/workspace-tools/README.md) voor uitgebreide instructies.
+## Kernrunners
 
-## Fasegericht Fetch (andere workspace)
+### Ecosysteem-coordinator runner
 
-Voor een consumer-workspace (bijv. `mandarin-architectuur`) kun je gericht ophalen op
-`value_stream_fase` en optioneel op één agent.
+Bestand: `artefacten/aeo/aeo.02.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py`
 
-### Voorbeeld: alleen concept-curator uit fnd.02
+Deze runner is de centrale "One Agent, One Runner"-router voor o.a.:
 
-Voer in de doel-workspace uit:
+- `consulteer-canon` – canon-consultatie + logging
+- `genereer-instructies` – samengestelde agent-instructies genereren
+- `merge-configuraties` – VS Code tasks uit agent-tasks samenvoegen
+- `valideer-agent-structuur` – agent folderstructuur toetsen
+- `list-agents` – beschikbare agents per value stream tonen
+- `fetch-agents` – prompts/agents/tasks naar een consumer-workspace kopiëren
+
+Voorbeeld (lijst agents in aeo.02):
 
 ```powershell
-python ..\mandarin-agents\scripts\fetch_prompts.py fnd.02 --source ..\mandarin-agents --target .
-python ..\mandarin-agents\scripts\fetch_tasks.py fnd.02 --agent concept-curator --source ..\mandarin-agents --target .
+python artefacten/aeo/aeo.02.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py list-agents aeo.02
 ```
 
-Resultaat:
-- Prompts in `.github/prompts` voor de fase.
-- Alleen `concept-curator` tasks uit `FND.02` in `.vscode/tasks.json`.
+### Agent-curator runner
 
-### Hele fase (alle agents) ophalen
+Bestand: `artefacten/aeo/aeo.02.agent-curator/runner/agent-curator.runner.py`
+
+Deze runner verzorgt publicatie-overzichten op ecosysteemniveau:
+
+- `publiceer-json` – `agents-publicatie.json` genereren (schema v2.0)
+- `publiceer-overzicht` – markdown overzicht van alle agents naar `docs/agents-overzicht.md`
+- `rapporteer-prompts-overzicht` – via ecosysteem-coordinator execution-instructies
+	genereren voor het prompts-overzicht
+
+Voorbeeld (generate agents-overzicht):
 
 ```powershell
-python ..\mandarin-agents\scripts\fetch_prompts.py fnd.02 --source ..\mandarin-agents --target .
-python ..\mandarin-agents\scripts\fetch_tasks.py fnd.02 --source ..\mandarin-agents --target .
+python artefacten/aeo/aeo.02.agent-curator/runner/agent-curator.runner.py publiceer-overzicht
 ```
 
-## Agents
+Na het draaien van deze runner kun je de gegenereerde overzichtsbestanden
+vinden in `docs/`.
 
-Alle agent definities zijn beschikbaar via `agents-publicatie.json` manifest en georganiseerd per value stream in `exports/`.
+## Prompt-instructies
 
-### Utility Agents
-Agents in `exports/utility/` zijn beschikbaar voor alle workspaces.
+Wanneer je `genereer-instructies` (via de ecosysteem-coordinator) of
+`rapporteer-prompts-overzicht` (via de agent-curator runner) gebruikt,
+worden execution-bestanden aangemaakt in `prompt-instructions/`:
 
-### Value Stream Agents
-Agents in `exports/<value-stream>/` zijn specifiek voor die waardestroom.
-
-## Voor Ontwikkelaars
-
-### Publicatie Proces
-
-```cmd
-# Agent definities publiceren vanuit development repository
-publiceer-agents.bat
+```text
+prompt-instructions/
+├── <hash>.agent-curator.rapporteer-prompts-overzicht.md
+└── history/
 ```
 
-### Repository Synchronisatie
+Deze bestanden bevatten:
 
-```cmd
-# Wijzigingen naar remote pushen
-push.bat
+- YAML-frontmatter met execution-metadata (agent, intent, execution_id, canon_ref, ...)
+- De volledige samengestelde instructies (charter + contract + prompt + context)
+
+Ze zijn bedoeld om 1-op-1 in een LLM of agent-runtime te plakken.
+
+## Documentatie (MkDocs / GitHub Pages)
+
+De repo bevat een minimale MkDocs-config om overzichten als site te
+publiceren (bijv. via GitHub Pages):
+
+- Config: `mkdocs.yml`
+- Brondocs: `docs/agents-overzicht.md`, `docs/agents-prompts-overzicht.md`
+
+Lokale build:
+
+```powershell
+pip install -r requirements-docs.txt
+mkdocs serve
 ```
+
+Daarna is de site beschikbaar op `http://127.0.0.1:8000` (of het adres
+dat MkDocs toont).
+
+## Scripts
+
+In `scripts/` staat momenteel één script:
+
+- `copy_prompts_mandarin_agents.py` – ondersteunt het genereren van een
+	aggregatie (bijv. `agents.yaml`) uit de canonieke prompts.
+
+Gebruik dit script alleen als je weet hoe het in jouw consumer-workspace
+is geïntegreerd; het is primair een hulpscript voor build/publishing.
 
 ## Vereisten
 
-- **Python 3.9+** - Voor Python scripts
-- **Git** - Voor repository operaties
-- **Internet connectie** - Voor clone/pull operaties
+- **Python 3.10+** – voor runners en tooling
+- **Git** – voor werken met de canon-repository
 
-## Beleid
+Installeer dependencies voor deze repo:
 
-Zie [beleid-mandarin-agents.md](beleid-mandarin-agents.md) voor workspace-specifiek beleid en governance.
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+Voor documentatie-builds gebruik je aanvullend `requirements-docs.txt`.
+
+## Beleid & governance
+
+- Workspace-beleid en canon-koppeling: `beleid-workspace.md`
+- Canon en doctrines (externe repo): mandarin-canon (gebruikt door
+	`consulteer-canon` in de ecosysteem-coordinator runner)
+
+Voor agent-specifieke governance (boundaries, charters, contracts) zie de
+respectieve bestanden onder `artefacten/<vs>/<vs>.<fase>.<agent>/`.
 
 ## Licentie
 
-Zie licentie informatie in individuele agent definities.
+Zie de licentie- en herkomstinformatie in de individuele agent- en
+templatebestanden.
