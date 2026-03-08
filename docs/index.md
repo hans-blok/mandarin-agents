@@ -1,6 +1,4 @@
-# Mandaryn Architecture
-
-Welkom bij de documentatie van het **Mandaryn Architecture** ecosysteem.
+# Mandaryn Agents
 
 Gebruik de navigatie bovenaan om naar de overzichten te gaan:
 
