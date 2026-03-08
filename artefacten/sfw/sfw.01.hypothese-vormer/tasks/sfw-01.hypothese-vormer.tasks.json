@@ -4,10 +4,12 @@
     {
       "label": "sfw.01 - hypothese-vormer: beschrijf-aannames",
       "type": "process",
-      "command": "powershell",
+      "command": "python",
       "args": [
-        "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'hypothese-vormer'; $intent = 'beschrijf-aannames'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"hypothese_titel=${input:in_hypothese_vormer_beschrijf_aannames_hypothese_titel}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "artefacten/sfw/sfw.01.hypothese-vormer/runner/hypothese-vormer.runner.py",
+        "beschrijf-aannames",
+        "--hypothese-titel",
+        "${input:in_hypothese_vormer_beschrijf_aannames_hypothese_titel}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -18,10 +20,22 @@
     {
       "label": "sfw.01 - hypothese-vormer: beschrijf-hypothese",
       "type": "process",
-      "command": "powershell",
+      "command": "python",
       "args": [
-        "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'hypothese-vormer'; $intent = 'beschrijf-hypothese'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"probleemomschrijving=${input:in_hypothese_vormer_beschrijf_hypothese_probleemomschrijving}\" -p \"interventie_vermoeden=${input:in_hypothese_vormer_beschrijf_hypothese_interventie_vermoeden}\" -p \"auteur=${input:in_hypothese_vormer_beschrijf_hypothese_auteur}\" -p \"bron_referenties=${input:in_hypothese_vormer_beschrijf_hypothese_bron_referenties}\" -p \"context=${input:in_hypothese_vormer_beschrijf_hypothese_context}\" -p \"stakeholders=${input:in_hypothese_vormer_beschrijf_hypothese_stakeholders}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "artefacten/sfw/sfw.01.hypothese-vormer/runner/hypothese-vormer.runner.py",
+        "beschrijf-hypothese",
+        "--probleem",
+        "${input:in_hypothese_vormer_beschrijf_hypothese_probleem}",
+        "--idee-voor-de-oplossing",
+        "${input:in_hypothese_vormer_beschrijf_hypothese_idee_voor_de_oplossing}",
+        "--auteur",
+        "${input:in_hypothese_vormer_beschrijf_hypothese_auteur}",
+        "--bronnen",
+        "${input:in_hypothese_vormer_beschrijf_hypothese_bronnen}",
+        "--context",
+        "${input:in_hypothese_vormer_beschrijf_hypothese_context}",
+        "--betrokkenen",
+        "${input:in_hypothese_vormer_beschrijf_hypothese_betrokkenen}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -32,10 +46,22 @@
     {
       "label": "sfw.01 - hypothese-vormer: beschrijf-toetsbaarheid",
       "type": "process",
-      "command": "powershell",
+      "command": "python",
       "args": [
-        "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'hypothese-vormer'; $intent = 'beschrijf-toetsbaarheid'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"hypothese_statement=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_statement}\" -p \"auteur=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_auteur}\" -p \"hypothese_bestand=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_bestand}\" -p \"toetsingscontext=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_toetsingscontext}\" -p \"beschikbare_metrics=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_beschikbare_metrics}\" -p \"acceptatie_drempel=${input:in_hypothese_vormer_beschrijf_toetsbaarheid_acceptatie_drempel}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "artefacten/sfw/sfw.01.hypothese-vormer/runner/hypothese-vormer.runner.py",
+        "beschrijf-toetsbaarheid",
+        "--hypothese-statement",
+        "${input:in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_statement}",
+        "--auteur",
+        "${input:in_hypothese_vormer_beschrijf_toetsbaarheid_auteur}",
+        "--hypothese-bestand",
+        "${input:in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_bestand}",
+        "--toetsingscontext",
+        "${input:in_hypothese_vormer_beschrijf_toetsbaarheid_toetsingscontext}",
+        "--beschikbare-metrics",
+        "${input:in_hypothese_vormer_beschrijf_toetsbaarheid_beschikbare_metrics}",
+        "--acceptatie-drempel",
+        "${input:in_hypothese_vormer_beschrijf_toetsbaarheid_acceptatie_drempel}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -51,14 +77,14 @@
       "description": "Waarde voor 'hypothese_titel' (beschrijf-aannames)"
     },
     {
-      "id": "in_hypothese_vormer_beschrijf_hypothese_probleemomschrijving",
+      "id": "in_hypothese_vormer_beschrijf_hypothese_probleem",
       "type": "promptString",
-      "description": "Waarde voor 'probleemomschrijving' (beschrijf-hypothese)"
+      "description": "Waarde voor 'probleem' (beschrijf-hypothese)"
     },
     {
-      "id": "in_hypothese_vormer_beschrijf_hypothese_interventie_vermoeden",
+      "id": "in_hypothese_vormer_beschrijf_hypothese_idee_voor_de_oplossing",
       "type": "promptString",
-      "description": "Waarde voor 'interventie_vermoeden' (beschrijf-hypothese)"
+      "description": "Waarde voor 'idee_voor_de_oplossing' (beschrijf-hypothese)"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_hypothese_auteur",
@@ -66,19 +92,19 @@
       "description": "Waarde voor 'auteur' (beschrijf-hypothese)"
     },
     {
-      "id": "in_hypothese_vormer_beschrijf_hypothese_bron_referenties",
+      "id": "in_hypothese_vormer_beschrijf_hypothese_bronnen",
       "type": "promptString",
-      "description": "Waarde voor 'bron_referenties' (beschrijf-hypothese)"
+      "description": "Waarde voor 'bronnen' (beschrijf-hypothese) (Optioneel)"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_hypothese_context",
       "type": "promptString",
-      "description": "Waarde voor 'context' (beschrijf-hypothese)"
+      "description": "Waarde voor 'context' (beschrijf-hypothese) (Optioneel)"
     },
     {
-      "id": "in_hypothese_vormer_beschrijf_hypothese_stakeholders",
+      "id": "in_hypothese_vormer_beschrijf_hypothese_betrokkenen",
       "type": "promptString",
-      "description": "Waarde voor 'stakeholders' (beschrijf-hypothese)"
+      "description": "Waarde voor 'betrokkenen' (beschrijf-hypothese) (Optioneel)"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_statement",
@@ -93,22 +119,22 @@
     {
       "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_bestand",
       "type": "promptString",
-      "description": "Waarde voor 'hypothese_bestand' (beschrijf-toetsbaarheid)"
+      "description": "Waarde voor 'hypothese_bestand' (beschrijf-toetsbaarheid) (Optioneel)"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_toetsingscontext",
       "type": "promptString",
-      "description": "Waarde voor 'toetsingscontext' (beschrijf-toetsbaarheid)"
+      "description": "Waarde voor 'toetsingscontext' (beschrijf-toetsbaarheid) (Optioneel)"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_beschikbare_metrics",
       "type": "promptString",
-      "description": "Waarde voor 'beschikbare_metrics' (beschrijf-toetsbaarheid)"
+      "description": "Waarde voor 'beschikbare_metrics' (beschrijf-toetsbaarheid) (Optioneel)"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_acceptatie_drempel",
       "type": "promptString",
-      "description": "Waarde voor 'acceptatie_drempel' (beschrijf-toetsbaarheid)"
+      "description": "Waarde voor 'acceptatie_drempel' (beschrijf-toetsbaarheid) (Optioneel)"
     }
   ]
 }

@@ -81,7 +81,7 @@ De agent-engineer bewaakt daarbij dat geen enkele intent "half gerealiseerd" is 
    Genereert en actualiseert VSCode task-definities (in artefacten-folder, niet `.vscode/tasks`) voor alle intents van een agent met correcte command-argumenten, working directory en afhankelijkheden, zodat elke intent aanroepbaar is via de VSCode task-interface na fetch naar `.github/tasks`.
 
 3. **Realiseer agent-runners**  
-   Genereert Python runner-scripts (`.runner.py`) voor alle intents van een agent met parameter-parsing, run_prompt.py aanroep, foutafhandeling en logging, zodat elke intent programmatisch aanroepbaar is met correcte audit-trail.
+   Genereert één centraal Python runner-script (`{agent}.runner.py`) per agent, met daarin alle intents als sub-commando's (CLI-structuur). Deze runner fungeert als de vaste in/out "voordeur" van de agent. De runner verwerkt argumenten, zorgt voor foutafhandeling, roept achterliggend `generate_instructions.py` aan (of verzorgt custom executie) en verzorgt de audit-trail. Bestaande runners worden niet overschreven zonder expliciete vlag, om custom uitbreidingen per agent (zoals bij de curator of engineer) te beschermen.
 
 ## 5. Grenzen
 
@@ -90,6 +90,7 @@ De agent-engineer bewaakt daarbij dat geen enkele intent "half gerealiseerd" is 
 - Genereert promptbestanden met YAML frontmatter en metadata via contract-discovery.
 - Genereert VSCode task-configuraties met correcte command-argumenten en paden in artefacten-folder.
 - Genereert Python runner-scripts met argparse-configuratie en run_prompt.py aanroepen.
+- Beheert en onderhoudt zijn eigen orkestratie- en pipeline-scripts (zoals `agent_engineer_pipeline.py`, `merge_tasks.py` en `generate_instructions.py`) expliciet binnen zijn eigen artefacten-domein (`artefacten/aeo/aeo.02.agent-engineer/runners/`).
 - Valideert consistentie tussen contracten, prompts, tasks en runners (alle intents compleet).
 - Actualiseert bestaande artefacten wanneer contracten wijzigen (prompts altijd overwrite, tasks/runners optioneel via parameter).
 - Rapporteert build-failures wanneer workspace-specificaties ontbreken of inconsistent zijn.
@@ -167,8 +168,8 @@ Dit charter is traceerbaar naar de volgende agent-contracten:
 De agent-engineer legt alle resultaten vast in de workspace:
 
 - `artefacten/{vs}/{vs}.{fase}.{agent}/prompts/mandarin.{agent}.{intent}.prompt.md` — Promptbestanden per intent met YAML frontmatter
-- `artefacten/{vs}/{vs}.{fase}.{agent}/tasks/{vs}-{fase}.{agent}.tasks.json` — VSCode task-configuratie per agent (samengevoegd in artefacten-folder)
-- `{runner_output_folder}/{agent}-{intent}.runner.py` — Python runner-scripts per intent (default: `scripts/`)
+- `artefacten/{vs}/{vs}.{fase}.{agent}/tasks/{vs}-{fase}.{agent}.tasks.json` — VSCode task-configuratie per agent die de centrale runner aanspreekt (samengevoegd in artefacten-folder)
+- `artefacten/{vs}/{vs}.{fase}.{agent}/runners/{agent}.runner.py` — Centrale Python runner-script per agent dat als CLI dient (bevat intents als sub-commands)
 - `audit/agent-engineer-validatierapport-{timestamp}.md` — Validatierapporten met consistentie-checks en build-status
 
 Alle Markdown-output wordt standaard in Markdown (.md) gegenereerd conform Principe 9 (Output-formaat Normering). Task-configuratie is JSON (VSCode standaard), runners zijn Python-scripts.

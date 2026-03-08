@@ -8,6 +8,4 @@ input_parameters:
   - conversie_opties
 value_stream_fase: fnd.02
 
-bootstrap:
-  script: scripts/bootstrap_canon_consult.py
 ---

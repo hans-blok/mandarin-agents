@@ -4,10 +4,14 @@
     {
       "label": "aod.02 - core-framework-architect: structureer-actieve-structuur",
       "type": "process",
-      "command": "powershell",
+      "command": "python",
       "args": [
-        "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'core-framework-architect'; $intent = 'structureer-actieve-structuur'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"archimate_laag=${input:in_core_framework_architect_structureer_actieve_structuur_archimate_laag}\" -p \"bestand=${input:in_core_framework_architect_structureer_actieve_structuur_bestand}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "artefacten/aod/aod.02.core-framework-architect/runner/core-framework-architect.runner.py",
+        "structureer-actieve-structuur",
+        "--archimate-laag",
+        "${input:in_core_framework_architect_structureer_actieve_structuur_archimate_laag}",
+        "--bestand",
+        "${input:in_core_framework_architect_structureer_actieve_structuur_bestand}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -18,10 +22,14 @@
     {
       "label": "aod.02 - core-framework-architect: structureer-gedrag",
       "type": "process",
-      "command": "powershell",
+      "command": "python",
       "args": [
-        "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'core-framework-architect'; $intent = 'structureer-gedrag'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"archimate_laag=${input:in_core_framework_architect_structureer_gedrag_archimate_laag}\" -p \"bestand=${input:in_core_framework_architect_structureer_gedrag_bestand}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "artefacten/aod/aod.02.core-framework-architect/runner/core-framework-architect.runner.py",
+        "structureer-gedrag",
+        "--archimate-laag",
+        "${input:in_core_framework_architect_structureer_gedrag_archimate_laag}",
+        "--bestand",
+        "${input:in_core_framework_architect_structureer_gedrag_bestand}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -32,10 +40,14 @@
     {
       "label": "aod.02 - core-framework-architect: structureer-passieve-structuur",
       "type": "process",
-      "command": "powershell",
+      "command": "python",
       "args": [
-        "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'core-framework-architect'; $intent = 'structureer-passieve-structuur'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"archimate_laag=${input:in_core_framework_architect_structureer_passieve_structuur_archimate_laag}\" -p \"bestand=${input:in_core_framework_architect_structureer_passieve_structuur_bestand}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "artefacten/aod/aod.02.core-framework-architect/runner/core-framework-architect.runner.py",
+        "structureer-passieve-structuur",
+        "--archimate-laag",
+        "${input:in_core_framework_architect_structureer_passieve_structuur_archimate_laag}",
+        "--bestand",
+        "${input:in_core_framework_architect_structureer_passieve_structuur_bestand}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -46,10 +58,14 @@
     {
       "label": "aod.02 - core-framework-architect: structureer-totaal-view",
       "type": "process",
-      "command": "powershell",
+      "command": "python",
       "args": [
-        "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'core-framework-architect'; $intent = 'structureer-totaal-view'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"archimate_laag=${input:in_core_framework_architect_structureer_totaal_view_archimate_laag}\" -p \"bestand=${input:in_core_framework_architect_structureer_totaal_view_bestand}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "artefacten/aod/aod.02.core-framework-architect/runner/core-framework-architect.runner.py",
+        "structureer-totaal-view",
+        "--archimate-laag",
+        "${input:in_core_framework_architect_structureer_totaal_view_archimate_laag}",
+        "--bestand",
+        "${input:in_core_framework_architect_structureer_totaal_view_bestand}"
       ],
       "problemMatcher": [],
       "presentation": {

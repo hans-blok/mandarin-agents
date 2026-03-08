@@ -22,8 +22,6 @@ input_files:
   # templates_folder: "artefacten/{vs}/{vs}.{fase}.{agent}/templates/"
   # Verwijder niet-gebruikte keys, voeg eigen keys toe waar nodig
 
-bootstrap:
-  script: scripts/bootstrap_canon_consult.py
   
 # Canon URL en grondslagen worden gelezen uit beleid-workspace.md
 # Agent-instructies staan in {agent-naam}.{intent-kortschrift}.agent.md

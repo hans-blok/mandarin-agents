@@ -4,7 +4,7 @@
 {runner-naam}.py - {Korte beschrijving van wat deze runner doet}
 
 Runner voor agent {agent-naam}, intent {intent-naam}.
-Voert run_prompt.py aan met voorgedefinieerde parameters en handelt agent-specifieke workflow af.
+Voert agent-engineer.runner.py generate-instructions aan met voorgedefinieerde parameters en handelt agent-specifieke workflow af.
 
 Usage:
     python {runner-naam}.py [OPTIONS]
@@ -12,11 +12,11 @@ Usage:
 Exit Codes:
     0: Success
     1: Validation error (input ontbreekt of ongeldig)
-    2: Execution error (run_prompt.py of agent gefaald)
+    2: Execution error (agent-engineer.runner.py generate-instructions of agent gefaald)
     3: Dependency unavailable (bestand niet gevonden, omgeving niet klaar)
 
 Architecture:
-    Runner -> run_prompt.py -> bootstrap_canon_consult.py + agent.md -> LLM execution
+    Runner -> agent-engineer.runner.py generate-instructions -> bootstrap_canon_consult.py + agent.md -> LLM execution
     
     Deze runner is NIET de agent zelf, maar bereidt execution voor en valideert.
     Echte "intelligentie" zit in de LLM die de gegenereerde instructies uitvoert.
@@ -24,7 +24,7 @@ Architecture:
 Governance:
     - Volgt doctrine-agent-charter-normering.md Principe 7 (Transparante Verantwoording)
     - Logt naar audit/{runner-naam}.log.md
-    - Parameters worden gevalideerd voor run_prompt.py wordt aangeroepen
+    - Parameters worden gevalideerd voor agent-engineer.runner.py generate-instructions wordt aangeroepen
     
 Template versie: 1.0.0
 Gegenereerd: {YYYY-MM-DD}
@@ -152,7 +152,7 @@ Exit Codes:
 
 def validate_inputs(args: argparse.Namespace) -> Tuple[bool, List[str]]:
     """
-    Valideer alle inputs voordat run_prompt.py wordt aangeroepen.
+    Valideer alle inputs voordat agent-engineer.runner.py generate-instructions wordt aangeroepen.
     
     Dit is de Input Quality Gate: de runner start ALLEEN als alle checks slagen.
     
@@ -213,10 +213,10 @@ def validate_inputs(args: argparse.Namespace) -> Tuple[bool, List[str]]:
 
 def build_run_prompt_params(args: argparse.Namespace) -> List[str]:
     """
-    Bouw lijst van -p parameters voor run_prompt.py.
+    Bouw lijst van -p parameters voor agent-engineer.runner.py generate-instructions.
     
-    run_prompt.py verwacht parameters in het formaat: -p key=value
-    Deze functie mapt command-line argumenten naar run_prompt.py parameters.
+    agent-engineer.runner.py generate-instructions verwacht parameters in het formaat: -p key=value
+    Deze functie mapt command-line argumenten naar agent-engineer.runner.py generate-instructions parameters.
     
     Args:
         args: Geparseerde command-line argumenten
@@ -260,9 +260,9 @@ def build_run_prompt_params(args: argparse.Namespace) -> List[str]:
 
 def run_agent(args: argparse.Namespace) -> int:
     """
-    Voer run_prompt.py uit met voorgedefinieerde parameters.
+    Voer agent-engineer.runner.py generate-instructions uit met voorgedefinieerde parameters.
     
-    Dit is de kern van de runner: roept run_prompt.py aan die op zijn beurt:
+    Dit is de kern van de runner: roept agent-engineer.runner.py generate-instructions aan die op zijn beurt:
     1. Canon consulteert via bootstrap_canon_consult.py
     2. Agent.md inlaadt
     3. Charter inlaadt (indien aanwezig)
@@ -279,7 +279,7 @@ def run_agent(args: argparse.Namespace) -> int:
     # Bouw commando
     cmd = [
         'python',
-        'scripts/run_prompt.py',
+        'scripts/agent-engineer.runner.py generate-instructions',
         PROMPT_FILE,
     ]
     
@@ -306,7 +306,7 @@ def run_agent(args: argparse.Namespace) -> int:
         result = subprocess.run(cmd, check=False)
         return result.returncode
     except FileNotFoundError as e:
-        print(f"ERROR: run_prompt.py niet gevonden: {e}", file=sys.stderr)
+        print(f"ERROR: agent-engineer.runner.py generate-instructions niet gevonden: {e}", file=sys.stderr)
         return 3  # Dependency unavailable
     except Exception as e:
         print(f"ERROR: Onverwachte fout tijdens uitvoering: {e}", file=sys.stderr)
@@ -404,7 +404,7 @@ def main() -> int:
     Flow:
         1. Parse argumenten
         2. Valideer inputs (Input Quality Gate)
-        3. Voer run_prompt.py uit
+        3. Voer agent-engineer.runner.py generate-instructions uit
         4. Log execution naar audit
         5. Return exit code
         
@@ -477,7 +477,7 @@ VERWIJDER DEZE SECTIE NA INVULLING
    - Gebruik duidelijke error messages
 
 4. BUILD_RUN_PROMPT_PARAMS (regel 181-218)
-   - Map CLI argumenten naar run_prompt.py parameters (-p key=value)
+   - Map CLI argumenten naar agent-engineer.runner.py generate-instructions parameters (-p key=value)
    - Deze keys worden gebruikt in prompt en agent.md als [KEY] placeholders
    - Voorbeeld: args.thema -> '-p', 'thema_epic={args.thema}'
 
@@ -511,9 +511,9 @@ VERWIJDER DEZE SECTIE NA INVULLING
    ```
 
 7. EXIT CODES
-   - 0: Success (run_prompt.py + agent succesvol)
+   - 0: Success (agent-engineer.runner.py generate-instructions + agent succesvol)
    - 1: Validation error (input quality gate gefaald)
-   - 2: Execution error (run_prompt.py of agent gefaald)
+   - 2: Execution error (agent-engineer.runner.py generate-instructions of agent gefaald)
    - 3: Dependency unavailable (bestand/tool niet gevonden)
 
 8. TESTEN
@@ -533,5 +533,5 @@ VERWIJDER DEZE SECTIE NA INVULLING
     ✓ Expliciete error handling: geen silent failures
 
 Template versie: 1.0.0
-Gebaseerd op: run_prompt.py, bootstrap_canon_consult.py, engineer-steward charter
+Gebaseerd op: agent-engineer.runner.py generate-instructions, bootstrap_canon_consult.py, engineer-steward charter
 """

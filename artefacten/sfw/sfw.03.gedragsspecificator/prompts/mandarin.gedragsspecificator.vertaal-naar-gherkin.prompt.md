@@ -9,6 +9,4 @@ input_parameters:
   - bestaande_feature_files
 value_stream_fase: sfw.03
 
-bootstrap:
-  script: scripts/bootstrap_canon_consult.py
 ---

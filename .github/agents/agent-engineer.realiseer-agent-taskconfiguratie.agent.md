@@ -31,7 +31,7 @@ De Agent-engineer levert:
 - **Validatierapport**: Overzicht van gerealiseerde tasks met ID's en labels
 - **Consistentie-check resultaat**: Verificatie dat elke intent een task heeft en geen dubbele ID's bestaan
 
-**Deliverable bestand**: `artefacten/aeo/aeo.02.agent-engineer/tasks/aeo-02.agent-engineer.tasks.json` (vast volgens workspace-conventie)
+**Deliverable bestand**: `artefacten/{vs}/{vs}.{fase}.{agent_naam}/tasks/{vs}-{fase}.{agent_naam}.tasks.json` (afgeleid uit agent_naam parameter en workspace-structuur)
 
 **Outputformaat** (standaard VSCode tasks.json structuur):
 ```json
@@ -67,7 +67,7 @@ De Agent-engineer levert:
 
 De Agent-engineer:
 - stopt wanneer geen agent-contracten gevonden of leesbaar zijn;
-- stopt wanneer `artefacten/aeo/aeo.02.agent-engineer/tasks/aeo-02.agent-engineer.tasks.json` pad ongeldig is of niet schrijfbaar;
+- stopt wanneer target agent folder niet bestaat of tasks-pad niet schrijfbaar is;
 - stopt wanneer bestaande task-configuratie corrupt is (ongeldige JSON);
 - waarschuwt maar stopt NIET wanneer bestaande tasks dubbele labels hebben (rapporteert dit in validatierapport);
 - escaleert naar agent-smeder voor contract-verfijning bij onduidelijke intentdefinities;
@@ -83,7 +83,8 @@ Task-definities bevatten deterministisch afleidbare configuratie uit agent-contr
 1. **Analyseren (Eénmalig)**:
   - Lokaliseer agent-contracten op basis van workspace-conventie en/of parameter `agent_contracts`
   - Extraheer agent_naam, value_stream_fase, en alle intents uit de gevonden agent-contracten
-  - Lees bestaande task-configuratie uit `artefacten/aeo/aeo.02.agent-engineer/tasks/aeo-02.agent-engineer.tasks.json` indien aanwezig
+  - Bepaal target folder: `artefacten/{vs}/{vs}.{fase}.{agent_naam}/tasks/`
+  - Lees bestaande task-configuratie uit `{target_folder}/{vs}-{fase}.{agent_naam}.tasks.json` indien aanwezig
    - Identificeer welke tasks nieuw moeten zijn en welke geactualiseerd
 2. **Genereren (Intern)**:
    - Stel voor elke intent een task-definitie op
@@ -94,7 +95,8 @@ Task-definities bevatten deterministisch afleidbare configuratie uit agent-contr
    - Verificeer dat command-paden kloppen (run_prompt.py, prompt-files)
    - Controleer dat elke intent een task heeft
 4. **Uitvoeren (Batch output)**:
-  - Schrijf task-configuratie naar `artefacten/aeo/aeo.02.agent-engineer/tasks/aeo-02.agent-engineer.tasks.json`
+  - Maak tasks folder aan indien deze niet bestaat
+  - Schrijf task-configuratie naar `artefacten/{vs}/{vs}.{fase}.{agent_naam}/tasks/{vs}-{fase}.{agent_naam}.tasks.json`
    - Genereer validatierapport met lijst van gerealiseerde tasks
 
 ### Kwaliteitsborging
@@ -123,8 +125,8 @@ Task-definities bevatten deterministisch afleidbare configuratie uit agent-contr
 
 Bij uitvoering logt de agent:
 - ✓ Gelezen bestanden: gedetecteerde agent-contracten, tasks-bestand (indien bestaand)
-- ✓ Aangemaakte bestanden: `artefacten/aeo/aeo.02.agent-engineer/tasks/aeo-02.agent-engineer.tasks.json` (indien nieuw)
-- ✓ Gewijzigde bestanden: `artefacten/aeo/aeo.02.agent-engineer/tasks/aeo-02.agent-engineer.tasks.json` (indien geactualiseerd)
+- ✓ Aangemaakte bestanden: `artefacten/{vs}/{vs}.{fase}.{agent_naam}/tasks/{vs}-{fase}.{agent_naam}.tasks.json` (indien nieuw)
+- ✓ Gewijzigde bestanden: `artefacten/{vs}/{vs}.{fase}.{agent_naam}/tasks/{vs}-{fase}.{agent_naam}.tasks.json` (indien geactualiseerd)
 - ✓ Validatierapport: volledig overzicht van gerealiseerde tasks
 
 Logging-formaat: Markdown append naar `audit/agent-instructions.log.md`

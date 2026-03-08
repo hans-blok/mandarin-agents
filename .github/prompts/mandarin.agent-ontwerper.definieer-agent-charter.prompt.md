@@ -1,12 +1,13 @@
 ---
 agent: mandarin.agent-ontwerper
 intent: definieer-agent-charter
+versie: 1.0.0
+input_parameters:
+  - agent_naam
+  - boundary_file
+  - value_stream_fase
+  - template_file
+  - referenties
 value_stream_fase: aeo.02
 
-bootstrap:
-  script: scripts/bootstrap_canon_consult.py
-
-# Canon URL en grondslagen worden gelezen uit beleid-workspace.md
-# Agent-instructies staan in agent-ontwerper.definieer-agent-charter.agent.md
-# Charter wordt automatisch geladen: agent-ontwerper.charter.md (zelfde folder)
 ---

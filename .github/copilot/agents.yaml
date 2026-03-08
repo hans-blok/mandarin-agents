@@ -6,6 +6,7 @@ agents:
   charter: artefacten/aeo/aeo.02.agent-curator/agent-curator.charter.md
   prompts:
   - .github/prompts/mandarin.agent-curator.rapporteer-ecosysteem-overzicht.prompt.md
+  - .github/prompts/mandarin.agent-curator.rapporteer-prompts-overzicht.prompt.md
   - .github/prompts/mandarin.agent-curator.valideer-agent-consistentie.prompt.md
   - .github/prompts/mandarin.agent-curator.valideer-boundary-overlap.prompt.md
   runners: []
@@ -37,25 +38,14 @@ agents:
   prompts:
   - .github/prompts/mandarin.capability-architect.definieer-agent-boundary.prompt.md
   runners: []
-- id: engineer-steward
-  name: workspace.engineer-steward
+- id: ecosysteem-coordinator
+  name: workspace.ecosysteem-coordinator
   type: uitvoerend
-  valueStream: fnd
-  charter: artefacten/fnd/fnd.01.engineer-steward/engineer-steward.charter.md
+  valueStream: aeo
+  charter: artefacten/aeo/aeo.02.ecosysteem-coordinator/ecosysteem-coordinator.charter.md
   prompts:
-  - .github/prompts/mandarin.engineer-steward-review.code.prompt.md
-  - .github/prompts/mandarin.engineer-steward-run.script.prompt.md
-  - .github/prompts/mandarin.engineer-steward-schrijf.script.prompt.md
-  runners: []
-- id: workspace-steward
-  name: workspace.workspace-steward
-  type: uitvoerend
-  valueStream: fnd
-  charter: artefacten/fnd/fnd.01.workspace-steward/workspace-steward.charter.md
-  prompts:
-  - .github/prompts/mandarin.workspace-steward-beheer.git.prompt.md
-  - .github/prompts/mandarin.workspace-steward-configureer.github.prompt.md
-  - .github/prompts/mandarin.workspace-steward-orden.workspace.prompt.md
-  - .github/prompts/mandarin.workspace-steward-schrijf.beleid.prompt.md
-  - .github/prompts/mandarin.workspace-steward-valideer.governance.prompt.md
+  - .github/prompts/mandarin.ecosysteem-coordinator.consulteer-canon.prompt.md
+  - .github/prompts/mandarin.ecosysteem-coordinator.genereer-instructies.prompt.md
+  - .github/prompts/mandarin.ecosysteem-coordinator.merge-configuraties.prompt.md
+  - .github/prompts/mandarin.ecosysteem-coordinator.valideer-agent-structuur.prompt.md
   runners: []

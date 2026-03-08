@@ -4,10 +4,16 @@
     {
       "label": "sfw.03 - gedragsspecificator: specificeer-gedrag",
       "type": "process",
-      "command": "powershell",
+      "command": "python",
       "args": [
-        "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'gedragsspecificator'; $intent = 'specificeer-gedrag'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"context_bestand=${input:in_gedragsspecificator_specificeer_gedrag_context_bestand}\" -p \"data_beschrijving_bestand=${input:in_gedragsspecificator_specificeer_gedrag_data_beschrijving_bestand}\" -p \"proces_beschrijving_bestand=${input:in_gedragsspecificator_specificeer_gedrag_proces_beschrijving_bestand}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "artefacten/sfw/sfw.03.gedragsspecificator/runner/gedragsspecificator.runner.py",
+        "specificeer-gedrag",
+        "--context-bestand",
+        "${input:in_gedragsspecificator_specificeer_gedrag_context_bestand}",
+        "--data-beschrijving-bestand",
+        "${input:in_gedragsspecificator_specificeer_gedrag_data_beschrijving_bestand}",
+        "--proces-beschrijving-bestand",
+        "${input:in_gedragsspecificator_specificeer_gedrag_proces_beschrijving_bestand}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -18,10 +24,16 @@
     {
       "label": "sfw.03 - gedragsspecificator: valideer-scenario-consistentie",
       "type": "process",
-      "command": "powershell",
+      "command": "python",
       "args": [
-        "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'gedragsspecificator'; $intent = 'valideer-scenario-consistentie'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"feature_files=${input:in_gedragsspecificator_valideer_scenario_consistentie_feature_files}\" -p \"specificatie_document=${input:in_gedragsspecificator_valideer_scenario_consistentie_specificatie_document}\" -p \"validation_rules=${input:in_gedragsspecificator_valideer_scenario_consistentie_validation_rules}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "artefacten/sfw/sfw.03.gedragsspecificator/runner/gedragsspecificator.runner.py",
+        "valideer-scenario-consistentie",
+        "--feature-files",
+        "${input:in_gedragsspecificator_valideer_scenario_consistentie_feature_files}",
+        "--specificatie-document",
+        "${input:in_gedragsspecificator_valideer_scenario_consistentie_specificatie_document}",
+        "--validation-rules",
+        "${input:in_gedragsspecificator_valideer_scenario_consistentie_validation_rules}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -32,10 +44,18 @@
     {
       "label": "sfw.03 - gedragsspecificator: vertaal-naar-gherkin",
       "type": "process",
-      "command": "powershell",
+      "command": "python",
       "args": [
-        "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'gedragsspecificator'; $intent = 'vertaal-naar-gherkin'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"specificatie_document=${input:in_gedragsspecificator_vertaal_naar_gherkin_specificatie_document}\" -p \"context=${input:in_gedragsspecificator_vertaal_naar_gherkin_context}\" -p \"extra_regels=${input:in_gedragsspecificator_vertaal_naar_gherkin_extra_regels}\" -p \"bestaande_feature_files=${input:in_gedragsspecificator_vertaal_naar_gherkin_bestaande_feature_files}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "artefacten/sfw/sfw.03.gedragsspecificator/runner/gedragsspecificator.runner.py",
+        "vertaal-naar-gherkin",
+        "--specificatie-document",
+        "${input:in_gedragsspecificator_vertaal_naar_gherkin_specificatie_document}",
+        "--context",
+        "${input:in_gedragsspecificator_vertaal_naar_gherkin_context}",
+        "--extra-regels",
+        "${input:in_gedragsspecificator_vertaal_naar_gherkin_extra_regels}",
+        "--bestaande-feature-files",
+        "${input:in_gedragsspecificator_vertaal_naar_gherkin_bestaande_feature_files}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -53,12 +73,12 @@
     {
       "id": "in_gedragsspecificator_specificeer_gedrag_data_beschrijving_bestand",
       "type": "promptString",
-      "description": "Waarde voor 'data_beschrijving_bestand' (specificeer-gedrag)"
+      "description": "Waarde voor 'data_beschrijving_bestand' (specificeer-gedrag) (Optioneel)"
     },
     {
       "id": "in_gedragsspecificator_specificeer_gedrag_proces_beschrijving_bestand",
       "type": "promptString",
-      "description": "Waarde voor 'proces_beschrijving_bestand' (specificeer-gedrag)"
+      "description": "Waarde voor 'proces_beschrijving_bestand' (specificeer-gedrag) (Optioneel)"
     },
     {
       "id": "in_gedragsspecificator_valideer_scenario_consistentie_feature_files",
@@ -73,7 +93,7 @@
     {
       "id": "in_gedragsspecificator_valideer_scenario_consistentie_validation_rules",
       "type": "promptString",
-      "description": "Waarde voor 'validation_rules' (valideer-scenario-consistentie)"
+      "description": "Waarde voor 'validation_rules' (valideer-scenario-consistentie) (Optioneel)"
     },
     {
       "id": "in_gedragsspecificator_vertaal_naar_gherkin_specificatie_document",
@@ -88,12 +108,12 @@
     {
       "id": "in_gedragsspecificator_vertaal_naar_gherkin_extra_regels",
       "type": "promptString",
-      "description": "Waarde voor 'extra_regels' (vertaal-naar-gherkin)"
+      "description": "Waarde voor 'extra_regels' (vertaal-naar-gherkin) (Optioneel)"
     },
     {
       "id": "in_gedragsspecificator_vertaal_naar_gherkin_bestaande_feature_files",
       "type": "promptString",
-      "description": "Waarde voor 'bestaande_feature_files' (vertaal-naar-gherkin)"
+      "description": "Waarde voor 'bestaande_feature_files' (vertaal-naar-gherkin) (Optioneel)"
     }
   ]
 }

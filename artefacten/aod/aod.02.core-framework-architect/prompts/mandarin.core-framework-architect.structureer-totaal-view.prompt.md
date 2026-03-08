@@ -7,6 +7,4 @@ input_parameters:
   - bestand
 value_stream_fase: aod.02
 
-bootstrap:
-  script: scripts/bootstrap_canon_consult.py
 ---

@@ -4,10 +4,16 @@
     {
       "label": "fnd.02 - documentvertaler: zet-om-naar-docx",
       "type": "process",
-      "command": "powershell",
+      "command": "python",
       "args": [
-        "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'documentvertaler'; $intent = 'zet-om-naar-docx'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"markdown_file=${input:in_documentvertaler_zet_om_naar_docx_markdown_file}\" -p \"output_path=${input:in_documentvertaler_zet_om_naar_docx_output_path}\" -p \"conversie_opties=${input:in_documentvertaler_zet_om_naar_docx_conversie_opties}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "artefacten/fnd/fnd.02.documentvertaler/runner/documentvertaler.runner.py",
+        "zet-om-naar-docx",
+        "--markdown-file",
+        "${input:in_documentvertaler_zet_om_naar_docx_markdown_file}",
+        "--output-path",
+        "${input:in_documentvertaler_zet_om_naar_docx_output_path}",
+        "--conversie-opties",
+        "${input:in_documentvertaler_zet_om_naar_docx_conversie_opties}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -30,7 +36,7 @@
     {
       "id": "in_documentvertaler_zet_om_naar_docx_conversie_opties",
       "type": "promptString",
-      "description": "Waarde voor 'conversie_opties' (zet-om-naar-docx)"
+      "description": "Waarde voor 'conversie_opties' (zet-om-naar-docx) (Optioneel)"
     }
   ]
 }

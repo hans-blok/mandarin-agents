@@ -18,14 +18,14 @@ De Hypothese-vormer beschrijft één expliciete, toetsbare probleem-oplossingshy
 ### Input (wat gaat erin)
 
 **Verplichte parameters**:
-- probleemomschrijving: Beschrijving van de huidige situatie en de frictie die ervaren wordt (type: string, minimaal 50 karakters).
-- interventie_vermoeden: Vermoedens of ideeën over mogelijke interventie of richting (type: string, minimaal 30 karakters).
-- auteur: Naam van degene die de hypothese formuleert (type: string).
+- probleem: Beschrijving van de huidige situatie en wat er mis gaat, lastig is, of beter kan. (minimaal 30 tekens).
+- idee_voor_de_oplossing: Het idee over wat we kunnen veranderen of verbeteren (minimaal 30 tekens).
+- auteur: Naam van degene die dit idee bedenkt.
 
 **Optionele parameters**:
-- bron_referenties: Lijst van bronnen die input leverden (type: list[string]).
-- context: Bredere context waarin de hypothese moet functioneren (type: string).
-- stakeholders: Betrokken stakeholders of doelgroepen (type: string).
+- bronnen: Welke documenten of mensen hebben informatie geleverd.
+- context: In welke situatie of omgeving speelt dit probleem zich af? .
+- betrokkenen: Wie zijn er betrokken bij dit probleem of deze oplossing? (bijv. gebruikers, teams, klanten, overheid).
 
 **Afgeleide informatie** (gegenereerd door agent):
 - hypothese_code: Unieke identifier voor deze hypothese (format: "HYP-{YYYYMMDD}-{sequence}")

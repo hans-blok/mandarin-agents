@@ -7,6 +7,4 @@ input_parameters:
   - *Context*
 value_stream_fase: fnd.02
 
-bootstrap:
-  script: scripts/bootstrap_canon_consult.py
 ---

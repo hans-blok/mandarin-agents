@@ -3,14 +3,12 @@ agent: mandarin.hypothese-vormer
 intent: beschrijf-hypothese
 versie: 1.0.0
 input_parameters:
-  - probleemomschrijving
-  - interventie_vermoeden
+  - probleem
+  - idee_voor_de_oplossing
   - auteur
-  - bron_referenties
+  - bronnen
   - context
-  - stakeholders
+  - betrokkenen
 value_stream_fase: sfw.01
 
-bootstrap:
-  script: scripts/bootstrap_canon_consult.py
 ---

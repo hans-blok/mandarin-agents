@@ -15,8 +15,6 @@ input_parameters:
   - {parameter-naam}
 value_stream_fase: {value-stream-code}.{fase-nummer}
 
-bootstrap:
-  script: scripts/bootstrap_canon_consult.py
 
 # Canon URL en grondslagen worden gelezen uit beleid-workspace.md
 # Agent-instructies staan in {agent-naam}.{intent-kortschrift}.agent.md

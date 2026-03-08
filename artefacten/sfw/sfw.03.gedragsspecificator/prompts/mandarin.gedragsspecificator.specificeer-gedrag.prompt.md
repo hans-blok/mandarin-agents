@@ -8,6 +8,4 @@ input_parameters:
   - proces_beschrijving_bestand
 value_stream_fase: sfw.03
 
-bootstrap:
-  script: scripts/bootstrap_canon_consult.py
 ---

@@ -12,6 +12,4 @@ input_parameters:
   - referentie_templates
 value_stream_fase: aeo.02
 
-bootstrap:
-  script: scripts/bootstrap_canon_consult.py
 ---

@@ -4,10 +4,14 @@
     {
       "label": "aeo.02 - agent-engineer: realiseer-agent-prompts",
       "type": "process",
-      "command": "powershell",
+      "command": "python",
       "args": [
-        "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-engineer'; $intent = 'realiseer-agent-prompts'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"agent_naam=${input:in_agent_engineer_realiseer_agent_prompts_agent_naam}\" -p \"intent=${input:in_agent_engineer_realiseer_agent_prompts_intent}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "artefacten/aeo/aeo.02.agent-engineer/runner/agent-engineer.runner.py",
+        "realiseer-agent-prompts",
+        "--agent-naam",
+        "${input:in_agent_engineer_realiseer_agent_prompts_agent_naam}",
+        "--intent",
+        "${input:in_agent_engineer_realiseer_agent_prompts_intent}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -18,10 +22,18 @@
     {
       "label": "aeo.02 - agent-engineer: realiseer-agent-runner",
       "type": "process",
-      "command": "powershell",
+      "command": "python",
       "args": [
-        "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-engineer'; $intent = 'realiseer-agent-runner'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"agent_naam=${input:in_agent_engineer_realiseer_agent_runner_agent_naam}\" -p \"contract_folder=${input:in_agent_engineer_realiseer_agent_runner_contract_folder}\" -p \"runner_output_folder=${input:in_agent_engineer_realiseer_agent_runner_runner_output_folder}\" -p \"overwrite_existing=${input:in_agent_engineer_realiseer_agent_runner_overwrite_existing}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "artefacten/aeo/aeo.02.agent-engineer/runner/agent-engineer.runner.py",
+        "realiseer-agent-runner",
+        "--agent-naam",
+        "${input:in_agent_engineer_realiseer_agent_runner_agent_naam}",
+        "--contract-folder",
+        "${input:in_agent_engineer_realiseer_agent_runner_contract_folder}",
+        "--runner-output-folder",
+        "${input:in_agent_engineer_realiseer_agent_runner_runner_output_folder}",
+        "--overwrite-existing",
+        "${input:in_agent_engineer_realiseer_agent_runner_overwrite_existing}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -32,10 +44,27 @@
     {
       "label": "aeo.02 - agent-engineer: realiseer-agent-taskconfiguratie",
       "type": "process",
-      "command": "powershell",
+      "command": "python",
       "args": [
-        "-Command",
-        "$generator = Join-Path $PWD 'scripts/generate_instructions.py'; $timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = 'agent-engineer'; $intent = 'realiseer-agent-taskconfiguratie'; $hashInput = $timestamp + $agent; $md5 = [System.Security.Cryptography.MD5]::Create(); $hashBytes = $md5.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($hashInput)); $hash = [System.BitConverter]::ToString($hashBytes).Replace('-','').Substring(0,4).ToLower(); $filename = \"agent-execution/$hash.$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python $generator --agent $agent --intent $intent -p \"agent_naam=${input:in_agent_engineer_realiseer_agent_taskconfiguratie_agent_naam}\" --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "artefacten/aeo/aeo.02.agent-engineer/runner/agent-engineer.runner.py",
+        "realiseer-agent-taskconfiguratie",
+        "--agent-naam",
+        "${input:in_agent_engineer_realiseer_agent_taskconfiguratie_agent_naam}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - agent-engineer: pipeline",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/aeo/aeo.02.agent-engineer/runner/agent-engineer.runner.py",
+        "pipeline",
+        "${input:in_agent_engineer_pipeline_agent}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -53,7 +82,7 @@
     {
       "id": "in_agent_engineer_realiseer_agent_prompts_intent",
       "type": "promptString",
-      "description": "Waarde voor 'intent' (realiseer-agent-prompts)"
+      "description": "Waarde voor 'intent' (realiseer-agent-prompts) (Optioneel)"
     },
     {
       "id": "in_agent_engineer_realiseer_agent_runner_agent_naam",
@@ -63,22 +92,27 @@
     {
       "id": "in_agent_engineer_realiseer_agent_runner_contract_folder",
       "type": "promptString",
-      "description": "Waarde voor 'contract_folder' (realiseer-agent-runner)"
+      "description": "Waarde voor 'contract_folder' (realiseer-agent-runner) (Optioneel)"
     },
     {
       "id": "in_agent_engineer_realiseer_agent_runner_runner_output_folder",
       "type": "promptString",
-      "description": "Waarde voor 'runner_output_folder' (realiseer-agent-runner)"
+      "description": "Waarde voor 'runner_output_folder' (realiseer-agent-runner) (Optioneel)"
     },
     {
       "id": "in_agent_engineer_realiseer_agent_runner_overwrite_existing",
       "type": "promptString",
-      "description": "Waarde voor 'overwrite_existing' (realiseer-agent-runner)"
+      "description": "Waarde voor 'overwrite_existing' (realiseer-agent-runner) (Optioneel)"
     },
     {
       "id": "in_agent_engineer_realiseer_agent_taskconfiguratie_agent_naam",
       "type": "promptString",
       "description": "Waarde voor 'agent_naam' (realiseer-agent-taskconfiguratie)"
+    },
+    {
+      "id": "in_agent_engineer_pipeline_agent",
+      "type": "promptString",
+      "description": "Agent naam voor pipeline (of leeg + --all voor alle agents)"
     }
   ]
 }

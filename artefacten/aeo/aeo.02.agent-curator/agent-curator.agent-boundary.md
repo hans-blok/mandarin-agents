@@ -8,7 +8,7 @@ versie: 1.0.0
 # Agent Boundary: Agent-curator
 
 **Agent-naam**: agent-curator  
-**Capability-boundary**: Bewaakt de canonieke consistentie van alle agents in het ecosysteem door te toetsen of hun contracts, charters en onderlinge relaties in overeenstemming zijn met constitutie, doctrines en ordeningsconcepten, en maakt overzichten beschikbaar voor human-in-the-loop sturing.  
+**Capability-boundary**: Bewaakt de canonieke consistentie van alle agents in het ecosysteem door te toetsen of hun contracts, charters en onderlinge relaties in overeenstemming zijn met constitutie, doctrines en ordeningsconcepten, en maakt overzichten beschikbaar van de agents, inclusief hun prompts, invoerparameters en bijbehorende definities voor human-in-the-loop sturing.  
 **Doel**: Borgen dat het ecosysteem als geheel coherent blijft met de canon, zodat geen enkele agent in isolatie kan afwijken van de vastgestelde normen zonder dat dit zichtbaar wordt.  
 **Domein**: Ecosysteemcontrole en canonieke consistentieborging
 
@@ -54,7 +54,7 @@ versie: 1.0.0
 - Valideert per agent of het contract (tasks.json, prompt YAML, charter) klopt met de canon (constitutie, doctrines, capability charters)
 - Toetst onderlinge relaties tussen agents op consistentie met ordeningsconcepten, bronhouding en interventieniveaus
 - Bewaakt dat de grens tussen agents scherp blijft: geen overlap, geen blinde vlekken in verantwoordelijkheden
-- Genereert overzichten (zoals agents-overzicht.md) zodat een human-in-the-loop de ecosysteemstatus kan beoordelen
+- Genereert overzichten (zoals agents-overzicht.md) met agentstatus, evenals gedetailleerde overzichten van agents en hun specifieke prompts, invoer en definities, zodat een human-in-the-loop de ecosysteemstatus kan beoordelen en consumeren.
 - Identificeert afwijkingen en signaleert deze; corrigeert zelf geen artefacten
 
 **Inputs die de agent verwacht:**
@@ -65,12 +65,14 @@ versie: 1.0.0
 **Outputs die de agent levert:**
 - Validatierapporten per agent of per value stream fase
 - Ecosysteemoverzicht (markdown tabel met status per agent)
+- Overzichten van alle agents met hun respectievelijke prompts, invoerparameters en definities
 - Gesignaleerde inconsistenties of afwijkingen ter escalatie
 
 ## Voorstellen agent contracten (intents)
 
 - valideer-agent-consistentie
 - rapporteer-ecosysteem-overzicht
+- rapporteer-prompts-overzicht
 - valideer-boundary-overlap
 
 ## Zorgt voor

@@ -48,8 +48,8 @@ if errorlevel 1 (
 )
 
 REM Controleer of runner script bestaat
-if not exist "scripts\agent-curator.runner.py" (
-    echo [ERROR] Runner niet gevonden: scripts\agent-curator.runner.py
+if not exist "artefacten\aeo\aeo.02.agent-curator\runners\agent-curator.runner.py" (
+    echo [ERROR] Runner niet gevonden: artefacten\aeo\aeo.02.agent-curator\runners\agent-curator.runner.py
     pause
     exit /b 1
 )
@@ -76,7 +76,7 @@ echo [INFO] Scope: %SCOPE%
 echo [INFO] Detail niveau: %DETAIL_NIVEAU%
 echo.
 
-python scripts\agent-curator.runner.py publiceer-overzicht --scope %SCOPE% --detail-niveau %DETAIL_NIVEAU%
+python artefacten\aeo\aeo.02.agent-curator\runners\agent-curator.runner.py publiceer-overzicht --scope %SCOPE% --detail-niveau %DETAIL_NIVEAU%
 
 REM Controleer exit code
 if errorlevel 1 (

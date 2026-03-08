@@ -27,9 +27,9 @@ settings.json
 # Tijdelijke bestanden en werkruimten
 temp/
 
-# Agent uitvoeringsinstructies (lokale runtime)
-agent-execution/*.md
-!agent-execution/README.md
+# Agent prompt-instructies (lokale runtime)
+prompt-instructions/*.md
+!prompt-instructions/README.md
 
 # Canon map (experimenteel/concept)
 canon/
@@ -150,9 +150,9 @@ settings.json
 # Tijdelijke bestanden en workspaces
 temp/
 
-# Agent execution instructies (lokale runtime)
-agent-execution/*.md
-!agent-execution/README.md
+# Agent prompt-instructies (lokale runtime)
+prompt-instructions/*.md
+!prompt-instructions/README.md
 
 # Canon folder (experimenteel/draft)
 canon/

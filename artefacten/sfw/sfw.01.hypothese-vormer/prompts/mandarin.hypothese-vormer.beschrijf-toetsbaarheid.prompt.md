@@ -11,6 +11,4 @@ input_parameters:
   - acceptatie_drempel
 value_stream_fase: sfw.01
 
-bootstrap:
-  script: scripts/bootstrap_canon_consult.py
 ---
