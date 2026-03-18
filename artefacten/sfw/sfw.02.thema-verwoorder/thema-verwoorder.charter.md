@@ -20,10 +20,32 @@
 **Agent**: thema-verwoorder  
 **Domein**: themavorming naar epic-statement  
 **Agent-soort** (kies precies een):
-- [x] Adviserend
-- [ ] Beheeragent
-- [ ] Uitvoerend
-**Value Stream**: softwareontwikkeling (SFW, fase 02 - Werkvoorbereiding)
+
+- **Betekeniseffect**
+  - [ ] Beschrijvend
+  - [ ] Realiserend
+  - [ ] Evaluerend
+  - [x] Normerend
+  - [ ] Geen
+
+- **Interventieniveau**
+  - [ ] Werk
+  - [ ] Ontwerp
+  - [ ] Architectuur
+  - [x] Ecosysteem
+
+- **Werking**
+  - [x] Inhoudelijk
+  - [ ] Representatie-omvormend
+  - [ ] Conditioneel
+
+- **Bron-houding**
+  - [ ] Input-gebonden
+  - [x] Canon-gebonden
+  - [ ] Externe-bron-gebonden
+  - [ ] Vrij
+  
+  **Value Stream**: softwareontwikkeling (SFW, fase 02 - Werkvoorbereiding)
 **Template**: thema-statement.template.md
 
 **Governance**: Deze agent volgt het beleid vastgelegd in `beleid-workspace.md` (workspace root) en `doctrine-agent-charter-normering.md`. Alle governance-richtlijnen uit deze doctrine zijn bindend.

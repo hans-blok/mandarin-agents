@@ -17,29 +17,36 @@ versie: 1.0.0
 ## Classificatie van de agent
 (vink aan wat van toepassing is)
 
-- **Betekeniseffect**
-  - [ ] Beschrijvend
-  - [ ] Realiserend
-  - [ ] Evaluerend
-  - [x] Normerend
-  - [ ] Geen
+## Mandarin-agent-classificatie (4 orthogonale assen)
 
-- **Interventieniveau**
-  - [ ] Werk
-  - [ ] Ontwerp
-  - [ ] Architectuur
-  - [x] Ecosysteem
+- **Vormingsfase** (fase van vorming of ontwikkeling)
+  - [ ] Operationeel in alle fasen
+  - [ ] Verkenning (onderzoeken van intentie, probleemstelling of richting)
+  - [x] Ordening (structureren van intentie en expliciet maken van samenhang)
+  - [ ] Vastlegging (betekenis bindend vaststellen binnen de workspace)
+  - [ ] Realisatie (betekenis werkend maken in systemen of processen)
+  - [ ] Toetsing (gerealiseerd artefact beoordelen tegen een norm)
+  - [ ] Operationalisatie (gerealiseerde structuur formeel in werking stellen)
 
-- **Werking**
-  - [x] Inhoudelijk
-  - [ ] Representatie-omvormend
-  - [ ] Conditioneel
+- **Betekeniseffect** (effect op betekenis)
+  - [ ] Geen betekenis (nul-positie, alleen voor conditionele werking)
+  - [ ] Beschrijvend (documenteert, vooraf en achteraf)
+  - [x] Structurerend (maakt samenhang en relaties expliciet)
+  - [ ] Normerend (normeert structuur en indeling voor realisatie en ook toetsing)
+  - [ ] Vastleggend (realiseert direct gedrag, structuur of configuratie)
+  - [ ] Realiserend (realiseert feitelijk gedrag, structuur of configuratie)
+  - [ ] Evaluerend (legt oordeel of duiding vast, beoordeelt kwaliteit)
 
-- **Bron-houding**
-  - [ ] Input-gebonden
-  - [x] Canon-gebonden
-  - [ ] Externe-bron-gebonden
-  - [ ] Vrij
+- **Werking** (inhoud, representatie of voorwaarden)
+  - [x] Inhoudelijk (werkt direct op betekenisvolle artefacten)
+  - [ ] Representatie-omvormend (zet inhoud om tussen representaties, betekenis-blind)
+  - [ ] Conditioneel (werkt op voorwaarden en hygiëne, niet op inhoud)
+
+- **Bronhouding** (kennisbronnen en herleidbaarheid)
+  - [ ] Input-gebonden (output 100% herleidbaar tot input)
+  - [x] Canon-gebonden (baseert zich expliciet op canon)
+  - [ ] Externe-bron-gebonden (haalt kennis uit externe bronnen, maar wel met kaders)
+  - [ ] Exploratief (gebruikt generatieve capaciteiten, aannames expliciet)
 
 ## Voorstellen agent contracten (intents)
 
