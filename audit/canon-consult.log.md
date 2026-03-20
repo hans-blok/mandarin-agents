@@ -7107,3 +7107,63 @@
 | `grondslagen\aeo` | `mandarin-domeinconcepten.md` |
 | `grondslagen\aeo` | `mandarin-ecosysteem-ordeningsconcepten.md` |
 
+
+---
+
+## Canon Consultation — 2026-03-18T21:34:40
+
+- **Agent**: hypothese-vormer
+- **Value Stream**: sfw
+- **Workspace File**: `artefacten\sfw\sfw.01.hypothese-vormer\prompts\mandarin.hypothese-vormer.beschrijf-hypothese.prompt.md`
+- **Intent**: beschrijf-hypothese
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: 2aa7464
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*`
+- **Charter**: `artefacten\sfw\sfw.01.hypothese-vormer\hypothese-vormer.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen\.algemeen` | `axioma-van-gezag.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `norm-constitutionele-bootstrapping.md` |
+| `grondslagen\.algemeen` | `norm-determnistiscche-runners.md` |
+| `grondslagen\.algemeen` | `review-checklist.md` |
+| `grondslagen\.algemeen` | `verplichte-bootstrap-header.md` |
+| `grondslagen\.algemeen` | `workspace-doctrine.md` |
+
+
+---
+
+## Canon Consultation — 2026-03-20T11:19:05
+
+- **Agent**: hypothese-vormer
+- **Value Stream**: sfw
+- **Workspace File**: `artefacten\sfw\sfw.01.hypothese-vormer\prompts\mandarin.hypothese-vormer.beschrijf-hypothese.prompt.md`
+- **Intent**: beschrijf-hypothese
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: 2aa7464
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*`
+- **Charter**: `artefacten\sfw\sfw.01.hypothese-vormer\hypothese-vormer.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen\.algemeen` | `axioma-van-gezag.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `norm-constitutionele-bootstrapping.md` |
+| `grondslagen\.algemeen` | `norm-determnistiscche-runners.md` |
+| `grondslagen\.algemeen` | `review-checklist.md` |
+| `grondslagen\.algemeen` | `verplichte-bootstrap-header.md` |
+| `grondslagen\.algemeen` | `workspace-doctrine.md` |
+

@@ -50,6 +50,7 @@ def run_generate_instructions(agent_naam: str, intent: str, params: dict):
     if result.returncode == 0:
         # Open in VS Code
         subprocess.run(["code", str(filename)], shell=True)
+        print(f"\n\033[1mEr ligt een execution-file met volledige instructies.\033[0m")
     else:
         print(f"❌ Fout opgetreden bij genereren instructies voor {intent}.", file=sys.stderr)
         sys.exit(result.returncode)

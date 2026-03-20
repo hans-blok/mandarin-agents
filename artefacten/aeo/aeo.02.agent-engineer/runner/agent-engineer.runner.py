@@ -9,6 +9,7 @@ Zuivere intents voor agent lifecycle engineering:
 
 Pipeline orchestratie:
 - pipeline: Voer alle 3 intents sequentieel uit voor een agent
+- execute-from-execution-file: Voer execution-file uit via LLM API
 
 Architectuur: One Agent, One Runner principe.
 Cross-cutting functionaliteit (generate-instructions, merge-tasks) is gemigreerd
@@ -16,13 +17,28 @@ naar ecosysteem-coordinator.runner.py conform de doctrine.
 """
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Optional, Tuple
 import argparse
 import hashlib
 import io
+import json
 import os
+import re
 import subprocess
 import sys
+
+# Optionele imports voor LLM executie
+try:
+    import frontmatter
+    HAS_FRONTMATTER = True
+except ImportError:
+    HAS_FRONTMATTER = False
+
+try:
+    import openai
+    HAS_OPENAI = True
+except ImportError:
+    HAS_OPENAI = False
 
 
 # ==============================================================================
@@ -321,6 +337,483 @@ def pipeline_main(args: argparse.Namespace) -> int:
 
 
 # ==============================================================================
+# EXECUTE-FROM-EXECUTION-FILE: Automated LLM Pipeline
+# ==============================================================================
+
+def parse_execution_file(file_path: Path) -> Tuple[Dict, str]:
+    """
+    Parse execution file met YAML frontmatter.
+    Returns: (metadata dict, instruction content)
+    """
+    if not HAS_FRONTMATTER:
+        raise ImportError("python-frontmatter is vereist. Installeer met: pip install python-frontmatter")
+    
+    post = frontmatter.load(file_path)
+    metadata = dict(post.metadata)
+    content = post.content
+    
+    return metadata, content
+
+
+def determine_output_config(metadata: Dict, workspace_root: Path) -> Dict:
+    """
+    Bepaal output configuratie op basis van agent/intent uit metadata.
+    Leest agent-contract voor output-locatie specificatie.
+    """
+    agent = metadata.get('agent', 'unknown')
+    intent = metadata.get('intent', 'unknown')
+    value_stream_fase = metadata.get('value_stream_fase', 'unknown')
+    
+    # Parse value stream en fase
+    vs_parts = value_stream_fase.split('.')
+    vs = vs_parts[0] if len(vs_parts) >= 1 else 'unknown'
+    fase = vs_parts[1] if len(vs_parts) >= 2 else '01'
+    
+    # Bepaal basis output folder
+    agent_folder = workspace_root / "artefacten" / vs / f"{vs}.{fase}.{agent}"
+    output_folder = agent_folder / "output"
+    
+    # Bepaal code prefix op basis van agent/intent
+    code_prefixes = {
+        'hypothese-vormer': 'HYP',
+        'concept-curator': 'CON',
+        'thema-verwoorder': 'THM',
+        'gedragsspecificator': 'GED',
+    }
+    code_prefix = code_prefixes.get(agent, 'OUT')
+    
+    return {
+        'agent': agent,
+        'intent': intent,
+        'value_stream': vs,
+        'fase': fase,
+        'agent_folder': agent_folder,
+        'output_folder': output_folder,
+        'code_prefix': code_prefix,
+    }
+
+
+def generate_output_code(output_folder: Path, code_prefix: str) -> str:
+    """
+    Genereer unieke output code: {PREFIX}-{YYYYMMDD}-{seq}
+    Scant bestaande bestanden voor volgende sequence nummer.
+    """
+    today = datetime.now().strftime('%Y%m%d')
+    pattern = f"{code_prefix}-{today}-"
+    
+    # Zoek bestaande bestanden met zelfde prefix en datum
+    existing_seqs = []
+    if output_folder.exists():
+        for f in output_folder.glob(f"*{pattern}*.md"):
+            # Extract sequence nummer uit bestandsnaam
+            match = re.search(rf'{pattern}(\d+)', f.name)
+            if match:
+                existing_seqs.append(int(match.group(1)))
+    
+    # Bepaal volgende sequence (start bij 01)
+    next_seq = max(existing_seqs, default=0) + 1
+    
+    return f"{code_prefix}-{today}-{next_seq:02d}"
+
+
+def call_llm_api(system_prompt: str, user_prompt: str, model: str = None) -> str:
+    """
+    Roep LLM API aan (OpenAI/Azure OpenAI).
+    Configuratie via environment variables:
+    - OPENAI_API_KEY: API key
+    - OPENAI_MODEL: Model naam (default: gpt-4o)
+    - AZURE_OPENAI_ENDPOINT: Azure endpoint (optioneel)
+    - AZURE_OPENAI_API_VERSION: Azure API version (optioneel)
+    """
+    if not HAS_OPENAI:
+        raise ImportError("openai package is vereist. Installeer met: pip install openai")
+    
+    api_key = os.environ.get('OPENAI_API_KEY')
+    if not api_key:
+        raise ValueError("OPENAI_API_KEY environment variable niet gezet")
+    
+    model = model or os.environ.get('OPENAI_MODEL', 'gpt-4o')
+    azure_endpoint = os.environ.get('AZURE_OPENAI_ENDPOINT')
+    
+    if azure_endpoint:
+        # Azure OpenAI
+        api_version = os.environ.get('AZURE_OPENAI_API_VERSION', '2024-02-15-preview')
+        client = openai.AzureOpenAI(
+            api_key=api_key,
+            api_version=api_version,
+            azure_endpoint=azure_endpoint
+        )
+    else:
+        # Standard OpenAI
+        client = openai.OpenAI(api_key=api_key)
+    
+    response = client.chat.completions.create(
+        model=model,
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ],
+        temperature=0.3,
+        max_tokens=4000
+    )
+    
+    return response.choices[0].message.content
+
+
+def write_audit_log(audit_path: Path, execution_id: str, agent: str, intent: str,
+                    input_files: List[str], output_files: List[str], 
+                    output_code: str, success: bool, error_msg: str = None):
+    """Schrijf audit log bestand."""
+    audit_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    
+    content = f"""---
+execution_id: {execution_id}
+agent: {agent}
+intent: {intent}
+timestamp: {timestamp}
+success: {success}
+output_code: {output_code}
+---
+
+# Execution Audit Log
+
+**Execution ID**: {execution_id}
+**Agent**: {agent}
+**Intent**: {intent}
+**Timestamp**: {timestamp}
+**Status**: {'SUCCESS' if success else 'FAILED'}
+
+## Input Files
+"""
+    for f in input_files:
+        content += f"- `{f}`\n"
+    
+    content += "\n## Output Files\n"
+    for f in output_files:
+        content += f"- `{f}`\n"
+    
+    if error_msg:
+        content += f"\n## Error\n```\n{error_msg}\n```\n"
+    
+    audit_path.write_text(content, encoding='utf-8')
+
+
+def execute_from_execution_file_main(args: argparse.Namespace) -> int:
+    """
+    Main functie voor execute-from-execution-file subcommand.
+    
+    Workflow:
+    1. Lees execution-file en parse YAML frontmatter
+    2. Bepaal agent-context en output-locaties
+    3. Genereer unieke output code
+    4. Roep LLM API aan met instructies
+    5. Schrijf output bestanden weg
+    6. Schrijf audit log
+    """
+    execution_file = Path(args.execution_file).resolve()
+    
+    if not execution_file.exists():
+        print(f"ERROR: Execution file niet gevonden: {execution_file}")
+        return 1
+    
+    # Bepaal workspace root
+    workspace_root = Path(__file__).resolve().parent.parent.parent.parent.parent
+    if not (workspace_root / "artefacten").exists():
+        workspace_root = Path.cwd()
+    
+    print("=" * 80)
+    print("EXECUTE FROM EXECUTION FILE")
+    print("=" * 80)
+    print(f"Execution file: {execution_file}")
+    print()
+    
+    input_files = [str(execution_file)]
+    output_files = []
+    output_code = "UNKNOWN"
+    
+    try:
+        # 1. Parse execution file
+        print("[1/6] Parsing execution file...")
+        metadata, instruction_content = parse_execution_file(execution_file)
+        
+        execution_id = metadata.get('execution_id', 'unknown')
+        agent = metadata.get('agent', 'unknown')
+        intent = metadata.get('intent', 'unknown')
+        
+        print(f"      Execution ID: {execution_id}")
+        print(f"      Agent: {agent}")
+        print(f"      Intent: {intent}")
+        print()
+        
+        # 2. Bepaal output configuratie
+        print("[2/6] Determining output configuration...")
+        output_config = determine_output_config(metadata, workspace_root)
+        output_folder = output_config['output_folder']
+        code_prefix = output_config['code_prefix']
+        
+        print(f"      Output folder: {output_folder}")
+        print(f"      Code prefix: {code_prefix}")
+        print()
+        
+        # 3. Genereer output code
+        print("[3/6] Generating output code...")
+        output_code = generate_output_code(output_folder, code_prefix)
+        print(f"      Output code: {output_code}")
+        print()
+        
+        # 4. Bouw prompts en roep LLM aan
+        print("[4/6] Calling LLM API...")
+        
+        system_prompt = f"""Je bent de agent {agent}, intent {intent}.
+Volg de instructies exact zoals beschreven in het agent charter en contract.
+Genereer output volgens het gespecificeerde formaat.
+Gebruik de volgende output code: {output_code}
+Datum: {datetime.now().strftime('%Y-%m-%d')}
+
+BELANGRIJK:
+- Volg het exacte output-formaat uit het contract
+- Gebruik de gegeven output code ({output_code}) in het document
+- Lever alleen de markdown content, geen extra uitleg"""
+        
+        user_prompt = instruction_content
+        
+        if args.dry_run:
+            print("      [DRY-RUN] Zou LLM aanroepen met:")
+            print(f"      System prompt: {len(system_prompt)} chars")
+            print(f"      User prompt: {len(user_prompt)} chars")
+            llm_response = f"[DRY-RUN] Output zou hier komen voor {output_code}"
+        else:
+            model = args.model if hasattr(args, 'model') else None
+            llm_response = call_llm_api(system_prompt, user_prompt, model)
+        
+        print(f"      Response length: {len(llm_response)} chars")
+        print()
+        
+        # 5. Schrijf output bestanden
+        print("[5/6] Writing output files...")
+        
+        # Maak output folder aan
+        output_folder.mkdir(parents=True, exist_ok=True)
+        
+        # Bepaal output bestandsnaam op basis van agent
+        output_filename_templates = {
+            'hypothese-vormer': f"hypothese-{output_code}.md",
+            'concept-curator': f"concept-{output_code}.md",
+            'thema-verwoorder': f"thema-{output_code}.md",
+            'gedragsspecificator': f"gedrag-{output_code}.md",
+        }
+        output_filename = output_filename_templates.get(agent, f"output-{output_code}.md")
+        output_path = output_folder / output_filename
+        
+        if not args.dry_run:
+            output_path.write_text(llm_response, encoding='utf-8')
+        
+        output_files.append(str(output_path))
+        print(f"      Output: {output_path}")
+        print()
+        
+        # 6. Schrijf audit log
+        print("[6/6] Writing audit log...")
+        
+        timestamp = datetime.now().strftime('%Y%m%d-%H%M')
+        audit_filename = f"{agent}-{timestamp}.log.md"
+        audit_path = workspace_root / "audit" / audit_filename
+        
+        if not args.dry_run:
+            write_audit_log(
+                audit_path, execution_id, agent, intent,
+                input_files, output_files, output_code, 
+                success=True
+            )
+        
+        output_files.append(str(audit_path))
+        print(f"      Audit log: {audit_path}")
+        print()
+        
+        # Samenvatting
+        print("=" * 80)
+        print("EXECUTION COMPLETE")
+        print("=" * 80)
+        print(f"Execution ID:  {execution_id}")
+        print(f"Output Code:   {output_code}")
+        print(f"Output File:   {output_path}")
+        print(f"Audit Log:     {audit_path}")
+        print()
+        
+        if not args.dry_run:
+            # Open output in VS Code
+            subprocess.run(["code", str(output_path)], shell=True)
+        
+        return 0
+        
+    except ImportError as e:
+        print(f"ERROR: {e}")
+        return 1
+    except ValueError as e:
+        print(f"ERROR: {e}")
+        return 1
+    except Exception as e:
+        print(f"ERROR: Unexpected error: {e}")
+        
+        # Schrijf fout naar audit log
+        timestamp = datetime.now().strftime('%Y%m%d-%H%M')
+        audit_filename = f"{metadata.get('agent', 'unknown')}-{timestamp}.log.md"
+        audit_path = workspace_root / "audit" / audit_filename
+        
+        if not args.dry_run:
+            write_audit_log(
+                audit_path, metadata.get('execution_id', 'unknown'),
+                metadata.get('agent', 'unknown'), metadata.get('intent', 'unknown'),
+                input_files, output_files, output_code,
+                success=False, error_msg=str(e)
+            )
+        
+        return 1
+
+
+# ==============================================================================
+# SAVE-OUTPUT: Handmatige LLM output opslaan
+# ==============================================================================
+
+def save_output_main(args: argparse.Namespace) -> int:
+    """
+    Sla handmatig gegenereerde LLM output op.
+    
+    Workflow:
+    1. Lees execution-file voor metadata (agent, intent, execution_id)
+    2. Lees output van temp/output-pending.md of --from-file
+    3. Genereer unieke output code
+    4. Schrijf naar juiste output folder
+    5. Schrijf audit log
+    """
+    execution_file = Path(args.execution_file).resolve()
+    
+    if not execution_file.exists():
+        print(f"ERROR: Execution file niet gevonden: {execution_file}")
+        return 1
+    
+    # Bepaal workspace root
+    workspace_root = Path(__file__).resolve().parent.parent.parent.parent.parent
+    if not (workspace_root / "artefacten").exists():
+        workspace_root = Path.cwd()
+    
+    # Bepaal output source
+    if args.from_file:
+        output_source = Path(args.from_file).resolve()
+    else:
+        output_source = workspace_root / "temp" / "output-pending.md"
+    
+    if not output_source.exists():
+        print(f"ERROR: Output bestand niet gevonden: {output_source}")
+        print()
+        print("Plak je LLM output in één van deze locaties:")
+        print(f"  1. {workspace_root / 'temp' / 'output-pending.md'}")
+        print(f"  2. Of gebruik: --from-file <pad>")
+        return 1
+    
+    print("=" * 80)
+    print("SAVE OUTPUT")
+    print("=" * 80)
+    print(f"Execution file: {execution_file}")
+    print(f"Output source:  {output_source}")
+    print()
+    
+    input_files = [str(execution_file), str(output_source)]
+    output_files = []
+    
+    try:
+        # 1. Parse execution file
+        print("[1/5] Parsing execution file...")
+        metadata, _ = parse_execution_file(execution_file)
+        
+        execution_id = metadata.get('execution_id', 'unknown')
+        agent = metadata.get('agent', 'unknown')
+        intent = metadata.get('intent', 'unknown')
+        
+        print(f"      Execution ID: {execution_id}")
+        print(f"      Agent: {agent}")
+        print(f"      Intent: {intent}")
+        print()
+        
+        # 2. Lees output content
+        print("[2/5] Reading output content...")
+        output_content = output_source.read_text(encoding='utf-8')
+        print(f"      Content length: {len(output_content)} chars")
+        print()
+        
+        # 3. Bepaal output configuratie en genereer code
+        print("[3/5] Determining output location...")
+        output_config = determine_output_config(metadata, workspace_root)
+        output_folder = output_config['output_folder']
+        code_prefix = output_config['code_prefix']
+        output_code = generate_output_code(output_folder, code_prefix)
+        
+        print(f"      Output folder: {output_folder}")
+        print(f"      Output code: {output_code}")
+        print()
+        
+        # 4. Schrijf output bestand
+        print("[4/5] Writing output file...")
+        output_folder.mkdir(parents=True, exist_ok=True)
+        
+        output_filename_templates = {
+            'hypothese-vormer': f"hypothese-{output_code}.md",
+            'concept-curator': f"concept-{output_code}.md",
+            'thema-verwoorder': f"thema-{output_code}.md",
+            'gedragsspecificator': f"gedrag-{output_code}.md",
+        }
+        output_filename = output_filename_templates.get(agent, f"output-{output_code}.md")
+        output_path = output_folder / output_filename
+        
+        output_path.write_text(output_content, encoding='utf-8')
+        output_files.append(str(output_path))
+        print(f"      Saved: {output_path}")
+        print()
+        
+        # 5. Schrijf audit log
+        print("[5/5] Writing audit log...")
+        timestamp = datetime.now().strftime('%Y%m%d-%H%M')
+        audit_filename = f"{agent}-{timestamp}.log.md"
+        audit_path = workspace_root / "audit" / audit_filename
+        
+        write_audit_log(
+            audit_path, execution_id, agent, intent,
+            input_files, output_files, output_code,
+            success=True
+        )
+        output_files.append(str(audit_path))
+        print(f"      Audit log: {audit_path}")
+        print()
+        
+        # Cleanup: verwijder output-pending.md als dat de source was
+        if not args.from_file and not args.keep_source:
+            output_source.unlink()
+            print(f"      Cleaned up: {output_source}")
+            print()
+        
+        # Samenvatting
+        print("=" * 80)
+        print("OUTPUT SAVED")
+        print("=" * 80)
+        print(f"Execution ID:  {execution_id}")
+        print(f"Output Code:   {output_code}")
+        print(f"Output File:   {output_path}")
+        print(f"Audit Log:     {audit_path}")
+        print()
+        
+        # Open output in VS Code
+        subprocess.run(["code", str(output_path)], shell=True)
+        
+        return 0
+        
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return 1
+
+
+# ==============================================================================
 # MAIN ENTRY POINT
 # ==============================================================================
 
@@ -358,6 +851,20 @@ def main():
     p_pipeline.add_argument("--dry-run", action="store_true", help="Toon wat uitgevoerd zou worden")
     p_pipeline.add_argument("--skip-bootstrap", action="store_true", help="Skip canon bootstrap")
 
+    # execute-from-execution-file
+    p_exec = subparsers.add_parser("execute-from-execution-file",
+                                    help="Voer execution-file uit via LLM API")
+    p_exec.add_argument("execution_file", type=str, help="Pad naar execution-file (.md)")
+    p_exec.add_argument("--model", type=str, help="LLM model (default: gpt-4o of OPENAI_MODEL env var)")
+    p_exec.add_argument("--dry-run", action="store_true", help="Toon wat uitgevoerd zou worden zonder LLM aan te roepen")
+
+    # save-output
+    p_save = subparsers.add_parser("save-output",
+                                    help="Sla handmatig gegenereerde LLM output op")
+    p_save.add_argument("execution_file", type=str, help="Pad naar execution-file (.md) voor metadata")
+    p_save.add_argument("--from-file", type=str, help="Pad naar bestand met output (default: temp/output-pending.md)")
+    p_save.add_argument("--keep-source", action="store_true", help="Verwijder source bestand niet na opslaan")
+
     args = parser.parse_args()
 
     if args.intent == "pipeline":
@@ -366,6 +873,10 @@ def main():
         if args.agent and args.all:
             parser.error("Gebruik óf agent naam óf --all, niet beide")
         sys.exit(pipeline_main(args))
+    elif args.intent == "execute-from-execution-file":
+        sys.exit(execute_from_execution_file_main(args))
+    elif args.intent == "save-output":
+        sys.exit(save_output_main(args))
     else:
         # Standaard intents: roep ecosysteem-coordinator aan via run_generate_instructions
         params_dict = vars(args).copy()
