@@ -36,8 +36,8 @@ versie: 1.0.0
 - **Bron-houding**
    - [x] Input-gebonden
    - [ ] Canon-gebonden
-   - [ ] Externe-bron-gebonden
-   - [ ] Vrij
+   - [ ] Externe-bron gebonden
+   - [ ] Exploratief
 
 **Classificatie-validatie (verplicht):**
 - [x] Gekozen as-posities zijn onderling compatibel volgens `mandarin-classificatie-matrices.md`

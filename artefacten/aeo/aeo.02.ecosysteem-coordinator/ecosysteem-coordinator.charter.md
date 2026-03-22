@@ -42,7 +42,7 @@ governance: Volgt beleid-workspace.md en doctrine-agent-charter-normering.md
 - **Bronhouding** (kennisbronnen en herleidbaarheid)
   - [x] Input-gebonden (output 100% herleidbaar tot input)
   - [ ] Canon-gebonden (baseert zich expliciet op canon)
-  - [ ] Externe-bron-gebonden (haalt kennis uit externe bronnen, maar wel met kaders)
+  - [ ] Externe-bron gebonden (haalt kennis uit externe bronnen, maar wel met kaders)
   - [ ] Exploratief (gebruikt generatieve capaciteiten, aannames expliciet)
 
 **Classificatie-validatie (verplicht):**
@@ -89,9 +89,9 @@ De ecosysteem-coordinator fungeert als infrastructurele laag die alle agents ond
    Combineert canon-context, agent charter, contract en prompt templates tot execution-ready instructiebestanden met volledige metadata.
    → Intent: `genereer-instructies`
 
-3. **Aggregeren van configuraties**  
-   Scant alle agent-specifieke task-bestanden en merget deze naar één globale `.vscode/tasks.json` voor uniforme toegang via VS Code.
-   → Intent: `merge-configuraties`
+3. **Activeren van workspace-configuratie**  
+   Leest de geconfigureerde `value_stream-fasen` uit `beleid-workspace.md` en merget alle bijbehorende task-bestanden naar één globale `.vscode/tasks.json`. Geen parameters vereist; scope wordt volledig bepaald door het beleid.
+   → Intent: `activeer-workspace-configuratie`
 
 4. **Valideren van agent-structuur**  
    Controleert of agent-folders voldoen aan doctrine-voorgeschreven structuur (naamgeving, verplichte bestanden, folder-indeling).
@@ -143,13 +143,14 @@ De ecosysteem-coordinator fungeert als infrastructurele laag die alle agents ond
 6. Write output naar execution_file pad
 7. Append naar `audit/agent-instructions.log.md`
 
-**merge-configuraties:**
-1. Scan .vscode/tasks/ en artefacten/**/tasks/ voor JSON bestanden
-2. Pas optionele filters toe
-3. Parse en valideer JSON structuren
-4. Merge tasks en inputs arrays met deduplicatie
-5. Write samengevoegde tasks.json
-6. Report bronbestanden en task-counts
+**activeer-workspace-configuratie:**
+1. Lees `value_stream-fasen` uit `beleid-workspace.md` frontmatter
+2. Scan artefacten/**/tasks/ voor JSON bestanden per geconfigureerde fase
+3. Scan .vscode/tasks/ voor handmatige task-bestanden
+4. Parse en valideer JSON structuren
+5. Merge tasks en inputs arrays met deduplicatie
+6. Write samengevoegde tasks.json naar .vscode/tasks.json
+7. Report bronbestanden, fasen en task-counts
 
 **valideer-agent-structuur:**
 1. Scan artefacten/ voor agent folders
@@ -173,9 +174,9 @@ Dit charter is traceerbaar naar de volgende agent-contracten en prompt-metadata:
   - Prompt-metadata: `artefacten/aeo/aeo.02.ecosysteem-coordinator/prompts/mandarin.ecosysteem-coordinator.genereer-instructies.prompt.md`
   - Template: `-`
 
-- Intent: `merge-configuraties`
-  - Agent-contract: `artefacten/aeo/aeo.02.ecosysteem-coordinator/agent-contracten/ecosysteem-coordinator.merge-configuraties.agent.md`
-  - Prompt-metadata: `artefacten/aeo/aeo.02.ecosysteem-coordinator/prompts/mandarin.ecosysteem-coordinator.merge-configuraties.prompt.md`
+- Intent: `activeer-workspace-configuratie`
+  - Agent-contract: `artefacten/aeo/aeo.02.ecosysteem-coordinator/agent-contracten/ecosysteem-coordinator.activeer-workspace-configuratie.agent.md`
+  - Prompt-metadata: `artefacten/aeo/aeo.02.ecosysteem-coordinator/prompts/mandarin.ecosysteem-coordinator.activeer-workspace-configuratie.prompt.md`
   - Template: `-`
 
 - Intent: `valideer-agent-structuur`
@@ -215,7 +216,7 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 - Bronnen geïntegreerd:
   - Canon consultatie functionaliteit is geïntegreerd in `ecosysteem-coordinator.runner.py`
   - `generate_instructions.py` (voorheen in agent-engineer) → intent `genereer-instructies`
-  - `merge_tasks.py` (voorheen in agent-engineer) → intent `merge-configuraties`
+  - `merge_tasks.py` (voorheen in agent-engineer) → intent `activeer-workspace-configuratie`
   - Nieuw: intent `valideer-agent-structuur`
 
 ## 11. Change Log

@@ -67,8 +67,8 @@ Raadpleeg mandarin-ecosysteem-ordeningsconcepten.md voor definities en voorbeeld
 - Rapporteert gerealiseerde artefacten en meldt fouten als "build failures"
 
 **Welke inputs verwacht de agent?**
-- Workspace-specificaties: agent boundaries, intents, routing-configuratie
-- Bestaande workspace-bestanden binnen scope (bijv. outputs van agent-smeder)
+- Agent-contracten: intent-definitie, parameters en routing per agent (automatisch gedetecteerd via workspace-conventie)
+- Bestaande workspace-bestanden binnen scope (bijv. outputs van agent-ontwerper)
 - Naamgevings- en structuurconventies binnen de workspace
 
 **Welke outputs levert de agent?**

@@ -42,8 +42,8 @@
 - **Bron-houding**
   - [ ] Input-gebonden
   - [x] Canon-gebonden
-  - [ ] Externe-bron-gebonden
-  - [ ] Vrij
+  - [ ] Externe-bron gebonden
+  - [ ] Exploratief
   
   **Value Stream**: softwareontwikkeling (SFW, fase 02 - Werkvoorbereiding)
 **Template**: thema-statement.template.md

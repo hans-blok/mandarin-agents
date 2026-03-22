@@ -39,6 +39,15 @@ De Capability-architect levert:
 
 **Deliverable bestand**: `artefacten/{vs}/{vs}.{fase}.{agent}/{agent}.agent-boundary.md`
 
+**Output-specificatie**:
+```yaml
+intent: definieer-agent-boundary
+output:
+  - type: agent-boundary
+    herkomstpositie: initiërend
+    template: artefacten/aeo/aeo.02.capability-architect/templates/agent-boundary.template.md
+```
+
 **VERPLICHT**: Het bestand MOET worden weggeschreven naar de workspace (niet alleen voorgesteld).
 
 **Bestandsformaat vereisten**:
@@ -156,11 +165,13 @@ De Capability-architect:
 ## Governance
 
 **Doctrine-naleving:**
-- **doctrine-agent-charter-normering.md** (v2.1.0, AEO.DOC.001):
+- **doctrine-agent-charter-normering.md** (v2.4.0, AEO.DOC.001):
   - Principe 1 (Identiteit vóór Implementatie): Boundary definieert externe kenmerken
   - Principe 2 (Eenduidige Verantwoordelijkheid): Eén capability per agent
   - Principe 7 (Transparante Verantwoording): Definitiekeuzes gedocumenteerd
   - Principe 9 (Output-formaat Normering): Markdown als default
+  - Richtlijn herkomstpositie: Output-specificatie bevat `herkomstpositie: initiërend`
+- **doctrine-traceability.md** (v1.1.0): Herkomstpositie `initiërend` — boundary-document start een nieuwe artefact-keten; runner genereert een nieuwe herkomstcode
 - **doctrine-werkwoorden-intents.md**: Werkwoord "definieer" voor structurerende definitie
 
 **Canon-consultatie:**

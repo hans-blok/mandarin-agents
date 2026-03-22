@@ -1,6 +1,7 @@
 # Verbetervoorstellen: {thema_code}
 
 ## Broncontext
+**Hypothese-code**: {hypothese_code}  
 **Thema-code**: {thema_code}  
 **Toelichting**: {toelichting}
 

@@ -9,6 +9,7 @@ agents:
   - .github/prompts/mandarin.agent-curator.rapporteer-prompts-overzicht.prompt.md
   - .github/prompts/mandarin.agent-curator.valideer-agent-consistentie.prompt.md
   - .github/prompts/mandarin.agent-curator.valideer-boundary-overlap.prompt.md
+  - .github/prompts/mandarin.agent-curator.valideer-runner-contract-consistentie.prompt.md
   runners: []
 - id: agent-engineer
   name: workspace.agent-engineer
@@ -38,14 +39,25 @@ agents:
   prompts:
   - .github/prompts/mandarin.capability-architect.definieer-agent-boundary.prompt.md
   runners: []
+- id: ecosysteem-beschrijver
+  name: workspace.ecosysteem-beschrijver
+  type: uitvoerend
+  valueStream: aeo
+  charter: artefacten/aeo/aeo.02.ecosysteem-beschrijver/ecosysteem-beschrijver.charter.md
+  prompts:
+  - .github/prompts/mandarin.ecosysteem-beschrijver.beschrijf-agent-positionering.prompt.md
+  - .github/prompts/mandarin.ecosysteem-beschrijver.beschrijf-ecosysteem-artefacten.prompt.md
+  - .github/prompts/mandarin.ecosysteem-beschrijver.beschrijf-ecosysteem-contracten.prompt.md
+  - .github/prompts/mandarin.ecosysteem-beschrijver.beschrijf-ecosysteem-value-streams-agents.prompt.md
+  runners: []
 - id: ecosysteem-coordinator
   name: workspace.ecosysteem-coordinator
   type: uitvoerend
   valueStream: aeo
   charter: artefacten/aeo/aeo.02.ecosysteem-coordinator/ecosysteem-coordinator.charter.md
   prompts:
+  - .github/prompts/mandarin.ecosysteem-coordinator.activeer-workspace-configuratie.prompt.md
   - .github/prompts/mandarin.ecosysteem-coordinator.consulteer-canon.prompt.md
   - .github/prompts/mandarin.ecosysteem-coordinator.genereer-instructies.prompt.md
-  - .github/prompts/mandarin.ecosysteem-coordinator.merge-configuraties.prompt.md
   - .github/prompts/mandarin.ecosysteem-coordinator.valideer-agent-structuur.prompt.md
   runners: []

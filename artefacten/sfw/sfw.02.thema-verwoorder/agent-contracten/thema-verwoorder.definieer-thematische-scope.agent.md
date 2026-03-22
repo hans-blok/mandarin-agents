@@ -6,13 +6,16 @@ Deze intent beschrijft het afbakenen en documenteren van de thematische scope bi
 ## Contract
 ### Input (wat gaat erin)
 **Verplichte parameters**:
-- hypothese_bestand: string, bestandsnaam van de hypothese (volledige pad of relatieve pad)
+- hypothese_code: string, de unieke hypothese-code in formaat jjmm.HHHH (bijv. 2603.H9XJ)
+- hypothese_bestand: string, bestandsnaam van het hypothese-document (volledige pad of relatieve pad)
 - auteur: string, naam van de auteur
 
 **Optionele parameters**:
 - toelichting: string, aanvullende tekstuele toelichting
 
-**Opmerking**: De agent leest het hypothese-bestand, analyseert de inhoud, en bepaalt zelf:
+**Opmerking**:
+- De hypothese-code komt rechtstreeks uit de hypothese-vormer (bestand `hypothese-<hypothese_code>.md`) en moet onveranderd worden overgenomen in alle vervolgdocumenten waarin deze hypothese wordt gebruikt.
+- De agent leest het hypothese-bestand, analyseert de inhoud, en bepaalt zelf:
 - Thema-code (korte unieke identificatiecode voor het thema)
 - Titel voor het thema
 - Relevante epics

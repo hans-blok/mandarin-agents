@@ -1,6 +1,7 @@
 # Epic: {epic_titel}
 
 ## Broncontext
+**Hypothese-code**: {hypothese_code}  
 **Thema-code**: {thema_code}
 
 ---

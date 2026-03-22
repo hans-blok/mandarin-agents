@@ -44,7 +44,8 @@ Raadpleeg mandarin-ecosysteem-ordeningsconcepten.md voor definities en voorbeeld
   - [ ] Ordening (structureren van intentie en expliciet maken van samenhang)
   - [ ] Vastlegging (betekenis bindend vaststellen binnen de workspace)
   - [ ] Realisatie (betekenis werkend maken in systemen of processen)
-  - [ ] Toetsing (gerealiseerd artefact beoordelen tegen een norm)
+   - [ ] Toetsing (gerealiseerd artefact beoordelen tegen een norm)
+  - [ ] Verantwoording (documenteren, traceerbaarheid expliciteren, contextualiseren)
   - [ ] Operationalisatie (gerealiseerde structuur formeel in werking stellen)
 
 - **Betekeniseffect** (effect op betekenis)
@@ -61,7 +62,7 @@ Raadpleeg mandarin-ecosysteem-ordeningsconcepten.md voor definities en voorbeeld
   - [ ] Inhoudelijk (werkt direct op betekenisvolle artefacten)
   - [ ] Representatie-omvormend (zet inhoud om tussen representaties, betekenis-blind)
   - [ ] Conditioneel (werkt op voorwaarden en hygiëne, niet op inhoud)
-
+ 
 - **Bronhouding** (kennisbronnen en herleidbaarheid)
   - [ ] Input-gebonden (output 100% herleidbaar tot input)
   - [ ] Canon-gebonden (baseert zich expliciet op canon)

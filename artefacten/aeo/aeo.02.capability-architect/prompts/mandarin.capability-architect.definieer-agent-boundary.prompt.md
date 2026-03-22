@@ -1,6 +1,7 @@
 ---
 agent: mandarin.capability-architect
 intent: definieer-agent-boundary
+bronhouding: Exploratief
 versie: 1.0.0
 input_parameters:
   - agent_naam

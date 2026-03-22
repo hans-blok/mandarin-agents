@@ -1,6 +1,7 @@
 ---
 agent: mandarin.agent-curator
 intent: valideer-boundary-overlap
+bronhouding: Canon-gebonden
 versie: 1.0.0
 input_parameters:
   - value_stream_fase

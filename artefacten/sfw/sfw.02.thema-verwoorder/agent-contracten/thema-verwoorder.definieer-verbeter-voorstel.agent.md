@@ -6,13 +6,16 @@ Deze intent beschrijft het genereren van meerdere verbetervoorstellen voor een t
 ## Contract
 ### Input (wat gaat erin)
 **Verplichte parameters**:
+- hypothese_code: string, de unieke hypothese-code in formaat jjmm.HHHH (bijv. 2603.H9XJ)
 - thema_code: string, unieke identificatiecode van het thema
 - auteur: string, naam van de auteur
 
 **Optionele parameters**:
 - toelichting: string, vrije tekst met aanvullende context of richting
 
-**Opmerking**: De agent:
+**Opmerking**:
+- De hypothese-code wordt als vaste referentie gebruikt in alle verbetervoorstellen, zodat duidelijk blijft op welke oorspronkelijke hypothese de voorgestelde verbeteringen terug te voeren zijn.
+- De agent:
 1. Zoekt de thematische scope op basis van de thema_code (artefacten/sfw/sfw.02.thema-verwoorder/scopes/)
 2. Zoekt gerelateerde epic structuren (artefacten/sfw/sfw.02.thema-verwoorder/epics/)
 3. Analyseert de context en bedenkt zelf meerdere verbetervoorstellen

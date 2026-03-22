@@ -42,7 +42,7 @@ governance: Volgt beleid-workspace.md (inclusief canon-raadpleging zoals daar va
 - **Bronhouding** (kennisbronnen en herleidbaarheid)
   - [ ] Input-gebonden (output 100% herleidbaar tot input)
   - [x] Canon-gebonden (baseert zich expliciet op canon)
-  - [ ] Externe-bron-gebonden (haalt kennis uit externe bronnen, maar wel met kaders)
+  - [ ] Externe-bron gebonden (haalt kennis uit externe bronnen, maar wel met kaders)
   - [ ] Exploratief (gebruikt generatieve capaciteiten, aannames expliciet)
 
 **Classificatie-validatie (verplicht):**

@@ -58,7 +58,8 @@ theme:
 # ------------------------------------------------------------
 extra_css: []
 
-extra_javascript: []
+extra_javascript:
+  - https://unpkg.com/mermaid@11/dist/mermaid.min.js
 
 # ------------------------------------------------------------
 # 5. Plugins
@@ -101,7 +102,11 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.mark
   - pymdownx.smartsymbols
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.tasklist:

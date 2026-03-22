@@ -80,7 +80,7 @@ versie: 1.0.0
 
 - `consulteer-canon` — Raadpleeg mandarin-canon, log commit SHA, retourneer grondslagen
 - `genereer-instructies` — Assembleer execution-bestand uit canon + charter + contract + prompt
-- `merge-configuraties` — Voeg agent-specifieke tasks samen naar globale tasks.json
+- `activeer-workspace-configuratie` — Voeg agent-specifieke tasks samen naar globale tasks.json op basis van beleid-workspace.md
 - `valideer-agent-structuur` — Controleer doctrine-compliance van agent-folders
 
 ---

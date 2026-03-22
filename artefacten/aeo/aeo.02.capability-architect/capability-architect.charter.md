@@ -15,11 +15,15 @@
    - [x] Normerend
    - [ ] Geen
 
-- **Interventieniveau**
-   - [ ] Werk
-   - [ ] Ontwerp
-   - [x] Architectuur
-   - [ ] Ecosysteem
+ **Vormingsfase** (fase van vorming of ontwikkeling)
+  - [ ] Operationeel in alle fasen
+  - [ ] Verkenning (onderzoeken van intentie, probleemstelling of richting)
+  - [x] Ordening (structureren van intentie en expliciet maken van samenhang)
+  - [ ] Vastlegging (betekenis bindend vaststellen binnen de workspace)
+  - [ ] Realisatie (betekenis werkend maken in systemen of processen)
+   - [ ] Toetsing (gerealiseerd artefact beoordelen tegen een norm)
+  - [ ] Verantwoording (documenteren, traceerbaarheid expliciteren, contextualiseren)
+  - [ ] Operationalisatie (gerealiseerde structuur formeel in werking stellen)
 
 - **Werking**
    - [x] Inhoudelijk
@@ -28,9 +32,10 @@
 
 - **Bron-houding**
    - [ ] Input-gebonden
-   - [x] Canon-gebonden
-   - [ ] Externe-bron-gebonden
-   - [ ] Vrij
+   - [ ] Canon-gebonden
+   - [ ] Workspace-gebonden
+   - [ ] Externe-bron gebonden
+   - [x] Exploratief
 
 **Classificatie-validatie (verplicht):**
 - [x] Gekozen as-posities zijn onderling compatibel volgens `mandarin-classificatie-matrices.md`

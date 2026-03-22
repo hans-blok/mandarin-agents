@@ -69,6 +69,24 @@
       }
     },
     {
+      "label": "aeo.02 - agent-curator: valideer-runner-contract-consistentie",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/aeo/aeo.02.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
+        "genereer-instructies",
+        "--agent", "agent-curator",
+        "--intent", "valideer-runner-contract-consistentie",
+        "-p", "agent_naam=${input:in_agent_curator_valideer_runner_contract_agent_naam}",
+        "-p", "value_stream_fase=${input:in_agent_curator_valideer_runner_contract_value_stream_fase}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
       "label": "aeo.02 - agent-curator: publiceer-json",
       "type": "process",
       "command": "python",
@@ -112,6 +130,18 @@
       "id": "in_agent_curator_valideer_boundary_overlap_value_stream_fase",
       "type": "promptString",
       "description": "Value stream fase (bijv. aeo.02)"
+    },
+    {
+      "id": "in_agent_curator_valideer_runner_contract_agent_naam",
+      "type": "promptString",
+      "description": "Agent naam om te toetsen (leeg = alle agents in fase)",
+      "default": ""
+    },
+    {
+      "id": "in_agent_curator_valideer_runner_contract_value_stream_fase",
+      "type": "promptString",
+      "description": "Value stream fase (bijv. aeo.02)",
+      "default": "aeo.02"
     }
   ]
 }

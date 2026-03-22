@@ -74,6 +74,7 @@ versie: 1.0.0
 - rapporteer-ecosysteem-overzicht
 - rapporteer-prompts-overzicht
 - valideer-boundary-overlap
+- valideer-runner-contract-consistentie
 
 ## Zorgt voor
 

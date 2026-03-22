@@ -1,6 +1,7 @@
 ---
 agent: mandarin.ecosysteem-coordinator
 intent: consulteer-canon
+bronhouding: Input-gebonden
 versie: 1.0.0
 input_parameters:
   - agent

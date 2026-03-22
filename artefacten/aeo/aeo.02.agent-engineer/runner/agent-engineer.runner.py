@@ -26,6 +26,8 @@ import os
 import re
 import subprocess
 import sys
+import random
+import string
 
 # Optionele imports voor LLM executie
 try:
@@ -393,14 +395,30 @@ def determine_output_config(metadata: Dict, workspace_root: Path) -> Dict:
     }
 
 
-def generate_output_code(output_folder: Path, code_prefix: str) -> str:
+def generate_output_code(output_folder: Path, code_prefix: str, agent: str = None) -> str:
+    """Genereer een unieke output code.
+
+    Standaardformaat: {PREFIX}-{YYYYMMDD}-{seq}
+    Speciaal voor hypothese-vormer: {jjmm}.{HASH4}, bijv. 2603.H9XJ
     """
-    Genereer unieke output code: {PREFIX}-{YYYYMMDD}-{seq}
-    Scant bestaande bestanden voor volgende sequence nummer.
-    """
+    # Speciaal patroon voor hypothese-vormer
+    if agent == "hypothese-vormer":
+        now = datetime.now()
+        jjmm = f"{now.year % 100:02d}{now.month:02d}"
+        alphabet = string.ascii_uppercase + string.digits
+
+        # Genereer tot we een nog niet bestaand bestand hebben
+        while True:
+            suffix = "".join(random.choices(alphabet, k=4))
+            code = f"{jjmm}.{suffix}"
+            candidate = output_folder / f"hypothese-{code}.md"
+            if not candidate.exists():
+                return code
+
+    # Default: bestaand sequentieel patroon behouden
     today = datetime.now().strftime('%Y%m%d')
     pattern = f"{code_prefix}-{today}-"
-    
+
     # Zoek bestaande bestanden met zelfde prefix en datum
     existing_seqs = []
     if output_folder.exists():
@@ -409,10 +427,10 @@ def generate_output_code(output_folder: Path, code_prefix: str) -> str:
             match = re.search(rf'{pattern}(\d+)', f.name)
             if match:
                 existing_seqs.append(int(match.group(1)))
-    
+
     # Bepaal volgende sequence (start bij 01)
     next_seq = max(existing_seqs, default=0) + 1
-    
+
     return f"{code_prefix}-{today}-{next_seq:02d}"
 
 
@@ -559,23 +577,33 @@ def execute_from_execution_file_main(args: argparse.Namespace) -> int:
         
         # 3. Genereer output code
         print("[3/6] Generating output code...")
-        output_code = generate_output_code(output_folder, code_prefix)
+        output_code = generate_output_code(output_folder, code_prefix, agent)
         print(f"      Output code: {output_code}")
         print()
         
         # 4. Bouw prompts en roep LLM aan
         print("[4/6] Calling LLM API...")
         
-        system_prompt = f"""Je bent de agent {agent}, intent {intent}.
-Volg de instructies exact zoals beschreven in het agent charter en contract.
-Genereer output volgens het gespecificeerde formaat.
-Gebruik de volgende output code: {output_code}
-Datum: {datetime.now().strftime('%Y-%m-%d')}
+        # Basis system prompt
+        extra_instructies = ""
+        if agent == "hypothese-vormer":
+            extra_instructies = f"""
 
-BELANGRIJK:
-- Volg het exacte output-formaat uit het contract
-- Gebruik de gegeven output code ({output_code}) in het document
-- Lever alleen de markdown content, geen extra uitleg"""
+    Specifiek voor deze agent:
+    - Noteer de hypothese-code expliciet bovenaan het document als:
+      Hypothese-code: {output_code}
+    """
+
+        system_prompt = f"""Je bent de agent {agent}, intent {intent}.
+    Volg de instructies exact zoals beschreven in het agent charter en contract.
+    Genereer output volgens het gespecificeerde formaat.
+    Gebruik de volgende output code: {output_code}{extra_instructies}
+    Datum: {datetime.now().strftime('%Y-%m-%d')}
+
+    BELANGRIJK:
+    - Volg het exacte output-formaat uit het contract
+    - Gebruik de gegeven output code ({output_code}) in het document
+    - Lever alleen de markdown content, geen extra uitleg"""
         
         user_prompt = instruction_content
         
@@ -748,7 +776,7 @@ def save_output_main(args: argparse.Namespace) -> int:
         output_config = determine_output_config(metadata, workspace_root)
         output_folder = output_config['output_folder']
         code_prefix = output_config['code_prefix']
-        output_code = generate_output_code(output_folder, code_prefix)
+        output_code = generate_output_code(output_folder, code_prefix, agent)
         
         print(f"      Output folder: {output_folder}")
         print(f"      Output code: {output_code}")
@@ -828,7 +856,7 @@ def main():
     p_prompts = subparsers.add_parser("realiseer-agent-prompts", 
                                        help="Genereer .prompt.md bestanden uit agent-contracten")
     p_prompts.add_argument("--agent-naam", required=True, help="Agent naam")
-    p_prompts.add_argument("--intent", required=False, help="Specifieke intent (optioneel)")
+    p_prompts.add_argument("--intent", dest="intent_filter", required=False, nargs='?', const=None, default=None, help="Specifieke intent filter (optioneel)")
 
     # realiseer-agent-runner
     p_runner = subparsers.add_parser("realiseer-agent-runner", 
@@ -836,7 +864,7 @@ def main():
     p_runner.add_argument("--agent-naam", required=True, help="Agent naam")
     p_runner.add_argument("--contract-folder", required=False, help="Contract folder pad")
     p_runner.add_argument("--runner-output-folder", required=False, help="Output folder voor runner")
-    p_runner.add_argument("--overwrite-existing", action="store_true", help="Overschrijf bestaande runner")
+    p_runner.add_argument("--overwrite-existing", nargs='?', const='true', default='false', help="Overschrijf bestaande runner (true/false)")
 
     # realiseer-agent-taskconfiguratie
     p_tasks = subparsers.add_parser("realiseer-agent-taskconfiguratie", 

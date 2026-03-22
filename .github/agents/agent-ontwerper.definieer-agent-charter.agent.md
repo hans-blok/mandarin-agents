@@ -19,24 +19,21 @@ De Agent-ontwerper creëert het agent-charter document dat identiteit, rol, gren
 
 **Verplichte parameters**:
 - agent_naam: Naam van de agent waarvoor het charter wordt gedefinieerd (type: string, kebab-case).
-- boundary_file: Pad naar het agent-boundary document (type: string, relatief pad, bijv. "artefacten/aeo/aeo.02.{agent}/agent-boundary-{agent}.md").
-- value_stream_fase: Value stream en fase code (type: string, format: "{vs}.{fase}", bijv. "aeo.02", "fnd.01").
 
 **Optionele parameters**:
-- template_file: Override voor charter template locatie (type: string, default: "artefacten/aeo/aeo.02.agent-smeder/templates/agent-charter.template.md").
-- referenties: Lijst van referentie-documenten voor charter-definitie (type: list[string], komma-gescheiden paden).
+- geen 
 
 **Afgeleide informatie** (geëxtraheerd uit boundary):
 - capability_boundary: Externe verantwoordelijkheid in één zin
 - classificatie: Vormingsfase, Betekeniseffect, Werking, Bronhouding
-- intents: Voorgestelde agent-contracten uit boundary
+- intents: Vastgelegde contracten voor deze agent.
 - domein: Primair kennisgebied van agent
 
 ### Output (wat komt eruit)
 
 De Agent-ontwerper levert:
 - **Agent-charter document** met volledige agent-identiteit:
-  - YAML frontmatter: agent-ID, versie, domein, value stream, governance
+  - YAML frontmatter: agent-ID, versie, domein, value stream, bronhouding, governance
   - Mandarin-agent-classificatie: 4 orthogonale assen met checkbox-selectie
   - Doel en bestaansreden: Waarom de agent bestaat
   - Capability boundary: Eén-zin definitie van verantwoordelijkheid

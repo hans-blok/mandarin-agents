@@ -1,6 +1,7 @@
 ---
 agent: mandarin.ecosysteem-coordinator
 intent: genereer-instructies
+bronhouding: Input-gebonden
 versie: 1.0.0
 input_parameters:
   - agent

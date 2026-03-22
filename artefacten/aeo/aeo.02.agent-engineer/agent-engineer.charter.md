@@ -34,7 +34,7 @@
 - **Bronhouding** (kennisbronnen en herleidbaarheid)
   - [x] Input-gebonden (output 100% herleidbaar tot input)
   - [ ] Canon-gebonden (baseert zich expliciet op canon)
-  - [ ] Externe-bron-gebonden (haalt kennis uit externe bronnen, maar wel met kaders)
+  - [ ] Externe-bron gebonden (haalt kennis uit externe bronnen, maar wel met kaders)
   - [ ] Exploratief (gebruikt generatieve capaciteiten, aannames expliciet)
 
 **Classificatie-validatie (verplicht):**

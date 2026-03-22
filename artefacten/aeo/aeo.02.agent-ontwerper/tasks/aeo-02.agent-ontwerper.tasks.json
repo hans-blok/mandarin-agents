@@ -10,14 +10,8 @@
         "definieer-agent-charter",
         "--agent-naam",
         "${input:in_agent_ontwerper_definieer_agent_charter_agent_naam}",
-        "--boundary-file",
-        "${input:in_agent_ontwerper_definieer_agent_charter_boundary_file}",
         "--value-stream-fase",
-        "${input:in_agent_ontwerper_definieer_agent_charter_value_stream_fase}",
-        "--template-file",
-        "${input:in_agent_ontwerper_definieer_agent_charter_template_file}",
-        "--referenties",
-        "${input:in_agent_ontwerper_definieer_agent_charter_referenties}"
+        "${input:in_agent_ontwerper_definieer_agent_charter_value_stream_fase}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -34,8 +28,6 @@
         "definieer-agent-contract",
         "--agent-naam",
         "${input:in_agent_ontwerper_definieer_agent_contract_agent_naam}",
-        "--boundary-file",
-        "${input:in_agent_ontwerper_definieer_agent_contract_boundary_file}",
         "--intent-naam",
         "${input:in_agent_ontwerper_definieer_agent_contract_intent_naam}",
         "--value-stream-fase",
@@ -60,18 +52,12 @@
         "definieer-agent-template",
         "--agent-naam",
         "${input:in_agent_ontwerper_definieer_agent_template_agent_naam}",
-        "--boundary-file",
-        "${input:in_agent_ontwerper_definieer_agent_template_boundary_file}",
-        "--template-naam",
-        "${input:in_agent_ontwerper_definieer_agent_template_template_naam}",
-        "--output-type",
-        "${input:in_agent_ontwerper_definieer_agent_template_output_type}",
+        "--intent",
+        "${input:in_agent_ontwerper_definieer_agent_template_intent}",
+        "--file-naam-inspiratie",
+        "${input:in_agent_ontwerper_definieer_agent_template_file_naam_inspiratie}",
         "--value-stream-fase",
-        "${input:in_agent_ontwerper_definieer_agent_template_value_stream_fase}",
-        "--voorbeeldstructuur",
-        "${input:in_agent_ontwerper_definieer_agent_template_voorbeeldstructuur}",
-        "--referentie-templates",
-        "${input:in_agent_ontwerper_definieer_agent_template_referentie_templates}"
+        "${input:in_agent_ontwerper_definieer_agent_template_value_stream_fase}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -84,92 +70,60 @@
     {
       "id": "in_agent_ontwerper_definieer_agent_charter_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'agent_naam' (definieer-agent-charter)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_charter_boundary_file",
-      "type": "promptString",
-      "description": "Waarde voor 'boundary_file' (definieer-agent-charter)"
+      "description": "Agent naam (kebab-case, bijv. hypothese-vormer)"
     },
     {
       "id": "in_agent_ontwerper_definieer_agent_charter_value_stream_fase",
       "type": "promptString",
-      "description": "Waarde voor 'value_stream_fase' (definieer-agent-charter)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_charter_template_file",
-      "type": "promptString",
-      "description": "Waarde voor 'template_file' (definieer-agent-charter) (Optioneel)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_charter_referenties",
-      "type": "promptString",
-      "description": "Waarde voor 'referenties' (definieer-agent-charter) (Optioneel)"
+      "description": "Value stream fase (standaard: aeo.02)",
+      "default": "aeo.02"
     },
     {
       "id": "in_agent_ontwerper_definieer_agent_contract_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'agent_naam' (definieer-agent-contract)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_contract_boundary_file",
-      "type": "promptString",
-      "description": "Waarde voor 'boundary_file' (definieer-agent-contract)"
+      "description": "Agent naam (kebab-case, bijv. hypothese-vormer)"
     },
     {
       "id": "in_agent_ontwerper_definieer_agent_contract_intent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'intent_naam' (definieer-agent-contract)"
+      "description": "Intent naam (optioneel; leeg = alle intents in boundary)"
     },
     {
       "id": "in_agent_ontwerper_definieer_agent_contract_value_stream_fase",
       "type": "promptString",
-      "description": "Waarde voor 'value_stream_fase' (definieer-agent-contract)"
+      "description": "Value stream fase (standaard: aeo.02)",
+      "default": "aeo.02"
     },
     {
       "id": "in_agent_ontwerper_definieer_agent_contract_template_file",
       "type": "promptString",
-      "description": "Waarde voor 'template_file' (definieer-agent-contract) (Optioneel)"
+      "description": "Override voor contract template (optioneel, leeg = standaard template)"
     },
     {
       "id": "in_agent_ontwerper_definieer_agent_contract_referenties",
       "type": "promptString",
-      "description": "Waarde voor 'referenties' (definieer-agent-contract) (Optioneel)"
+      "description": "Komma-gescheiden referentiedocumenten (optioneel)"
     },
     {
       "id": "in_agent_ontwerper_definieer_agent_template_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'agent_naam' (definieer-agent-template)"
+      "description": "Agent naam (kebab-case, bijv. hypothese-vormer)"
     },
     {
-      "id": "in_agent_ontwerper_definieer_agent_template_boundary_file",
+      "id": "in_agent_ontwerper_definieer_agent_template_intent",
       "type": "promptString",
-      "description": "Waarde voor 'boundary_file' (definieer-agent-template)"
+      "description": "Filter op intent naam (optioneel; leeg = alle intents in boundary)"
     },
     {
-      "id": "in_agent_ontwerper_definieer_agent_template_template_naam",
+      "id": "in_agent_ontwerper_definieer_agent_template_file_naam_inspiratie",
       "type": "promptString",
-      "description": "Waarde voor 'template_naam' (definieer-agent-template)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_template_output_type",
-      "type": "promptString",
-      "description": "Waarde voor 'output_type' (definieer-agent-template)"
+      "description": "Bestand in temp/ als inspiratie voor templatestructuur (optioneel)"
     },
     {
       "id": "in_agent_ontwerper_definieer_agent_template_value_stream_fase",
       "type": "promptString",
-      "description": "Waarde voor 'value_stream_fase' (definieer-agent-template)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_template_voorbeeldstructuur",
-      "type": "promptString",
-      "description": "Waarde voor 'voorbeeldstructuur' (definieer-agent-template) (Optioneel)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_template_referentie_templates",
-      "type": "promptString",
-      "description": "Waarde voor 'referentie_templates' (definieer-agent-template) (Optioneel)"
+      "description": "Value stream fase (standaard: aeo.02)",
+      "default": "aeo.02"
     }
   ]
 }

@@ -19,11 +19,11 @@ De Agent-ontwerper creëert agent-contract documenten voor elke intent uit de bo
 
 **Verplichte parameters**:
 - agent_naam: Naam van de agent waarvoor contracten worden gedefinieerd (type: string, kebab-case).
-- boundary_file: Pad naar het agent-boundary document (type: string, relatief pad).
-- intent_naam: Naam van de specifieke intent waarvoor contract wordt gedefinieerd (type: string, kebab-case, bijv. "definieer-charter", "analyseer-hypothese").
-- value_stream_fase: Value stream en fase code (type: string, format: "{vs}.{fase}").
 
 **Optionele parameters**:
+- intent_naam: Naam van de specifieke intent waarvoor contract wordt gedefinieerd (type: string, kebab-case, bijv. "definieer-charter", "analyseer-hypothese").
+Standaard is dat voor alle intents in "Voorstellen agent contracten" sectie in boundary een template wordt aangemaakt. Wanneer deze parameter is opgegeven, wordt alleen voor deze intent een contract gegenereerd.
+
 - template_file: Override voor agent-contract template locatie (type: string, default: "artefacten/aeo/aeo.02.agent-smeder/templates/agent-contract-intent.template.md").
 - referenties: Lijst van referentie-documenten of bestaande contracten als voorbeeld (type: list[string]).
 
@@ -31,6 +31,7 @@ De Agent-ontwerper creëert agent-contract documenten voor elke intent uit de bo
 - capability_boundary: Context voor contract-scope
 - classificatie: Voor metadata-sectie in contract
 - intent_beschrijving: Uit "Voorstellen agent contracten" sectie in boundary
+- template_file: vaak is een template aanwezig. dit template wordt gelezen voor het maken van het contract.
 
 ### Output (wat komt eruit)
 

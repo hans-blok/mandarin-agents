@@ -42,8 +42,8 @@ governance: Volgt beleid-workspace.md en doctrine-agent-charter-normering.md
 - **Bronhouding** (kennisbronnen en herleidbaarheid)
   - [ ] Input-gebonden (output 100% herleidbaar tot input)
   - [ ] Canon-gebonden (baseert zich expliciet op canon)
-  - [ ] Externe-bron-gebonden (haalt kennis uit externe bronnen, maar wel met kaders)
-  - [x] Exploratief (gebruikt generatieve capaciteiten, aannames expliciet)
+  - [ ] Externe-bron gebonden (haalt kennis uit externe bronnen, maar wel met kaders)
+  - [x] Open (gebruikt generatieve capaciteiten, aannames expliciet)
 
 ## 1. Doel en bestaansreden
 

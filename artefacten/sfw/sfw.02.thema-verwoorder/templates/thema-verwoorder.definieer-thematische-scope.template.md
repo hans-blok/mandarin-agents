@@ -1,6 +1,10 @@
+---
+hypothese_code: {hypothese_code}
+---
 # Template: definieer-thematische-scope
 
 ## Bronhypothese
+- **Hypothese-code**: {hypothese_code}
 - **Bron**: {hypothese_bestand}
 - **Toelichting**: {toelichting}
 

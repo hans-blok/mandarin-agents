@@ -1,6 +1,7 @@
 ---
 agent: mandarin.hypothese-vormer
 intent: beschrijf-hypothese
+bronhouding: Exploratief
 versie: 1.0.0
 input_parameters:
   - probleem

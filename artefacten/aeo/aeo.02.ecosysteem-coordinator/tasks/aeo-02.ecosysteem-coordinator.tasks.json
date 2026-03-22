@@ -48,18 +48,12 @@
       }
     },
     {
-      "label": "aeo.02 - ecosysteem-coordinator: merge-configuraties",
+      "label": "aeo.02 - ecosysteem-coordinator: activeer-workspace-configuratie",
       "type": "process",
       "command": "python",
       "args": [
         "artefacten/aeo/aeo.02.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
-        "merge-configuraties",
-        "--filter-fase",
-        "${input:in_ecosysteem_coordinator_merge_configuraties_filter_fase}",
-        "--tasks-folder",
-        "${input:in_ecosysteem_coordinator_merge_configuraties_tasks_folder}",
-        "--output-file",
-        "${input:in_ecosysteem_coordinator_merge_configuraties_output_file}"
+        "activeer-workspace-configuratie"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -137,24 +131,6 @@
       "description": "Generatie methode",
       "options": ["append", "overwrite"],
       "default": "append"
-    },
-    {
-      "id": "in_ecosysteem_coordinator_merge_configuraties_filter_fase",
-      "type": "promptString",
-      "description": "Filter op value stream fase (bijv. aeo.02, of leeg voor alle)",
-      "default": ""
-    },
-    {
-      "id": "in_ecosysteem_coordinator_merge_configuraties_tasks_folder",
-      "type": "promptString",
-      "description": "Root folder voor task-bestanden",
-      "default": "artefacten"
-    },
-    {
-      "id": "in_ecosysteem_coordinator_merge_configuraties_output_file",
-      "type": "promptString",
-      "description": "Output bestand voor gemerged tasks.json",
-      "default": ".vscode/tasks.json"
     },
     {
       "id": "in_ecosysteem_coordinator_valideer_agent_structuur_agent_naam",

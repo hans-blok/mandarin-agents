@@ -1,0 +1,94 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "aeo.02 - ecosysteem-beschrijver: beschrijf-agent-positionering",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/aeo/aeo.02.ecosysteem-beschrijver/runner/ecosysteem-beschrijver.runner.py",
+        "beschrijf-agent-positionering",
+        "--agent-naam",
+        "${input:in_ecosysteem_beschrijver_beschrijf_agent_positionering_agent_naam}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - ecosysteem-beschrijver: beschrijf-ecosysteem-artefacten",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/aeo/aeo.02.ecosysteem-beschrijver/runner/ecosysteem-beschrijver.runner.py",
+        "beschrijf-ecosysteem-artefacten",
+        "--value-stream-fase",
+        "${input:in_ecosysteem_beschrijver_beschrijf_ecosysteem_artefacten_value_stream_fase}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - ecosysteem-beschrijver: beschrijf-ecosysteem-contracten",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/aeo/aeo.02.ecosysteem-beschrijver/runner/ecosysteem-beschrijver.runner.py",
+        "beschrijf-ecosysteem-contracten",
+        "--value-stream-fase",
+        "${input:in_ecosysteem_beschrijver_beschrijf_ecosysteem_contracten_value_stream_fase}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - ecosysteem-beschrijver: beschrijf-ecosysteem-value-streams-agents",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/aeo/aeo.02.ecosysteem-beschrijver/runner/ecosysteem-beschrijver.runner.py",
+        "beschrijf-ecosysteem-value-streams-agents",
+        "--value-stream-fase",
+        "${input:in_ecosysteem_beschrijver_beschrijf_ecosysteem_value_streams_agents_value_stream_fase}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "in_ecosysteem_beschrijver_beschrijf_agent_positionering_agent_naam",
+      "type": "promptString",
+      "description": "Agent naam (kebab-case, bijv. agent-curator)"
+    },
+    {
+      "id": "in_ecosysteem_beschrijver_beschrijf_ecosysteem_artefacten_value_stream_fase",
+      "type": "promptString",
+      "description": "Value stream fase (bijv. aeo.02)",
+      "default": "aeo.02"
+    },
+    {
+      "id": "in_ecosysteem_beschrijver_beschrijf_ecosysteem_contracten_value_stream_fase",
+      "type": "promptString",
+      "description": "Value stream fase (bijv. aeo.02)",
+      "default": "aeo.02"
+    },
+    {
+      "id": "in_ecosysteem_beschrijver_beschrijf_ecosysteem_value_streams_agents_value_stream_fase",
+      "type": "promptString",
+      "description": "Value stream fase of 'alle' (bijv. aeo.02)",
+      "default": "aeo.02"
+    }
+  ]
+}

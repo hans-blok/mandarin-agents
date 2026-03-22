@@ -19,19 +19,14 @@ De Agent-ontwerper creëert context-specifieke output templates voor een agent, 
 
 **Verplichte parameters**:
 - agent_naam: Naam van de agent waarvoor templates worden gedefinieerd (type: string, kebab-case).
-- boundary_file: Pad naar het agent-boundary document (type: string, relatief pad).
-- template_naam: Beschrijvende naam voor het template (type: string, kebab-case, bijv. "agent-boundary", "hypothese-document", "archimate-model").
-- output_type: Type output dat agent produceert (type: string, bijv. "document", "data-structure", "diagram", "configuration").
-- value_stream_fase: Value stream en fase code (type: string, format: "{vs}.{fase}").
+
 
 **Optionele parameters**:
-- voorbeeldstructuur: Voorbeeld van gewenste output-structuur (type: string, markdown tekst of bestandspad).
-- referentie_templates: Bestaande templates als inspiratie (type: list[string], paden naar vergelijkbare templates).
+- file_naam_inspiriratie: de gebruiker kan een file plaatsen in de folder temp. Deze dient als inspiratie voor de agent-ontwerper bij het vastleggen van het template (type: string, kebab-case).
+- intent: standaard wordt voor alle intents in oorstellen agent contracten" sectie in boundary een template aangemaakt. Wanneer deze parameter is opgegeven, wordt alleen voor deze intent een template gegenereerd. (type: string, exact match met intent-naam in boundary)
 
 **Afgeleide informatie** (geëxtraheerd uit boundary):
-- domein: Kennisgebied bepaalt welke template-structuur passend is
-- intents: Templates zijn vaak gekoppeld aan specifieke intents
-- output_beschrijving: Uit "Welke outputs levert de agent?" in boundary
+- intent_beschrijving: Uit "Voorstellen agent contracten" sectie in boundary
 
 ### Output (wat komt eruit)
 

@@ -9,6 +9,7 @@ versie: 1.0.0
 # Prompt Metadata (placeholders invullen)
 agent: mandarin.{agent-naam}
 intent: {intent-kortschrift}
+bronhouding: {bronhouding}
 versie: 1.0.0
 input_parameters:
   - {parameter-naam}
@@ -31,7 +32,13 @@ value_stream_fase: {value-stream-code}.{fase-nummer}
    - Voorbeeld: "analyseer-ecosysteem", "schrijf-script", "formuleer-hypothese"
    - Moet overeenkomen met intent-naam in boundary en charter
 
-3. {value-stream-code}.{fase-nummer}
+3. {bronhouding}
+   - Epistemische positie van de agent: de kennisbron op basis waarvan gehandeld wordt
+   - Geldige waarden: "Input-gebonden", "Canon-gebonden", "Workspace-gebonden", "Externe-bron gebonden", "Exploratief"
+   - Moet consistent zijn met de bronhouding gedeclareerd in het charter (classificatie-as)
+   - Voorbeeld: "Exploratief" (gebruikt generatieve capaciteiten, aannames expliciet)
+
+4. {value-stream-code}.{fase-nummer}
    - Value stream code + fase nummer
    - Voorbeeld: "aeo.02", "sfw.01", "fnd.02"
    - Bepaalt welke grondslagen worden geladen uit beleid-workspace.md (base code)
@@ -50,6 +57,7 @@ Minimalistische prompts bevatten ALLEEN metadata:
 ✓ Wat staat in de prompt:
   - agent: Volledige agent-naam met namespace
   - intent: Intent-kortschrift
+  - bronhouding: Epistemische positie (stuurt LLM-gedrag via runner)
   - versie: Promptversie
   - input_parameters: Alleen expliciete runtime-input van de gebruiker
   - value_stream_fase: Value stream en fase
@@ -84,7 +92,8 @@ ARCHITECTUUR-PRINCIPES (SOLID)
 ✓ Single Source of Truth:
   - Canon & grondslagen → beleid-workspace.md
   - Agent-instructies → {agent}.{intent}.agent.md
-  - Charter → {agent}.charter.md
+  - Charter → {agent}.charter.md (declareert bronhouding voor mensen)
+  - Bronhouding (operationeel) → prompt frontmatter (stuurt runner en LLM)
   - Agent-contracten → workspace-conventie (auto-discovery)
   - Input parameters → command-line parameters
 

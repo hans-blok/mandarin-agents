@@ -5,7 +5,7 @@ Runner voor agent: ecosysteem-coordinator
 Cross-cutting ecosysteem lifecycle taken:
 - consulteer-canon: Raadpleeg de canon en log SHA
 - genereer-instructies: Genereer execution-ready agent-instructies
-- merge-configuraties: Aggregeer task configuraties naar .vscode/tasks.json
+- activeer-workspace-configuratie: Activeer workspace op basis van beleid-workspace.md value_stream-fasen
 - valideer-agent-structuur: Valideer agent folder structuur tegen doctrine
 - list-agents: Toon beschikbare agents per value stream fase
 - fetch-agents: Haal prompts, agents en tasks op voor een value stream fase
@@ -832,12 +832,54 @@ def replace_placeholders(content: str, params: Dict, input_content: str,
     return content
 
 
+# ==============================================================================
+# BRONHOUDING
+# ==============================================================================
+
+BRONHOUDING_INSTRUCTIES = {
+    "Input-gebonden": (
+        "Je handelt uitsluitend op basis van de meegeleverde inputparameters. "
+        "Voeg geen kennis toe die niet expliciet in de input staat. "
+        "Als informatie ontbreekt, stop dan en vraag om verduidelijking."
+    ),
+    "Canon-gebonden": (
+        "Je handelt op basis van de canon. Elke conclusie is herleidbaar naar "
+        "een canonieke bron die in deze sessie is meegegeven. "
+        "Eigen interpretaties die niet canon-herleidbaar zijn, zijn niet toegestaan."
+    ),
+    "Externe-bron gebonden": (
+        "Je handelt uitsluitend op basis van de externe bronnen die als input zijn "
+        "meegegeven. Voeg geen eigen kennis of canonreferenties toe die niet "
+        "in die bronnen staan. Bronvermelding is verplicht."
+    ),
+    "Workspace-gebonden": (
+        "Je handelt uitsluitend op basis van wat aanwezig is in de workspace: "
+        "bestanden, artefacten en configuraties die expliciet zijn meegegeven of "
+        "aantoonbaar in de workspace staan. Je voegt geen externe kennis of "
+        "canonreferenties toe die niet uit de workspace afkomstig zijn."
+    ),
+    "Exploratief": (
+        "Je handelt exploratief: je gebruikt je generatieve capaciteiten om "
+        "inzichten, hypothesen en aannames te formuleren. Je bronnen zijn breed "
+        "en gevarieerd. Aannames die je maakt, maak je expliciet zichtbaar in de output."
+    ),
+}
+
+
 def assemble_full_instructions(metadata: Dict, prompt_content: str, prompt_file: str, 
                                params: Dict, input_content: str, 
                                input_files_content: Dict) -> Tuple[str, Optional[str]]:
     """Stel volledige agent-instructies samen uit alle bronnen."""
     parts = []
-    
+
+    bronhouding = metadata.get('bronhouding')
+    if bronhouding and bronhouding in BRONHOUDING_INSTRUCTIES:
+        parts.append(f"## Bronhouding: {bronhouding}\n\n")
+        parts.append(BRONHOUDING_INSTRUCTIES[bronhouding])
+        parts.append("\n\n---\n\n")
+    elif bronhouding:
+        print(f"WARNING: Onbekende bronhouding '{bronhouding}'. Geldige waarden: {', '.join(BRONHOUDING_INSTRUCTIES.keys())}")
+
     charter_content, charter_path = load_charter(prompt_file, metadata, params)
     if charter_content:
         parts.append("# Agent Charter\n\n")
@@ -1227,7 +1269,7 @@ def genereer_instructies_main(args: argparse.Namespace) -> int:
 
 
 # ==============================================================================
-# MERGE-CONFIGURATIES
+# ACTIVEER-WORKSPACE-CONFIGURATIE / MERGE helpers
 # ==============================================================================
 
 def load_task_file(file_path: Path) -> Dict:
@@ -1305,37 +1347,103 @@ def merge_tasks(tasks_folder: Path, workspace_root: Path, filter_fase: str = Non
     return merged
 
 
-def merge_configuraties_main(args: argparse.Namespace) -> int:
-    """Hoofdfunctie voor merge-configuraties."""
-    
+def activeer_workspace_configuratie_main(args: argparse.Namespace) -> int:
+    """Hoofdfunctie voor activeer-workspace-configuratie.
+
+    Leest value_stream-fasen uit beleid-workspace.md en merget
+    alle bijbehorende task-bestanden naar .vscode/tasks.json.
+    Geen parameters vereist; scope wordt bepaald door beleid.
+    """
     workspace_root = get_workspace_root()
-    
-    tasks_folder = workspace_root / '.vscode' / 'tasks'
     output_file = Path(args.output_file) if args.output_file else workspace_root / '.vscode' / 'tasks.json'
-    
+
     print("=" * 70)
-    print(f"Merge Configuraties naar {output_file}")
+    print(f"Activeer Workspace Configuratie naar {output_file}")
     print("=" * 70)
     print()
-    
-    if not tasks_folder.exists():
-        print(f"INFO: Folder {tasks_folder} niet gevonden, alleen artefacten worden gescand.")
-    
-    merged = merge_tasks(tasks_folder if tasks_folder.exists() else workspace_root, 
-                        workspace_root, filter_fase=args.filter_fase)
-    
+
+    workspace_config = load_workspace_config()
+    fasen = workspace_config.get('value_stream-fasen', [])
+
+    if not fasen:
+        print("ERROR: 'value_stream-fasen' niet gevonden in beleid-workspace.md.")
+        print("Voeg toe aan YAML frontmatter: value_stream-fasen: [\"aeo.02\", \"sfw.01\"]")
+        return 1
+
+    print(f"Geconfigureerde fasen in beleid-workspace.md: {fasen}")
+    print()
+
+    merged: Dict[str, Any] = {"version": "2.0.0", "tasks": [], "inputs": []}
+    totaal_bestanden = 0
+    artefacten_folder = workspace_root / "artefacten"
+    tasks_folder = workspace_root / '.vscode' / 'tasks'
+
+    for fase in fasen:
+        print(f"--- Fase: {fase} ---")
+        fase_bestanden = 0
+
+        if artefacten_folder.exists():
+            normalized_filter = fase.replace(".", "-")
+            found = sorted(f for f in artefacten_folder.rglob('tasks/*.tasks.json')
+                           if normalized_filter in f.name)
+
+            for task_file in found:
+                try:
+                    rel_path = task_file.relative_to(workspace_root)
+                except ValueError:
+                    rel_path = task_file.name
+                print(f"  + {rel_path}")
+                data = load_task_file(task_file)
+                if 'tasks' in data:
+                    merged['tasks'].extend(data['tasks'])
+                if 'inputs' in data:
+                    bestaande_ids = {inp['id'] for inp in merged['inputs']}
+                    for inp in data['inputs']:
+                        if inp['id'] not in bestaande_ids:
+                            merged['inputs'].append(inp)
+                            bestaande_ids.add(inp['id'])
+                fase_bestanden += 1
+
+        if fase_bestanden == 0:
+            print(f"  (geen task-bestanden gevonden voor {fase})")
+        totaal_bestanden += fase_bestanden
+        print()
+
+    if tasks_folder.exists():
+        handmatig = sorted(tasks_folder.glob('*.json'))
+        if handmatig:
+            print("--- Handmatige tasks (.vscode/tasks/) ---")
+            for task_file in handmatig:
+                print(f"  + {task_file.name}")
+                data = load_task_file(task_file)
+                if 'tasks' in data:
+                    merged['tasks'].extend(data['tasks'])
+                if 'inputs' in data:
+                    bestaande_ids = {inp['id'] for inp in merged['inputs']}
+                    for inp in data['inputs']:
+                        if inp['id'] not in bestaande_ids:
+                            merged['inputs'].append(inp)
+                            bestaande_ids.add(inp['id'])
+                totaal_bestanden += 1
+            print()
+
+    print(f"Totaal: {len(merged['tasks'])} tasks uit {totaal_bestanden} bestanden")
+
+    if totaal_bestanden == 0:
+        print("ERROR: Geen task-bestanden gevonden voor geconfigureerde fasen.")
+        return 1
+
     if args.dry_run:
         print(f"\n[DRY-RUN] Zou schrijven naar: {output_file}")
         print(f"[DRY-RUN] {len(merged['tasks'])} tasks, {len(merged['inputs'])} inputs")
         return 0
-    
+
     output_file.parent.mkdir(parents=True, exist_ok=True)
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(merged, f, indent=2, ensure_ascii=False)
-    
+
     print(f"\n✓ Geschreven naar: {output_file}")
     print("=" * 70)
-    
     return 0
 
 
@@ -1766,35 +1874,60 @@ def fetch_agents_main(args: argparse.Namespace) -> int:
 
 def valideer_agent_structuur_main(args: argparse.Namespace) -> int:
     """Valideer agent folder structuur tegen doctrine."""
-    
-    print("=" * 80)
-    print(f"VALIDEER AGENT STRUCTUUR: {args.agent_naam}")
-    print("=" * 80)
-    print()
-    
-    # Zoek agent folder
+
     artefacten = Path("artefacten")
     if not artefacten.exists():
         print("ERROR: artefacten/ folder niet gevonden")
         return 1
-    
-    agent_folder = None
-    for folder in artefacten.rglob(f"*.{args.agent_naam}"):
-        if folder.is_dir():
-            agent_folder = folder
-            break
-    
-    if not agent_folder:
-        print(f"ERROR: Agent folder niet gevonden voor '{args.agent_naam}'")
-        return 1
-    
+
+    # Verzamel te valideren agent-folders
+    if args.agent_naam:
+        agent_folders = []
+        for folder in artefacten.rglob(f"*.{args.agent_naam}"):
+            if folder.is_dir():
+                agent_folders.append(folder)
+                break
+        if not agent_folders:
+            print(f"ERROR: Agent folder niet gevonden voor '{args.agent_naam}'")
+            return 1
+    else:
+        # Alle agents in value_stream_fase (of alle agents als geen fase gegeven)
+        vs_fase = getattr(args, 'value_stream_fase', None)
+        agent_folders = []
+        for folder in sorted(artefacten.rglob("*.runner.py")):
+            agent_folder = folder.parent.parent
+            if agent_folder not in agent_folders and agent_folder.is_dir():
+                if vs_fase and vs_fase not in str(agent_folder):
+                    continue
+                agent_folders.append(agent_folder)
+        if not agent_folders:
+            print("Geen agent-folders gevonden.")
+            return 1
+
+    overall_exit = 0
+    for agent_folder in agent_folders:
+        exit_code = _valideer_agent_folder(agent_folder)
+        if exit_code != 0:
+            overall_exit = exit_code
+    return overall_exit
+
+
+def _valideer_agent_folder(agent_folder: Path) -> int:
+    """Valideer één agent-folder en return exit code."""
+    print("=" * 80)
+    print(f"VALIDEER AGENT STRUCTUUR: {agent_folder.name}")
+    print("=" * 80)
+    print()
+
+    agent_naam = agent_folder.name.split(".", 2)[-1] if "." in agent_folder.name else agent_folder.name
+
     print(f"Agent folder: {agent_folder}")
     print()
     
     # Verwachte structuur
     required_files = [
-        f"{args.agent_naam}.charter.md",
-        f"{args.agent_naam}.agent-boundary.md",
+        f"{agent_naam}.charter.md",
+        f"{agent_naam}.agent-boundary.md",
     ]
     
     required_folders = [
@@ -1913,16 +2046,14 @@ def main():
     p_gen.add_argument("--bootstrap-quiet", action="store_true", help="Compacte bootstrap output")
     p_gen.add_argument("--no-save", action="store_true", help="Schrijf geen execution file naar prompt-instructions/")
 
-    # merge-configuraties
-    p_merge = subparsers.add_parser("merge-configuraties", help="Merge task configuraties naar tasks.json")
-    p_merge.add_argument("--filter-fase", type=str, help="Filter op value stream fase")
-    p_merge.add_argument("--tasks-folder", type=str, help="Root folder voor tasks")
-    p_merge.add_argument("--output-file", type=str, help="Output bestand")
-    p_merge.add_argument("--dry-run", action="store_true", help="Toon wat gedaan zou worden")
+    # activeer-workspace-configuratie
+    p_activeer = subparsers.add_parser("activeer-workspace-configuratie", help="Activeer workspace op basis van beleid-workspace.md value_stream-fasen")
+    p_activeer.add_argument("--output-file", type=str, help="Output bestand (default: .vscode/tasks.json)")
+    p_activeer.add_argument("--dry-run", action="store_true", help="Toon wat gedaan zou worden")
 
     # valideer-agent-structuur
     p_val = subparsers.add_parser("valideer-agent-structuur", help="Valideer agent folder structuur")
-    p_val.add_argument("--agent-naam", required=True, help="Agent naam om te valideren")
+    p_val.add_argument("--agent-naam", required=False, default=None, help="Agent naam om te valideren (leeg = alle agents in value_stream_fase)")
     p_val.add_argument("--value-stream-fase", help="Value stream fase")
     p_val.add_argument("--output-format", type=str, default="markdown", choices=["markdown", "json"])
     p_val.add_argument("--strict", action="store_true", help="Stricte validatie")
@@ -1945,8 +2076,8 @@ def main():
         sys.exit(consulteer_canon_main(args))
     elif args.subcommand == "genereer-instructies":
         sys.exit(genereer_instructies_main(args))
-    elif args.subcommand == "merge-configuraties":
-        sys.exit(merge_configuraties_main(args))
+    elif args.subcommand == "activeer-workspace-configuratie":
+        sys.exit(activeer_workspace_configuratie_main(args))
     elif args.subcommand == "valideer-agent-structuur":
         sys.exit(valideer_agent_structuur_main(args))
     elif args.subcommand == "list-agents":

@@ -15,18 +15,25 @@ versie: 1.1.0
 
 ## Mandarin-agent-classificatie (4 orthogonale assen)
 
+- **Vormingsfase**
+   - [ ] Verkenning
+   - [ ] Ordening
+   - [ ] Vastlegging
+   - [ ] Realisatie
+   - [ ] Toetsing
+   - [ ] Verantwoording
+   - [ ] Operationalisatie
+   - [ ] Overkoepelend
+
 - **Betekeniseffect**
    - [ ] Beschrijvend
+   - [ ] Structuurrealiserend
+   - [ ] Normerend
    - [ ] Realiserend
    - [ ] Evaluerend
-   - [ ] Normerend
+   - [ ] Rangschikkend
+   - [ ] Validerend
    - [ ] Geen
-
-- **Interventieniveau**
-   - [ ] Werk
-   - [ ] Ontwerp
-   - [ ] Architectuur
-   - [ ] Ecosysteem
 
 - **Werking**
    - [ ] Inhoudelijk
@@ -36,8 +43,9 @@ versie: 1.1.0
 - **Bron-houding**
    - [ ] Input-gebonden
    - [ ] Canon-gebonden
+   - [ ] Workspace-gebonden
    - [ ] Externe-bron-gebonden
-   - [ ] Vrij
+   - [ ] Exploratief
 
 **Classificatie-validatie (verplicht):**
 - [ ] Gekozen as-posities zijn onderling compatibel volgens `mandarin-classificatie-matrices.md`

@@ -6,10 +6,13 @@ Deze intent beschrijft het gestructureerd vastleggen van een epic volgens SAFe-c
 ## Contract
 ### Input (wat gaat erin)
 **Verplichte parameters**:
+- hypothese_code: string, de unieke hypothese-code in formaat jjmm.HHHH (bijv. 2603.H9XJ)
 - thema_code: string, unieke identificatiecode van het thema
 - auteur: string, naam van de auteur
 
-**Opmerking**: De agent zoekt de thematische scope op basis van de thema_code in artefacten/sfw/sfw.02.thema-verwoorder/scopes/, analyseert de context, en bepaalt zelf:
+**Opmerking**:
+- De hypothese-code komt rechtstreeks uit de hypothese-vormer en moet als referentie in de epic-output worden opgenomen, zodat traceerbaar blijft welke hypothese aan dit thema en deze epic gekoppeld is.
+- De agent zoekt de thematische scope op basis van de thema_code in artefacten/sfw/sfw.02.thema-verwoorder/scopes/, analyseert de context, en bepaalt zelf:
 - Epic titel
 - Epic beschrijving
 - Epic doelstelling (epic_doel)

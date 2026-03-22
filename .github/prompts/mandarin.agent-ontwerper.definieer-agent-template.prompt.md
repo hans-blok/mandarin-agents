@@ -1,15 +1,13 @@
 ---
 agent: mandarin.agent-ontwerper
 intent: definieer-agent-template
-versie: 1.0.0
+bronhouding: canon-gebonden
+versie: 1.1.0
 input_parameters:
   - agent_naam
-  - boundary_file
-  - template_naam
-  - output_type
   - value_stream_fase
-  - voorbeeldstructuur
-  - referentie_templates
+  - intent
+  - file_naam_inspiratie
 value_stream_fase: aeo.02
 
 ---
