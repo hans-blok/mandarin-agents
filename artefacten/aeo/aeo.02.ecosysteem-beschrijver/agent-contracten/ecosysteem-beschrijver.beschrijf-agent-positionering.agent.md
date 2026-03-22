@@ -137,6 +137,12 @@ De agent leidt de inhoud van de beschrijving af uit de volgende bronnen:
 **Niet opnemen in contextdiagram**:
 - `workspace` — intern werkdomein van de agent, geen externe actor
 - `mens` — triggert de laag daarboven (coördinator); één laag diep betekent uitsluitend directe aanroepers
+- runners en scripts — infrastructuur, geen functionele aanroeper
+- ecosysteem-coördinator als `genereer-instructies` — infrastructurele instructie-assemblage, geen inhoudelijke aanroep
+
+**Aanroeper-type bepalen**:
+- Agent als aanroeper: gebruik `🤖 {Agent-naam}`
+- Mens als aanroeper (exploratieve agents, sfw value stream): gebruik de rolnaam uit boundary sectie "Mogelijke raakvlakken", of `👤 Initiator` als geen expliciete rolnaam is gedefinieerd
 
 ### Foutafhandeling
 

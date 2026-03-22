@@ -1,6 +1,6 @@
 ---
 agent: ecosysteem-beschrijver
-versie: 1.3.0
+versie: 1.4.0
 domein: Ecosysteem-documentatie en -positionering
 value_stream: Agent Ecosysteem Ontwikkeling
 governance: Volgt beleid-workspace.md (inclusief canon-raadpleging zoals daar vastgelegd) en doctrine-agent-charter-normering.md; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
@@ -9,7 +9,7 @@ governance: Volgt beleid-workspace.md (inclusief canon-raadpleging zoals daar va
 # Agent Charter — ecosysteem-beschrijver
 
 **Agent-ID**: `aeo.02.ecosysteem-beschrijver`  
-**Versie**: 1.3.0  
+**Versie**: 1.4.0  
 **Domein**: Ecosysteem-documentatie en -positionering  
 **Value Stream**: Agent Ecosysteem Ontwikkeling (fase 02 — Ecosysteeminrichting)  
 **Governance**: Volgt `beleid-workspace.md` en `doctrine-agent-charter-normering.md`
@@ -203,6 +203,25 @@ Afwijkingen:
 - worden tekstueel benoemd;
 - nooit impliciet gesignaleerd via kleur of vorm.
 
+### Principe 6 — Functioneel aanroepen vs infrastructureel starten
+
+Het contextdiagram toont uitsluitend **functionele aanroepers**: actoren die de inhoudelijke opdracht geven.
+
+**Niet opnemen** als aanroeper in het contextdiagram:
+- runners en scripts die technisch de agent starten;
+- de ecosysteem-coördinator wanneer deze uitsluitend als instructie-assembler fungeert (`genereer-instructies`) — dat is infrastructuur, geen inhoudelijke aanroep.
+
+**Twee typen functionele aanroepers:**
+
+| Type | Label-conventie | Voorbeeld |
+|------|-----------------|-----------|
+| Agent | `🤖 {Agent-naam}` | `🤖 Ecosysteem-coördinator` |
+| Mens | `👤 {Rolnaam}` | `👤 Initiator` |
+
+Gebruik de domeinspecifieke rolnaam uit het boundary-document indien aanwezig. Ontbreekt een expliciete rolnaam, gebruik dan `👤 Initiator` als generieke aanduiding.
+
+**Human-in-the-loop** is een aparte reviewer-rol en staat los van de aanroeper — ook als het in de praktijk dezelfde persoon betreft. Beide nodes worden altijd expliciet opgenomen.
+
 ---
 
 ## 6. Zuiverheidsborging van beschrijving
@@ -313,3 +332,4 @@ Inhoud:
 | 2026-03-22 | 1.1.0 | Toevoeging representatie- en zuiverheidsdiscipline | chatGPT |
 | 2026-03-22 | 1.2.0 | Kaderbron/werkbron-onderscheid in kerntaak 1 en principe 3 | chatGPT |
 | 2026-03-22 | 1.3.0 | Verplichte timestamp-header in sectie 8 toegevoegd | chatGPT |
+| 2026-03-22 | 1.4.0 | Principe 6: functioneel vs infrastructureel aanroepen in sectie 5 | chatGPT |

@@ -1,7 +1,7 @@
 ---
 agent: ecosysteem-beschrijver
 template_naam: beschrijf-agent-positionering
-versie: 1.1.0
+versie: 1.2.0
 herkomstpositie: voortbouwend
 output_type: document
 doel: Beschrijft de positionering van een agent als context diagram — wie roept de agent aan, welke externe diensten gebruikt de agent.
@@ -58,6 +58,8 @@ flowchart LR
 
 ## Voorbeeld-output
 
+> **Let op**: `<aanroeper>` is de *functionele* aanroeper — de actor die de inhoudelijke opdracht geeft. Runners, scripts en de ecosysteem-coördinator in de rol van instructie-assembler zijn infrastructuur en verschijnen NIET als aanroeper.
+
 ```markdown
 ---
 agent: ecosysteem-beschrijver
@@ -94,6 +96,7 @@ flowchart LR
 |--------|-------|-----------|
 | 1.0.0 | 2026-03-21 | Initiële template |
 | 1.1.0 | 2026-03-21 | Vereenvoudigd tot context diagram |
+| 1.2.0 | 2026-03-22 | Noot toegevoegd over functionele vs infrastructurele aanroeper |
 
 ---
 

@@ -3,9 +3,9 @@ agent: ecosysteem-beschrijver
 intent: beschrijf-agent-positionering
 value_stream_fase: sfw.01
 scope: hypothese-vormer
-timestamp: 2026-03-22 20:09
-execution_id: ad4b
-canon_ref: 573db95
+timestamp: 2026-03-22 21:26
+execution_id: 58fe
+canon_ref: adef1f5
 ---
 
 # Positionering: hypothese-vormer
@@ -14,13 +14,13 @@ canon_ref: 573db95
 
 ```mermaid
 flowchart LR
-    operator["Operator"]
+    initiator["👤 Initiator"]
     hypothese["Hypothese-vormer"]
-    thema["Thema-verwoorder"]
+    thema["🤖 Thema-verwoorder"]
     llm["Extern LLM"]
     human["👤 Human-in-the-loop"]
 
-    operator -->|levert probleembeschrijving en idee| hypothese
+    initiator -->|levert probleembeschrijving en idee| hypothese
     llm -->|levert inferentie| hypothese
     hypothese -->|levert hypothese-document| thema
     hypothese -->|levert hypothese ter controle| human
@@ -31,7 +31,7 @@ flowchart LR
     classDef dienst     fill:#fff8e1,stroke:#f9a825,color:#5d4037;
 
     class hypothese agent-zelf;
-    class operator aanroeper;
+    class initiator aanroeper;
     class thema,human ontvanger;
     class llm dienst;
 ```
@@ -40,12 +40,12 @@ flowchart LR
 
 ```mermaid
 sequenceDiagram
-    participant OP as Operator
+    participant IN as 👤 Initiator
     participant HV as Hypothese-vormer
     participant LLM as Extern LLM
     actor HiL as Human-in-the-loop
 
-    OP->>HV: levert probleembeschrijving, idee en context
+    IN->>HV: levert probleembeschrijving, idee en context
     HV->>HV: leest boundary, charter en contracten
     HV->>LLM: vraag om tekst te genereren (synthese)
     LLM-->>HV: gegenereerde tekst (synthese)
