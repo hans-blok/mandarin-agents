@@ -28,6 +28,7 @@ De Agent-ontwerper creëert het agent-charter document dat identiteit, rol, gren
 - classificatie: Vormingsfase, Betekeniseffect, Werking, Bronhouding
 - intents: Vastgelegde contracten voor deze agent.
 - domein: Primair kennisgebied van agent
+- kaderdefinities: Lijst van kaderdefinitie-documenten waarop de agent zich baseert (canonieke paden uit boundary, bijv. `grondslagen/kaderdefinities/togaf.kaderdefinitie.md`). "geen" wanneer niet van toepassing.
 
 ### Output (wat komt eruit)
 

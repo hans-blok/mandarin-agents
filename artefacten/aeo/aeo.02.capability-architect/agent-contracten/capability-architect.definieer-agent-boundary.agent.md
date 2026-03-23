@@ -23,7 +23,8 @@ De Capability-architect definieert de servicegrens van een agent als duurzame, e
 - korte_beschrijving: Korte beschrijving van het doel van de agent (type: string, 1-3 zinnen).
 
 **Optionele parameters**:
-- template_file: Override voor template locatie (default: "artefacten/aeo/aeo.02.capability-architect/templates/agent-boundary.template.md").
+- geen 
+
 
 
 ### Output (wat komt eruit)
@@ -63,6 +64,7 @@ output:
 agent: {agent_naam}
 value_stream: {vs}
 value_stream_fase: {vs}.{fase}
+kaderdefinities: {kaderdefinities — lijst van canonieke paden, of "geen"}
 versie: 1.0.0
 ---
 

@@ -121,15 +121,12 @@ def definieer_agent_boundary_main(args: argparse.Namespace) -> int:
     value stream fase en korte beschrijving.
 
     Verplichte parameters: agent_naam, value_stream_fase, korte_beschrijving
-    Optionele parameters:  template_file
     """
     params = {
         "agent_naam": args.agent_naam,
         "value_stream_fase": args.value_stream_fase,
         "korte_beschrijving": args.korte_beschrijving,
     }
-    if args.template_file:
-        params["template_file"] = args.template_file
 
     return run_generate_instructions("definieer-agent-boundary", params)
 
@@ -169,15 +166,6 @@ def main() -> int:
         "--korte-beschrijving",
         required=True,
         help="Korte beschrijving van het doel van de agent (1-3 zinnen)",
-    )
-    p_boundary.add_argument(
-        "--template-file",
-        required=False,
-        default=None,
-        help=(
-            "Override voor template locatie "
-            "(default: artefacten/aeo/aeo.02.capability-architect/templates/agent-boundary.template.md)"
-        ),
     )
 
     args = parser.parse_args()

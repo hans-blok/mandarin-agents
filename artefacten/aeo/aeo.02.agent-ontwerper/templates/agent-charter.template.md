@@ -11,6 +11,7 @@ versie: 1.1.0
 **Versie**: 1.0.0  
 **Domein**: {hoofddomein van de agent}  
 **Value Stream**: {value-stream-naam} (fase {fase-nummer} - {fase-naam})  
+**Kaderdefinities**: {kaderdefinities — lijst van canonieke paden, of "geen"}  
 **Governance**: Volgt `beleid-workspace.md` (inclusief canon-raadpleging zoals daar vastgelegd) en `doctrine-agent-charter-normering.md`; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
 
 ## Mandarin-agent-classificatie (4 orthogonale assen)
@@ -178,6 +179,7 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 
 **Inhoudelijk:**
 - `{hoofddomein}`: Primair domein van operatie (1-5 woorden)
+- `{kaderdefinities}`: Lijst van kaderdefinitie-documenten uit mandarin-canon (bijv. `grondslagen/kaderdefinities/togaf.kaderdefinitie.md`). Kaderdefinities zijn de normatieve controlelaag tussen externe kennis en het operationele handelen van agents (conform doctrine-bronhouding-en-exploratie). Meerdere kaderdefinities mogelijk als agent meerdere externe grondslagen toepast. "geen" wanneer de agent geen extern kader gebruikt.
 - Alle tekstblokken tussen `{...}`: Vervang door concrete invulling
 
 **Classificatie (uit boundary + canon):**

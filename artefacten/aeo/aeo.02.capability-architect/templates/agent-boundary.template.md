@@ -18,6 +18,7 @@ Het gegenereerde boundary-document krijgt de volgende structuur:
 agent: <agent-naam>
 value_stream: <vs-code>
 value_stream_fase: <vs-code>.<fase-nummer>
+kaderdefinities: <lijst van canonieke paden, of "geen">
 versie: 1.0.0
 ---
 

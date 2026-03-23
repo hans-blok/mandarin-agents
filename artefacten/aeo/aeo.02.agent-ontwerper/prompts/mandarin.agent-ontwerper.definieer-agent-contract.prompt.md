@@ -6,7 +6,6 @@ versie: 1.1.0
 input_parameters:
   - agent_naam
   - intent_naam
-  - value_stream_fase
   - template_file
   - referenties
 value_stream_fase: aeo.02

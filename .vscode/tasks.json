@@ -276,9 +276,7 @@
         "--value-stream-fase",
         "${input:in_capability_architect_definieer_agent_boundary_value_stream_fase}",
         "--korte-beschrijving",
-        "${input:in_capability_architect_definieer_agent_boundary_korte_beschrijving}",
-        "--template-file",
-        "${input:in_capability_architect_definieer_agent_boundary_template_file}"
+        "${input:in_capability_architect_definieer_agent_boundary_korte_beschrijving}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -595,11 +593,6 @@
       "id": "in_capability_architect_definieer_agent_boundary_korte_beschrijving",
       "type": "promptString",
       "description": "Waarde voor 'korte_beschrijving' (definieer-agent-boundary)"
-    },
-    {
-      "id": "in_capability_architect_definieer_agent_boundary_template_file",
-      "type": "promptString",
-      "description": "Waarde voor 'template_file' (definieer-agent-boundary) (Optioneel)"
     },
     {
       "id": "in_ecosysteem_beschrijver_beschrijf_agent_positionering_agent_naam",

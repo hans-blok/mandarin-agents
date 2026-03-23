@@ -3,9 +3,9 @@ agent: ecosysteem-beschrijver
 intent: beschrijf-agent-positionering
 value_stream_fase: aeo.02
 scope: ecosysteem-beschrijver
-timestamp: 2026-03-22 10:00
-execution_id: 1d61
-canon_ref: f1bc996
+timestamp: 2026-03-22 21:53
+execution_id: c97c
+canon_ref: adef1f5
 ---
 
 # Positionering: ecosysteem-beschrijver
@@ -14,14 +14,12 @@ canon_ref: f1bc996
 
 ```mermaid
 flowchart LR
-    coordinator["Ecosysteem-coördinator"]
-    ontwerper["Agent-ontwerper"]
+    coordinator["🤖 Ecosysteem-coördinator"]
     ecosysteem["Ecosysteem-beschrijver"]
     llm["Extern LLM"]
     human["👤 Human-in-the-loop"]
 
     coordinator -->|initieert beschrijvingsverzoek| ecosysteem
-    ontwerper -->|levert charters en contracten| ecosysteem
     llm -->|levert inferentie| ecosysteem
     ecosysteem -->|levert beschrijving ter controle| human
 
@@ -31,7 +29,7 @@ flowchart LR
     classDef dienst     fill:#fff8e1,stroke:#f9a825,color:#5d4037;
 
     class ecosysteem agent-zelf;
-    class coordinator,ontwerper aanroeper;
+    class coordinator aanroeper;
     class human ontvanger;
     class llm dienst;
 ```
@@ -40,18 +38,16 @@ flowchart LR
 
 ```mermaid
 sequenceDiagram
-    participant EC as Ecosysteem-coördinator
-    participant AO as Agent-ontwerper
+    participant EC as 🤖 Ecosysteem-coördinator
     participant EB as Ecosysteem-beschrijver
     participant LLM as Extern LLM
     actor HiL as Human-in-the-loop
 
     EC->>EB: initieert beschrijvingsverzoek (agent_naam)
-    AO->>EB: levert charters en contracten
     EB->>EB: leest boundary, charter en contracten
     EB->>LLM: vraag om tekst te genereren (synthese)
     LLM-->>EB: gegenereerde tekst (synthese)
-    EB->>EB: schrijft ecosysteem-beschrijver.beschrijving.md
+    EB->>EB: schrijft {agent_naam}.beschrijving.md
     EB-->>HiL: output beschikbaar ter controle
 ```
 
@@ -75,9 +71,14 @@ sequenceDiagram
 
 ## Bronbestanden
 
-- `artefacten/aeo/aeo.02.ecosysteem-beschrijver/ecosysteem-beschrijver.agent-boundary.md`
-- `artefacten/aeo/aeo.02.ecosysteem-beschrijver/ecosysteem-beschrijver.charter.md`
-- `artefacten/aeo/aeo.02.ecosysteem-beschrijver/agent-contracten/ecosysteem-beschrijver.beschrijf-agent-positionering.agent.md`
-- `artefacten/aeo/aeo.02.ecosysteem-beschrijver/agent-contracten/ecosysteem-beschrijver.beschrijf-ecosysteem-artefacten.agent.md`
-- `artefacten/aeo/aeo.02.ecosysteem-beschrijver/agent-contracten/ecosysteem-beschrijver.beschrijf-ecosysteem-contracten.agent.md`
-- `artefacten/aeo/aeo.02.ecosysteem-beschrijver/agent-contracten/ecosysteem-beschrijver.beschrijf-ecosysteem-value-streams-agents.agent.md`
+### Werkbron
+
+- `artefacten/aeo/aeo.02.ecosysteem-beschrijver/ecosysteem-beschrijver.agent-boundary.md` — levert aanroepers, diensten en scope van de agent
+
+### Kaderbron
+
+- `artefacten/aeo/aeo.02.ecosysteem-beschrijver/ecosysteem-beschrijver.charter.md` — levert authoritative classificatie, kerntaken en grenzen
+- `artefacten/aeo/aeo.02.ecosysteem-beschrijver/agent-contracten/ecosysteem-beschrijver.beschrijf-agent-positionering.agent.md` — levert werkwijze en output-locatie voor intent beschrijf-agent-positionering
+- `artefacten/aeo/aeo.02.ecosysteem-beschrijver/agent-contracten/ecosysteem-beschrijver.beschrijf-ecosysteem-artefacten.agent.md` — levert werkwijze voor intent beschrijf-ecosysteem-artefacten
+- `artefacten/aeo/aeo.02.ecosysteem-beschrijver/agent-contracten/ecosysteem-beschrijver.beschrijf-ecosysteem-contracten.agent.md` — levert werkwijze voor intent beschrijf-ecosysteem-contracten
+- `artefacten/aeo/aeo.02.ecosysteem-beschrijver/agent-contracten/ecosysteem-beschrijver.beschrijf-ecosysteem-value-streams-agents.agent.md` — levert werkwijze voor intent beschrijf-ecosysteem-value-streams-agents
