@@ -1,12 +1,21 @@
+---
+agent: agent-ontwerper
+versie: 1.2.0
+domein: Agent-identiteitsconstitutie
+value_stream: Agent Ecosysteem Ontwikkeling (aeo)
+governance: Volgt beleid-workspace.md (inclusief canon-raadpleging zoals daar vastgelegd) en doctrine-agent-charter-normering.md; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
+---
+
 # Agent Charter - agent-ontwerper
 
 **Agent-ID**: `aeo.02.agent-ontwerper`  
-**Versie**: 1.1.0  
+**Versie**: `1.2.0`  
 **Domein**: Agent-identiteitsconstitutie  
 **Value Stream**: Agent Ecosysteem Ontwikkeling (fase 02 - Ecosysteeminrichting)  
+**Kaderdefinities**: geen  
 **Governance**: Volgt `beleid-workspace.md` (inclusief canon-raadpleging zoals daar vastgelegd) en `doctrine-agent-charter-normering.md`; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
 
-## Classificatie-assen (vink aan wat van toepassing is)
+## Mandarin-agent-classificatie (4 orthogonale assen)
 
 - **Vormingsfase** (fase van vorming of ontwikkeling)
   - [ ] Operationeel in alle fasen
@@ -36,6 +45,10 @@
   - [x] Canon-gebonden (baseert zich expliciet op canon)
   - [ ] Externe-bron gebonden (haalt kennis uit externe bronnen, maar wel met kaders)
   - [ ] Exploratief (gebruikt generatieve capaciteiten, aannames expliciet)
+
+**Classificatie-validatie (verplicht):**
+- [x] Gekozen as-posities zijn onderling compatibel: Vastlegging × Normerend × Inhoudelijk × Canon-gebonden is een coherente combinatie voor een identiteitsconstituerende agent
+- [x] Positionering volgt definities uit `mandarin-ordeningsconcepten.md` (geen eigen interpretatie van as-betekenissen)
 
 ## 1. Doel en bestaansreden
 
@@ -91,7 +104,7 @@ De agent-ontwerper bewaakt daarbij dat charters extern observeerbaar gedrag besc
 - Wijzigt geen bestaande doctrine of canon — volgt deze, maar definieert ze niet
 - Beoordeelt geen kwaliteit of overlap met andere agents — dit is taak van agent-curator
 - Neemt geen strategische beslissingen over agent-prioritering
-- Maakt geen prompts of prompt-metadata aan — dit is taak van andere agents in de keten
+- Maakt geen concrete prompts of prompt-metadata-bestanden aan — de agent definieert hoogstens de templatestructuur daarvoor; realisatie in de keten ligt bij engineer-gerichte agents
 - Valideert niet of agents operationeel correct zijn — dit is taak van testing/QA agents
 
 ## 6. Werkwijze
@@ -135,11 +148,11 @@ Dit charter is traceerbaar naar de volgende agent-contracten:
 
 - Intent: `definieer-agent-charter`
 	- Agent-contract: `artefacten/aeo/aeo.02.agent-ontwerper/agent-contracten/agent-ontwerper.definieer-agent-charter.agent.md`
-	- Template: `artefacten/aeo/aeo.02.agent-smeder/templates/agent-charter.template.md`
+   - Template: `artefacten/aeo/aeo.02.agent-ontwerper/templates/agent-charter.template.md`
 
 - Intent: `definieer-agent-contract`
 	- Agent-contract: `artefacten/aeo/aeo.02.agent-ontwerper/agent-contracten/agent-ontwerper.definieer-agent-contract.agent.md`
-	- Template: `artefacten/aeo/aeo.02.agent-smeder/templates/agent-contract-intent.template.md`
+   - Template: `artefacten/aeo/aeo.02.agent-ontwerper/templates/agent-contract-intent.template.md`
 
 - Intent: `definieer-agent-template`
 	- Agent-contract: `artefacten/aeo/aeo.02.agent-ontwerper/agent-contracten/agent-ontwerper.definieer-agent-template.agent.md`
@@ -174,9 +187,9 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 
 ## 10. Herkomstverantwoording
 
-- Dit charter volgt de structuur en richtlijnen uit `artefacten/aeo/aeo.02.agent-smeder/templates/agent-charter.template.md`
+- Dit charter volgt de structuur en richtlijnen uit `artefacten/aeo/aeo.02.agent-ontwerper/templates/agent-charter.template.md`
 - Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0
-- Agent-boundary: `artefacten/aeo/aeo.02.agent-ontwerper/agent-boundary-agent-ontwerper.md` (gedefinieerd door capability-architect)
+- Agent-boundary: `artefacten/aeo/aeo.02.agent-ontwerper/agent-ontwerper.agent-boundary.md` (gedefinieerd door capability-architect)
 - Agent-contracten: zie sectie Traceerbaarheid
 - Bron-locatie in deze workspace: `artefacten/aeo/aeo.02.agent-ontwerper/agent-ontwerper.charter.md`
 
@@ -186,3 +199,4 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 |-------|--------|-----------|--------|
 | 2026-03-01 | 1.0.0 | Initiële charter agent-ontwerper volgens agent-charter.template.md | agent-smeder |
 | 2026-03-01 | 1.1.0 | Classificatie gecorrigeerd naar Vormingsfase as uit boundary (was: Interventieniveau) | GitHub Copilot |
+| 2026-03-23 | 1.2.0 | Charter genormaliseerd naar actuele template-conventies; YAML frontmatter, kaderdefinities, traceerbaarheid en boundary-verwijzingen gecorrigeerd | GitHub Copilot |

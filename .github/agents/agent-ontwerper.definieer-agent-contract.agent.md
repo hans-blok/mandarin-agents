@@ -24,7 +24,8 @@ De Agent-ontwerper creëert agent-contract documenten voor elke intent uit de bo
 - intent_naam: Naam van de specifieke intent waarvoor contract wordt gedefinieerd (type: string, kebab-case, bijv. "definieer-charter", "analyseer-hypothese").
 Standaard is dat voor alle intents in "Voorstellen agent contracten" sectie in boundary een template wordt aangemaakt. Wanneer deze parameter is opgegeven, wordt alleen voor deze intent een contract gegenereerd.
 
-- template_file: Override voor agent-contract template locatie (type: string, default: "artefacten/aeo/aeo.02.agent-smeder/templates/agent-contract-intent.template.md").
+- boundary_file: Pad naar het agent-boundary document (type: string, default: afgeleid uit `agent_naam` en `value_stream_fase`).
+- template_file: Override voor agent-contract template locatie (type: string, default: "artefacten/aeo/aeo.02.agent-ontwerper/templates/agent-contract-intent.template.md").
 - referenties: Lijst van referentie-documenten of bestaande contracten als voorbeeld (type: list[string]).
 
 **Afgeleide informatie** (geëxtraheerd uit boundary):
@@ -191,7 +192,7 @@ Logging-formaat: Markdown append naar `audit/agent-instructions.log.md`
 **Value Stream**: Agent Ecosysteem Ontwikkeling (aeo)  
 **Fase**: 02 — Ecosysteeminrichting  
 **Classificatie**: 
+- Vormingsfase: Vastlegging
 - Betekeniseffect: Normerend
-- Interventieniveau: Werk
 - Werking: Inhoudelijk
 - Bron-houding: Canon-gebonden

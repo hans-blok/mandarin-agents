@@ -5,7 +5,7 @@ Runner voor agent: ecosysteem-coordinator
 Cross-cutting ecosysteem lifecycle taken:
 - consulteer-canon: Raadpleeg de canon en log SHA
 - genereer-instructies: Genereer execution-ready agent-instructies
-- activeer-workspace-configuratie: Activeer workspace op basis van beleid-workspace.md value_stream-fasen
+- aggregeer-tasks: Aggregeer tasks op basis van beleid-workspace.md value_stream-fasen
 - valideer-agent-structuur: Valideer agent folder structuur tegen doctrine
 - list-agents: Toon beschikbare agents per value stream fase
 - fetch-agents: Haal prompts, agents en tasks op voor een value stream fase
@@ -1269,7 +1269,7 @@ def genereer_instructies_main(args: argparse.Namespace) -> int:
 
 
 # ==============================================================================
-# ACTIVEER-WORKSPACE-CONFIGURATIE / MERGE helpers
+# AGGREGEER-TASKS / MERGE helpers
 # ==============================================================================
 
 def load_task_file(file_path: Path) -> Dict:
@@ -1347,30 +1347,41 @@ def merge_tasks(tasks_folder: Path, workspace_root: Path, filter_fase: str = Non
     return merged
 
 
-def activeer_workspace_configuratie_main(args: argparse.Namespace) -> int:
-    """Hoofdfunctie voor activeer-workspace-configuratie.
+def aggregeer_tasks_main(args: argparse.Namespace) -> int:
+    """Hoofdfunctie voor aggregeer-tasks.
 
-    Leest value_stream-fasen uit beleid-workspace.md en merget
-    alle bijbehorende task-bestanden naar .vscode/tasks.json.
+    Verwijdert de huidige tasks.json en bouwt deze opnieuw op:
+    1. Altijd fnd.01 (fundamentele agents)
+    2. Plus value_stream-fasen uit beleid-workspace.md
+    
     Geen parameters vereist; scope wordt bepaald door beleid.
     """
     workspace_root = get_workspace_root()
     output_file = Path(args.output_file) if args.output_file else workspace_root / '.vscode' / 'tasks.json'
 
     print("=" * 70)
-    print(f"Activeer Workspace Configuratie naar {output_file}")
+    print(f"Aggregeer Tasks naar {output_file}")
     print("=" * 70)
     print()
 
+    # Verwijder bestaande tasks.json
+    if output_file.exists() and not args.dry_run:
+        output_file.unlink()
+        print(f"✗ Verwijderd: {output_file}")
+        print()
+
     workspace_config = load_workspace_config()
-    fasen = workspace_config.get('value_stream-fasen', [])
+    geconfigureerde_fasen = workspace_config.get('value_stream-fasen', [])
 
-    if not fasen:
-        print("ERROR: 'value_stream-fasen' niet gevonden in beleid-workspace.md.")
-        print("Voeg toe aan YAML frontmatter: value_stream-fasen: [\"aeo.02\", \"sfw.01\"]")
-        return 1
+    # Bouw fasenlijst: fnd.01 altijd + geconfigureerde fasen
+    fasen = ["fnd.01"]
+    for fase in geconfigureerde_fasen:
+        if fase not in fasen:
+            fasen.append(fase)
 
-    print(f"Geconfigureerde fasen in beleid-workspace.md: {fasen}")
+    print(f"Fundamentele fase: fnd.01 (altijd)")
+    print(f"Geconfigureerde fasen in beleid-workspace.md: {geconfigureerde_fasen}")
+    print(f"Totaal te verwerken fasen: {fasen}")
     print()
 
     merged: Dict[str, Any] = {"version": "2.0.0", "tasks": [], "inputs": []}
@@ -2046,8 +2057,8 @@ def main():
     p_gen.add_argument("--bootstrap-quiet", action="store_true", help="Compacte bootstrap output")
     p_gen.add_argument("--no-save", action="store_true", help="Schrijf geen execution file naar prompt-instructions/")
 
-    # activeer-workspace-configuratie
-    p_activeer = subparsers.add_parser("activeer-workspace-configuratie", help="Activeer workspace op basis van beleid-workspace.md value_stream-fasen")
+    # aggregeer-tasks
+    p_activeer = subparsers.add_parser("aggregeer-tasks", help="Aggregeer tasks op basis van beleid-workspace.md value_stream-fasen")
     p_activeer.add_argument("--output-file", type=str, help="Output bestand (default: .vscode/tasks.json)")
     p_activeer.add_argument("--dry-run", action="store_true", help="Toon wat gedaan zou worden")
 
@@ -2076,8 +2087,8 @@ def main():
         sys.exit(consulteer_canon_main(args))
     elif args.subcommand == "genereer-instructies":
         sys.exit(genereer_instructies_main(args))
-    elif args.subcommand == "activeer-workspace-configuratie":
-        sys.exit(activeer_workspace_configuratie_main(args))
+    elif args.subcommand == "aggregeer-tasks":
+        sys.exit(aggregeer_tasks_main(args))
     elif args.subcommand == "valideer-agent-structuur":
         sys.exit(valideer_agent_structuur_main(args))
     elif args.subcommand == "list-agents":

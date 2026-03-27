@@ -10,6 +10,6 @@ input_parameters:
   - params
   - skip_bootstrap
   - method
-value_stream_fase: aeo.02
+value_stream_fase: fnd.01
 
 ---

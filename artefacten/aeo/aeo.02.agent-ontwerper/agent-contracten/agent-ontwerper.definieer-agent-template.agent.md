@@ -22,7 +22,7 @@ De Agent-ontwerper creëert context-specifieke output templates voor een agent, 
 
 
 **Optionele parameters**:
-- file_naam_inspiriratie: de gebruiker kan een file plaatsen in de folder temp. Deze dient als inspiratie voor de agent-ontwerper bij het vastleggen van het template (type: string, kebab-case).
+- file_naam_inspiratie: de gebruiker kan een file plaatsen in de folder temp. Deze dient als inspiratie voor de agent-ontwerper bij het vastleggen van het template (type: string, kebab-case).
 - intent: standaard wordt voor alle intents in oorstellen agent contracten" sectie in boundary een template aangemaakt. Wanneer deze parameter is opgegeven, wordt alleen voor deze intent een template gegenereerd. (type: string, exact match met intent-naam in boundary)
 
 **Afgeleide informatie** (geëxtraheerd uit boundary):
@@ -208,7 +208,7 @@ Logging-formaat: Markdown append naar `audit/agent-instructions.log.md`
 **Value Stream**: Agent Ecosysteem Ontwikkeling (aeo)  
 **Fase**: 02 — Ecosysteeminrichting  
 **Classificatie**: 
+- Vormingsfase: Vastlegging
 - Betekeniseffect: Normerend
-- Interventieniveau: Werk
 - Werking: Inhoudelijk
 - Bron-houding: Canon-gebonden

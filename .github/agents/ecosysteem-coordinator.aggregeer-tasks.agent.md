@@ -1,14 +1,14 @@
 ---
 agent: ecosysteem-coordinator
-intent: activeer-workspace-configuratie
+intent: aggregeer-tasks
 versie: 1.0.0
 ---
 
-# Ecosysteem-coordinator — Activeer Workspace Configuratie
+# Ecosysteem-coordinator — Aggregeer Tasks
 
 ## Rolbeschrijving (korte samenvatting)
 
-Maakt de workspace execution-ready door alle agent-task-configuraties te aggregeren naar één globale `.vscode/tasks.json`, op basis van de value stream fasen die zijn geconfigureerd in `beleid-workspace.md`. Geen parameters vereist: de scope wordt volledig bepaald door de workspace-configuratie.
+Aggregeert alle agent-task-configuraties naar één globale `.vscode/tasks.json`, op basis van de value stream fasen die zijn geconfigureerd in `beleid-workspace.md`. Geen parameters vereist: de scope wordt volledig bepaald door de workspace-configuratie.
 
 **VERPLICHT**: Raadpleeg de agent charter voor volledige context, grenzen en werkwijze.  
 **Conventie**: Charter bevindt zich in `ecosysteem-coordinator.charter.md` in de parent folder van dit contract.
@@ -40,7 +40,7 @@ De ecosysteem-coordinator levert:
 
 **Output-specificatie**:
 ```yaml
-intent: activeer-workspace-configuratie
+intent: aggregeer-tasks
 output:
   - type: tasks-configuratie
     herkomstpositie: initiërend

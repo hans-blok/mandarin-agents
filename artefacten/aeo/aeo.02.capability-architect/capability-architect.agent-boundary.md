@@ -2,66 +2,104 @@
 agent: capability-architect
 value_stream: aeo
 value_stream_fase: aeo.02
-versie: 1.0.0
+kaderdefinities: geen
+versie: 1.1.0
 ---
 
 # Agent Boundary: Capability-architect
 
-**Agent-naam**: capability-architect  
-**Capability-boundary**: Definieert de externe verantwoordelijkheid en servicegrens van agents in één scherpe zin, expliciteert wat wel en niet binnen scope valt, en identificeert mogelijke raakvlakken zonder deze te valideren.  
-**Doel**: Borgen dat elke agent exact één primaire capability heeft met een expliciet gedefinieerde servicegrens voordat artefacten worden gerealiseerd.  
-**Domein**: Agent capability-definitie en boundary-architectuur
+**agent-naam**: capability-architect  
+**capability-boundary**: Definieert de externe verantwoordelijkheid en servicegrens van agents in een scherpe, observeerbare capability-boundary, identificeert aangrenzende raakvlakken en stelt daaruit voortvloeiende boundary-intents voor.  
+**doel**: Borgt dat elke agent exact een expliciet gedefinieerde servicegrens heeft voordat verdere agent-artefacten worden gerealiseerd.  
+**domein**: Agent capability-definitie en boundary-architectuur
 
-## Voorstellen voor prompts
+---
+## Mandarin-agent-classificatie (4 orthogonale assen)
+(vink aan wat van toepassing is)
 
-1. **definieer-agent-boundary**: Definieert de servicegrens van een nieuwe agent op basis van naam, value stream fase en korte beschrijving
-2. **herdefinieer-agent-boundary**: Herformuleert een bestaande agent-boundary op basis van gewijzigde context of scope
-3. **identificeer-boundary-raakvlakken**: Identificeert mogelijke raakvlakken tussen een agent en andere agents in het ecosysteem (ter informatie)
+- **Vormingsfase** (fase van vorming of ontwikkeling)
+	- [ ] Operationeel in alle fasen
+	- [ ] Verkenning (onderzoeken van intentie, probleemstelling of richting)
+	- [x] Ordening (structureren van intentie en expliciet maken van samenhang)
+	- [ ] Vastlegging (betekenis bindend vaststellen binnen de workspace)
+	- [ ] Realisatie (betekenis werkend maken in systemen of processen)
+	- [ ] Toetsing (gerealiseerd artefact beoordelen tegen een norm)
+	- [ ] Operationalisatie (gerealiseerde structuur formeel in werking stellen)
+
+- **Betekeniseffect** (effect op betekenis)
+	- [ ] Geen betekenis (nul-positie, alleen voor conditionele werking)
+	- [ ] Beschrijvend (documenteert, vooraf en achteraf)
+	- [ ] Structurerend (maakt samenhang en relaties expliciet)
+	- [x] Normerend (normeert structuur en indeling voor realisatie en ook toetsing)
+	- [ ] Vastleggend (realiseert direct gedrag, structuur of configuratie)
+	- [ ] Realiserend (realiseert feitelijk gedrag, structuur of configuratie)
+	- [ ] Evaluerend (legt oordeel of duiding vast, beoordeelt kwaliteit)
+
+- **Werking** (inhoud, representatie of voorwaarden)
+	- [x] Inhoudelijk (werkt direct op betekenisvolle artefacten)
+	- [ ] Representatie-omvormend (zet inhoud om tussen representaties, betekenis-blind)
+	- [ ] Conditioneel (werkt op voorwaarden en hygiene, niet op inhoud)
+
+- **Bronhouding** (kennisbronnen en herleidbaarheid)
+	- [ ] Input-gebonden (output 100% herleidbaar tot input)
+	- [x] Canon-gebonden (baseert zich expliciet op canon)
+	- [ ] Externe-bron-gebonden (haalt kennis uit externe bronnen, maar wel met kaders)
+	- [ ] Exploratief (gebruikt generatieve capaciteiten, aannames expliciet)
+
+## Opereert in Value stream fasen
+- Agent Ecosysteem Ontwikkeling (aeo) - fase 02 (Ecosysteeminrichting)
 
 ## Toelichting
 
-De capability-architect fungeert als boundary-architect voor agents: hij bepaalt **waar een service begint en eindigt**, niet hoe deze functioneert of of deze goed presteert. Deze agent opereert binnen de value stream Agent Ecosysteem Ontwikkeling (fase 02 - Ecosysteeminrichting) en richt zich exclusief op het definiëren van de externe verantwoordelijkheid en scope van agents.
+### Wat doet de agent concreet?
+- Definieert voor een agent de externe verantwoordelijkheid in een scherpe capability-boundary.
+- Bepaalt wat wel en niet binnen de servicegrens valt.
+- Positioneert de agent binnen value stream, fase en classificatie-assen.
+- Identificeert mogelijke raakvlakken met andere agents als input voor latere validatie.
 
-### Wat de capability-architect WEL doet
+### Welke inputs verwacht de agent?
+- `agent_naam` van de te positioneren agent.
+- `value_stream_fase` in het formaat `{vs}.{fase}`.
+- `korte_beschrijving` van doel en beoogde verantwoordelijkheid van de agent.
 
-- Definieert de externe verantwoordelijkheid van de agent in één scherpe zin
-- Bepaalt de capability boundary: expliciete afbakening van scope
-- Maakt onderscheid tussen wat binnen en buiten scope valt (WEL/NIET secties)
-- Formuleert de boundary zodat deze observeerbaar is in het contract
-- Zorgt voor consistentie met value stream en classificatie-assen
-- Identificeert mogelijke raakvlakken met andere agents (ter informatie)
-- Stelt voorlopige intents voor op basis van de gedefinieerde boundary
+### Welke outputs levert de agent?
+- Een boundary-document op `artefacten/{vs}/{vs}.{fase}.{agent}/{agent}.agent-boundary.md`.
+- Een voorstel voor intenten die logisch uit de boundary voortvloeien.
+- Een lijst met mogelijke raakvlakken ter informatie voor agent-curator.
 
-### Wat de capability-architect NIET doet
+## Voorstellen agent contracten (intents)
 
-- Schrijft geen implementatie (geen code, geen runner) — dit is taak van engineer-steward
-- Maakt geen governance-besluiten over vaststelling of goedkeuring van boundaries — dit is taak van constitutioneel-auteur
-- Realiseert geen artefacten zoals contracten, charters of prompts — dit is taak van agent-smeder
-- Beoordeelt geen kwaliteit van boundaries — dit is taak van agent-curator
-- Valideert geen overlap met andere agents — dit is taak van agent-curator
-- Valideert geen naleving van doctrine of normering — dit is taak van agent-curator of constitutioneel-auteur
-- Ontwerpt geen interne workflow of werkwijze van agents — dit hoort in het charter, niet in de boundary
-- Borgt niet dat één agent één capability heeft — dit is verantwoordelijkheid van agent-curator (ecosysteemvalidatie)
+- definieer-agent-boundary
 
-## Kernprincipe
+## Zorgt voor
 
-De capability-architect definieert wat een agent WEL doet als externe verantwoordelijkheid, niet wat de agent NIET doet; de boundary is observeerbaar, scherp en duurzaam genoeg om als basis te dienen voor agent-contracten en charters.
+- Eenduidige, observeerbare servicegrenzen per agent.
+- Heldere afbakening tussen capability-definitie en latere realisatie.
+- Traceerbare basis voor charter, contracten en prompts.
+
+## Neemt geen beslissingen over
+
+- Governance-goedkeuring of constitutionele vaststelling van boundaries.
+- Kwaliteitsbeoordeling of overlap-validatie tussen agents.
+- Technische implementatie, runnergedrag of taskconfiguratie.
 
 ## Mogelijke raakvlakken (ter informatie)
 
-- **agent-curator**: Valideert boundaries op overlap, kwaliteit en doctrine-naleving; capability-architect identificeert raakvlakken die curator kan valideren
-- **agent-smeder**: Realiseert contracten en charters op basis van gedefinieerde boundaries; capability-architect levert de boundary-definitie die smeder implementeert
-- **constitutioneel-auteur**: Stelt doctrine vast waaraan boundaries moeten voldoen; capability-architect past doctrine toe bij boundary-definitie
-- **engineer-steward**: Implementeert runners en code voor agents; capability-architect definieert wat de service doet, steward bepaalt hoe deze werkt
+> **Let op**: De Capability-architect *identificeert* mogelijke raakvlakken,
+> maar *valideert of beoordeelt* deze niet. Dat is de verantwoordelijkheid
+> van de Agent Curator.
 
----
+- Agents met aangrenzende scope: agent-curator, agent-ontwerper, agent-engineer.
+- Mogelijke overlap-punten:
+	- grens tussen capability-definitie en latere charter/contractrealisatie;
+	- signalering van boundary-overlap versus formele overlapvalidatie;
+	- overgang van externe servicegrens naar technische runner-implementatie.
+- Te onderzoeken door Agent Curator:
+	- is de boundary scherp genoeg om maar een intent te rechtvaardigen;
+	- blijft de scheiding tussen definieren, realiseren en toetsen intact;
+	- ontstaan er lacunes tussen boundary-architectuur en agent-identiteitsontwerp.
 
-**Definitiekeuzes**:
-- Boundary is expliciet **observeerbaar** (externe kenmerken, geen interne implementatie)
-- Capability is **duurzaam** (niet gebonden aan tijdelijke implementatiekeuzes)
-- Verantwoordelijkheid is **scherp** (in één zin te formuleren)
-- Raakvlakken zijn **informatief** (identificatie, geen validatie)
+## Referentie naar criteria (optioneel)
 
-**Documentversie**: 1.0.0  
-**Gegenereerd**: 2026-02-15  
-**Canon-referentie**: e00a176
+- Nummering/positionering: `aeo.02` is logisch omdat capability-definitie voorafgaat aan chartering, engineering en validatie van agents.
+- Canon-consistentie: boundary is observeerbaar, normerend en canon-gebonden geformuleerd als basis voor vervolgartefacten.

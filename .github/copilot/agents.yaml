@@ -53,11 +53,9 @@ agents:
 - id: ecosysteem-coordinator
   name: workspace.ecosysteem-coordinator
   type: uitvoerend
-  valueStream: aeo
-  charter: artefacten/aeo/aeo.02.ecosysteem-coordinator/ecosysteem-coordinator.charter.md
+  valueStream: fnd
+  charter: artefacten/fnd/fnd.01.ecosysteem-coordinator/ecosysteem-coordinator.charter.md
   prompts:
-  - .github/prompts/mandarin.ecosysteem-coordinator.activeer-workspace-configuratie.prompt.md
-  - .github/prompts/mandarin.ecosysteem-coordinator.consulteer-canon.prompt.md
+  - .github/prompts/mandarin.ecosysteem-coordinator.aggregeer-tasks.prompt.md
   - .github/prompts/mandarin.ecosysteem-coordinator.genereer-instructies.prompt.md
-  - .github/prompts/mandarin.ecosysteem-coordinator.valideer-agent-structuur.prompt.md
   runners: []

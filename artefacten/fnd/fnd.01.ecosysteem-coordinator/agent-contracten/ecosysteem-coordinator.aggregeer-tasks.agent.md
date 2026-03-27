@@ -1,14 +1,18 @@
 ---
 agent: ecosysteem-coordinator
-intent: activeer-workspace-configuratie
+intent: aggregeer-tasks
 versie: 1.0.0
 ---
 
-# Ecosysteem-coordinator — Activeer Workspace Configuratie
+# Ecosysteem-coordinator — Aggregeer Tasks
 
 ## Rolbeschrijving (korte samenvatting)
 
-Maakt de workspace execution-ready door alle agent-task-configuraties te aggregeren naar één globale `.vscode/tasks.json`, op basis van de value stream fasen die zijn geconfigureerd in `beleid-workspace.md`. Geen parameters vereist: de scope wordt volledig bepaald door de workspace-configuratie.
+Verwijdert de bestaande `.vscode/tasks.json` en bouwt deze opnieuw op met:
+1. **Altijd**: Alle tasks uit `fnd.01` (fundamentele agents)
+2. **Plus**: Alle tasks voor fasen geconfigureerd in `beleid-workspace.md` (`value_stream-fasen`)
+
+Geen parameters vereist: de scope wordt volledig bepaald door de workspace-configuratie.
 
 **VERPLICHT**: Raadpleeg de agent charter voor volledige context, grenzen en werkwijze.  
 **Conventie**: Charter bevindt zich in `ecosysteem-coordinator.charter.md` in de parent folder van dit contract.
@@ -25,7 +29,10 @@ Maakt de workspace execution-ready door alle agent-task-configuraties te aggrege
 - dry_run: Toon wat zou worden samengevoegd zonder te schrijven (type: boolean, default: false).
 
 **Automatisch gelezen uit `beleid-workspace.md`**:
-- `value_stream-fasen`: Lijst van te verwerken fasen (bijv. `["aeo.02", "sfw.01"]`)
+- `value_stream-fasen`: Lijst van extra te verwerken fasen (bijv. `["aeo.02", "sfw.01"]`)
+
+**Altijd meegenomen**:
+- `fnd.01`: Fundamentele agents worden altijd toegevoegd, ongeacht workspace-configuratie
 
 ### Output (wat komt eruit)
 
@@ -40,7 +47,7 @@ De ecosysteem-coordinator levert:
 
 **Output-specificatie**:
 ```yaml
-intent: activeer-workspace-configuratie
+intent: aggregeer-tasks
 output:
   - type: tasks-configuratie
     herkomstpositie: initiërend

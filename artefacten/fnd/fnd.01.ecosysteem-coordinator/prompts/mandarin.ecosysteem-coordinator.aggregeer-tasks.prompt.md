@@ -1,8 +1,8 @@
 ---
 agent: mandarin.ecosysteem-coordinator
-intent: activeer-workspace-configuratie
+intent: aggregeer-tasks
 bronhouding: Workspace-gebonden
 versie: 1.0.0
-value_stream_fase: aeo.02
+value_stream_fase: fnd.01
 
 ---

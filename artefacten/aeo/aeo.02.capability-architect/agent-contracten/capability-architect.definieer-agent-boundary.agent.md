@@ -23,7 +23,7 @@ De Capability-architect definieert de servicegrens van een agent als duurzame, e
 - korte_beschrijving: Korte beschrijving van het doel van de agent (type: string, 1-3 zinnen).
 
 **Optionele parameters**:
-- geen 
+- geen
 
 
 
@@ -54,17 +54,17 @@ output:
 **Bestandsformaat vereisten**:
 1. **Moet YAML frontmatter bevatten**: agent, value_stream, value_stream_fase, versie
 2. **value_stream en value_stream_fase**: Gebruik de waarden uit de INPUT parameter `value_stream_fase`, NIET van de executor agent
-3. **Moet template volgen**: Gebruik `agent-boundary.template.md` (beschikbaar als [TEMPLATE_FILE] placeholder, wordt automatisch geladen via template_file parameter)
+3. **Moet template volgen**: Gebruik `artefacten/aeo/aeo.02.capability-architect/templates/agent-boundary.template.md`
 4. **Classificatie checkboxes**: Gebruik checkbox syntax `- [ ]` en `- [x]` uit template
 5. **Intent naming**: Alle voorgestelde intents MOETEN starten met canoniek werkwoord uit `doctrine-intent-naming.md` (meestal "definieer" voor structurerende definitie)
 
-**Outputformaat** (volgens [TEMPLATE_FILE] placeholder):
+**Outputformaat** (volgens `artefacten/aeo/aeo.02.capability-architect/templates/agent-boundary.template.md`):
 ```markdown
 ---
 agent: {agent_naam}
 value_stream: {vs}
 value_stream_fase: {vs}.{fase}
-kaderdefinities: {kaderdefinities — lijst van canonieke paden, of "geen"}
+kaderdefinities: geen
 versie: 1.0.0
 ---
 
@@ -77,32 +77,37 @@ versie: 1.0.0
 
 ---
 
-## Classificatie van de agent
+## Mandarin-agent-classificatie (4 orthogonale assen)
 (vink aan wat van toepassing is)
 
+- **Vormingsfase**
+  - [ ] Operationeel in alle fasen
+  - [ ] Verkenning
+  - [ ] Ordening
+  - [ ] Vastlegging
+  - [ ] Realisatie
+  - [ ] Toetsing
+  - [ ] Operationalisatie
+
 - **Betekeniseffect**
+  - [ ] Geen betekenis
   - [ ] Beschrijvend
+  - [ ] Structurerend
+  - [ ] Normerend
+  - [ ] Vastleggend
   - [ ] Realiserend
   - [ ] Evaluerend
-  - [ ] Normerend
-  - [ ] Geen
-
-- **Interventieniveau**
-  - [ ] Werk
-  - [ ] Ontwerp
-  - [ ] Architectuur
-  - [ ] Ecosysteem
 
 - **Werking**
   - [ ] Inhoudelijk
   - [ ] Representatie-omvormend
   - [ ] Conditioneel
 
-- **Bron-houding**
+- **Bronhouding**
   - [ ] Input-gebonden
   - [ ] Canon-gebonden
   - [ ] Externe-bron-gebonden
-  - [ ] Vrij
+  - [ ] Exploratief
 
 ## Voorstellen agent contracten (intents)
 
@@ -116,8 +121,7 @@ versie: 1.0.0
 **Formaat-normering**: 
 - Default formaat: **Markdown** (.md), conform Principe 9
 - Alternatieve formaten alleen op expliciete verzoek
-- Markdown bevat structuur volgens agent-boundary.template.md (geladen via template_file parameter)
-- Template wordt automatisch geladen en beschikbaar gemaakt als [TEMPLATE_FILE] placeholder
+- Markdown bevat structuur volgens `artefacten/aeo/aeo.02.capability-architect/templates/agent-boundary.template.md`
 
 ### Foutafhandeling
 
@@ -138,7 +142,7 @@ De Capability-architect:
 
 ### Stappen
 1. **Analyseer input**: Begrijp korte_beschrijving en domein, extraheer vs en fase uit value_stream_fase PARAMETER (niet van executor agent)
-2. **Raadpleeg template**: Gebruik [TEMPLATE_FILE] placeholder voor agent-boundary.template.md structuur (wordt automatisch geladen)
+2. **Raadpleeg template**: Gebruik `artefacten/aeo/aeo.02.capability-architect/templates/agent-boundary.template.md` als vaste structuurbron
 3. **Raadpleeg doctrine**: Check doctrine-intent-naming.md voor canonieke werkwoorden (meestal "definieer")
 4. **Definieer verantwoordelijkheid**: Formuleer externe verantwoordelijkheid in één zin
 5. **Bepaal boundary**: Expliciteer wat wél en níet binnen scope valt (minimaal 3 bullets per sectie)
@@ -149,7 +153,7 @@ De Capability-architect:
 10. **Schrijf boundary document**: 
     - Gebruik YAML frontmatter met value_stream en value_stream_fase uit INPUT parameter
     - Volg template-structuur volledig (inclusief checkboxes)
-    - Schrijf weg naar artefacten/{vs}/{vs}.{fase}.{agent}/agent-boundary-{agent}.md
+    - Schrijf weg naar artefacten/{vs}/{vs}.{fase}.{agent}/{agent}.agent-boundary.md
 11. **Valideer compleetheid**: Check template-checklist en kwaliteitsborging
 
 ### Kwaliteitsborging
@@ -160,7 +164,7 @@ De Capability-architect:
 - **Template volledig gevolgd**: Alle secties uit agent-boundary.template.md aanwezig, inclusief checkboxes
 - **Classificatie checkboxes** correct aangevinkt met `- [x]` syntax
 - **Mogelijke raakvlakken** geïdentificeerd (zonder validatie)
-- **Bestand weggeschreven** naar correct pad: artefacten/{vs}/{vs}.{fase}.{agent}/agent-boundary-{agent}.md
+- **Bestand weggeschreven** naar correct pad: artefacten/{vs}/{vs}.{fase}.{agent}/{agent}.agent-boundary.md
 
 ---
 
@@ -184,7 +188,7 @@ De Capability-architect:
 
 Bij uitvoering logt de agent:
 - ✓ Gelezen bestanden: korte_beschrijving (als parameter), referentie_agents (indien opgegeven)
-- ✓ Aangemaakte bestanden: agent-boundary-{agent}.md
+- ✓ Aangemaakte bestanden: {agent}.agent-boundary.md
 - ✓ Geen gewijzigde bestanden (boundary is nieuw, of wordt geversioned)
 - ✓ Geïdentificeerde raakvlakken (zonder validatie-conclusie)
 
@@ -204,7 +208,7 @@ Logging-formaat: Markdown append naar `audit/agent-instructions.log.md`
 **Value Stream**: Agent Ecosysteem Ontwikkeling (aeo)  
 **Fase**: 02 — Ecosysteeminrichting  
 **Classificatie**: 
+- Vormingsfase: Ordening
 - Betekeniseffect: Normerend
-- Interventieniveau: Ecosysteem
 - Werking: Inhoudelijk
 - Bron-houding: Canon-gebonden

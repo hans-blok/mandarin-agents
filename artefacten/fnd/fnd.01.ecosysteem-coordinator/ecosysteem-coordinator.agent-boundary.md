@@ -1,14 +1,14 @@
 ---
 agent: ecosysteem-coordinator
-value_stream: aeo
-value_stream_fase: aeo.02
+value_stream: fnd
+value_stream_fase: fnd.01
 versie: 1.0.0
 ---
 
 # Agent Boundary: Ecosysteem-coordinator
 
 **agent-naam**: ecosysteem-coordinator
-**capability-boundary**: Orkestreert ecosysteem-brede lifecycle-taken (canon-synchronisatie, instructie-generatie, configuratie-aggregatie) die geen individuele agent toebehoort; raakt geen agent-inhoud aan en wijzigt geen canon.
+**capability-boundary**: Orkestreert ecosysteem-brede lifecycle-taken (instructie-generatie, task-aggregatie) die geen individuele agent toebehoort; raakt geen agent-inhoud aan.
 **doel**: Waarborgen dat alle agents consistent kunnen opereren door shared infrastructure en cross-cutting concerns centraal te beheren.
 **domein**: Ecosysteem-lifecycle
 
@@ -49,48 +49,39 @@ versie: 1.0.0
 
 ## Opereert in Value stream fasen
 
-- aeo.02 — Agent Ecosysteem Ontwikkeling (Ecosysteeminrichting)
+- fnd.01 — Fundamentele Agents (Infrastructuur)
+- Ondersteunt alle value streams
 
 ---
 
 ## Toelichting
 
 **Wat doet de agent concreet?**
-- Raadpleegt mandarin-canon en registreert commit SHA voor traceerbaarheid
 - Assembleert execution-bestanden uit charter + contract + prompt templates
-- Merget agent-specifieke task-configuraties naar globale `.vscode/tasks.json`
+- Aggregeert agent-specifieke task-configuraties naar globale `.vscode/tasks.json`
 - Voert `bootstrap:` declaraties uit prompt frontmatter uit
-- Valideert of agent-folders voldoen aan doctrine-structuur
 
 **Welke inputs verwacht de agent?**
-- Workspace-beleid dat het pad naar mandarin-canon repository specificeert (lokaal of GitHub URL)
-- Agent-naam en intent voor instructie-generatie
-- Prompt-bestanden met frontmatter metadata
 - Agent-naam en intent voor instructie-generatie
 - Prompt-bestanden met frontmatter metadata
 
 **Welke outputs levert de agent?**
 - Execution-bestanden in `prompt-instructions/` folder
-- Samengevoegde `tasks.json` configuratie
-- Audit-logs in `audit/canon-consult.log.md`
+- Geaggregeerde `tasks.json` configuratie
 
 ---
 
 ## Voorstellen agent contracten (intents)
 
-- `consulteer-canon` — Raadpleeg mandarin-canon, log commit SHA, retourneer grondslagen
-- `genereer-instructies` — Assembleer execution-bestand uit canon + charter + contract + prompt
-- `activeer-workspace-configuratie` — Voeg agent-specifieke tasks samen naar globale tasks.json op basis van beleid-workspace.md
-- `valideer-agent-structuur` — Controleer doctrine-compliance van agent-folders
+- `genereer-instructies` — Assembleer execution-bestand uit charter + contract + prompt
+- `aggregeer-tasks` — Aggregeer agent-specifieke tasks naar globale tasks.json op basis van beleid-workspace.md
 
 ---
 
 ## Zorgt voor
 
-- Consistente canon-raadpleging met verifieerbare audit trail
 - Uniforme instructie-generatie onafhankelijk van welke agent wordt uitgevoerd
 - Gecentraliseerd configuratie-beheer zonder duplicatie in agent-runners
-- Structuur-validatie als kwaliteitspoort voor nieuwe agents
 
 ---
 
@@ -98,7 +89,6 @@ versie: 1.0.0
 
 - Inhoud van agent-charters of -contracts (dat doet capability-architect / agent-ontwerper)
 - Kwaliteit of correctheid van agents (dat doet agent-curator)
-- Canon-inhoud of doctrine-wijzigingen (dat doet constitutioneel-auteur)
 - Agent-specifieke business logic (dat doet de betreffende agent zelf)
 
 ---
@@ -110,18 +100,16 @@ versie: 1.0.0
   - `agent-curator` — valideert agents; ecosysteem-coordinator valideert alleen structuur
   
 - **Mogelijke overlap-punten**:
-  - `merge-tasks` functionaliteit zit nu in agent-engineer runner
-  - `generate-instructions` functionaliteit zit nu in agent-engineer runner
-  - Canon consultatie is geïntegreerd in de ecosysteem-coordinator runner
+  - `merge-tasks` functionaliteit was in agent-engineer runner, nu geïntegreerd als `aggregeer-tasks`
+  - `generate-instructions` functionaliteit was in agent-engineer runner, nu geïntegreerd
 
 - **Te onderzoeken door Agent Curator**:
-  - Migratie van `generate-instructions`, `merge-tasks`, `pipeline` van agent-engineer naar ecosysteem-coordinator
-  - ~~Integratie van `bootstrap_canon_consult.py` als intent van deze agent~~ ✓ Voltooid
+  - Migratie van `pipeline` van agent-engineer naar ecosysteem-coordinator
 
 ---
 
 ## Referentie naar criteria
 
 - **Naamgeving**: `ecosysteem-coordinator` drukt uit dat dit een coördinerende rol is, geen creërende of validerende
-- **Positionering**: aeo.02 (Ecosysteeminrichting) omdat dit de infrastructuur betreft waarop agents draaien
-- **Canon-consistentie**: Volgt doctrine-agent-charter-normering Principe 2 (Eenduidige Verantwoordelijkheid) door alleen lifecycle-orchestratie te claimen; volgt ook doctrine-agent-runner-architectuur uit de canon
+- **Positionering**: fnd.01 (Fundamentele Agents) omdat dit de infrastructuur betreft waarop alle agents draaien
+- **Doctrine-consistentie**: Volgt doctrine-agent-charter-normering Principe 2 (Eenduidige Verantwoordelijkheid) door alleen lifecycle-orchestratie te claimen

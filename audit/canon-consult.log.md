@@ -8280,3 +8280,44 @@
 | `grondslagen\aeo` | `mandarin-domeinconcepten.md` |
 | `grondslagen\aeo` | `mandarin-ecosysteem-ordeningsconcepten.md` |
 
+
+---
+
+## Canon Consultation — 2026-03-23T20:23:14
+
+- **Agent**: capability-architect
+- **Value Stream**: aeo
+- **Workspace File**: `artefacten\aeo\aeo.02.agent-curator\prompts\mandarin.agent-curator.valideer-agent-consistentie.prompt.md`
+- **Intent**: valideer-agent-consistentie
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: ceb3327
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*,grondslagen/aeo/*`
+- **Charter**: `artefacten\aeo\aeo.02.agent-curator\agent-curator.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen\.algemeen` | `axioma-van-gezag.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `doctrine-bronhouding-en-exploratie.md` |
+| `grondslagen\.algemeen` | `norm-constitutionele-bootstrapping.md` |
+| `grondslagen\.algemeen` | `norm-determnistiscche-runners.md` |
+| `grondslagen\.algemeen` | `review-checklist.md` |
+| `grondslagen\.algemeen` | `verplichte-bootstrap-header.md` |
+| `grondslagen\.algemeen` | `workspace-doctrine.md` |
+| `grondslagen\aeo` | `doctrine-agent-charter-normering.md` |
+| `grondslagen\aeo` | `doctrine-agent-runner-architectuur.md` |
+| `grondslagen\aeo` | `doctrine-handoff-creatie-en-overdrachtsdiscipline.md` |
+| `grondslagen\aeo` | `doctrine-intent-naming.md` |
+| `grondslagen\aeo` | `doctrine-mandarin-agents-output-structuur.md` |
+| `grondslagen\aeo` | `doctrine-runner-discipline-en-runner-kernel.md` |
+| `grondslagen\aeo` | `doctrine-traceability.md` |
+| `grondslagen\aeo` | `mandarin-classificatie-matrices.md` |
+| `grondslagen\aeo` | `mandarin-domeinconcepten.md` |
+| `grondslagen\aeo` | `mandarin-ecosysteem-ordeningsconcepten.md` |
+

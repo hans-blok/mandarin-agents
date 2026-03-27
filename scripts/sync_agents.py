@@ -1,14 +1,19 @@
 """
-Copy Mandarin Agents Assets Script
+Sync Agents Script
 
-Kopieert agent-artefacten naar centrale locaties en genereert agents.yaml:
+Synchroniseert agent-artefacten naar centrale locaties:
 - Prompts uit artefacten/{vs}/{agent}/prompts/ naar .github/prompts/
 - Agent-contracten uit artefacten/{vs}/{agent}/agent-contracten/ naar .github/agents/
 - Genereert .github/copilot/agents.yaml met alle agents
+- Aggregeert tasks naar .vscode/tasks.json via ecosysteem-coordinator
+
+Verwerkt: aeo.02.* en fnd.01.* agents
 """
 
 import os
 import shutil
+import subprocess
+import sys
 import yaml
 from pathlib import Path
 
@@ -59,12 +64,13 @@ def extract_value_stream_from_path(agent_path):
     return "utility"
 
 def main():
-    """Kopieer alle agent assets en genereer agents.yaml."""
-    print("[copy_mandarin_agents] Start synchronisatie van agent assets...")
+    """Synchroniseer alle agent assets en genereer agents.yaml."""
+    print("[sync_agents] Start synchronisatie...")
     print()
     
-    # Gebruik relatieve paden ten opzichte van workspace root
-    workspace_root = Path.cwd()
+    # Bepaal workspace root op basis van script locatie (scripts/ folder)
+    script_dir = Path(__file__).resolve().parent
+    workspace_root = script_dir.parent
     artefacten_folder = workspace_root / "artefacten"
     prompts_dest = workspace_root / ".github" / "prompts"
     agents_dest = workspace_root / ".github" / "agents"
@@ -72,7 +78,7 @@ def main():
     
     if not artefacten_folder.exists():
         print(f"[Waarschuwing] Artefacten folder niet gevonden: {artefacten_folder}")
-        print(f"[Debug] Current working directory: {workspace_root}")
+        print(f"[Debug] Workspace root: {workspace_root}")
         return
     
     # 1. Cleanup .github/prompts
@@ -190,7 +196,28 @@ def main():
         build_agents_yaml(agents_data, agents_yaml_path)
         print()
     
-    print(f"[copy_mandarin_agents] ✓ Synchronisatie afgerond")
+    # 5. Aggregeer tasks via ecosysteem-coordinator
+    print("[Info] Aggregeer tasks naar .vscode/tasks.json...")
+    runner_path = workspace_root / "artefacten" / "fnd" / "fnd.01.ecosysteem-coordinator" / "runner" / "ecosysteem-coordinator.runner.py"
+    if runner_path.exists():
+        env = os.environ.copy()
+        env["PYTHONIOENCODING"] = "utf-8"
+        result = subprocess.run(
+            [sys.executable, str(runner_path), "aggregeer-tasks"],
+            cwd=str(workspace_root),
+            capture_output=True,
+            text=True,
+            env=env
+        )
+        if result.returncode == 0:
+            print("  ✓ Tasks geaggregeerd")
+        else:
+            print(f"  ✗ Fout bij aggregeren: {result.stderr}")
+    else:
+        print(f"  ✗ Runner niet gevonden: {runner_path}")
+    print()
+    
+    print(f"[sync_agents] ✓ Synchronisatie afgerond")
     print(f"[Samenvatting]")
     print(f"  - {total_prompts} prompts gekopieerd naar .github/prompts/")
     print(f"  - {total_contracts} agent-contracten gekopieerd naar .github/agents/")

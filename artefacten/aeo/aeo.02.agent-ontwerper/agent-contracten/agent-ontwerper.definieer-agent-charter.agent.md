@@ -21,7 +21,7 @@ De Agent-ontwerper creëert het agent-charter document dat identiteit, rol, gren
 - agent_naam: Naam van de agent waarvoor het charter wordt gedefinieerd (type: string, kebab-case).
 
 **Optionele parameters**:
-- geen 
+- boundary_file: Pad naar het agent-boundary document (type: string, default: afgeleid uit `agent_naam` en `value_stream_fase`).
 
 **Afgeleide informatie** (geëxtraheerd uit boundary):
 - capability_boundary: Externe verantwoordelijkheid in één zin
@@ -203,7 +203,7 @@ Logging-formaat: Markdown append naar `audit/agent-instructions.log.md`
 **Value Stream**: Agent Ecosysteem Ontwikkeling (aeo)  
 **Fase**: 02 — Ecosysteeminrichting  
 **Classificatie**: 
+- Vormingsfase: Vastlegging
 - Betekeniseffect: Normerend
-- Interventieniveau: Werk
 - Werking: Inhoudelijk
 - Bron-houding: Canon-gebonden

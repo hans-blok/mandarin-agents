@@ -1,7 +1,7 @@
 ---
 agent: mandarin.agent-ontwerper
 intent: definieer-agent-template
-bronhouding: canon-gebonden
+bronhouding: Canon-gebonden
 versie: 1.1.0
 input_parameters:
   - agent_naam

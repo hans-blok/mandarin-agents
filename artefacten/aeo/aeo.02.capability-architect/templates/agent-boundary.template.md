@@ -1,7 +1,7 @@
 ---
 agent: capability-architect
 intent: definieer-agent-boundary
-versie: 1.0.0
+versie: 1.1.0
 # Template voor het definiëren van agent boundaries.
 # Definieert de servicegrens: wat de agent wél en níet doet.
 # Validatie en beoordeling van overlap/kwaliteit wordt gedaan door Agent Curator.
@@ -45,8 +45,7 @@ Raadpleeg mandarin-ecosysteem-ordeningsconcepten.md voor definities en voorbeeld
   - [ ] Ordening (structureren van intentie en expliciet maken van samenhang)
   - [ ] Vastlegging (betekenis bindend vaststellen binnen de workspace)
   - [ ] Realisatie (betekenis werkend maken in systemen of processen)
-   - [ ] Toetsing (gerealiseerd artefact beoordelen tegen een norm)
-  - [ ] Verantwoording (documenteren, traceerbaarheid expliciteren, contextualiseren)
+  - [ ] Toetsing (gerealiseerd artefact beoordelen tegen een norm)
   - [ ] Operationalisatie (gerealiseerde structuur formeel in werking stellen)
 
 - **Betekeniseffect** (effect op betekenis)
