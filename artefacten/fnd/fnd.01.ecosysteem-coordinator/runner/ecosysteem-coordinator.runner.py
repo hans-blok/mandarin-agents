@@ -35,6 +35,30 @@ except ImportError:
 
 
 # ==============================================================================
+# WINDOWS UTF-8 ENCODING FIX
+# ==============================================================================
+
+def setup_utf8_encoding():
+    """Configureer UTF-8 encoding voor Windows console output.
+    
+    Voorkomt UnicodeEncodeError bij het printen van speciale tekens
+    zoals pijlen (→), checkmarks (✓), etc.
+    """
+    if sys.platform == 'win32':
+        # Reconfigure stdout/stderr to use UTF-8 with error handling
+        if hasattr(sys.stdout, 'reconfigure'):
+            sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+        if hasattr(sys.stderr, 'reconfigure'):
+            sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+        
+        # Set environment variable for child processes
+        os.environ['PYTHONIOENCODING'] = 'utf-8'
+
+# Apply UTF-8 fix immediately
+setup_utf8_encoding()
+
+
+# ==============================================================================
 # SHARED UTILITIES
 # ==============================================================================
 
@@ -79,20 +103,57 @@ def get_workspace_root() -> Path:
     """Centrale functie voor workspace root detectie.
     
     Probeert eerst relatief aan dit script, dan fallback naar cwd.
+    Script staat in: artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/
+    Dus 5 niveaus omhoog naar repo root.
     """
-    repo_root = Path(__file__).resolve().parent.parent.parent.parent
+    repo_root = Path(__file__).resolve().parent.parent.parent.parent.parent
     if (repo_root / "artefacten").exists():
         return repo_root
     return Path.cwd()
 
 
-def find_agent_file(agent_naam: str, filename: str, extra_search_paths: List[Path] = None) -> Optional[Path]:
+def get_agent_source_root() -> Path:
+    """Retourneert de root van de agent-definities (mandarin-agents).
+    
+    Dit is de repo waar dit script zelf in staat.
+    """
+    return Path(__file__).resolve().parent.parent.parent.parent.parent
+
+
+def get_target_workspace() -> Path:
+    """Retourneert de doelworkspace (cwd) waar output naartoe gaat."""
+    return Path.cwd()
+
+
+def compute_relative_agent_path(target_workspace: Path, agent_source: Path) -> str:
+    """Bereken relatief pad van target workspace naar agent source.
+    
+    Returns:
+        Relatief pad string zoals '../mandarin-agents'
+    """
+    try:
+        rel = os.path.relpath(agent_source, target_workspace)
+        # Normaliseer naar forward slashes voor cross-platform compatibiliteit
+        return rel.replace("\\", "/")
+    except ValueError:
+        # Verschillende drives op Windows
+        return str(agent_source).replace("\\", "/")
+
+
+def find_agent_file(agent_naam: str, filename: str, extra_search_paths: List[Path] = None, search_root: Path = None) -> Optional[Path]:
     """Generieke file finder voor charter, boundary, agent-instructions, etc.
     
     Zoekt in artefacten structuur met optionele extra zoekpaden.
+    
+    Args:
+        agent_naam: Naam van de agent
+        filename: Bestandsnaam om te zoeken
+        extra_search_paths: Extra paden om te doorzoeken
+        search_root: Root folder om in te zoeken (default: agent source root)
     """
-    workspace_root = get_workspace_root()
-    artefacten_path = workspace_root / "artefacten"
+    if search_root is None:
+        search_root = get_agent_source_root()
+    artefacten_path = search_root / "artefacten"
     
     # Zoek in artefacten structuur
     if artefacten_path.exists():
@@ -147,13 +208,21 @@ def load_prompt_file(prompt_path: str) -> Tuple[Dict, str]:
     return post.metadata, post.content
 
 
-def find_prompt_file(intent: str, agent: str = None) -> Optional[Path]:
+def find_prompt_file(intent: str, agent: str = None, search_root: Path = None) -> Optional[Path]:
     """Zoek prompt file voor gegeven intent.
     
     Zoekt eerst in artefacten structuur (modern), dan fallback naar .github/prompts/ (legacy).
+    
+    Args:
+        intent: De intent naam om te zoeken
+        agent: Optionele agent naam voor specifiekere match
+        search_root: Root folder om in te zoeken (default: agent source root)
     """
+    if search_root is None:
+        search_root = get_agent_source_root()
+    
     # Eerst zoeken in artefacten structuur (modern)
-    artefacten = Path("artefacten")
+    artefacten = search_root / "artefacten"
     if artefacten.exists() and agent:
         pattern = f"**/prompts/mandarin.{agent}.{intent}.prompt.md"
         matches = list(artefacten.glob(pattern))
@@ -167,7 +236,7 @@ def find_prompt_file(intent: str, agent: str = None) -> Optional[Path]:
                 return match
     
     # Fallback naar .github/prompts/ (legacy structuur)
-    prompts_dir = Path(".github/prompts")
+    prompts_dir = search_root / ".github/prompts"
     if not prompts_dir.exists():
         return None
     
@@ -195,9 +264,17 @@ def find_prompt_file(intent: str, agent: str = None) -> Optional[Path]:
     return None
 
 
-def find_boundary_file(agent_naam: str) -> Optional[Path]:
-    """Zoek boundary file voor gegeven agent naam."""
-    artefacten = Path("artefacten")
+def find_boundary_file(agent_naam: str, search_root: Path = None) -> Optional[Path]:
+    """Zoek boundary file voor gegeven agent naam.
+    
+    Args:
+        agent_naam: Naam van de agent
+        search_root: Root folder om in te zoeken (default: agent source root)
+    """
+    if search_root is None:
+        search_root = get_agent_source_root()
+    
+    artefacten = search_root / "artefacten"
     if not artefacten.exists():
         return None
     
@@ -639,7 +716,10 @@ def run_bootstrap(metadata: Dict, prompt_file: str, method: str, params: Dict,
 
 
 def load_agent_instructions(prompt_file: str, metadata: Dict, params: Dict) -> Optional[str]:
-    """Laad agent-instructies uit .agent.md bestand."""
+    """Laad agent-instructies uit .agent.md bestand.
+    
+    Zoekt in de agent source root (mandarin-agents), niet in cwd.
+    """
     agent_full = metadata.get('agent', '')
     agent_naam = agent_full.split('.')[-1] if '.' in agent_full else agent_full
     
@@ -649,9 +729,10 @@ def load_agent_instructions(prompt_file: str, metadata: Dict, params: Dict) -> O
         return None
     
     agent_file_name = f"{agent_naam}.{intent}.agent.md"
+    agent_source = get_agent_source_root()
     
     # Strategie 1: Zoek in uitvoerende agent's folder
-    artefacten_path = Path("artefacten")
+    artefacten_path = agent_source / "artefacten"
     if artefacten_path.exists():
         for agent_folder in artefacten_path.rglob(f"*.{agent_naam}"):
             if agent_folder.is_dir():
@@ -674,7 +755,7 @@ def load_agent_instructions(prompt_file: str, metadata: Dict, params: Dict) -> O
     agent = params.get('agent', params.get('agent_naam', ''))
     
     if vs and fase and agent:
-        agent_folder = Path(f"artefacten/{vs}/{vs}.{fase}.{agent}")
+        agent_folder = agent_source / f"artefacten/{vs}/{vs}.{fase}.{agent}"
         agent_contracten_folder = agent_folder / "agent-contracten"
         
         agent_file = agent_contracten_folder / agent_file_name
@@ -700,29 +781,12 @@ def load_agent_instructions(prompt_file: str, metadata: Dict, params: Dict) -> O
             return f.read()
 
     # Strategie 4: Fallback - zoek in .github/agents
-    github_agents_dir = Path(".github/agents")
+    github_agents_dir = agent_source / ".github/agents"
     agent_file = github_agents_dir / agent_file_name
     if agent_file.exists():
         print(f"[OK] Agent-instructies geladen: {agent_file}")
         with open(agent_file, 'r', encoding='utf-8') as f:
             return f.read()
-            
-    # Strategie 5: Fallback - zoek in workspace_root/artefacten
-    artefacten_path = get_workspace_root() / "artefacten"
-    if artefacten_path.exists():
-        for agent_folder in artefacten_path.rglob(f"*.{agent_naam}"):
-            if agent_folder.is_dir():
-                agent_contracten_folder = agent_folder / "agent-contracten"
-                agent_file = agent_contracten_folder / agent_file_name
-                if agent_file.exists():
-                    print(f"[OK] Agent-instructies geladen: {agent_file}")
-                    with open(agent_file, 'r', encoding='utf-8') as f:
-                        return f.read()
-                agent_file = agent_folder / agent_file_name
-                if agent_file.exists():
-                    print(f"[OK] Agent-instructies geladen: {agent_file}")
-                    with open(agent_file, 'r', encoding='utf-8') as f:
-                        return f.read()
 
     print(f"INFO: Agent-instructies niet gevonden: {agent_file_name}")
     
@@ -730,7 +794,10 @@ def load_agent_instructions(prompt_file: str, metadata: Dict, params: Dict) -> O
 
 
 def load_charter(prompt_file: str, metadata: Dict, params: Dict) -> Tuple[Optional[str], Optional[str]]:
-    """Laad charter uit conventie: {agent-naam}.charter.md."""
+    """Laad charter uit conventie: {agent-naam}.charter.md.
+    
+    Zoekt in de agent source root (mandarin-agents), niet in cwd.
+    """
     agent_full = metadata.get('agent', '')
     agent_naam = agent_full.split('.')[-1] if '.' in agent_full else agent_full
     
@@ -738,9 +805,10 @@ def load_charter(prompt_file: str, metadata: Dict, params: Dict) -> Tuple[Option
         return None, None
     
     charter_file_name = f"{agent_naam}.charter.md"
+    agent_source = get_agent_source_root()
     
     # Strategie 1: Zoek in uitvoerende agent's folder
-    artefacten_path = Path("artefacten")
+    artefacten_path = agent_source / "artefacten"
     if artefacten_path.exists():
         for agent_folder in artefacten_path.rglob(f"*.{agent_naam}"):
             if agent_folder.is_dir():
@@ -756,7 +824,7 @@ def load_charter(prompt_file: str, metadata: Dict, params: Dict) -> Tuple[Option
     agent = params.get('agent', params.get('agent_naam', ''))
     
     if vs and fase and agent:
-        agent_folder = Path(f"artefacten/{vs}/{vs}.{fase}.{agent}")
+        agent_folder = agent_source / f"artefacten/{vs}/{vs}.{fase}.{agent}"
         charter_file = agent_folder / charter_file_name
         
         if charter_file.exists():
@@ -773,17 +841,6 @@ def load_charter(prompt_file: str, metadata: Dict, params: Dict) -> Tuple[Option
         print(f"[OK] Charter geladen: {charter_file}")
         with open(charter_file, 'r', encoding='utf-8') as f:
             return f.read(), str(charter_file)
-
-    # Strategie 4: Fallback - zoek in workspace_root/artefacten
-    artefacten_path = get_workspace_root() / "artefacten"
-    if artefacten_path.exists():
-        for agent_folder in artefacten_path.rglob(f"*.{agent_naam}"):
-            if agent_folder.is_dir():
-                charter_file = agent_folder / charter_file_name
-                if charter_file.exists():
-                    print(f"[OK] Charter geladen: {charter_file}")
-                    with open(charter_file, 'r', encoding='utf-8') as f:
-                        return f.read(), str(charter_file)
 
     print(f"INFO: Charter niet gevonden (optioneel): {charter_file_name}")
     
@@ -1315,6 +1372,39 @@ def load_task_file(file_path: Path) -> Dict:
         return json.load(f)
 
 
+def transform_task_paths(task: Dict, relative_agent_path: str) -> Dict:
+    """Transformeer paden in een task definitie naar relatieve paden.
+    
+    Zet 'artefacten/...' om naar '{relative_agent_path}/artefacten/...'
+    zodat tasks vanuit de target workspace kunnen worden uitgevoerd.
+    """
+    task = task.copy()
+    
+    # Transformeer args array
+    if 'args' in task:
+        new_args = []
+        for arg in task['args']:
+            if isinstance(arg, str) and arg.startswith('artefacten/'):
+                new_args.append(f"{relative_agent_path}/{arg}")
+            else:
+                new_args.append(arg)
+        task['args'] = new_args
+    
+    # Transformeer command als het een pad is
+    if 'command' in task and isinstance(task['command'], str):
+        cmd = task['command']
+        if cmd.startswith('artefacten/'):
+            task['command'] = f"{relative_agent_path}/{cmd}"
+    
+    # Transformeer options.cwd indien aanwezig
+    if 'options' in task and 'cwd' in task['options']:
+        cwd = task['options']['cwd']
+        if cwd.startswith('artefacten/'):
+            task['options']['cwd'] = f"{relative_agent_path}/{cwd}"
+    
+    return task
+
+
 def merge_tasks(tasks_folder: Path, workspace_root: Path, filter_fase: str = None) -> Dict:
     """Merge alle task files in folder naar één structuur."""
     merged = {
@@ -1391,13 +1481,15 @@ def aggregeer_tasks_main(args: argparse.Namespace) -> int:
     1. Altijd fnd.01 (fundamentele agents)
     2. Plus value_stream-fasen uit beleid-workspace.md
     
-    Geen parameters vereist; scope wordt bepaald door beleid.
+    Leest task-bestanden uit mandarin-agents (agent source).
+    Schrijft naar de huidige workspace (cwd).
     Logt naar /logs met archivering van bestaande logs naar /logs/history.
     """
-    workspace_root = get_workspace_root()
+    agent_source = get_agent_source_root()
+    target_workspace = get_target_workspace()
     
-    # Setup logging
-    logs_dir = workspace_root / "logs"
+    # Setup logging in target workspace
+    logs_dir = target_workspace / "logs"
     logs_dir.mkdir(parents=True, exist_ok=True)
     
     # Archiveer bestaande logs
@@ -1414,17 +1506,24 @@ def aggregeer_tasks_main(args: argparse.Namespace) -> int:
             if n_archived > 0:
                 print(f"Gearchiveerd: {n_archived} bestaande log(s) naar logs/history/")
                 print()
-            return _execute_aggregeer_tasks(args, workspace_root, log_file)
+            return _execute_aggregeer_tasks(args, agent_source, target_workspace, log_file)
         finally:
             sys.stdout = original_stdout
 
 
-def _execute_aggregeer_tasks(args: argparse.Namespace, workspace_root: Path, log_file: Path) -> int:
-    """Voer de eigenlijke aggregeer-tasks uit (met logging actief)."""
-    output_file = Path(args.output_file) if args.output_file else workspace_root / '.vscode' / 'tasks.json'
+def _execute_aggregeer_tasks(args: argparse.Namespace, agent_source: Path, target_workspace: Path, log_file: Path) -> int:
+    """Voer de eigenlijke aggregeer-tasks uit (met logging actief).
+    
+    Args:
+        agent_source: Root van mandarin-agents (bron van task-bestanden)
+        target_workspace: Doelworkspace (cwd) voor output en beleid
+        log_file: Pad naar logbestand
+    """
+    output_file = Path(args.output_file) if args.output_file else target_workspace / '.vscode' / 'tasks.json'
 
     print("=" * 70)
     print(f"Aggregeer Tasks naar {output_file}")
+    print(f"Bron: {agent_source}")
     print("=" * 70)
     print()
 
@@ -1434,6 +1533,7 @@ def _execute_aggregeer_tasks(args: argparse.Namespace, workspace_root: Path, log
         print(f"✗ Verwijderd: {output_file}")
         print()
 
+    # Lees beleid uit target workspace
     workspace_config = load_workspace_config()
     geconfigureerde_fasen = workspace_config.get('value_stream-fasen', [])
 
@@ -1450,8 +1550,13 @@ def _execute_aggregeer_tasks(args: argparse.Namespace, workspace_root: Path, log
 
     merged: Dict[str, Any] = {"version": "2.0.0", "tasks": [], "inputs": []}
     totaal_bestanden = 0
-    artefacten_folder = workspace_root / "artefacten"
-    tasks_folder = workspace_root / '.vscode' / 'tasks'
+    artefacten_folder = agent_source / "artefacten"
+    tasks_folder = target_workspace / '.vscode' / 'tasks'
+    
+    # Bereken relatief pad voor path-transformatie
+    relative_agent_path = compute_relative_agent_path(target_workspace, agent_source)
+    print(f"Relatief pad naar agent source: {relative_agent_path}")
+    print()
 
     for fase in fasen:
         print(f"--- Fase: {fase} ---")
@@ -1464,13 +1569,16 @@ def _execute_aggregeer_tasks(args: argparse.Namespace, workspace_root: Path, log
 
             for task_file in found:
                 try:
-                    rel_path = task_file.relative_to(workspace_root)
+                    rel_path = task_file.relative_to(agent_source)
                 except ValueError:
                     rel_path = task_file.name
                 print(f"  + {rel_path}")
                 data = load_task_file(task_file)
                 if 'tasks' in data:
-                    merged['tasks'].extend(data['tasks'])
+                    # Transformeer paden in elke task
+                    for task in data['tasks']:
+                        transformed = transform_task_paths(task, relative_agent_path)
+                        merged['tasks'].append(transformed)
                 if 'inputs' in data:
                     bestaande_ids = {inp['id'] for inp in merged['inputs']}
                     for inp in data['inputs']:
@@ -1511,7 +1619,7 @@ def _execute_aggregeer_tasks(args: argparse.Namespace, workspace_root: Path, log
     if args.dry_run:
         print(f"\n[DRY-RUN] Zou schrijven naar: {output_file}")
         print(f"[DRY-RUN] {len(merged['tasks'])} tasks, {len(merged['inputs'])} inputs")
-        print(f"Log: {log_file.relative_to(workspace_root)}")
+        print(f"Log: {log_file.relative_to(target_workspace)}")
         return 0
 
     output_file.parent.mkdir(parents=True, exist_ok=True)
@@ -1519,7 +1627,7 @@ def _execute_aggregeer_tasks(args: argparse.Namespace, workspace_root: Path, log
         json.dump(merged, f, indent=2, ensure_ascii=False)
 
     print(f"\n✓ Geschreven naar: {output_file}")
-    print(f"Log: {log_file.relative_to(workspace_root)}")
+    print(f"Log: {log_file.relative_to(target_workspace)}")
     print("=" * 70)
     return 0
 
