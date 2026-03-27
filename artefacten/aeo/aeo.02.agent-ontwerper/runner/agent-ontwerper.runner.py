@@ -32,8 +32,45 @@ def get_workspace_root() -> Path:
     return Path.cwd()
 
 
-def derive_boundary_file(agent_naam: str, value_stream_fase: str) -> str:
-    """Leid het boundary bestandspad af uit agent_naam en value_stream_fase."""
+def find_agent_folder(agent_naam: str) -> tuple[str, Path]:
+    """
+    Zoek de agent-folder in artefacten/*/.
+    
+    Returns:
+        (value_stream_fase, folder_path) - bijv. ("fnd.01", Path("artefacten/fnd/fnd.01.documentatie-omvormer"))
+    
+    Raises:
+        FileNotFoundError als agent niet gevonden wordt.
+    """
+    root = get_workspace_root()
+    artefacten = root / "artefacten"
+    
+    for vs_folder in artefacten.iterdir():
+        if not vs_folder.is_dir():
+            continue
+        for agent_folder in vs_folder.iterdir():
+            if not agent_folder.is_dir():
+                continue
+            # Patroon: {vs}.{fase}.{agent-naam}
+            parts = agent_folder.name.split(".")
+            if len(parts) >= 3 and ".".join(parts[2:]) == agent_naam:
+                value_stream_fase = f"{parts[0]}.{parts[1]}"
+                return (value_stream_fase, agent_folder)
+    
+    raise FileNotFoundError(
+        f"Agent-folder niet gevonden voor '{agent_naam}' in {artefacten}"
+    )
+
+
+def derive_boundary_file(agent_naam: str, value_stream_fase: str = None) -> str:
+    """
+    Leid het boundary bestandspad af uit agent_naam.
+    
+    Als value_stream_fase niet meegegeven wordt, wordt deze automatisch
+    gedetecteerd uit de folder-structuur.
+    """
+    if value_stream_fase is None:
+        value_stream_fase, _ = find_agent_folder(agent_naam)
     vs = value_stream_fase.split(".")[0]
     return f"artefacten/{vs}/{value_stream_fase}.{agent_naam}/{agent_naam}.agent-boundary.md"
 
@@ -120,14 +157,14 @@ def definieer_agent_charter_main(args: argparse.Namespace) -> int:
     Genereert een agent-charter op basis van een agent-boundary document.
 
     Verplichte parameters: agent_naam
-    Optionele parameters:  value_stream_fase
-    Afgeleid:              boundary_file (uit agent_naam + value_stream_fase)
+    Afgeleid:              boundary_file, value_stream_fase (uit folder-structuur)
     """
-    boundary_file = args.boundary_file or derive_boundary_file(args.agent_naam, args.value_stream_fase)
+    value_stream_fase, _ = find_agent_folder(args.agent_naam)
+    boundary_file = args.boundary_file or derive_boundary_file(args.agent_naam, value_stream_fase)
     params = {
         "agent_naam": args.agent_naam,
         "boundary_file": boundary_file,
-        "value_stream_fase": args.value_stream_fase,
+        "value_stream_fase": value_stream_fase,
     }
     return run_generate_instructions("definieer-agent-charter", params)
 
@@ -139,14 +176,15 @@ def definieer_agent_contract_main(args: argparse.Namespace) -> int:
     Genereert een agent-contract voor een specifieke intent op basis van de boundary.
 
     Verplichte parameters: agent_naam
-    Optionele parameters:  intent_naam, value_stream_fase, template_file, referenties
-    Afgeleid:              boundary_file (uit agent_naam + value_stream_fase)
+    Optionele parameters:  intent_naam, template_file, referenties
+    Afgeleid:              boundary_file, value_stream_fase (uit folder-structuur)
     """
-    boundary_file = args.boundary_file or derive_boundary_file(args.agent_naam, args.value_stream_fase)
+    value_stream_fase, _ = find_agent_folder(args.agent_naam)
+    boundary_file = args.boundary_file or derive_boundary_file(args.agent_naam, value_stream_fase)
     params = {
         "agent_naam": args.agent_naam,
         "boundary_file": boundary_file,
-        "value_stream_fase": args.value_stream_fase,
+        "value_stream_fase": value_stream_fase,
     }
     if args.intent_naam:
         params["intent_naam"] = args.intent_naam
@@ -166,14 +204,15 @@ def definieer_agent_template_main(args: argparse.Namespace) -> int:
     Standaard voor alle intents in de boundary; optioneel gefilterd op één intent.
 
     Verplichte parameters: agent_naam
-    Optionele parameters:  intent, file_naam_inspiratie, value_stream_fase
-    Afgeleid:              boundary_file (uit agent_naam + value_stream_fase)
+    Optionele parameters:  intent, file_naam_inspiratie
+    Afgeleid:              boundary_file, value_stream_fase (uit folder-structuur)
     """
-    boundary_file = derive_boundary_file(args.agent_naam, args.value_stream_fase)
+    value_stream_fase, _ = find_agent_folder(args.agent_naam)
+    boundary_file = derive_boundary_file(args.agent_naam, value_stream_fase)
     params = {
         "agent_naam": args.agent_naam,
         "boundary_file": boundary_file,
-        "value_stream_fase": args.value_stream_fase,
+        "value_stream_fase": value_stream_fase,
     }
     intent_filter = args.intent_filter or None
     file_naam_inspiratie = args.file_naam_inspiratie or None
@@ -209,11 +248,7 @@ def main() -> int:
     )
     p_charter.add_argument(
         "--boundary-file", required=False, default=None,
-        help="Pad naar het agent-boundary document (optioneel, wordt afgeleid als leeg)",
-    )
-    p_charter.add_argument(
-        "--value-stream-fase", required=False, default=f"{VALUE_STREAM}.{FASE}",
-        help=f'Value stream en fase code (standaard: "{VALUE_STREAM}.{FASE}")',
+        help="Pad naar het agent-boundary document (optioneel, wordt automatisch afgeleid)",
     )
 
     # ── definieer-agent-contract ─────────────────────────────────────────────
@@ -227,15 +262,11 @@ def main() -> int:
     )
     p_contract.add_argument(
         "--boundary-file", required=False, default=None,
-        help="Pad naar het agent-boundary document (optioneel, wordt afgeleid als leeg)",
+        help="Pad naar het agent-boundary document (optioneel, wordt automatisch afgeleid)",
     )
     p_contract.add_argument(
         "--intent-naam", required=False, default=None,
         help='Naam van de specifieke intent; leeg = alle intents in boundary',
-    )
-    p_contract.add_argument(
-        "--value-stream-fase", required=False, default=f"{VALUE_STREAM}.{FASE}",
-        help=f'Value stream en fase code (standaard: "{VALUE_STREAM}.{FASE}")',
     )
     p_contract.add_argument(
         "--template-file", required=False, default=None,
@@ -262,10 +293,6 @@ def main() -> int:
     p_template.add_argument(
         "--file-naam-inspiratie", required=False, nargs='?', const=None, default=None,
         help="Bestandspad in temp/ dat dient als inspiratie voor de templatestructuur",
-    )
-    p_template.add_argument(
-        "--value-stream-fase", required=False, default=f"{VALUE_STREAM}.{FASE}",
-        help=f'Value stream en fase code (standaard: "{VALUE_STREAM}.{FASE}")',
     )
 
     args = parser.parse_args()

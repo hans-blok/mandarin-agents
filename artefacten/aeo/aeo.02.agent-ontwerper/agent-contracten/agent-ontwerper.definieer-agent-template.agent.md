@@ -25,6 +25,10 @@ De Agent-ontwerper creëert context-specifieke output templates voor een agent, 
 - file_naam_inspiratie: de gebruiker kan een file plaatsen in de folder temp. Deze dient als inspiratie voor de agent-ontwerper bij het vastleggen van het template (type: string, kebab-case).
 - intent: standaard wordt voor alle intents in oorstellen agent contracten" sectie in boundary een template aangemaakt. Wanneer deze parameter is opgegeven, wordt alleen voor deze intent een template gegenereerd. (type: string, exact match met intent-naam in boundary)
 
+**Afgeleide informatie** (automatisch gedetecteerd):
+- value_stream_fase: Gedetecteerd uit folder-patroon `artefacten/{vs}/{vs}.{fase}.{agent-naam}/`
+- boundary_file: Automatisch afgeleid uit `agent_naam` en gedetecteerde folder-structuur
+
 **Afgeleide informatie** (geëxtraheerd uit boundary):
 - intent_beschrijving: Uit "Voorstellen agent contracten" sectie in boundary
 

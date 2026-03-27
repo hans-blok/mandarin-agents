@@ -50,52 +50,111 @@ sequenceDiagram
   participant LLM as LLM (Claude/GPT)
   participant Artefacten as artefacten/
 
-  User->>VSCode: Start task "beschrijf-hypothese"
+  rect rgb(230, 245, 230)
+  Note over User,VSCode: Fase 1: Task starten (stap 1-4)
+  User->>VSCode: 1-3. Open VS Code, start task, kies intent
+  VSCode->>User: 4. Vraag parameters (probleem, idee, auteur)
+  User->>VSCode: 4. Vul parameters in
   VSCode->>Runner: beschrijf-hypothese --probleem "..." --idee "..."
-  Runner->>Runner: Parse CLI-argumenten (argparse)
-  Runner->>Runner: Verzamel parameters in dict
-  Runner->>Coordinator: genereer-instructies --agent hypothese-vormer<br/>--intent beschrijf-hypothese -p probleem="..." etc.
+  end
+
+  rect rgb(230, 240, 255)
+  Note over Runner,Output: Fase 2: Instructie-generatie (stap 5-8)
+  Runner->>Runner: 5. Parse CLI-argumenten (argparse)
+  Runner->>Coordinator: 6. genereer-instructies --agent hypothese-vormer<br/>--intent beschrijf-hypothese -p probleem="..." etc.
   
-  Note over Coordinator,Canon: Canon consultatie
+  Note over Coordinator,Canon: 7a. Canon consultatie
   Coordinator->>Canon: git pull (synchroniseer)
   Canon-->>Coordinator: SHA referentie
-  Coordinator->>Canon: Lees constitutie
-  Canon-->>Coordinator: grondslagen/.algemeen/constitutie.md
-  Coordinator->>Canon: Lees grondslagen (glob patterns)
+  Coordinator->>Canon: Lees constitutie + grondslagen
   Canon-->>Coordinator: grondslagen/.algemeen/*, grondslagen/{value_stream}/*
   
-  Note over Coordinator,Mandarin: Agent artefacten
-  Coordinator->>Mandarin: Lees charter
-  Mandarin-->>Coordinator: hypothese-vormer.charter.md
+  Note over Coordinator,Mandarin: 7b. Agent artefacten
+  Coordinator->>Mandarin: Lees charter + contract
+  Mandarin-->>Coordinator: hypothese-vormer.charter.md, beschrijf-hypothese.agent.md
   
-  Coordinator->>Mandarin: Lees prompt
-  Mandarin-->>Coordinator: mandarin.hypothese-vormer.beschrijf-hypothese.prompt.md
+  Coordinator->>Coordinator: 7c. Assembleer instructies<br/>(constitutie + grondslagen + charter + prompt + parameters)
   
-  Coordinator->>Mandarin: Lees boundary (voor metadata)
-  Mandarin-->>Coordinator: hypothese-vormer.agent-boundary.md
-  
-  Coordinator->>Coordinator: Assembleer instructies<br/>(constitutie + grondslagen + charter + prompt + parameters)
-  
-  Coordinator->>Output: Schrijf naar prompt-instructions/
+  Coordinator->>Output: 8. Schrijf naar prompt-instructions/
   Output-->>Coordinator: {hash}.hypothese-vormer.beschrijf-hypothese.md
-  Output-->>Coordinator: history/{timestamp}-hypothese-vormer.beschrijf-hypothese.md
   
   Coordinator-->>Runner: Gereed
   Runner-->>VSCode: Instructies gegenereerd
   VSCode-->>User: Task voltooid
-  
-  Note over User,Copilot: Handmatige stap: lees instructies
-  User->>Output: Open instructiebestand
+  end
+
+  rect rgb(255, 245, 230)
+  Note over User,LLM: Fase 3: Instructies uitvoeren (stap 9-12)
+  User->>Output: 9. Open instructiebestand
   Output-->>User: Volledige instructies
-  User->>Copilot: Plak instructies in chat
+  User->>User: 10. Kopieer inhoud
+  User->>Copilot: 11. Plak instructies in chat
   
   Copilot->>LLM: Request (system + user prompt)
-  LLM->>LLM: Inferentie / Synthese
+  LLM->>LLM: 12. Inferentie / Synthese
   LLM-->>Copilot: Gegenereerde hypothese-beschrijving
+  Copilot->>Artefacten: 12. Schrijf hypothese-beschrijving.md
   Copilot-->>User: Resultaat in chat window
-  Copilot->>Artefacten: Schrijf hypothese-beschrijving.md
-  Artefacten-->>User: Bestand opgeslagen
+  end
+
+  rect rgb(245, 235, 250)
+  Note over User,Artefacten: Fase 4: Review en opvolging (stap 13-15)
+  User->>Artefacten: 13. Controleer gegenereerd artefact
+  Artefacten-->>User: hypothese-beschrijving.md
+  User->>Artefacten: 14. Pas aan indien nodig
+  User->>User: 15. Commit wijzigingen naar git
+  end
 ```
+
+## Handleiding: Stap voor stap
+
+### Fase 1: Task starten
+
+1. **Open VS Code** in de project-workspace
+2. **Start een task** via `Ctrl+Shift+P` → "Tasks: Run Task"
+3. **Kies de gewenste agent-intent**, bijv. `sfw.01 - hypothese-vormer: beschrijf-hypothese`
+4. **Vul de gevraagde parameters in** via de input-prompts (probleem, idee, auteur, etc.)
+
+### Fase 2: Instructie-generatie (automatisch)
+
+5. De **runner** (`hypothese-vormer.runner.py`) ontvangt de CLI-argumenten
+6. De runner roept de **ecosysteem-coordinator** aan met agent-naam, intent en parameters
+7. De coordinator:
+   - Synchroniseert de **mandarin-canon** (git pull) en noteert de SHA-referentie
+   - Leest de **constitutie** en relevante **grondslagen** uit de canon
+   - Leest het **charter**, de **prompt** en de **boundary** van de agent uit mandarin-agents
+   - Assembleert alles tot één instructiebestand
+8. Het instructiebestand wordt weggeschreven naar `prompt-instructions/`
+   - Hoofdbestand: `{hash}.{agent}.{intent}.md`
+   - Kopie in: `prompt-instructions/history/`
+
+### Fase 3: Instructies uitvoeren
+
+9. **Open het gegenereerde instructiebestand** uit `prompt-instructions/`
+10. **Kopieer de volledige inhoud** (of selecteer en gebruik Copilot Chat)
+11. **Plak in VS Code Copilot Chat** (of een andere LLM-interface)
+12. De LLM leest de instructies en voert de taak uit:
+    - Genereert het gevraagde artefact (hypothese, charter, contract, etc.)
+    - Schrijft het resultaat naar de juiste locatie in `artefacten/`
+
+### Fase 4: Review en opvolging
+
+13. **Controleer het gegenereerde artefact** in de artefacten-map
+14. **Pas aan indien nodig** — de LLM-output is een startpunt
+15. **Commit de wijzigingen** naar git
+
+### Samenvatting flow
+
+```
+Task starten → Runner → Coordinator → Instructiebestand → Copilot Chat → Artefact
+```
+
+| Stap | Actie | Resultaat |
+|------|-------|-----------|
+| 1-4 | Task selecteren en parameters invoeren | Runner wordt gestart |
+| 5-8 | Instructie-assemblage | Instructiebestand in `prompt-instructions/` |
+| 9-12 | Instructies naar LLM sturen | Artefact gegenereerd |
+| 13-15 | Review en commit | Werk opgeslagen in git |
 
 ## Verantwoordelijkheden
 

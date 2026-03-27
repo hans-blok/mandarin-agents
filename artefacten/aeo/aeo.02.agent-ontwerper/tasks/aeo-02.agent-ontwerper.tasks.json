@@ -9,9 +9,7 @@
         "artefacten/aeo/aeo.02.agent-ontwerper/runner/agent-ontwerper.runner.py",
         "definieer-agent-charter",
         "--agent-naam",
-        "${input:in_agent_ontwerper_definieer_agent_charter_agent_naam}",
-        "--value-stream-fase",
-        "${input:in_agent_ontwerper_definieer_agent_charter_value_stream_fase}"
+        "${input:in_agent_ontwerper_definieer_agent_charter_agent_naam}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -30,8 +28,6 @@
         "${input:in_agent_ontwerper_definieer_agent_contract_agent_naam}",
         "--intent-naam",
         "${input:in_agent_ontwerper_definieer_agent_contract_intent_naam}",
-        "--value-stream-fase",
-        "${input:in_agent_ontwerper_definieer_agent_contract_value_stream_fase}",
         "--template-file",
         "${input:in_agent_ontwerper_definieer_agent_contract_template_file}",
         "--referenties",
@@ -55,9 +51,7 @@
         "--intent",
         "${input:in_agent_ontwerper_definieer_agent_template_intent}",
         "--file-naam-inspiratie",
-        "${input:in_agent_ontwerper_definieer_agent_template_file_naam_inspiratie}",
-        "--value-stream-fase",
-        "${input:in_agent_ontwerper_definieer_agent_template_value_stream_fase}"
+        "${input:in_agent_ontwerper_definieer_agent_template_file_naam_inspiratie}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -73,12 +67,6 @@
       "description": "Agent naam (kebab-case, bijv. hypothese-vormer)"
     },
     {
-      "id": "in_agent_ontwerper_definieer_agent_charter_value_stream_fase",
-      "type": "promptString",
-      "description": "Value stream fase (standaard: aeo.02)",
-      "default": "aeo.02"
-    },
-    {
       "id": "in_agent_ontwerper_definieer_agent_contract_agent_naam",
       "type": "promptString",
       "description": "Agent naam (kebab-case, bijv. hypothese-vormer)"
@@ -87,12 +75,6 @@
       "id": "in_agent_ontwerper_definieer_agent_contract_intent_naam",
       "type": "promptString",
       "description": "Intent naam (optioneel; leeg = alle intents in boundary)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_contract_value_stream_fase",
-      "type": "promptString",
-      "description": "Value stream fase (standaard: aeo.02)",
-      "default": "aeo.02"
     },
     {
       "id": "in_agent_ontwerper_definieer_agent_contract_template_file",
@@ -118,12 +100,6 @@
       "id": "in_agent_ontwerper_definieer_agent_template_file_naam_inspiratie",
       "type": "promptString",
       "description": "Bestand in temp/ als inspiratie voor templatestructuur (optioneel)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_template_value_stream_fase",
-      "type": "promptString",
-      "description": "Value stream fase (standaard: aeo.02)",
-      "default": "aeo.02"
     }
   ]
 }

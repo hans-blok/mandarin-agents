@@ -8633,3 +8633,96 @@
 | `grondslagen\aeo` | `mandarin-domeinconcepten.md` |
 | `grondslagen\aeo` | `mandarin-ecosysteem-ordeningsconcepten.md` |
 
+
+---
+
+## Canon Consultation — 2026-03-27T21:28:48
+
+- **Agent**: documentatie-omvormer
+- **Value Stream**: fnd
+- **Workspace File**: `C:\git\mandarin-agents\artefacten\fnd\fnd.01.documentatie-omvormer\prompts\mandarin.documentatie-omvormer.genereer-publicatiestructuur.prompt.md`
+- **Intent**: genereer-publicatiestructuur
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: ceb3327
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*`
+- **Charter**: `C:\git\mandarin-agents\artefacten\fnd\fnd.01.documentatie-omvormer\documentatie-omvormer.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen/.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `doctrine-bronhouding-en-exploratie.md` |
+| `grondslagen\.algemeen` | `norm-constitutionele-bootstrapping.md` |
+| `grondslagen\.algemeen` | `norm-determnistiscche-runners.md` |
+| `grondslagen\.algemeen` | `review-checklist.md` |
+| `grondslagen\.algemeen` | `verplichte-bootstrap-header.md` |
+| `grondslagen\.algemeen` | `workspace-doctrine.md` |
+
+
+---
+
+## Canon Consultation — 2026-03-27T21:32:23
+
+- **Agent**: documentatie-omvormer
+- **Value Stream**: fnd
+- **Workspace File**: `C:\git\mandarin-agents\artefacten\fnd\fnd.01.documentatie-omvormer\prompts\mandarin.documentatie-omvormer.genereer-navigatiebestand.prompt.md`
+- **Intent**: genereer-navigatiebestand
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: ceb3327
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*`
+- **Charter**: `C:\git\mandarin-agents\artefacten\fnd\fnd.01.documentatie-omvormer\documentatie-omvormer.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen/.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `doctrine-bronhouding-en-exploratie.md` |
+| `grondslagen\.algemeen` | `norm-constitutionele-bootstrapping.md` |
+| `grondslagen\.algemeen` | `norm-determnistiscche-runners.md` |
+| `grondslagen\.algemeen` | `review-checklist.md` |
+| `grondslagen\.algemeen` | `verplichte-bootstrap-header.md` |
+| `grondslagen\.algemeen` | `workspace-doctrine.md` |
+
+
+---
+
+## Canon Consultation — 2026-03-27T22:09:00
+
+- **Agent**: documentatie-omvormer
+- **Value Stream**: fnd
+- **Workspace File**: `C:\git\mandarin-agents\artefacten\fnd\fnd.01.documentatie-omvormer\prompts\mandarin.documentatie-omvormer.genereer-navigatiebestand.prompt.md`
+- **Intent**: genereer-navigatiebestand
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: ceb3327
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*`
+- **Charter**: `C:\git\mandarin-agents\artefacten\fnd\fnd.01.documentatie-omvormer\documentatie-omvormer.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen/.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `doctrine-bronhouding-en-exploratie.md` |
+| `grondslagen\.algemeen` | `norm-constitutionele-bootstrapping.md` |
+| `grondslagen\.algemeen` | `norm-determnistiscche-runners.md` |
+| `grondslagen\.algemeen` | `review-checklist.md` |
+| `grondslagen\.algemeen` | `verplichte-bootstrap-header.md` |
+| `grondslagen\.algemeen` | `workspace-doctrine.md` |
+
