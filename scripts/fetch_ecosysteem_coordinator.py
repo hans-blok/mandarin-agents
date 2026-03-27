@@ -24,8 +24,9 @@ import argparse
 import json
 import shutil
 import sys
+from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, TextIO
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
@@ -37,6 +38,29 @@ DEFAULT_SOURCE = (
     else REPO_ROOT
 )
 DEFAULT_TARGET = REPO_ROOT
+
+
+class TeeWriter:
+    """Schrijf output naar zowel console als logbestand."""
+    
+    def __init__(self, console: TextIO, logfile: TextIO):
+        self.console = console
+        self.logfile = logfile
+    
+    def write(self, text: str):
+        # Console: vervang unicode tekens die niet werken op Windows cp1252
+        try:
+            self.console.write(text)
+        except UnicodeEncodeError:
+            # Fallback: vervang problematische tekens
+            safe_text = text.replace('\u2717', 'x').replace('\u2713', 'v')
+            self.console.write(safe_text)
+        self.logfile.write(text)
+        self.logfile.flush()
+    
+    def flush(self):
+        self.console.flush()
+        self.logfile.flush()
 
 
 def collect_ecosysteem_files(artefacten_root: Path) -> Tuple[List[Tuple[Path, str]], List[Tuple[Path, str]], List[Path]]:
@@ -99,6 +123,25 @@ def copy_files(
         count += 1
 
     return count
+
+
+def clean_folder(folder_path: Path, pattern: str, dry_run: bool) -> int:
+    """Verwijder alle bestanden in folder die matchen met pattern."""
+    if not folder_path.exists():
+        return 0
+    
+    files = list(folder_path.glob(pattern))
+    if not files:
+        return 0
+    
+    for f in files:
+        if dry_run:
+            print(f"  [dry] Verwijder: {f.name}")
+        else:
+            f.unlink()
+            print(f"  ✗ Verwijderd: {f.name}")
+    
+    return len(files)
 
 
 def merge_and_write_tasks(
@@ -220,8 +263,56 @@ def main(argv=None) -> int:
             "Gebruik --source om de mandarin-agents repo aan te wijzen."
         )
 
+    # Setup logging naar /logs
+    logs_dir = target_root / "logs"
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    log_file = logs_dir / f"fetch-ecosysteem-coordinator-{timestamp}.log"
+    
+    with open(log_file, "w", encoding="utf-8") as logf:
+        # Redirect stdout naar TeeWriter
+        original_stdout = sys.stdout
+        sys.stdout = TeeWriter(original_stdout, logf)
+        
+        try:
+            return _execute_fetch(args, source_root, target_root, artefacten_root, log_file)
+        finally:
+            sys.stdout = original_stdout
+
+
+def _execute_fetch(
+    args: argparse.Namespace,
+    source_root: Path,
+    target_root: Path,
+    artefacten_root: Path,
+    log_file: Path,
+) -> int:
+    """Voer de eigenlijke fetch uit (met logging actief)."""
+
     print(f"\nFetch ecosysteem-coordinator  |  bron: {source_root}  ->  doel: {target_root}\n")
 
+    # 1. Cleanup bestaande bestanden
+    prompts_dir = target_root / ".github" / "prompts"
+    agents_dir = target_root / ".github" / "agents"
+    tasks_file = target_root / ".vscode" / "tasks.json"
+
+    print("Opruimen bestaande bestanden:")
+    n_cleaned = clean_folder(prompts_dir, "*.prompt.md", args.dry_run)
+    n_cleaned += clean_folder(agents_dir, "*.agent.md", args.dry_run)
+    
+    if tasks_file.exists():
+        if args.dry_run:
+            print(f"  [dry] Verwijder: {tasks_file}")
+        else:
+            tasks_file.unlink()
+            print(f"  ✗ Verwijderd: {tasks_file}")
+        n_cleaned += 1
+    
+    if n_cleaned == 0:
+        print("  (niets te verwijderen)")
+    print()
+
+    # 2. Verzamel nieuwe bestanden
     prompts, contracts, task_files = collect_ecosysteem_files(artefacten_root)
 
     print(f"Prompts ({len(prompts)}):")
@@ -245,6 +336,7 @@ def main(argv=None) -> int:
     print(f"  Prompts gekopieerd : {n_prompts}")
     print(f"  Agents gekopieerd  : {n_contracts}")
     print(f"  Tasks samengevoegd : {n_tasks}")
+    print(f"  Log: {log_file.relative_to(target_root)}")
     print()
     return 0
 

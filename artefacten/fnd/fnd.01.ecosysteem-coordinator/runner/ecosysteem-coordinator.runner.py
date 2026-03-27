@@ -14,7 +14,7 @@ Architectuur: One Agent, One Runner principe.
 """
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple, Optional, Set
+from typing import Dict, List, Tuple, Optional, Set, TextIO
 import argparse
 import glob
 import hashlib
@@ -37,6 +37,43 @@ except ImportError:
 # ==============================================================================
 # SHARED UTILITIES
 # ==============================================================================
+
+class TeeWriter:
+    """Schrijf output naar zowel console als logbestand."""
+    
+    def __init__(self, console: TextIO, logfile: TextIO):
+        self.console = console
+        self.logfile = logfile
+    
+    def write(self, text: str):
+        self.console.write(text)
+        self.logfile.write(text)
+        self.logfile.flush()
+    
+    def flush(self):
+        self.console.flush()
+        self.logfile.flush()
+
+
+def archive_existing_logs(logs_dir: Path, prefix: str) -> int:
+    """Verplaats bestaande logs met gegeven prefix naar logs/history."""
+    if not logs_dir.exists():
+        return 0
+    
+    history_dir = logs_dir / "history"
+    existing_logs = list(logs_dir.glob(f"{prefix}*.log"))
+    
+    if not existing_logs:
+        return 0
+    
+    history_dir.mkdir(parents=True, exist_ok=True)
+    
+    for log_file in existing_logs:
+        dest = history_dir / log_file.name
+        shutil.move(str(log_file), str(dest))
+    
+    return len(existing_logs)
+
 
 def get_workspace_root() -> Path:
     """Centrale functie voor workspace root detectie.
@@ -1355,8 +1392,35 @@ def aggregeer_tasks_main(args: argparse.Namespace) -> int:
     2. Plus value_stream-fasen uit beleid-workspace.md
     
     Geen parameters vereist; scope wordt bepaald door beleid.
+    Logt naar /logs met archivering van bestaande logs naar /logs/history.
     """
     workspace_root = get_workspace_root()
+    
+    # Setup logging
+    logs_dir = workspace_root / "logs"
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Archiveer bestaande logs
+    n_archived = archive_existing_logs(logs_dir, "aggregeer-tasks-")
+    
+    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    log_file = logs_dir / f"aggregeer-tasks-{timestamp}.log"
+    
+    with open(log_file, "w", encoding="utf-8") as logf:
+        original_stdout = sys.stdout
+        sys.stdout = TeeWriter(original_stdout, logf)
+        
+        try:
+            if n_archived > 0:
+                print(f"Gearchiveerd: {n_archived} bestaande log(s) naar logs/history/")
+                print()
+            return _execute_aggregeer_tasks(args, workspace_root, log_file)
+        finally:
+            sys.stdout = original_stdout
+
+
+def _execute_aggregeer_tasks(args: argparse.Namespace, workspace_root: Path, log_file: Path) -> int:
+    """Voer de eigenlijke aggregeer-tasks uit (met logging actief)."""
     output_file = Path(args.output_file) if args.output_file else workspace_root / '.vscode' / 'tasks.json'
 
     print("=" * 70)
@@ -1447,6 +1511,7 @@ def aggregeer_tasks_main(args: argparse.Namespace) -> int:
     if args.dry_run:
         print(f"\n[DRY-RUN] Zou schrijven naar: {output_file}")
         print(f"[DRY-RUN] {len(merged['tasks'])} tasks, {len(merged['inputs'])} inputs")
+        print(f"Log: {log_file.relative_to(workspace_root)}")
         return 0
 
     output_file.parent.mkdir(parents=True, exist_ok=True)
@@ -1454,6 +1519,7 @@ def aggregeer_tasks_main(args: argparse.Namespace) -> int:
         json.dump(merged, f, indent=2, ensure_ascii=False)
 
     print(f"\n✓ Geschreven naar: {output_file}")
+    print(f"Log: {log_file.relative_to(workspace_root)}")
     print("=" * 70)
     return 0
 
