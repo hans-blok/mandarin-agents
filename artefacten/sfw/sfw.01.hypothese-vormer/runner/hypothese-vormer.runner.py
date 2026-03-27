@@ -12,28 +12,20 @@ from datetime import datetime
 import hashlib
 
 def run_generate_instructions(agent_naam: str, intent: str, params: dict):
-    # Vind root van de workspace
-    workspace_root = Path(__file__).resolve().parent.parent.parent.parent.parent
-    if not (workspace_root / "artefacten").exists():
-        # Fallback als we ergens anders draaien
-        workspace_root = Path.cwd()
-        
-    generator = workspace_root / 'artefacten' / 'aeo' / 'aeo.02.agent-engineer' / 'runners' / 'agent-engineer.runner.py'
+    # Vind root van mandarin-agents (waar dit script staat)
+    script_root = Path(__file__).resolve().parent.parent.parent.parent.parent
     
-    # Maak output pad
-    timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-    hash_input = f"{timestamp}{agent_naam}".encode('utf-8')
-    hash_str = hashlib.md5(hash_input).hexdigest()[:4].lower()
+    # Gebruik ecosysteem-coordinator runner voor genereer-instructies
+    generator = script_root / 'artefacten' / 'fnd' / 'fnd.01.ecosysteem-coordinator' / 'runner' / 'ecosysteem-coordinator.runner.py'
     
-    exec_dir = workspace_root / "prompt-instructions"
-    exec_dir.mkdir(exist_ok=True)
-    filename = exec_dir / f"{timestamp}-{agent_naam}.{intent}.md"
+    if not generator.exists():
+        print(f"❌ Generator niet gevonden: {generator}", file=sys.stderr)
+        sys.exit(1)
     
     cmd = [
-        sys.executable, str(generator), 'generate-instructions',
+        sys.executable, str(generator), 'genereer-instructies',
         "--agent", agent_naam,
         "--intent", intent,
-        "--execution-file", str(filename)
     ]
     
     for k, v in params.items():
@@ -48,9 +40,7 @@ def run_generate_instructions(agent_naam: str, intent: str, params: dict):
     result = subprocess.run(cmd, env=env)
     
     if result.returncode == 0:
-        # Open in VS Code
-        subprocess.run(["code", str(filename)], shell=True)
-        print(f"\n\033[1mEr ligt een execution-file met volledige instructies.\033[0m")
+        print(f"\n\033[1mInstructies gegenereerd. Bekijk agent-execution/ folder.\033[0m")
     else:
         print(f"❌ Fout opgetreden bij genereren instructies voor {intent}.", file=sys.stderr)
         sys.exit(result.returncode)
@@ -63,16 +53,26 @@ def main():
     subparsers = parser.add_subparsers(dest="intent", required=True, help="Beschikbare intents (commando's)")
 
     # 1. beschrijf-hypothese
-    p_hyp = subparsers.add_parser("beschrijf-hypothese", help="beschrijf-hypothese")
-    p_hyp.add_argument("--hypothese-document", required=True, help="Pad naar je document/tekst")
+    p_hyp = subparsers.add_parser("beschrijf-hypothese", help="Formuleer een hypothese op basis van een probleem en idee")
+    p_hyp.add_argument("--probleem", required=True, help="Het probleem dat je wilt oplossen")
+    p_hyp.add_argument("--idee-voor-de-oplossing", required=True, help="Je idee voor de oplossing")
+    p_hyp.add_argument("--auteur", required=True, help="Naam van de auteur")
+    p_hyp.add_argument("--bronnen", default="", help="Bronnen (optioneel)")
+    p_hyp.add_argument("--context", default="", help="Context informatie (optioneel)")
+    p_hyp.add_argument("--betrokkenen", default="", help="Betrokkenen (optioneel)")
 
     # 2. beschrijf-aannames
-    p_aan = subparsers.add_parser("beschrijf-aannames", help="beschrijf-aannames")
-    p_aan.add_argument("--hypothese", required=True, help="De beschreven hypothese")
+    p_aan = subparsers.add_parser("beschrijf-aannames", help="Beschrijf de aannames in een hypothese")
+    p_aan.add_argument("--hypothese-titel", required=True, help="Titel van de hypothese")
 
     # 3. beschrijf-toetsbaarheid
-    p_toets = subparsers.add_parser("beschrijf-toetsbaarheid", help="beschrijf-toetsbaarheid")
-    p_toets.add_argument("--aannames", required=True, help="De te toetsen aannames")
+    p_toets = subparsers.add_parser("beschrijf-toetsbaarheid", help="Beschrijf hoe de hypothese getoetst kan worden")
+    p_toets.add_argument("--hypothese-statement", required=True, help="De hypothese statement")
+    p_toets.add_argument("--auteur", required=True, help="Naam van de auteur")
+    p_toets.add_argument("--hypothese-bestand", default="", help="Pad naar hypothese bestand (optioneel)")
+    p_toets.add_argument("--toetsingscontext", default="", help="Context voor toetsing (optioneel)")
+    p_toets.add_argument("--beschikbare-metrics", default="", help="Beschikbare metrics (optioneel)")
+    p_toets.add_argument("--acceptatie-drempel", default="", help="Acceptatie drempel (optioneel)")
 
     args = parser.parse_args()
     

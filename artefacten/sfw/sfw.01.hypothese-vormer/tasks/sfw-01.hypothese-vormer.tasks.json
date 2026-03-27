@@ -2,22 +2,6 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "sfw.01 - hypothese-vormer: beschrijf-aannames",
-      "type": "process",
-      "command": "python",
-      "args": [
-        "artefacten/sfw/sfw.01.hypothese-vormer/runner/hypothese-vormer.runner.py",
-        "beschrijf-aannames",
-        "--hypothese-titel",
-        "${input:in_hypothese_vormer_beschrijf_aannames_hypothese_titel}"
-      ],
-      "problemMatcher": [],
-      "presentation": {
-        "reveal": "always",
-        "panel": "shared"
-      }
-    },
-    {
       "label": "sfw.01 - hypothese-vormer: beschrijf-hypothese",
       "type": "process",
       "command": "python",
@@ -36,6 +20,22 @@
         "${input:in_hypothese_vormer_beschrijf_hypothese_context}",
         "--betrokkenen",
         "${input:in_hypothese_vormer_beschrijf_hypothese_betrokkenen}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "sfw.01 - hypothese-vormer: beschrijf-aannames",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/sfw/sfw.01.hypothese-vormer/runner/hypothese-vormer.runner.py",
+        "beschrijf-aannames",
+        "--hypothese-titel",
+        "${input:in_hypothese_vormer_beschrijf_aannames_hypothese_titel}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -72,69 +72,69 @@
   ],
   "inputs": [
     {
-      "id": "in_hypothese_vormer_beschrijf_aannames_hypothese_titel",
-      "type": "promptString",
-      "description": "Waarde voor 'hypothese_titel' (beschrijf-aannames)"
-    },
-    {
       "id": "in_hypothese_vormer_beschrijf_hypothese_probleem",
       "type": "promptString",
-      "description": "Waarde voor 'probleem' (beschrijf-hypothese)"
+      "description": "Het probleem dat je wilt oplossen"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_hypothese_idee_voor_de_oplossing",
       "type": "promptString",
-      "description": "Waarde voor 'idee_voor_de_oplossing' (beschrijf-hypothese)"
+      "description": "Je idee voor de oplossing"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_hypothese_auteur",
       "type": "promptString",
-      "description": "Waarde voor 'auteur' (beschrijf-hypothese)"
+      "description": "Naam van de auteur"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_hypothese_bronnen",
       "type": "promptString",
-      "description": "Waarde voor 'bronnen' (beschrijf-hypothese) (Optioneel)"
+      "description": "Bronnen (optioneel, druk Enter om over te slaan)"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_hypothese_context",
       "type": "promptString",
-      "description": "Waarde voor 'context' (beschrijf-hypothese) (Optioneel)"
+      "description": "Context informatie (optioneel, druk Enter om over te slaan)"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_hypothese_betrokkenen",
       "type": "promptString",
-      "description": "Waarde voor 'betrokkenen' (beschrijf-hypothese) (Optioneel)"
+      "description": "Betrokkenen (optioneel, druk Enter om over te slaan)"
+    },
+    {
+      "id": "in_hypothese_vormer_beschrijf_aannames_hypothese_titel",
+      "type": "promptString",
+      "description": "Titel van de hypothese"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_statement",
       "type": "promptString",
-      "description": "Waarde voor 'hypothese_statement' (beschrijf-toetsbaarheid)"
+      "description": "De hypothese statement"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_auteur",
       "type": "promptString",
-      "description": "Waarde voor 'auteur' (beschrijf-toetsbaarheid)"
+      "description": "Naam van de auteur"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_bestand",
       "type": "promptString",
-      "description": "Waarde voor 'hypothese_bestand' (beschrijf-toetsbaarheid) (Optioneel)"
+      "description": "Pad naar hypothese bestand (optioneel)"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_toetsingscontext",
       "type": "promptString",
-      "description": "Waarde voor 'toetsingscontext' (beschrijf-toetsbaarheid) (Optioneel)"
+      "description": "Context voor toetsing (optioneel)"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_beschikbare_metrics",
       "type": "promptString",
-      "description": "Waarde voor 'beschikbare_metrics' (beschrijf-toetsbaarheid) (Optioneel)"
+      "description": "Beschikbare metrics (optioneel)"
     },
     {
       "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_acceptatie_drempel",
       "type": "promptString",
-      "description": "Waarde voor 'acceptatie_drempel' (beschrijf-toetsbaarheid) (Optioneel)"
+      "description": "Acceptatie drempel (optioneel)"
     }
   ]
 }
