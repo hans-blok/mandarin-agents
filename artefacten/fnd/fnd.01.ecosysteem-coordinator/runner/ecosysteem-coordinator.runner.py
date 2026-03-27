@@ -1367,9 +1367,9 @@ def genereer_instructies_main(args: argparse.Namespace) -> int:
         # Expliciet opgegeven execution file
         execution_file_path = args.execution_file
     elif not no_save:
-        # Auto-genereer pad naar prompt-instructions/
-        workspace_root = get_workspace_root()
-        prompt_instructions_dir = workspace_root / "prompt-instructions"
+        # Auto-genereer pad naar prompt-instructions/ in target workspace (cwd)
+        target_workspace = get_target_workspace()
+        prompt_instructions_dir = target_workspace / "prompt-instructions"
         
         agent_name = metadata.get('agent', 'unknown').split('.')[-1]
         intent = metadata.get('intent', 'unknown')

@@ -1,4 +1,4 @@
-# Mandarin Agents
+﻿# Mandarin Agents
 
 Deze repository bevat de **canonieke definitie van Mandarin agents**:
 charters, contracts, prompts, templates, runners en ondersteunende tooling
@@ -14,23 +14,23 @@ De relevante top-level mappen zijn:
 
 ```text
 mandarin-agents/
-├── artefacten/           # Canonieke agent-artefacten per value stream
-│   ├── aeo/              # Agent Ecosysteem Ontwikkeling (aeo)
-│   ├── aod/              # Architectuur Ontwerp (aod)
-│   ├── fnd/              # Fundamenten (fnd)
-│   └── sfw/              # Software Fabricage (sfw)
-├── docs/                 # Gegenereerde overzichten (MkDocs bron)
-│   ├── agents-overzicht.md
-│   ├── agents-prompts-overzicht.md
-│   └── assets/
-├── scripts/              # Ondersteunende scripts
-│   └── copy_prompts_mandarin_agents.py
-├── prompt-instructions/  # Execution-ready prompts voor runners/LLM
-├── audit/                # Logfiles (canon consult, agent-instructions)
-├── concepts/             # Conceptuele documentatie (domein- en ordeningsconcepten)
-├── mkdocs.yml            # Site-configuratie voor GitHub Pages / MkDocs
-├── requirements.txt      # Python dependencies voor runners/tools
-└── requirements-docs.txt # Extra dependencies voor documentatie build
+â”œâ”€â”€ artefacten/           # Canonieke agent-artefacten per value stream
+â”‚   â”œâ”€â”€ aeo/              # Agent Ecosysteem Ontwikkeling (aeo)
+â”‚   â”œâ”€â”€ aod/              # Architectuur Ontwerp (aod)
+â”‚   â”œâ”€â”€ fnd/              # Fundamenten (fnd)
+â”‚   â””â”€â”€ sfw/              # Software Fabricage (sfw)
+â”œâ”€â”€ docs/                 # Gegenereerde overzichten (MkDocs bron)
+â”‚   â”œâ”€â”€ agents-overzicht.md
+â”‚   â”œâ”€â”€ agents-prompts-overzicht.md
+â”‚   â””â”€â”€ assets/
+â”œâ”€â”€ scripts/              # Ondersteunende scripts
+â”‚   â””â”€â”€ copy_prompts_mandarin_agents.py
+â”œâ”€â”€ prompt-instructions/  # Execution-ready prompts voor runners/LLM
+â”œâ”€â”€ audit/                # Logfiles (canon consult, agent-instructions)
+â”œâ”€â”€ concepts/             # Conceptuele documentatie (domein- en ordeningsconcepten)
+â”œâ”€â”€ mkdocs.yml            # Site-configuratie voor GitHub Pages / MkDocs
+â”œâ”€â”€ requirements.txt      # Python dependencies voor runners/tools
+â””â”€â”€ requirements-docs.txt # Extra dependencies voor documentatie build
 ```
 
 Binnen `artefacten/` is de structuur verder per value stream en agent
@@ -38,35 +38,35 @@ gestandaardiseerd. Voorbeeld voor `aeo.02.agent-curator`:
 
 ```text
 artefacten/aeo/aeo.02.agent-curator/
-├── agent-curator.agent-boundary.md
-├── agent-curator.charter.md
-├── agent-contracten/
-├── prompts/
-├── templates/
-├── tasks/
-└── runner/
-		└── agent-curator.runner.py
+â”œâ”€â”€ agent-curator.agent-boundary.md
+â”œâ”€â”€ agent-curator.charter.md
+â”œâ”€â”€ agent-contracten/
+â”œâ”€â”€ prompts/
+â”œâ”€â”€ templates/
+â”œâ”€â”€ tasks/
+â””â”€â”€ runner/
+		â””â”€â”€ agent-curator.runner.py
 ```
 
 ## Kernrunners
 
 ### Ecosysteem-coordinator runner
 
-Bestand: `artefacten/aeo/aeo.02.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py`
+Bestand: `artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py`
 
 Deze runner is de centrale "One Agent, One Runner"-router voor o.a.:
 
-- `consulteer-canon` – canon-consultatie + logging
-- `genereer-instructies` – samengestelde agent-instructies genereren
-- `merge-configuraties` – VS Code tasks uit agent-tasks samenvoegen
-- `valideer-agent-structuur` – agent folderstructuur toetsen
-- `list-agents` – beschikbare agents per value stream tonen
-- `fetch-agents` – prompts/agents/tasks naar een consumer-workspace kopiëren
+- `consulteer-canon` â€“ canon-consultatie + logging
+- `genereer-instructies` â€“ samengestelde agent-instructies genereren
+- `merge-configuraties` â€“ VS Code tasks uit agent-tasks samenvoegen
+- `valideer-agent-structuur` â€“ agent folderstructuur toetsen
+- `list-agents` â€“ beschikbare agents per value stream tonen
+- `fetch-agents` â€“ prompts/agents/tasks naar een consumer-workspace kopiÃ«ren
 
 Voorbeeld (lijst agents in aeo.02):
 
 ```powershell
-python artefacten/aeo/aeo.02.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py list-agents aeo.02
+python artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py list-agents aeo.02
 ```
 
 ### Agent-curator runner
@@ -75,9 +75,9 @@ Bestand: `artefacten/aeo/aeo.02.agent-curator/runner/agent-curator.runner.py`
 
 Deze runner verzorgt publicatie-overzichten op ecosysteemniveau:
 
-- `publiceer-json` – `agents-publicatie.json` genereren (schema v2.0)
-- `publiceer-overzicht` – markdown overzicht van alle agents naar `docs/agents-overzicht.md`
-- `rapporteer-prompts-overzicht` – via ecosysteem-coordinator execution-instructies
+- `publiceer-json` â€“ `agents-publicatie.json` genereren (schema v2.0)
+- `publiceer-overzicht` â€“ markdown overzicht van alle agents naar `docs/agents-overzicht.md`
+- `rapporteer-prompts-overzicht` â€“ via ecosysteem-coordinator execution-instructies
 	genereren voor het prompts-overzicht
 
 Voorbeeld (generate agents-overzicht):
@@ -97,8 +97,8 @@ worden execution-bestanden aangemaakt in `prompt-instructions/`:
 
 ```text
 prompt-instructions/
-├── <hash>.agent-curator.rapporteer-prompts-overzicht.md
-└── history/
+â”œâ”€â”€ <hash>.agent-curator.rapporteer-prompts-overzicht.md
+â””â”€â”€ history/
 ```
 
 Deze bestanden bevatten:
@@ -128,18 +128,18 @@ dat MkDocs toont).
 
 ## Scripts
 
-In `scripts/` staat momenteel één script:
+In `scripts/` staat momenteel Ã©Ã©n script:
 
-- `copy_prompts_mandarin_agents.py` – ondersteunt het genereren van een
+- `copy_prompts_mandarin_agents.py` â€“ ondersteunt het genereren van een
 	aggregatie (bijv. `agents.yaml`) uit de canonieke prompts.
 
 Gebruik dit script alleen als je weet hoe het in jouw consumer-workspace
-is geïntegreerd; het is primair een hulpscript voor build/publishing.
+is geÃ¯ntegreerd; het is primair een hulpscript voor build/publishing.
 
 ## Vereisten
 
-- **Python 3.10+** – voor runners en tooling
-- **Git** – voor werken met de canon-repository
+- **Python 3.10+** â€“ voor runners en tooling
+- **Git** â€“ voor werken met de canon-repository
 
 Installeer dependencies voor deze repo:
 

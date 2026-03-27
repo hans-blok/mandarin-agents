@@ -1,4 +1,4 @@
-{
+﻿{
   "version": "2.0.0",
   "tasks": [
     {
@@ -6,7 +6,7 @@
       "type": "process",
       "command": "python",
       "args": [
-        "artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
+        "./artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
         "aggregeer-tasks"
       ],
       "problemMatcher": [],
@@ -16,14 +16,16 @@
       }
     },
     {
-      "label": "sfw.01 - hypothese-vormer: beschrijf-aannames",
+      "label": "aeo.02 - agent-curator: rapporteer-ecosysteem-overzicht",
       "type": "process",
       "command": "python",
       "args": [
-        "artefacten/sfw/sfw.01.hypothese-vormer/runner/hypothese-vormer.runner.py",
-        "beschrijf-aannames",
-        "--hypothese-titel",
-        "${input:in_hypothese_vormer_beschrijf_aannames_hypothese_titel}"
+        "./artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
+        "genereer-instructies",
+        "--agent",
+        "agent-curator",
+        "--intent",
+        "rapporteer-ecosysteem-overzicht"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -32,24 +34,16 @@
       }
     },
     {
-      "label": "sfw.01 - hypothese-vormer: beschrijf-hypothese",
+      "label": "aeo.02 - agent-curator: rapporteer-prompts-overzicht",
       "type": "process",
       "command": "python",
       "args": [
-        "artefacten/sfw/sfw.01.hypothese-vormer/runner/hypothese-vormer.runner.py",
-        "beschrijf-hypothese",
-        "--probleem",
-        "${input:in_hypothese_vormer_beschrijf_hypothese_probleem}",
-        "--idee-voor-de-oplossing",
-        "${input:in_hypothese_vormer_beschrijf_hypothese_idee_voor_de_oplossing}",
-        "--auteur",
-        "${input:in_hypothese_vormer_beschrijf_hypothese_auteur}",
-        "--bronnen",
-        "${input:in_hypothese_vormer_beschrijf_hypothese_bronnen}",
-        "--context",
-        "${input:in_hypothese_vormer_beschrijf_hypothese_context}",
-        "--betrokkenen",
-        "${input:in_hypothese_vormer_beschrijf_hypothese_betrokkenen}"
+        "./artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
+        "genereer-instructies",
+        "--agent",
+        "agent-curator",
+        "--intent",
+        "rapporteer-prompts-overzicht"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -58,24 +52,20 @@
       }
     },
     {
-      "label": "sfw.01 - hypothese-vormer: beschrijf-toetsbaarheid",
+      "label": "aeo.02 - agent-curator: valideer-agent-consistentie",
       "type": "process",
       "command": "python",
       "args": [
-        "artefacten/sfw/sfw.01.hypothese-vormer/runner/hypothese-vormer.runner.py",
-        "beschrijf-toetsbaarheid",
-        "--hypothese-statement",
-        "${input:in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_statement}",
-        "--auteur",
-        "${input:in_hypothese_vormer_beschrijf_toetsbaarheid_auteur}",
-        "--hypothese-bestand",
-        "${input:in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_bestand}",
-        "--toetsingscontext",
-        "${input:in_hypothese_vormer_beschrijf_toetsbaarheid_toetsingscontext}",
-        "--beschikbare-metrics",
-        "${input:in_hypothese_vormer_beschrijf_toetsbaarheid_beschikbare_metrics}",
-        "--acceptatie-drempel",
-        "${input:in_hypothese_vormer_beschrijf_toetsbaarheid_acceptatie_drempel}"
+        "./artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
+        "genereer-instructies",
+        "--agent",
+        "agent-curator",
+        "--intent",
+        "valideer-agent-consistentie",
+        "-p",
+        "agent_naam=${input:in_agent_curator_valideer_agent_consistentie_agent_naam}",
+        "-p",
+        "value_stream_fase=${input:in_agent_curator_valideer_agent_consistentie_value_stream_fase}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -84,16 +74,18 @@
       }
     },
     {
-      "label": "sfw.02 - thema-verwoorder: definieer-epic-structuur",
+      "label": "aeo.02 - agent-curator: valideer-boundary-overlap",
       "type": "process",
       "command": "python",
       "args": [
-        "artefacten/sfw/sfw.02.thema-verwoorder/runner/thema-verwoorder.runner.py",
-        "definieer-epic-structuur",
-        "--thema-code",
-        "${input:in_thema_verwoorder_definieer_epic_structuur_thema_code}",
-        "--auteur",
-        "${input:in_thema_verwoorder_definieer_epic_structuur_auteur}"
+        "./artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
+        "genereer-instructies",
+        "--agent",
+        "agent-curator",
+        "--intent",
+        "valideer-boundary-overlap",
+        "-p",
+        "value_stream_fase=${input:in_agent_curator_valideer_boundary_overlap_value_stream_fase}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -102,18 +94,20 @@
       }
     },
     {
-      "label": "sfw.02 - thema-verwoorder: definieer-thematische-scope",
+      "label": "aeo.02 - agent-curator: valideer-runner-contract-consistentie",
       "type": "process",
       "command": "python",
       "args": [
-        "artefacten/sfw/sfw.02.thema-verwoorder/runner/thema-verwoorder.runner.py",
-        "definieer-thematische-scope",
-        "--hypothese-bestand",
-        "${input:in_thema_verwoorder_definieer_thematische_scope_hypothese_bestand}",
-        "--auteur",
-        "${input:in_thema_verwoorder_definieer_thematische_scope_auteur}",
-        "--toelichting",
-        "${input:in_thema_verwoorder_definieer_thematische_scope_toelichting}"
+        "./artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
+        "genereer-instructies",
+        "--agent",
+        "agent-curator",
+        "--intent",
+        "valideer-runner-contract-consistentie",
+        "-p",
+        "agent_naam=${input:in_agent_curator_valideer_runner_contract_agent_naam}",
+        "-p",
+        "value_stream_fase=${input:in_agent_curator_valideer_runner_contract_value_stream_fase}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -122,18 +116,245 @@
       }
     },
     {
-      "label": "sfw.02 - thema-verwoorder: definieer-verbeter-voorstel",
+      "label": "aeo.02 - agent-curator: publiceer-json",
       "type": "process",
       "command": "python",
       "args": [
-        "artefacten/sfw/sfw.02.thema-verwoorder/runner/thema-verwoorder.runner.py",
-        "definieer-verbeter-voorstel",
-        "--thema-code",
-        "${input:in_thema_verwoorder_definieer_verbeter_voorstel_thema_code}",
-        "--auteur",
-        "${input:in_thema_verwoorder_definieer_verbeter_voorstel_auteur}",
-        "--toelichting",
-        "${input:in_thema_verwoorder_definieer_verbeter_voorstel_toelichting}"
+        "./artefacten/aeo/aeo.02.agent-curator/runner/agent-curator.runner.py",
+        "publiceer-json"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - agent-curator: publiceer-overzicht",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.02.agent-curator/runner/agent-curator.runner.py",
+        "publiceer-overzicht"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - agent-engineer: realiseer-agent-prompts",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.02.agent-engineer/runner/agent-engineer.runner.py",
+        "realiseer-agent-prompts",
+        "--agent-naam",
+        "${input:in_agent_engineer_realiseer_agent_prompts_agent_naam}",
+        "--intent",
+        "${input:in_agent_engineer_realiseer_agent_prompts_intent}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - agent-engineer: realiseer-agent-runner",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.02.agent-engineer/runner/agent-engineer.runner.py",
+        "realiseer-agent-runner",
+        "--agent-naam",
+        "${input:in_agent_engineer_realiseer_agent_runner_agent_naam}",
+        "--contract-folder",
+        "${input:in_agent_engineer_realiseer_agent_runner_contract_folder}",
+        "--runner-output-folder",
+        "${input:in_agent_engineer_realiseer_agent_runner_runner_output_folder}",
+        "--overwrite-existing",
+        "${input:in_agent_engineer_realiseer_agent_runner_overwrite_existing}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - agent-engineer: realiseer-agent-taskconfiguratie",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.02.agent-engineer/runner/agent-engineer.runner.py",
+        "realiseer-agent-taskconfiguratie",
+        "--agent-naam",
+        "${input:in_agent_engineer_realiseer_agent_taskconfiguratie_agent_naam}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - agent-engineer: pipeline",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.02.agent-engineer/runner/agent-engineer.runner.py",
+        "pipeline",
+        "${input:in_agent_engineer_pipeline_agent}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - agent-ontwerper: definieer-agent-charter",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.02.agent-ontwerper/runner/agent-ontwerper.runner.py",
+        "definieer-agent-charter",
+        "--agent-naam",
+        "${input:in_agent_ontwerper_definieer_agent_charter_agent_naam}",
+        "--value-stream-fase",
+        "${input:in_agent_ontwerper_definieer_agent_charter_value_stream_fase}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - agent-ontwerper: definieer-agent-contract",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.02.agent-ontwerper/runner/agent-ontwerper.runner.py",
+        "definieer-agent-contract",
+        "--agent-naam",
+        "${input:in_agent_ontwerper_definieer_agent_contract_agent_naam}",
+        "--intent-naam",
+        "${input:in_agent_ontwerper_definieer_agent_contract_intent_naam}",
+        "--value-stream-fase",
+        "${input:in_agent_ontwerper_definieer_agent_contract_value_stream_fase}",
+        "--template-file",
+        "${input:in_agent_ontwerper_definieer_agent_contract_template_file}",
+        "--referenties",
+        "${input:in_agent_ontwerper_definieer_agent_contract_referenties}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - agent-ontwerper: definieer-agent-template",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.02.agent-ontwerper/runner/agent-ontwerper.runner.py",
+        "definieer-agent-template",
+        "--agent-naam",
+        "${input:in_agent_ontwerper_definieer_agent_template_agent_naam}",
+        "--intent",
+        "${input:in_agent_ontwerper_definieer_agent_template_intent}",
+        "--file-naam-inspiratie",
+        "${input:in_agent_ontwerper_definieer_agent_template_file_naam_inspiratie}",
+        "--value-stream-fase",
+        "${input:in_agent_ontwerper_definieer_agent_template_value_stream_fase}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - capability-architect: definieer-agent-boundary",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.02.capability-architect/runner/capability-architect.runner.py",
+        "definieer-agent-boundary",
+        "--agent-naam",
+        "${input:in_capability_architect_definieer_agent_boundary_agent_naam}",
+        "--value-stream-fase",
+        "${input:in_capability_architect_definieer_agent_boundary_value_stream_fase}",
+        "--korte-beschrijving",
+        "${input:in_capability_architect_definieer_agent_boundary_korte_beschrijving}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - ecosysteem-beschrijver: beschrijf-agent-positionering",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.02.ecosysteem-beschrijver/runner/ecosysteem-beschrijver.runner.py",
+        "beschrijf-agent-positionering",
+        "--agent-naam",
+        "${input:in_ecosysteem_beschrijver_beschrijf_agent_positionering_agent_naam}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - ecosysteem-beschrijver: beschrijf-ecosysteem-artefacten",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.02.ecosysteem-beschrijver/runner/ecosysteem-beschrijver.runner.py",
+        "beschrijf-ecosysteem-artefacten",
+        "--value-stream-fase",
+        "${input:in_ecosysteem_beschrijver_beschrijf_ecosysteem_artefacten_value_stream_fase}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - ecosysteem-beschrijver: beschrijf-ecosysteem-contracten",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.02.ecosysteem-beschrijver/runner/ecosysteem-beschrijver.runner.py",
+        "beschrijf-ecosysteem-contracten",
+        "--value-stream-fase",
+        "${input:in_ecosysteem_beschrijver_beschrijf_ecosysteem_contracten_value_stream_fase}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.02 - ecosysteem-beschrijver: beschrijf-ecosysteem-value-streams-agents",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.02.ecosysteem-beschrijver/runner/ecosysteem-beschrijver.runner.py",
+        "beschrijf-ecosysteem-value-streams-agents",
+        "--value-stream-fase",
+        "${input:in_ecosysteem_beschrijver_beschrijf_ecosysteem_value_streams_agents_value_stream_fase}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -168,109 +389,167 @@
   ],
   "inputs": [
     {
-      "id": "in_hypothese_vormer_beschrijf_aannames_hypothese_titel",
+      "id": "in_agent_curator_valideer_agent_consistentie_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'hypothese_titel' (beschrijf-aannames)"
+      "description": "Agent naam om te valideren"
     },
     {
-      "id": "in_hypothese_vormer_beschrijf_hypothese_probleem",
+      "id": "in_agent_curator_valideer_agent_consistentie_value_stream_fase",
       "type": "promptString",
-      "description": "Waarde voor 'probleem' (beschrijf-hypothese)"
+      "description": "Value stream fase (bijv. aeo.02)"
     },
     {
-      "id": "in_hypothese_vormer_beschrijf_hypothese_idee_voor_de_oplossing",
+      "id": "in_agent_curator_valideer_boundary_overlap_value_stream_fase",
       "type": "promptString",
-      "description": "Waarde voor 'idee_voor_de_oplossing' (beschrijf-hypothese)"
+      "description": "Value stream fase (bijv. aeo.02)"
     },
     {
-      "id": "in_hypothese_vormer_beschrijf_hypothese_auteur",
+      "id": "in_agent_curator_valideer_runner_contract_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'auteur' (beschrijf-hypothese)"
+      "description": "Agent naam om te toetsen (leeg = alle agents in fase)",
+      "default": ""
     },
     {
-      "id": "in_hypothese_vormer_beschrijf_hypothese_bronnen",
+      "id": "in_agent_curator_valideer_runner_contract_value_stream_fase",
       "type": "promptString",
-      "description": "Waarde voor 'bronnen' (beschrijf-hypothese) (Optioneel)"
+      "description": "Value stream fase (bijv. aeo.02)",
+      "default": "aeo.02"
     },
     {
-      "id": "in_hypothese_vormer_beschrijf_hypothese_context",
+      "id": "in_agent_engineer_realiseer_agent_prompts_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'context' (beschrijf-hypothese) (Optioneel)"
+      "description": "Waarde voor 'agent_naam' (realiseer-agent-prompts)"
     },
     {
-      "id": "in_hypothese_vormer_beschrijf_hypothese_betrokkenen",
+      "id": "in_agent_engineer_realiseer_agent_prompts_intent",
       "type": "promptString",
-      "description": "Waarde voor 'betrokkenen' (beschrijf-hypothese) (Optioneel)"
+      "description": "Waarde voor 'intent' (realiseer-agent-prompts) (Optioneel)"
     },
     {
-      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_statement",
+      "id": "in_agent_engineer_realiseer_agent_runner_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'hypothese_statement' (beschrijf-toetsbaarheid)"
+      "description": "Waarde voor 'agent_naam' (realiseer-agent-runner)"
     },
     {
-      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_auteur",
+      "id": "in_agent_engineer_realiseer_agent_runner_contract_folder",
       "type": "promptString",
-      "description": "Waarde voor 'auteur' (beschrijf-toetsbaarheid)"
+      "description": "Waarde voor 'contract_folder' (realiseer-agent-runner) (Optioneel)"
     },
     {
-      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_hypothese_bestand",
+      "id": "in_agent_engineer_realiseer_agent_runner_runner_output_folder",
       "type": "promptString",
-      "description": "Waarde voor 'hypothese_bestand' (beschrijf-toetsbaarheid) (Optioneel)"
+      "description": "Waarde voor 'runner_output_folder' (realiseer-agent-runner) (Optioneel)"
     },
     {
-      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_toetsingscontext",
+      "id": "in_agent_engineer_realiseer_agent_runner_overwrite_existing",
       "type": "promptString",
-      "description": "Waarde voor 'toetsingscontext' (beschrijf-toetsbaarheid) (Optioneel)"
+      "description": "Waarde voor 'overwrite_existing' (realiseer-agent-runner) (Optioneel)"
     },
     {
-      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_beschikbare_metrics",
+      "id": "in_agent_engineer_realiseer_agent_taskconfiguratie_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'beschikbare_metrics' (beschrijf-toetsbaarheid) (Optioneel)"
+      "description": "Waarde voor 'agent_naam' (realiseer-agent-taskconfiguratie)"
     },
     {
-      "id": "in_hypothese_vormer_beschrijf_toetsbaarheid_acceptatie_drempel",
+      "id": "in_agent_engineer_pipeline_agent",
       "type": "promptString",
-      "description": "Waarde voor 'acceptatie_drempel' (beschrijf-toetsbaarheid) (Optioneel)"
+      "description": "Agent naam voor pipeline (of leeg + --all voor alle agents)"
     },
     {
-      "id": "in_thema_verwoorder_definieer_epic_structuur_thema_code",
+      "id": "in_agent_ontwerper_definieer_agent_charter_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'thema_code' (definieer-epic-structuur)"
+      "description": "Agent naam (kebab-case, bijv. hypothese-vormer)"
     },
     {
-      "id": "in_thema_verwoorder_definieer_epic_structuur_auteur",
+      "id": "in_agent_ontwerper_definieer_agent_charter_value_stream_fase",
       "type": "promptString",
-      "description": "Waarde voor 'auteur' (definieer-epic-structuur)"
+      "description": "Value stream fase (standaard: aeo.02)",
+      "default": "aeo.02"
     },
     {
-      "id": "in_thema_verwoorder_definieer_thematische_scope_hypothese_bestand",
+      "id": "in_agent_ontwerper_definieer_agent_contract_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'hypothese_bestand' (definieer-thematische-scope)"
+      "description": "Agent naam (kebab-case, bijv. hypothese-vormer)"
     },
     {
-      "id": "in_thema_verwoorder_definieer_thematische_scope_auteur",
+      "id": "in_agent_ontwerper_definieer_agent_contract_intent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'auteur' (definieer-thematische-scope)"
+      "description": "Intent naam (optioneel; leeg = alle intents in boundary)"
     },
     {
-      "id": "in_thema_verwoorder_definieer_thematische_scope_toelichting",
+      "id": "in_agent_ontwerper_definieer_agent_contract_value_stream_fase",
       "type": "promptString",
-      "description": "Waarde voor 'toelichting' (definieer-thematische-scope) (Optioneel)"
+      "description": "Value stream fase (standaard: aeo.02)",
+      "default": "aeo.02"
     },
     {
-      "id": "in_thema_verwoorder_definieer_verbeter_voorstel_thema_code",
+      "id": "in_agent_ontwerper_definieer_agent_contract_template_file",
       "type": "promptString",
-      "description": "Waarde voor 'thema_code' (definieer-verbeter-voorstel)"
+      "description": "Override voor contract template (optioneel, leeg = standaard template)"
     },
     {
-      "id": "in_thema_verwoorder_definieer_verbeter_voorstel_auteur",
+      "id": "in_agent_ontwerper_definieer_agent_contract_referenties",
       "type": "promptString",
-      "description": "Waarde voor 'auteur' (definieer-verbeter-voorstel)"
+      "description": "Komma-gescheiden referentiedocumenten (optioneel)"
     },
     {
-      "id": "in_thema_verwoorder_definieer_verbeter_voorstel_toelichting",
+      "id": "in_agent_ontwerper_definieer_agent_template_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'toelichting' (definieer-verbeter-voorstel) (Optioneel)"
+      "description": "Agent naam (kebab-case, bijv. hypothese-vormer)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_intent",
+      "type": "promptString",
+      "description": "Filter op intent naam (optioneel; leeg = alle intents in boundary)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_file_naam_inspiratie",
+      "type": "promptString",
+      "description": "Bestand in temp/ als inspiratie voor templatestructuur (optioneel)"
+    },
+    {
+      "id": "in_agent_ontwerper_definieer_agent_template_value_stream_fase",
+      "type": "promptString",
+      "description": "Value stream fase (standaard: aeo.02)",
+      "default": "aeo.02"
+    },
+    {
+      "id": "in_capability_architect_definieer_agent_boundary_agent_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'agent_naam' (definieer-agent-boundary)"
+    },
+    {
+      "id": "in_capability_architect_definieer_agent_boundary_value_stream_fase",
+      "type": "promptString",
+      "description": "Waarde voor 'value_stream_fase' (definieer-agent-boundary)"
+    },
+    {
+      "id": "in_capability_architect_definieer_agent_boundary_korte_beschrijving",
+      "type": "promptString",
+      "description": "Waarde voor 'korte_beschrijving' (definieer-agent-boundary)"
+    },
+    {
+      "id": "in_ecosysteem_beschrijver_beschrijf_agent_positionering_agent_naam",
+      "type": "promptString",
+      "description": "Agent naam (kebab-case, bijv. agent-curator)"
+    },
+    {
+      "id": "in_ecosysteem_beschrijver_beschrijf_ecosysteem_artefacten_value_stream_fase",
+      "type": "promptString",
+      "description": "Value stream fase (bijv. aeo.02)",
+      "default": "aeo.02"
+    },
+    {
+      "id": "in_ecosysteem_beschrijver_beschrijf_ecosysteem_contracten_value_stream_fase",
+      "type": "promptString",
+      "description": "Value stream fase (bijv. aeo.02)",
+      "default": "aeo.02"
+    },
+    {
+      "id": "in_ecosysteem_beschrijver_beschrijf_ecosysteem_value_streams_agents_value_stream_fase",
+      "type": "promptString",
+      "description": "Value stream fase of 'alle' (bijv. aeo.02)",
+      "default": "aeo.02"
     }
   ]
 }

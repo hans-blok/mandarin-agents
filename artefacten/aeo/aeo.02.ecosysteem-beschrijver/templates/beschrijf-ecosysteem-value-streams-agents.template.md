@@ -1,16 +1,16 @@
----
+﻿---
 agent: ecosysteem-beschrijver
 template_naam: beschrijf-ecosysteem-value-streams-agents
 versie: 1.0.0
 output_type: document
-doel: Geeft een gestructureerd overzicht van alle value streams en hun agents in het ecosysteem — welke agents per value stream en fase, inclusief hun boundary-classificatie, domein en intentaantal.
+doel: Geeft een gestructureerd overzicht van alle value streams en hun agents in het ecosysteem â€” welke agents per value stream en fase, inclusief hun boundary-classificatie, domein en intentaantal.
 ---
 
 # Template: Ecosysteem Value Streams & Agents Overzicht
 
 ## Doel en gebruik
 
-Dit template structureert de output van de intent `beschrijf-ecosysteem-value-streams-agents`. Het produceert een leesbaar overzicht van alle value streams, hun fasen, en de agents die daarbinnen actief zijn. Per agent wordt de boundary-classificatie en het intentaantal opgenomen. Het document is beschrijvend — geen evaluatie, geen normering.
+Dit template structureert de output van de intent `beschrijf-ecosysteem-value-streams-agents`. Het produceert een leesbaar overzicht van alle value streams, hun fasen, en de agents die daarbinnen actief zijn. Per agent wordt de boundary-classificatie en het intentaantal opgenomen. Het document is beschrijvend â€” geen evaluatie, geen normering.
 
 Gebruikt door: `beschrijf-ecosysteem-value-streams-agents`
 
@@ -25,19 +25,19 @@ scope: <scope-omschrijving>
 timestamp: <yyyy-mm-dd HH:MM>
 ---
 
-# Ecosysteem: Value Streams & Agents — <scope>
+# Ecosysteem: Value Streams & Agents â€” <scope>
 
 ## Inleiding
 
-<Korte beschrijving van de scope: welke value streams in scope, basis-bronbestanden, hoe agents zijn geïdentificeerd.>
+<Korte beschrijving van de scope: welke value streams in scope, basis-bronbestanden, hoe agents zijn geÃ¯dentificeerd.>
 
 ## Value streams
 
-### <value-stream-code> — <value-stream-naam>
+### <value-stream-code> â€” <value-stream-naam>
 
-**Beschrijving**: <één zin over wat deze value stream voortbrengt of regisseert>
+**Beschrijving**: <Ã©Ã©n zin over wat deze value stream voortbrengt of regisseert>
 
-#### Fase <fase-code> — <fase-naam>
+#### Fase <fase-code> â€” <fase-naam>
 
 | Agent | Korte boundary-zin | Domein | Intents |
 |-------|-------------------|--------|---------|
@@ -46,7 +46,7 @@ timestamp: <yyyy-mm-dd HH:MM>
 
 ---
 
-### <value-stream-code-2> — <value-stream-naam-2>
+### <value-stream-code-2> â€” <value-stream-naam-2>
 
 [herhaal structuur]
 
@@ -88,12 +88,12 @@ Totaaloverzicht van alle agents in scope, gesorteerd op value stream en fase.
 
 ## Validatie-criteria
 
-- ✓ Elke bekende value stream heeft een eigen sectie
-- ✓ Alle agents in scope staan in de agents-matrix
-- ✓ De boundary-zin is de eerste zin uit de "doelstelling"- of "korte-beschrijving"-sectie in het boundary-document
-- ✓ Intents-teller klopt met het aantal intents in het boundary-document
-- ✓ Document bevat geen evaluatie of oordeel over agents
-- ✓ Bronbestanden zijn expliciet vermeld
+- âœ“ Elke bekende value stream heeft een eigen sectie
+- âœ“ Alle agents in scope staan in de agents-matrix
+- âœ“ De boundary-zin is de eerste zin uit de "doelstelling"- of "korte-beschrijving"-sectie in het boundary-document
+- âœ“ Intents-teller klopt met het aantal intents in het boundary-document
+- âœ“ Document bevat geen evaluatie of oordeel over agents
+- âœ“ Bronbestanden zijn expliciet vermeld
 
 ## Voorbeeld-output
 
@@ -106,7 +106,7 @@ scope: alle value streams
 timestamp: 2026-03-21 10:00
 ---
 
-# Ecosysteem: Value Streams & Agents — alle value streams
+# Ecosysteem: Value Streams & Agents â€” alle value streams
 
 ## Inleiding
 
@@ -115,11 +115,11 @@ Bronbestanden: alle boundary- en charter-documenten in de artefacten/-map.
 
 ## Value streams
 
-### aeo — Agent Engineering & Orchestration
+### aeo â€” Agent Engineering & Orchestration
 
 **Beschrijving**: Omvat het ontwerp, de implementatie en het beheer van agents in het ecosysteem.
 
-#### Fase 02 — Implementatie
+#### Fase 02 â€” Implementatie
 
 | Agent | Korte boundary-zin | Domein | Intents |
 |-------|-------------------|--------|---------|
@@ -127,7 +127,7 @@ Bronbestanden: alle boundary- en charter-documenten in de artefacten/-map.
 | agent-engineer | Implementeert agents op basis van contracten en templates. | Implementatie | 4 |
 | agent-ontwerper | Ontwerpt agent-structuren op basis van boundaries en intents. | Ontwerp | 3 |
 | capability-architect | Definieert de capability-grenzen van agents. | Architectuur | 2 |
-| ecosysteem-coordinator | Coördineert het gehele agent-ecosysteem. | Coördinatie | 5 |
+| ecosysteem-coordinator | CoÃ¶rdineert het gehele agent-ecosysteem. | CoÃ¶rdinatie | 5 |
 
 ## Agents-matrix
 
@@ -148,12 +148,12 @@ Bronbestanden: alle boundary- en charter-documenten in de artefacten/-map.
 - artefacten/aeo/aeo.02.agent-engineer/agent-engineer.agent-boundary.md
 - artefacten/aeo/aeo.02.agent-ontwerper/agent-ontwerper.agent-boundary.md
 - artefacten/aeo/aeo.02.capability-architect/capability-architect.agent-boundary.md
-- artefacten/aeo/aeo.02.ecosysteem-coordinator/ecosysteem-coordinator.agent-boundary.md
+- artefacten/fnd/fnd.01.ecosysteem-coordinator/ecosysteem-coordinator.agent-boundary.md
 ```
 
 ## Gebruiksinstructies
 
-1. Bepaal de scope (één fase, meerdere fasen, of alle value streams).
+1. Bepaal de scope (Ã©Ã©n fase, meerdere fasen, of alle value streams).
 2. Lees per agent het boundary-document om de boundary-zin, het domein en het intentaantal te extraheren.
 3. Groepeer agents per value stream en per fase.
 4. Vul de agents-matrix met alle agents in scope.
@@ -164,7 +164,7 @@ Bronbestanden: alle boundary- en charter-documenten in de artefacten/-map.
 
 | Versie | Datum | Wijziging |
 |--------|-------|-----------|
-| 1.0.0 | 2026-03-21 | Initiële template voor ecosysteem-beschrijver |
+| 1.0.0 | 2026-03-21 | InitiÃ«le template voor ecosysteem-beschrijver |
 
 ---
 

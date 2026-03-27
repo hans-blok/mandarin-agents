@@ -53,12 +53,12 @@ def find_ecosysteem_coordinator_runner() -> Path:
     this_file = Path(__file__).resolve()
     repo_root = this_file.parent.parent.parent.parent
     
-    candidate = repo_root / "artefacten" / "aeo" / "aeo.02.ecosysteem-coordinator" / "runner" / "ecosysteem-coordinator.runner.py"
+    candidate = repo_root / "artefacten" / "fnd" / "fnd.01.ecosysteem-coordinator" / "runner" / "ecosysteem-coordinator.runner.py"
     if candidate.exists():
         return candidate
     
     # Fallback: zoek vanuit cwd
-    cwd_candidate = Path.cwd() / "artefacten" / "aeo" / "aeo.02.ecosysteem-coordinator" / "runner" / "ecosysteem-coordinator.runner.py"
+    cwd_candidate = Path.cwd() / "artefacten" / "fnd" / "fnd.01.ecosysteem-coordinator" / "runner" / "ecosysteem-coordinator.runner.py"
     if cwd_candidate.exists():
         return cwd_candidate
     

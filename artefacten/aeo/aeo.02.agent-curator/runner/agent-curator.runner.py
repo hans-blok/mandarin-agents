@@ -474,14 +474,14 @@ def handle_rapporteer_prompts_overzicht() -> int:
     # Bepaal pad naar ecosysteem-coordinator runner relatief t.o.v. dit bestand
     # Padstructuur (workspace root = vier niveaus hoger):
     #   artefacten/aeo/aeo.02.agent-curator/runner/agent-curator.runner.py
-    #   artefacten/aeo/aeo.02.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py
+    #   artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py
     try:
         workspace_root = Path(__file__).resolve().parents[4]
     except Exception as e:
         print(f"[ERROR] Kan workspace root voor ecosysteem-coordinator niet bepalen: {e}", file=sys.stderr)
         return 1
 
-    eco_runner = workspace_root / "artefacten" / "aeo" / "aeo.02.ecosysteem-coordinator" / "runner" / "ecosysteem-coordinator.runner.py"
+    eco_runner = workspace_root / "artefacten" / "fnd" / "fnd.01.ecosysteem-coordinator" / "runner" / "ecosysteem-coordinator.runner.py"
 
     if not eco_runner.exists():
         print(f"[ERROR] ecosysteem-coordinator runner niet gevonden op: {eco_runner}", file=sys.stderr)

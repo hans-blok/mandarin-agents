@@ -1,0 +1,92 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "fnd.01 - documentatie-omvormer: genereer-publicatiestructuur",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/fnd/fnd.01.documentatie-omvormer/runner/documentatie-omvormer.runner.py",
+        "genereer-publicatiestructuur",
+        "--structuur-regels",
+        "${input:in_documentatie_omvormer_genereer_publicatiestructuur_structuur_regels}",
+        "--exclude-patterns",
+        "${input:in_documentatie_omvormer_genereer_publicatiestructuur_exclude_patterns}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "fnd.01 - documentatie-omvormer: genereer-navigatiebestand",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/fnd/fnd.01.documentatie-omvormer/runner/documentatie-omvormer.runner.py",
+        "genereer-navigatiebestand"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "fnd.01 - documentatie-omvormer: genereer-correcte-links",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/fnd/fnd.01.documentatie-omvormer/runner/documentatie-omvormer.runner.py",
+        "genereer-correcte-links",
+        "--docs-folder",
+        "${input:in_documentatie_omvormer_genereer_correcte_links_docs_folder}",
+        "--platform",
+        "${input:in_documentatie_omvormer_genereer_correcte_links_platform}",
+        "--base-url",
+        "${input:in_documentatie_omvormer_genereer_correcte_links_base_url}",
+        "--exclude-patterns",
+        "${input:in_documentatie_omvormer_genereer_correcte_links_exclude_patterns}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "in_documentatie_omvormer_genereer_publicatiestructuur_structuur_regels",
+      "type": "promptString",
+      "description": "Waarde voor 'structuur_regels' (genereer-publicatiestructuur) (Optioneel)"
+    },
+    {
+      "id": "in_documentatie_omvormer_genereer_publicatiestructuur_exclude_patterns",
+      "type": "promptString",
+      "description": "Waarde voor 'exclude_patterns' (genereer-publicatiestructuur) (Optioneel)"
+    },
+    {
+      "id": "in_documentatie_omvormer_genereer_correcte_links_docs_folder",
+      "type": "promptString",
+      "description": "Waarde voor 'docs_folder' (genereer-correcte-links)"
+    },
+    {
+      "id": "in_documentatie_omvormer_genereer_correcte_links_platform",
+      "type": "pickString",
+      "description": "Waarde voor 'platform' (genereer-correcte-links)",
+      "options": ["github", "gitlab", "mkdocs"]
+    },
+    {
+      "id": "in_documentatie_omvormer_genereer_correcte_links_base_url",
+      "type": "promptString",
+      "description": "Waarde voor 'base_url' (genereer-correcte-links) (Optioneel)"
+    },
+    {
+      "id": "in_documentatie_omvormer_genereer_correcte_links_exclude_patterns",
+      "type": "promptString",
+      "description": "Waarde voor 'exclude_patterns' (genereer-correcte-links) (Optioneel)"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-{
+﻿{
   "version": "2.0.0",
   "tasks": [
     {
@@ -6,7 +6,7 @@
       "type": "process",
       "command": "python",
       "args": [
-        "artefacten/aeo/aeo.02.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
+        "artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
         "genereer-instructies",
         "--agent", "agent-curator",
         "--intent", "rapporteer-ecosysteem-overzicht"
@@ -22,7 +22,7 @@
       "type": "process",
       "command": "python",
       "args": [
-        "artefacten/aeo/aeo.02.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
+        "artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
         "genereer-instructies",
         "--agent", "agent-curator",
         "--intent", "rapporteer-prompts-overzicht"
@@ -38,7 +38,7 @@
       "type": "process",
       "command": "python",
       "args": [
-        "artefacten/aeo/aeo.02.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
+        "artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
         "genereer-instructies",
         "--agent", "agent-curator",
         "--intent", "valideer-agent-consistentie",
@@ -56,7 +56,7 @@
       "type": "process",
       "command": "python",
       "args": [
-        "artefacten/aeo/aeo.02.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
+        "artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
         "genereer-instructies",
         "--agent", "agent-curator",
         "--intent", "valideer-boundary-overlap",
@@ -73,7 +73,7 @@
       "type": "process",
       "command": "python",
       "args": [
-        "artefacten/aeo/aeo.02.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
+        "artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
         "genereer-instructies",
         "--agent", "agent-curator",
         "--intent", "valideer-runner-contract-consistentie",

@@ -37,8 +37,8 @@ def find_ecosysteem_coordinator_runner() -> Path:
     candidate = (
         root
         / "artefacten"
-        / "aeo"
-        / "aeo.02.ecosysteem-coordinator"
+        / "fnd"
+        / "fnd.01.ecosysteem-coordinator"
         / "runner"
         / "ecosysteem-coordinator.runner.py"
     )
