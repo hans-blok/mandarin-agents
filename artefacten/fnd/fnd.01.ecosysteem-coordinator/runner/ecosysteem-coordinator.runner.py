@@ -511,8 +511,10 @@ def execute_canon_consultation(
         print(f"ERROR: Could not resolve canon commit SHA in: {resolved_canon_path}", file=sys.stderr)
         return (False, None)
     
-    # Read grondslagen
-    patterns = [p.strip() for p in grondslagen_patterns.split(",")]
+    # Read grondslagen - constitutie altijd eerst
+    CONSTITUTIE_PATH = "grondslagen/.algemeen/constitutie.md"
+    patterns = [CONSTITUTIE_PATH]  # Constitutie is verplicht en altijd eerste
+    patterns.extend([p.strip() for p in grondslagen_patterns.split(",") if p.strip() != CONSTITUTIE_PATH])
     grondslagen = read_grondslagen(resolved_canon_path, patterns)
     
     if grondslagen["count"] == 0:
@@ -960,12 +962,46 @@ BRONHOUDING_INSTRUCTIES = {
 }
 
 
+def load_constitutie() -> Optional[str]:
+    """Laad de constitutie uit de canon repository.
+    
+    Zoekt in: ../mandarin-canon/grondslagen/.algemeen/constitutie.md
+    """
+    workspace_root = get_workspace_root()
+    canon_paths = [
+        workspace_root.parent / "mandarin-canon" / "grondslagen" / ".algemeen" / "constitutie.md",
+        workspace_root / "mandarin-canon" / "grondslagen" / ".algemeen" / "constitutie.md",
+    ]
+    
+    for canon_path in canon_paths:
+        if canon_path.exists():
+            try:
+                with open(canon_path, 'r', encoding='utf-8') as f:
+                    return f.read()
+            except Exception as e:
+                print(f"WARNING: Kon constitutie niet lezen: {e}")
+                return None
+    
+    return None
+
+
 def assemble_full_instructions(metadata: Dict, prompt_content: str, prompt_file: str, 
                                params: Dict, input_content: str, 
                                input_files_content: Dict) -> Tuple[str, Optional[str]]:
-    """Stel volledige agent-instructies samen uit alle bronnen."""
+    """Stel volledige agent-instructies samen uit alle bronnen.
+    
+    Volgorde: constitutie → bronhouding → charter → agent instructies
+    """
     parts = []
+    
+    # 1. Constitutie (fundament uit canon)
+    constitutie = load_constitutie()
+    if constitutie:
+        parts.append("# Constitutie\n\n")
+        parts.append(constitutie)
+        parts.append("\n\n---\n\n")
 
+    # 2. Bronhouding
     bronhouding = metadata.get('bronhouding')
     if bronhouding and bronhouding in BRONHOUDING_INSTRUCTIES:
         parts.append(f"## Bronhouding: {bronhouding}\n\n")
@@ -974,6 +1010,7 @@ def assemble_full_instructions(metadata: Dict, prompt_content: str, prompt_file:
     elif bronhouding:
         print(f"WARNING: Onbekende bronhouding '{bronhouding}'. Geldige waarden: {', '.join(BRONHOUDING_INSTRUCTIES.keys())}")
 
+    # 3. Charter
     charter_content, charter_path = load_charter(prompt_file, metadata, params)
     if charter_content:
         parts.append("# Agent Charter\n\n")
