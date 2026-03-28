@@ -1,6 +1,6 @@
 ---
 agent: documentatie-omvormer
-versie: 1.0.0
+versie: 1.1.0
 domein: Documentatie-representatie
 value_stream: Fundamental Infrastructure (fnd)
 kaderdefinities: geen
@@ -10,7 +10,7 @@ governance: Volgt beleid-workspace.md en doctrine-agent-charter-normering.md
 # Agent Charter - documentatie-omvormer
 
 **Agent-ID**: `fnd.01.documentatie-omvormer`  
-**Versie**: 1.0.0  
+**Versie**: 1.1.0  
 **Domein**: Documentatie-representatie  
 **Value Stream**: Fundamental Infrastructure (fase 01 - Infrastructurele diensten)  
 **Kaderdefinities**: geen  
@@ -95,6 +95,7 @@ De documentatie-omvormer bewaakt daarbij dat geen enkele transformatie inhoudeli
 - Behoudt alle oorspronkelijke inhoud ongewijzigd
 - Genereert transformatie-rapporten met overzicht van acties
 - Valideert link-correctheid voor specifieke platforms
+- **Borgt correcte bullet-rendering**: zorgt voor blanco regel vóór opsommingen en consistente inspringing bij geneste lijsten
 
 ### Wat de documentatie-omvormer NIET doet
 
@@ -192,4 +193,5 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 
 | Datum | Versie | Wijziging | Auteur |
 |-------|--------|-----------|--------|
+| 2026-03-28 | 1.1.0 | Bullet-rendering toegevoegd aan WEL-sectie: blanco regel vóór opsommingen, consistente inspringing | GitHub Copilot |
 | 2026-03-27 | 1.0.0 | Initiële charter documentatie-omvormer volgens agent-charter.template.md | GitHub Copilot |

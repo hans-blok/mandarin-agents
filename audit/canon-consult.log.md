@@ -8726,3 +8726,34 @@
 | `grondslagen\.algemeen` | `verplichte-bootstrap-header.md` |
 | `grondslagen\.algemeen` | `workspace-doctrine.md` |
 
+
+---
+
+## Canon Consultation — 2026-03-28T09:32:36
+
+- **Agent**: architectuur-verkenner
+- **Value Stream**: aod
+- **Workspace File**: `C:\git\mandarin-agents\artefacten\aeo\aeo.02.capability-architect\prompts\mandarin.capability-architect.definieer-agent-boundary.prompt.md`
+- **Intent**: definieer-agent-boundary
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: ceb3327
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*`
+- **Charter**: `C:\git\mandarin-agents\artefacten\aeo\aeo.02.capability-architect\capability-architect.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen/.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `doctrine-bronhouding-en-exploratie.md` |
+| `grondslagen\.algemeen` | `norm-constitutionele-bootstrapping.md` |
+| `grondslagen\.algemeen` | `norm-determnistiscche-runners.md` |
+| `grondslagen\.algemeen` | `review-checklist.md` |
+| `grondslagen\.algemeen` | `verplichte-bootstrap-header.md` |
+| `grondslagen\.algemeen` | `workspace-doctrine.md` |
+

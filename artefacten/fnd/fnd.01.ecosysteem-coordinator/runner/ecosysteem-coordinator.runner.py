@@ -179,19 +179,50 @@ def find_agent_file(agent_naam: str, filename: str, extra_search_paths: List[Pat
 
 
 def load_workspace_config() -> Dict:
-    """Laad workspace configuratie uit beleid-workspace.md."""
+    """Laad workspace configuratie (metadata) uit beleid-workspace.md.
+    
+    VERPLICHT: beleid-workspace.md MOET aanwezig zijn.
+    Stopt met foutmelding indien niet gevonden.
+    """
+    metadata, _ = load_beleid_workspace()
+    return metadata
+
+
+def load_beleid_workspace() -> Tuple[Dict, str]:
+    """Laad workspace beleid: zowel config (frontmatter) als content.
+    
+    VERPLICHT: beleid-workspace.md MOET aanwezig zijn.
+    Stopt met foutmelding indien niet gevonden.
+    
+    Returns:
+        Tuple van (metadata dict, content string)
+    """
     workspace_file = Path('beleid-workspace.md')
     
     if not workspace_file.exists():
-        return {}
+        print()
+        print("=" * 80)
+        print("ERROR: beleid-workspace.md niet gevonden")
+        print("=" * 80)
+        print()
+        print("beleid-workspace.md is VERPLICHT voor agent executie.")
+        print("Dit bestand definieert workspace-specifiek beleid en configuratie.")
+        print()
+        print(f"Verwachte locatie: {workspace_file.absolute()}")
+        print()
+        sys.exit(1)
     
     try:
         with open(workspace_file, 'r', encoding='utf-8') as f:
             post = frontmatter.load(f)
-        return post.metadata
+        return post.metadata, post.content
     except Exception as e:
-        print(f"WARNING: Kan beleid-workspace.md niet lezen: {e}")
-        return {}
+        print()
+        print("=" * 80)
+        print(f"ERROR: Kan beleid-workspace.md niet lezen: {e}")
+        print("=" * 80)
+        print()
+        sys.exit(1)
 
 
 def load_prompt_file(prompt_path: str) -> Tuple[Dict, str]:
@@ -987,10 +1018,16 @@ def load_constitutie() -> Optional[str]:
 
 def assemble_full_instructions(metadata: Dict, prompt_content: str, prompt_file: str, 
                                params: Dict, input_content: str, 
-                               input_files_content: Dict) -> Tuple[str, Optional[str]]:
+                               input_files_content: Dict,
+                               beleid_content: str = None) -> Tuple[str, Optional[str]]:
     """Stel volledige agent-instructies samen uit alle bronnen.
     
-    Volgorde: constitutie → bronhouding → charter → agent instructies
+    Volgorde (verplicht volgens constitutie leesvolgorde):
+    1. Constitutie (fundament uit canon)
+    2. Workspace Beleid (uit beleid-workspace.md)
+    3. Bronhouding (methode-specifieke instructies)
+    4. Agent Charter (identiteit en grenzen)
+    5. Agent Contract (intent-specifieke instructies)
     """
     parts = []
     
@@ -1001,7 +1038,13 @@ def assemble_full_instructions(metadata: Dict, prompt_content: str, prompt_file:
         parts.append(constitutie)
         parts.append("\n\n---\n\n")
 
-    # 2. Bronhouding
+    # 2. Workspace Beleid (uit beleid-workspace.md)
+    if beleid_content and beleid_content.strip():
+        parts.append("# Workspace Beleid\n\n")
+        parts.append(beleid_content.strip())
+        parts.append("\n\n---\n\n")
+
+    # 3. Bronhouding
     bronhouding = metadata.get('bronhouding')
     if bronhouding and bronhouding in BRONHOUDING_INSTRUCTIES:
         parts.append(f"## Bronhouding: {bronhouding}\n\n")
@@ -1010,17 +1053,20 @@ def assemble_full_instructions(metadata: Dict, prompt_content: str, prompt_file:
     elif bronhouding:
         print(f"WARNING: Onbekende bronhouding '{bronhouding}'. Geldige waarden: {', '.join(BRONHOUDING_INSTRUCTIES.keys())}")
 
-    # 3. Charter
+    # 4. Agent Charter
     charter_content, charter_path = load_charter(prompt_file, metadata, params)
     if charter_content:
         parts.append("# Agent Charter\n\n")
         parts.append(charter_content)
         parts.append("\n\n---\n\n")
     
+    # 5. Agent Contract (intent-specifieke instructies)
     agent_instructions = load_agent_instructions(prompt_file, metadata, params)
     if agent_instructions:
+        parts.append("# Agent Contract\n\n")
         parts.append(agent_instructions)
     elif prompt_content.strip():
+        parts.append("# Agent Contract\n\n")
         parts.append(prompt_content)
     
     combined = ''.join(parts)
@@ -1205,7 +1251,8 @@ Dit logbestand registreert alle gegenereerde agent-instructies.
 def genereer_instructies_main(args: argparse.Namespace) -> int:
     """Hoofdfunctie voor genereer-instructies."""
     
-    workspace_config = load_workspace_config()
+    # Laad beleid-workspace: zowel config (frontmatter) als content
+    workspace_config, beleid_content = load_beleid_workspace()
     
     # === AUTO-DISCOVERY FLOW ===
     if args.agent and args.intent:
@@ -1354,7 +1401,7 @@ def genereer_instructies_main(args: argparse.Namespace) -> int:
             return 1
         final_prompt = replace_placeholders(minimal_content, params, "", None)
     else:
-        final_prompt, _ = assemble_full_instructions(metadata, prompt_content, args.prompt_file, params, input_content, input_files_content)
+        final_prompt, _ = assemble_full_instructions(metadata, prompt_content, args.prompt_file, params, input_content, input_files_content, beleid_content)
     
     log_mode = getattr(args, 'log_mode', 'full')
     log_agent_instructions(metadata, params, final_prompt, args.prompt_file, log_mode)
