@@ -78,42 +78,42 @@
     {
       "id": "in_core_framework_architect_structureer_actieve_structuur_archimate_laag",
       "type": "promptString",
-      "description": "Waarde voor 'archimate_laag' (structureer-actieve-structuur)"
+      "description": "Te modelleren ArchiMate-laag"
     },
     {
       "id": "in_core_framework_architect_structureer_actieve_structuur_bestand",
       "type": "promptString",
-      "description": "Waarde voor 'bestand' (structureer-actieve-structuur)"
+      "description": "Pad naar het bronbestand dat als input dient voor modellering"
     },
     {
       "id": "in_core_framework_architect_structureer_gedrag_archimate_laag",
       "type": "promptString",
-      "description": "Waarde voor 'archimate_laag' (structureer-gedrag)"
+      "description": "Te modelleren ArchiMate-laag"
     },
     {
       "id": "in_core_framework_architect_structureer_gedrag_bestand",
       "type": "promptString",
-      "description": "Waarde voor 'bestand' (structureer-gedrag)"
+      "description": "Pad naar het bronbestand dat als input dient voor modellering"
     },
     {
       "id": "in_core_framework_architect_structureer_passieve_structuur_archimate_laag",
       "type": "promptString",
-      "description": "Waarde voor 'archimate_laag' (structureer-passieve-structuur)"
+      "description": "Te modelleren ArchiMate-laag"
     },
     {
       "id": "in_core_framework_architect_structureer_passieve_structuur_bestand",
       "type": "promptString",
-      "description": "Waarde voor 'bestand' (structureer-passieve-structuur)"
+      "description": "Pad naar het bronbestand dat als input dient voor modellering"
     },
     {
       "id": "in_core_framework_architect_structureer_totaal_view_archimate_laag",
       "type": "promptString",
-      "description": "Waarde voor 'archimate_laag' (structureer-totaal-view)"
+      "description": "Te modelleren ArchiMate-laag"
     },
     {
       "id": "in_core_framework_architect_structureer_totaal_view_bestand",
       "type": "promptString",
-      "description": "Waarde voor 'bestand' (structureer-totaal-view)"
+      "description": "Pad naar het bronbestand dat als input dient voor modellering"
     }
   ]
 }

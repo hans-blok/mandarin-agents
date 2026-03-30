@@ -1,0 +1,126 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "miv.07 - behoefteprofiel-opsteller: beschrijf-selectiecriteria",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/miv/miv.07.behoefteprofiel-opsteller/runner/behoefteprofiel-opsteller.runner.py",
+        "beschrijf-selectiecriteria",
+        "--eisenpakket-bron",
+        "${input:in_behoefteprofiel_opsteller_beschrijf_selectiecriteria_eisenpakket_bron}",
+        "--selectiecontext",
+        "${input:in_behoefteprofiel_opsteller_beschrijf_selectiecriteria_selectiecontext}",
+        "--output-naam",
+        "${input:in_behoefteprofiel_opsteller_beschrijf_selectiecriteria_output_naam}",
+        "--toelichting-op-prioriteit",
+        "${input:in_behoefteprofiel_opsteller_beschrijf_selectiecriteria_toelichting_op_prioriteit}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "miv.07 - behoefteprofiel-opsteller: formuleer-behoefteprofiel",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/miv/miv.07.behoefteprofiel-opsteller/runner/behoefteprofiel-opsteller.runner.py",
+        "formuleer-behoefteprofiel",
+        "--bronbestanden",
+        "${input:in_behoefteprofiel_opsteller_formuleer_behoefteprofiel_bronbestanden}",
+        "--operationele-context",
+        "${input:in_behoefteprofiel_opsteller_formuleer_behoefteprofiel_operationele_context}",
+        "--selectiedoel",
+        "${input:in_behoefteprofiel_opsteller_formuleer_behoefteprofiel_selectiedoel}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "miv.07 - behoefteprofiel-opsteller: structureer-eisenpakket",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/miv/miv.07.behoefteprofiel-opsteller/runner/behoefteprofiel-opsteller.runner.py",
+        "structureer-eisenpakket",
+        "--behoefteprofiel-bron",
+        "${input:in_behoefteprofiel_opsteller_structureer_eisenpakket_behoefteprofiel_bron}",
+        "--ordeningskader",
+        "${input:in_behoefteprofiel_opsteller_structureer_eisenpakket_ordeningskader}",
+        "--prioriteringsgrondslag",
+        "${input:in_behoefteprofiel_opsteller_structureer_eisenpakket_prioriteringsgrondslag}",
+        "--aanvullende-toelichting",
+        "${input:in_behoefteprofiel_opsteller_structureer_eisenpakket_aanvullende_toelichting}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "in_behoefteprofiel_opsteller_beschrijf_selectiecriteria_eisenpakket_bron",
+      "type": "promptString",
+      "description": "Pad naar een bestaand eisenpakket of behoefteprofiel dat als basis dient voor de selectiecriteria"
+    },
+    {
+      "id": "in_behoefteprofiel_opsteller_beschrijf_selectiecriteria_selectiecontext",
+      "type": "promptString",
+      "description": "Beschrijving van de context waarin de criteria later gebruikt worden, inclusief type leverancier of dienst"
+    },
+    {
+      "id": "in_behoefteprofiel_opsteller_beschrijf_selectiecriteria_output_naam",
+      "type": "promptString",
+      "description": "Logische naam voor het outputbestand (Optioneel)"
+    },
+    {
+      "id": "in_behoefteprofiel_opsteller_beschrijf_selectiecriteria_toelichting_op_prioriteit",
+      "type": "promptString",
+      "description": "Aanvullende uitleg over relatieve zwaarte zonder formele weging (Optioneel)"
+    },
+    {
+      "id": "in_behoefteprofiel_opsteller_formuleer_behoefteprofiel_bronbestanden",
+      "type": "promptString",
+      "description": "Lijst met bronbestanden waarin functionele en niet-functionele behoeften zijn vastgelegd"
+    },
+    {
+      "id": "in_behoefteprofiel_opsteller_formuleer_behoefteprofiel_operationele_context",
+      "type": "promptString",
+      "description": "Beschrijving van de context voor hosting en technisch applicatiebeheer waarvoor het behoefteprofiel wordt opgesteld"
+    },
+    {
+      "id": "in_behoefteprofiel_opsteller_formuleer_behoefteprofiel_selectiedoel",
+      "type": "promptString",
+      "description": "Beschrijving van waarvoor het behoefteprofiel later gebruikt gaat worden in de leveranciersselectie"
+    },
+    {
+      "id": "in_behoefteprofiel_opsteller_structureer_eisenpakket_behoefteprofiel_bron",
+      "type": "promptString",
+      "description": "Pad naar een bestaand behoefteprofiel of gelijkwaardig bronartefact dat als basis dient voor structurering"
+    },
+    {
+      "id": "in_behoefteprofiel_opsteller_structureer_eisenpakket_ordeningskader",
+      "type": "promptString",
+      "description": "Beschrijving van de gewenste indeling van eisen, wensen en randvoorwaarden"
+    },
+    {
+      "id": "in_behoefteprofiel_opsteller_structureer_eisenpakket_prioriteringsgrondslag",
+      "type": "promptString",
+      "description": "Uitleg op basis waarvan prioriteiten worden toegekend of overgenomen"
+    },
+    {
+      "id": "in_behoefteprofiel_opsteller_structureer_eisenpakket_aanvullende_toelichting",
+      "type": "promptString",
+      "description": "Extra uitleg van de opdrachtgever over structuur of nadrukpunten (Optioneel)"
+    }
+  ]
+}

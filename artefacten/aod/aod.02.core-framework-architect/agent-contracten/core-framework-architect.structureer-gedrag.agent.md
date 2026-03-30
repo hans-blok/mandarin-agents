@@ -1,3 +1,9 @@
+---
+agent: core-framework-architect
+intent: structureer-gedrag
+versie: 1.0.0
+---
+
 # Core-framework-architect — Structureer Gedrag
 
 ## Rolbeschrijving (korte samenvatting)

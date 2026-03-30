@@ -120,6 +120,447 @@ def run_generate_instructions(agent_naam: str, intent: str, params: Dict[str, st
         sys.exit(result.returncode)
 
 
+def parse_simple_frontmatter(text: str) -> Tuple[Dict[str, str], str]:
+    """Parse eenvoudige YAML frontmatter zonder externe dependency."""
+    if not text.startswith('---'):
+        return {}, text
+
+    parts = text.split('---', 2)
+    if len(parts) < 3:
+        return {}, text
+
+    metadata_block = parts[1]
+    body = parts[2].lstrip('\r\n')
+    metadata: Dict[str, str] = {}
+
+    for raw_line in metadata_block.splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith('#') or ':' not in line:
+            continue
+        key, value = line.split(':', 1)
+        metadata[key.strip()] = value.strip()
+
+    return metadata, body
+
+
+def strip_parameter_description(description: str) -> str:
+    """Verwijder type/default annotaties uit parameterbeschrijving."""
+    cleaned = re.sub(r'\s*\(type:.*$', '', description).strip()
+    return cleaned.rstrip('.')
+
+
+def extract_parameters_from_contract(body: str) -> Tuple[List[Dict[str, str]], List[Dict[str, str]]]:
+    """Extraheer verplichte en optionele parameters uit contract markdown."""
+    required: List[Dict[str, str]] = []
+    optional: List[Dict[str, str]] = []
+    mode: Optional[str] = None
+
+    for raw_line in body.splitlines():
+        line = raw_line.strip()
+
+        if line == "**Verplichte parameters**:":
+            mode = 'required'
+            continue
+        if line == "**Optionele parameters**:":
+            mode = 'optional'
+            continue
+        if line.startswith("**Afgeleide informatie**") or line.startswith("### Output"):
+            mode = None
+            continue
+
+        match = re.match(r'^-\s+`?([a-zA-Z0-9_]+)`?:\s+(.+)$', line)
+        if not match or mode is None:
+            continue
+
+        name = match.group(1).strip()
+        description = strip_parameter_description(match.group(2))
+        if name == 'geen':
+            continue
+
+        target = required if mode == 'required' else optional
+        target.append({
+            'name': name,
+            'description': description,
+        })
+
+    return required, optional
+
+
+def extract_checked_classification(body: str, heading: str) -> Optional[str]:
+    """Zoek de aangevinkte classificatiewaarde onder een kopje in boundary markdown."""
+    active = False
+
+    for raw_line in body.splitlines():
+        line = raw_line.strip()
+
+        if line.startswith(f"- **{heading}**"):
+            active = True
+            continue
+        if active and line.startswith("- **") and not line.startswith(f"- **{heading}**"):
+            break
+
+        if active:
+            match = re.match(r'^-\s+\[x\]\s+(.+)$', line, flags=re.IGNORECASE)
+            if match:
+                value = re.sub(r'\s*\(.+$', '', match.group(1)).strip()
+                return value
+
+    return None
+
+
+def discover_agent_context(agent_naam: str) -> Dict[str, object]:
+    """Zoek folder, boundary en contracten voor de doelagent."""
+    agents = find_all_agents()
+    for agent in agents:
+        if agent['naam'] != agent_naam:
+            continue
+
+        agent_folder: Path = agent['path']
+        parts = agent_folder.name.split('.')
+        if len(parts) < 3:
+            raise ValueError(f"Onverwachte agent-folder naam: {agent_folder.name}")
+
+        vs = parts[0]
+        fase = parts[1]
+        boundary_file = agent_folder / f"{agent_naam}.agent-boundary.md"
+        charter_file = agent_folder / f"{agent_naam}.charter.md"
+
+        if not boundary_file.exists():
+            raise FileNotFoundError(f"Boundary niet gevonden: {boundary_file}")
+
+        return {
+            'agent_naam': agent_naam,
+            'agent_folder': agent_folder,
+            'contracten': sorted(agent['contracten']),
+            'vs': vs,
+            'fase': fase,
+            'value_stream_fase': f"{vs}.{fase}",
+            'boundary_file': boundary_file,
+            'charter_file': charter_file,
+        }
+
+    raise FileNotFoundError(f"Agent '{agent_naam}' met contracten niet gevonden")
+
+
+def realiseer_agent_prompts_main(args: argparse.Namespace) -> int:
+    """Genereer prompt-metadata bestanden deterministisch uit agent-contracten."""
+    try:
+        context = discover_agent_context(args.agent_naam)
+        boundary_text = context['boundary_file'].read_text(encoding='utf-8')
+        _, boundary_body = parse_simple_frontmatter(boundary_text)
+        bronhouding = extract_checked_classification(boundary_body, 'Bronhouding') or 'Input-gebonden'
+
+        prompts_dir = context['agent_folder'] / 'prompts'
+        prompts_dir.mkdir(parents=True, exist_ok=True)
+
+        created_files: List[Path] = []
+
+        for contract_path in context['contracten']:
+            contract_text = contract_path.read_text(encoding='utf-8')
+            metadata, body = parse_simple_frontmatter(contract_text)
+            intent = metadata.get('intent')
+            if not intent:
+                continue
+            if args.intent_filter and intent != args.intent_filter:
+                continue
+
+            required, optional = extract_parameters_from_contract(body)
+            input_parameters = [p['name'] for p in required + optional]
+
+            lines = [
+                '---',
+                f"agent: mandarin.{context['agent_naam']}",
+                f"intent: {intent}",
+                f"bronhouding: {bronhouding}",
+                'versie: 1.0.0',
+                'input_parameters:',
+            ]
+            for parameter in input_parameters:
+                lines.append(f"  - {parameter}")
+            if not input_parameters:
+                lines.append('  []')
+            lines.extend([
+                f"value_stream_fase: {context['value_stream_fase']}",
+                '',
+                '---',
+                '',
+            ])
+
+            prompt_path = prompts_dir / f"mandarin.{context['agent_naam']}.{intent}.prompt.md"
+            prompt_path.write_text('\n'.join(lines), encoding='utf-8')
+            created_files.append(prompt_path)
+
+        if not created_files:
+            print("ERROR: Geen prompts gegenereerd; controleer intent-filter en contracten")
+            return 1
+
+        print(f"[OK] {len(created_files)} prompt(s) gerealiseerd in {prompts_dir}")
+        for path in created_files:
+            print(f"      [CREATED] {path}")
+        return 0
+
+    except Exception as exc:
+        print(f"ERROR: {exc}")
+        return 1
+
+
+def realiseer_agent_taskconfiguratie_main(args: argparse.Namespace) -> int:
+    """Genereer VS Code task-configuratie uit agent-contracten."""
+    try:
+        context = discover_agent_context(args.agent_naam)
+        tasks_dir = context['agent_folder'] / 'tasks'
+        tasks_dir.mkdir(parents=True, exist_ok=True)
+
+        runner_path = f"artefacten/{context['vs']}/{context['value_stream_fase']}.{context['agent_naam']}/runner/{context['agent_naam']}.runner.py"
+        tasks: List[Dict[str, object]] = []
+        inputs: List[Dict[str, str]] = []
+        seen_inputs = set()
+
+        for contract_path in context['contracten']:
+            contract_text = contract_path.read_text(encoding='utf-8')
+            metadata, body = parse_simple_frontmatter(contract_text)
+            intent = metadata.get('intent')
+            if not intent:
+                continue
+
+            required, optional = extract_parameters_from_contract(body)
+            parameters = [(p, False) for p in required] + [(p, True) for p in optional]
+
+            task_args: List[str] = [runner_path, intent]
+            for parameter, is_optional in parameters:
+                cli_name = parameter['name'].replace('_', '-')
+                input_id = f"in_{context['agent_naam'].replace('-', '_')}_{intent.replace('-', '_')}_{parameter['name']}"
+                task_args.extend([f"--{cli_name}", f"${{input:{input_id}}}"])
+
+                if input_id not in seen_inputs:
+                    description = parameter['description'] or f"Waarde voor '{parameter['name']}'"
+                    if is_optional:
+                        description = f"{description} (Optioneel)"
+                    inputs.append({
+                        'id': input_id,
+                        'type': 'promptString',
+                        'description': description,
+                    })
+                    seen_inputs.add(input_id)
+
+            tasks.append({
+                'label': f"{context['value_stream_fase']} - {context['agent_naam']}: {intent}",
+                'type': 'process',
+                'command': 'python',
+                'args': task_args,
+                'problemMatcher': [],
+                'presentation': {
+                    'reveal': 'always',
+                    'panel': 'shared',
+                },
+            })
+
+        if not tasks:
+            print("ERROR: Geen tasks gegenereerd; geen leesbare agent-contracten gevonden")
+            return 1
+
+        task_config = {
+            'version': '2.0.0',
+            'tasks': tasks,
+            'inputs': inputs,
+        }
+
+        task_file = tasks_dir / f"{context['vs']}-{context['fase']}.{context['agent_naam']}.tasks.json"
+        task_file.write_text(json.dumps(task_config, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+        print(f"[OK] Task-configuratie gerealiseerd: {task_file}")
+        print(f"      [OK] {len(tasks)} task(s), {len(inputs)} input(s)")
+        return 0
+
+    except Exception as exc:
+        print(f"ERROR: {exc}")
+        return 1
+
+
+def sanitize_identifier(value: str) -> str:
+    """Maak een string bruikbaar als Python identifier."""
+    sanitized = re.sub(r'[^a-zA-Z0-9_]+', '_', value.replace('-', '_'))
+    sanitized = sanitized.strip('_')
+    return sanitized or 'intent'
+
+
+def resolve_contract_paths(context: Dict[str, object], contract_folder: Optional[str]) -> List[Path]:
+    """Bepaal welke contractbestanden gebruikt worden voor runner-generatie."""
+    if not contract_folder:
+        return list(context['contracten'])
+
+    contract_dir = Path(contract_folder)
+    if not contract_dir.is_absolute():
+        contract_dir = Path.cwd() / contract_dir
+
+    if not contract_dir.exists() or not contract_dir.is_dir():
+        raise FileNotFoundError(f"Contract folder niet gevonden: {contract_dir}")
+
+    contract_paths = sorted(contract_dir.glob('*.agent.md'))
+    if not contract_paths:
+        raise FileNotFoundError(f"Geen agent-contracten gevonden in: {contract_dir}")
+
+    return contract_paths
+
+
+def determine_runner_output_path(context: Dict[str, object], runner_output_folder: Optional[str]) -> Path:
+    """Bepaal outputpad voor de te genereren runner."""
+    if runner_output_folder:
+        output_dir = Path(runner_output_folder)
+        if not output_dir.is_absolute():
+            output_dir = Path.cwd() / output_dir
+    else:
+        output_dir = context['agent_folder'] / 'runner'
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    return output_dir / f"{context['agent_naam']}.runner.py"
+
+
+def build_runner_content(context: Dict[str, object], contract_paths: List[Path]) -> str:
+    """Genereer runner-code voor een doelagent op basis van contracten."""
+    target_agent = context['agent_naam']
+    parser_blocks: List[str] = []
+    intents: List[str] = []
+
+    for contract_path in contract_paths:
+        contract_text = contract_path.read_text(encoding='utf-8')
+        metadata, body = parse_simple_frontmatter(contract_text)
+        intent = metadata.get('intent')
+        if not intent:
+            continue
+
+        intents.append(intent)
+        required, optional = extract_parameters_from_contract(body)
+        parser_var = f"p_{sanitize_identifier(intent)}"
+        lines = [
+            f"    {parser_var} = subparsers.add_parser({intent!r}, help={('Intent: ' + intent)!r})"
+        ]
+
+        for parameter in required:
+            lines.append(
+                f"    {parser_var}.add_argument('--{parameter['name'].replace('_', '-')}', required=True, help={parameter['description']!r})"
+            )
+        for parameter in optional:
+            lines.append(
+                f"    {parser_var}.add_argument('--{parameter['name'].replace('_', '-')}', required=False, help={parameter['description']!r})"
+            )
+
+        parser_blocks.append('\n'.join(lines))
+
+    if not intents:
+        raise ValueError('Geen intents gevonden in contracten voor runner-generatie')
+
+    intents_doc = '\n'.join(f"- {intent}" for intent in intents)
+    parser_code = '\n\n'.join(parser_blocks)
+
+    return f'''#!/usr/bin/env python3
+"""
+Runner voor agent: {target_agent}
+
+Beschikbare intents:
+{intents_doc}
+
+Architectuur: One Agent, One Runner.
+Deze runner delegeert execution-file generatie aan ecosysteem-coordinator.runner.py.
+"""
+
+from pathlib import Path
+import argparse
+import os
+import subprocess
+import sys
+
+
+TARGET_AGENT = {target_agent!r}
+
+
+def find_ecosysteem_coordinator_runner() -> Path:
+    """Zoek de ecosysteem-coordinator runner."""
+    this_file = Path(__file__).resolve()
+    repo_root = this_file.parent.parent.parent.parent
+
+    candidate = repo_root / "artefacten" / "fnd" / "fnd.01.ecosysteem-coordinator" / "runner" / "ecosysteem-coordinator.runner.py"
+    if candidate.exists():
+        return candidate
+
+    cwd_candidate = Path.cwd() / "artefacten" / "fnd" / "fnd.01.ecosysteem-coordinator" / "runner" / "ecosysteem-coordinator.runner.py"
+    if cwd_candidate.exists():
+        return cwd_candidate
+
+    raise FileNotFoundError("ecosysteem-coordinator.runner.py niet gevonden")
+
+
+def run_intent(intent: str, params: dict[str, str]) -> int:
+    """Delegeer intent-uitvoering naar de ecosysteem-coordinator."""
+    coordinator = find_ecosysteem_coordinator_runner()
+    cmd = [
+        sys.executable,
+        str(coordinator),
+        "genereer-instructies",
+        "--agent",
+        TARGET_AGENT,
+        "--intent",
+        intent,
+    ]
+
+    for key, value in params.items():
+        if value is None or value == "":
+            continue
+        cmd.extend(["-p", f"{{key}}={{value}}"])
+
+    env = dict(os.environ)
+    env["PYTHONIOENCODING"] = "utf-8"
+    return subprocess.run(cmd, env=env).returncode
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description=f"Runner voor agent: {{TARGET_AGENT}}",
+        formatter_class=argparse.RawTextHelpFormatter,
+    )
+    subparsers = parser.add_subparsers(dest="intent", required=True, help="Beschikbare intents")
+
+{parser_code}
+
+    args = parser.parse_args()
+    params = {{
+        key: value
+        for key, value in vars(args).items()
+        if key != "intent" and value is not None
+    }}
+    return run_intent(args.intent, params)
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+'''
+
+
+def realiseer_agent_runner_main(args: argparse.Namespace) -> int:
+    """Genereer een centrale runner per doelagent op basis van contracten."""
+    try:
+        context = discover_agent_context(args.agent_naam)
+        contract_paths = resolve_contract_paths(context, args.contract_folder)
+        output_path = determine_runner_output_path(context, args.runner_output_folder)
+
+        overwrite_existing = str(args.overwrite_existing).lower() == 'true'
+        if output_path.exists() and not overwrite_existing:
+            raise FileExistsError(
+                f"Runner bestaat al: {output_path}. Gebruik --overwrite-existing true om te overschrijven"
+            )
+
+        runner_content = build_runner_content(context, contract_paths)
+        output_path.write_text(runner_content, encoding='utf-8')
+
+        print(f"[OK] Runner gerealiseerd: {output_path}")
+        print(f"      [OK] {len(contract_paths)} contract(en) verwerkt")
+        return 0
+
+    except Exception as exc:
+        print(f"ERROR: {exc}")
+        return 1
+
+
 # ==============================================================================
 # PIPELINE
 # ==============================================================================
@@ -178,7 +619,7 @@ class TeeOutput:
 
 
 def execute_agent_engineer(agent_naam: str, intent: str, skip_bootstrap: bool = False, 
-                           dry_run: bool = False) -> bool:
+                           dry_run: bool = False, extra_args: Optional[List[str]] = None) -> bool:
     """
     Voer agent-engineer uit voor specifieke intent.
     """
@@ -190,6 +631,9 @@ def execute_agent_engineer(agent_naam: str, intent: str, skip_bootstrap: bool = 
         intent,
         "--agent-naam", agent_naam
     ]
+
+    if extra_args:
+        cmd.extend(extra_args)
     
     if dry_run:
         print(f"  [DRY-RUN] Zou uitvoeren: {' '.join(cmd)}")
@@ -276,7 +720,8 @@ def run_pipeline(target_agent: str = None, dry_run: bool = False,
         stats = {
             'total': len(agents) * len(intents),
             'success': 0,
-            'failed': 0
+            'failed': 0,
+            'skipped': 0,
         }
         
         for i, agent in enumerate(agents, 1):
@@ -286,6 +731,14 @@ def run_pipeline(target_agent: str = None, dry_run: bool = False,
             agent_success = True
             
             for intent in intents:
+                if intent == "realiseer-agent-runner":
+                    existing_runner = agent['path'] / 'runner' / f"{agent['naam']}.runner.py"
+                    if existing_runner.exists():
+                        print(f"  [SKIP] Runner bestaat al, overslaan om bestaande implementatie te beschermen: {existing_runner}")
+                        stats['skipped'] += 1
+                        stats['success'] += 1
+                        continue
+
                 success = execute_agent_engineer(
                     agent['naam'],
                     intent,
@@ -308,6 +761,7 @@ def run_pipeline(target_agent: str = None, dry_run: bool = False,
         print("=" * 80)
         print(f"Total operations: {stats['total']}")
         print(f"Successful:       {stats['success']} ✓")
+        print(f"Skipped:          {stats['skipped']} ↷")
         print(f"Failed:           {stats['failed']} ✗")
         print()
         print(f"Completed: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
@@ -901,6 +1355,12 @@ def main():
         if args.agent and args.all:
             parser.error("Gebruik óf agent naam óf --all, niet beide")
         sys.exit(pipeline_main(args))
+    elif args.intent == "realiseer-agent-prompts":
+        sys.exit(realiseer_agent_prompts_main(args))
+    elif args.intent == "realiseer-agent-runner":
+        sys.exit(realiseer_agent_runner_main(args))
+    elif args.intent == "realiseer-agent-taskconfiguratie":
+        sys.exit(realiseer_agent_taskconfiguratie_main(args))
     elif args.intent == "execute-from-execution-file":
         sys.exit(execute_from_execution_file_main(args))
     elif args.intent == "save-output":

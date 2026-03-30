@@ -147,7 +147,7 @@ Bronbestanden: alle boundary- en charter-documenten in de artefacten/-map.
 - artefacten/aeo/aeo.02.agent-curator/agent-curator.agent-boundary.md
 - artefacten/aeo/aeo.02.agent-engineer/agent-engineer.agent-boundary.md
 - artefacten/aeo/aeo.02.agent-ontwerper/agent-ontwerper.agent-boundary.md
-- artefacten/aeo/aeo.02.capability-architect/capability-architect.agent-boundary.md
+- artefacten/aeo/aeo.01.capability-architect/capability-architect.agent-boundary.md
 - artefacten/fnd/fnd.01.ecosysteem-coordinator/ecosysteem-coordinator.agent-boundary.md
 ```
 

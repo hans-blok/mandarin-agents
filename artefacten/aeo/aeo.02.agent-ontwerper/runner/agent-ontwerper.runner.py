@@ -250,6 +250,10 @@ def main() -> int:
         "--boundary-file", required=False, default=None,
         help="Pad naar het agent-boundary document (optioneel, wordt automatisch afgeleid)",
     )
+    p_charter.add_argument(
+        "--value-stream-fase", required=False, default=None,
+        help=argparse.SUPPRESS,
+    )
 
     # ── definieer-agent-contract ─────────────────────────────────────────────
     p_contract = subparsers.add_parser(
@@ -263,6 +267,10 @@ def main() -> int:
     p_contract.add_argument(
         "--boundary-file", required=False, default=None,
         help="Pad naar het agent-boundary document (optioneel, wordt automatisch afgeleid)",
+    )
+    p_contract.add_argument(
+        "--value-stream-fase", required=False, default=None,
+        help=argparse.SUPPRESS,
     )
     p_contract.add_argument(
         "--intent-naam", required=False, default=None,
@@ -293,6 +301,10 @@ def main() -> int:
     p_template.add_argument(
         "--file-naam-inspiratie", required=False, nargs='?', const=None, default=None,
         help="Bestandspad in temp/ dat dient als inspiratie voor de templatestructuur",
+    )
+    p_template.add_argument(
+        "--value-stream-fase", required=False, default=None,
+        help=argparse.SUPPRESS,
     )
 
     args = parser.parse_args()

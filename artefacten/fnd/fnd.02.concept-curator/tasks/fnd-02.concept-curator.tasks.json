@@ -75,9 +75,7 @@
         "artefacten/fnd/fnd.02.concept-curator/runner/concept-curator.runner.py",
         "verweef-concepten",
         "--concept-bestand",
-        "${input:in_concept_curator_verweef_concepten_concept_bestand}",
-        "--*Context*",
-        "${input:in_concept_curator_verweef_concepten_*Context*}"
+        "${input:in_concept_curator_verweef_concepten_concept_bestand}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -90,72 +88,67 @@
     {
       "id": "in_concept_curator_definieer_concept_term",
       "type": "promptString",
-      "description": "Waarde voor 'term' (definieer-concept)"
+      "description": "De naam van het te definiëren concept"
     },
     {
       "id": "in_concept_curator_definieer_concept_definitie",
       "type": "promptString",
-      "description": "Waarde voor 'definitie' (definieer-concept)"
+      "description": "De voorgestelde definitie van het concept"
     },
     {
       "id": "in_concept_curator_definieer_concept_domein",
       "type": "promptString",
-      "description": "Waarde voor 'domein' (definieer-concept)"
+      "description": "Het domein waarbinnen het concept wordt gedefinieerd"
     },
     {
       "id": "in_concept_curator_definieer_concept_synoniemen",
       "type": "promptString",
-      "description": "Waarde voor 'synoniemen' (definieer-concept) (Optioneel)"
+      "description": "Lijst van alternatieve termen (Optioneel)"
     },
     {
       "id": "in_concept_curator_definieer_concept_relaties",
       "type": "promptString",
-      "description": "Waarde voor 'relaties' (definieer-concept) (Optioneel)"
+      "description": "Lijst van gerelateerde concepten (Optioneel)"
     },
     {
       "id": "in_concept_curator_definieer_concept_bron",
       "type": "promptString",
-      "description": "Waarde voor 'bron' (definieer-concept) (Optioneel)"
+      "description": "Bronvermelding van de definitie (Optioneel)"
     },
     {
       "id": "in_concept_curator_rapporteer_concept_status_domein",
       "type": "promptString",
-      "description": "Waarde voor 'domein' (rapporteer-concept-status)"
+      "description": "Het te inventariseren concepten-domein"
     },
     {
       "id": "in_concept_curator_rapporteer_concept_status_formaat",
       "type": "promptString",
-      "description": "Waarde voor 'formaat' (rapporteer-concept-status) (Optioneel)"
+      "description": "Gewenst output-formaat ('markdown', 'json') (Optioneel)"
     },
     {
       "id": "in_concept_curator_rapporteer_concept_status_status_filter",
       "type": "promptString",
-      "description": "Waarde voor 'status_filter' (rapporteer-concept-status) (Optioneel)"
+      "description": "Filter op status ('concept', 'stable', 'deprecated', 'all') (Optioneel)"
     },
     {
       "id": "in_concept_curator_valideer_concept_coherentie_artefact_bestand",
       "type": "promptString",
-      "description": "Waarde voor 'artefact_bestand' (valideer-concept-coherentie)"
+      "description": "Het te valideren document of bestand"
     },
     {
       "id": "in_concept_curator_valideer_concept_coherentie_domein",
       "type": "promptString",
-      "description": "Waarde voor 'domein' (valideer-concept-coherentie)"
+      "description": "Het referentiekader waartegen gevalideerd wordt"
     },
     {
       "id": "in_concept_curator_valideer_concept_coherentie_striktheid",
       "type": "promptString",
-      "description": "Waarde voor 'striktheid' (valideer-concept-coherentie) (Optioneel)"
+      "description": "Niveau van validatie ('strict', 'normal', 'lenient') (Optioneel)"
     },
     {
       "id": "in_concept_curator_verweef_concepten_concept_bestand",
       "type": "promptString",
-      "description": "Waarde voor 'concept_bestand' (verweef-concepten)"
-    },
-    {
-      "id": "in_concept_curator_verweef_concepten_*Context*",
-      "type": "promptString",
-      "description": "Waarde voor '*Context*' (verweef-concepten)"
+      "description": "Pad naar het bestand waarin concepten verweven moeten worden"
     }
   ]
 }

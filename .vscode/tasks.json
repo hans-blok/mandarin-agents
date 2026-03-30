@@ -1,6 +1,60 @@
-﻿{
+{
   "version": "2.0.0",
   "tasks": [
+    {
+      "label": "fnd.01 - documentatie-omvormer: genereer-publicatiestructuur",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/fnd/fnd.01.documentatie-omvormer/runner/documentatie-omvormer.runner.py",
+        "genereer-publicatiestructuur",
+        "--structuur-regels",
+        "${input:in_documentatie_omvormer_genereer_publicatiestructuur_structuur_regels}",
+        "--exclude-patterns",
+        "${input:in_documentatie_omvormer_genereer_publicatiestructuur_exclude_patterns}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "fnd.01 - documentatie-omvormer: genereer-navigatiebestand",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/fnd/fnd.01.documentatie-omvormer/runner/documentatie-omvormer.runner.py",
+        "genereer-navigatiebestand"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "fnd.01 - documentatie-omvormer: genereer-correcte-links",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/fnd/fnd.01.documentatie-omvormer/runner/documentatie-omvormer.runner.py",
+        "genereer-correcte-links",
+        "--docs-folder",
+        "${input:in_documentatie_omvormer_genereer_correcte_links_docs_folder}",
+        "--platform",
+        "${input:in_documentatie_omvormer_genereer_correcte_links_platform}",
+        "--base-url",
+        "${input:in_documentatie_omvormer_genereer_correcte_links_base_url}",
+        "--exclude-patterns",
+        "${input:in_documentatie_omvormer_genereer_correcte_links_exclude_patterns}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
     {
       "label": "fnd.01 - ecosysteem-coordinator: aggregeer-tasks",
       "type": "process",
@@ -8,6 +62,26 @@
       "args": [
         "./artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py",
         "aggregeer-tasks"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.01 - capability-architect: definieer-agent-boundary",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.01.capability-architect/runner/capability-architect.runner.py",
+        "definieer-agent-boundary",
+        "--agent-naam",
+        "${input:in_capability_architect_definieer_agent_boundary_agent_naam}",
+        "--value-stream-fase",
+        "${input:in_capability_architect_definieer_agent_boundary_value_stream_fase}",
+        "--korte-beschrijving",
+        "${input:in_capability_architect_definieer_agent_boundary_korte_beschrijving}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -206,7 +280,7 @@
       "args": [
         "./artefacten/aeo/aeo.02.agent-engineer/runner/agent-engineer.runner.py",
         "pipeline",
-        "${input:in_agent_engineer_pipeline_agent}"
+        "${input:in_agent_engineer_pipeline_agent_naam}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -222,9 +296,7 @@
         "./artefacten/aeo/aeo.02.agent-ontwerper/runner/agent-ontwerper.runner.py",
         "definieer-agent-charter",
         "--agent-naam",
-        "${input:in_agent_ontwerper_definieer_agent_charter_agent_naam}",
-        "--value-stream-fase",
-        "${input:in_agent_ontwerper_definieer_agent_charter_value_stream_fase}"
+        "${input:in_agent_ontwerper_definieer_agent_charter_agent_naam}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -243,8 +315,6 @@
         "${input:in_agent_ontwerper_definieer_agent_contract_agent_naam}",
         "--intent-naam",
         "${input:in_agent_ontwerper_definieer_agent_contract_intent_naam}",
-        "--value-stream-fase",
-        "${input:in_agent_ontwerper_definieer_agent_contract_value_stream_fase}",
         "--template-file",
         "${input:in_agent_ontwerper_definieer_agent_contract_template_file}",
         "--referenties",
@@ -268,29 +338,7 @@
         "--intent",
         "${input:in_agent_ontwerper_definieer_agent_template_intent}",
         "--file-naam-inspiratie",
-        "${input:in_agent_ontwerper_definieer_agent_template_file_naam_inspiratie}",
-        "--value-stream-fase",
-        "${input:in_agent_ontwerper_definieer_agent_template_value_stream_fase}"
-      ],
-      "problemMatcher": [],
-      "presentation": {
-        "reveal": "always",
-        "panel": "shared"
-      }
-    },
-    {
-      "label": "aeo.02 - capability-architect: definieer-agent-boundary",
-      "type": "process",
-      "command": "python",
-      "args": [
-        "./artefacten/aeo/aeo.02.capability-architect/runner/capability-architect.runner.py",
-        "definieer-agent-boundary",
-        "--agent-naam",
-        "${input:in_capability_architect_definieer_agent_boundary_agent_naam}",
-        "--value-stream-fase",
-        "${input:in_capability_architect_definieer_agent_boundary_value_stream_fase}",
-        "--korte-beschrijving",
-        "${input:in_capability_architect_definieer_agent_boundary_korte_beschrijving}"
+        "${input:in_agent_ontwerper_definieer_agent_template_file_naam_inspiratie}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -389,6 +437,56 @@
   ],
   "inputs": [
     {
+      "id": "in_documentatie_omvormer_genereer_publicatiestructuur_structuur_regels",
+      "type": "promptString",
+      "description": "Waarde voor 'structuur_regels' (genereer-publicatiestructuur) (Optioneel)"
+    },
+    {
+      "id": "in_documentatie_omvormer_genereer_publicatiestructuur_exclude_patterns",
+      "type": "promptString",
+      "description": "Waarde voor 'exclude_patterns' (genereer-publicatiestructuur) (Optioneel)"
+    },
+    {
+      "id": "in_documentatie_omvormer_genereer_correcte_links_docs_folder",
+      "type": "promptString",
+      "description": "Waarde voor 'docs_folder' (genereer-correcte-links)"
+    },
+    {
+      "id": "in_documentatie_omvormer_genereer_correcte_links_platform",
+      "type": "pickString",
+      "description": "Waarde voor 'platform' (genereer-correcte-links)",
+      "options": [
+        "github",
+        "gitlab",
+        "mkdocs"
+      ]
+    },
+    {
+      "id": "in_documentatie_omvormer_genereer_correcte_links_base_url",
+      "type": "promptString",
+      "description": "Waarde voor 'base_url' (genereer-correcte-links) (Optioneel)"
+    },
+    {
+      "id": "in_documentatie_omvormer_genereer_correcte_links_exclude_patterns",
+      "type": "promptString",
+      "description": "Waarde voor 'exclude_patterns' (genereer-correcte-links) (Optioneel)"
+    },
+    {
+      "id": "in_capability_architect_definieer_agent_boundary_agent_naam",
+      "type": "promptString",
+      "description": "Waarde voor 'agent_naam' (definieer-agent-boundary)"
+    },
+    {
+      "id": "in_capability_architect_definieer_agent_boundary_value_stream_fase",
+      "type": "promptString",
+      "description": "Waarde voor 'value_stream_fase' (definieer-agent-boundary)"
+    },
+    {
+      "id": "in_capability_architect_definieer_agent_boundary_korte_beschrijving",
+      "type": "promptString",
+      "description": "Waarde voor 'korte_beschrijving' (definieer-agent-boundary)"
+    },
+    {
       "id": "in_agent_curator_valideer_agent_consistentie_agent_naam",
       "type": "promptString",
       "description": "Agent naam om te valideren"
@@ -418,53 +516,47 @@
     {
       "id": "in_agent_engineer_realiseer_agent_prompts_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'agent_naam' (realiseer-agent-prompts)"
+      "description": "Naam van de agent waarvoor prompts worden gerealiseerd"
     },
     {
       "id": "in_agent_engineer_realiseer_agent_prompts_intent",
       "type": "promptString",
-      "description": "Waarde voor 'intent' (realiseer-agent-prompts) (Optioneel)"
+      "description": "Specifieke intent waarvoor prompt wordt gerealiseerd (Optioneel)"
     },
     {
       "id": "in_agent_engineer_realiseer_agent_runner_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'agent_naam' (realiseer-agent-runner)"
+      "description": "Naam van de agent waarvoor runners worden gerealiseerd"
     },
     {
       "id": "in_agent_engineer_realiseer_agent_runner_contract_folder",
       "type": "promptString",
-      "description": "Waarde voor 'contract_folder' (realiseer-agent-runner) (Optioneel)"
+      "description": "Pad naar de folder met agent-contracten (Optioneel)"
     },
     {
       "id": "in_agent_engineer_realiseer_agent_runner_runner_output_folder",
       "type": "promptString",
-      "description": "Waarde voor 'runner_output_folder' (realiseer-agent-runner) (Optioneel)"
+      "description": "Folder voor gegenereerde runners (Optioneel)"
     },
     {
       "id": "in_agent_engineer_realiseer_agent_runner_overwrite_existing",
       "type": "promptString",
-      "description": "Waarde voor 'overwrite_existing' (realiseer-agent-runner) (Optioneel)"
+      "description": "Of bestaande runner-scripts overschreven mogen worden (Optioneel)"
     },
     {
       "id": "in_agent_engineer_realiseer_agent_taskconfiguratie_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'agent_naam' (realiseer-agent-taskconfiguratie)"
+      "description": "Naam van de agent waarvoor tasks worden gerealiseerd"
     },
     {
-      "id": "in_agent_engineer_pipeline_agent",
+      "id": "in_agent_engineer_pipeline_agent_naam",
       "type": "promptString",
-      "description": "Agent naam voor pipeline (of leeg + --all voor alle agents)"
+      "description": "Naam van de agent waarvoor de volledige pipeline wordt uitgevoerd (prompts + runner + tasks)"
     },
     {
       "id": "in_agent_ontwerper_definieer_agent_charter_agent_naam",
       "type": "promptString",
       "description": "Agent naam (kebab-case, bijv. hypothese-vormer)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_charter_value_stream_fase",
-      "type": "promptString",
-      "description": "Value stream fase (standaard: aeo.02)",
-      "default": "aeo.02"
     },
     {
       "id": "in_agent_ontwerper_definieer_agent_contract_agent_naam",
@@ -475,12 +567,6 @@
       "id": "in_agent_ontwerper_definieer_agent_contract_intent_naam",
       "type": "promptString",
       "description": "Intent naam (optioneel; leeg = alle intents in boundary)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_contract_value_stream_fase",
-      "type": "promptString",
-      "description": "Value stream fase (standaard: aeo.02)",
-      "default": "aeo.02"
     },
     {
       "id": "in_agent_ontwerper_definieer_agent_contract_template_file",
@@ -506,27 +592,6 @@
       "id": "in_agent_ontwerper_definieer_agent_template_file_naam_inspiratie",
       "type": "promptString",
       "description": "Bestand in temp/ als inspiratie voor templatestructuur (optioneel)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_template_value_stream_fase",
-      "type": "promptString",
-      "description": "Value stream fase (standaard: aeo.02)",
-      "default": "aeo.02"
-    },
-    {
-      "id": "in_capability_architect_definieer_agent_boundary_agent_naam",
-      "type": "promptString",
-      "description": "Waarde voor 'agent_naam' (definieer-agent-boundary)"
-    },
-    {
-      "id": "in_capability_architect_definieer_agent_boundary_value_stream_fase",
-      "type": "promptString",
-      "description": "Waarde voor 'value_stream_fase' (definieer-agent-boundary)"
-    },
-    {
-      "id": "in_capability_architect_definieer_agent_boundary_korte_beschrijving",
-      "type": "promptString",
-      "description": "Waarde voor 'korte_beschrijving' (definieer-agent-boundary)"
     },
     {
       "id": "in_ecosysteem_beschrijver_beschrijf_agent_positionering_agent_naam",

@@ -14,7 +14,7 @@ Architectuur: One Agent, One Runner principe.
 """
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple, Optional, Set, TextIO
+from typing import Any, Dict, List, Tuple, Optional, Set, TextIO
 import argparse
 import glob
 import hashlib
@@ -1016,6 +1016,159 @@ def load_constitutie() -> Optional[str]:
     return None
 
 
+def strip_frontmatter_block(content: str) -> str:
+    """Verwijder een optioneel YAML frontmatter-blok aan het begin."""
+    if not content.startswith('---'):
+        return content
+
+    lines = content.splitlines(keepends=True)
+    if not lines or lines[0].strip() != '---':
+        return content
+
+    for index in range(1, len(lines)):
+        if lines[index].strip() == '---':
+            return ''.join(lines[index + 1:]).lstrip('\n')
+
+    return content
+
+
+def normalize_heading_title(title: str) -> str:
+    """Normaliseer markdown-headingtekst voor vergelijking."""
+    normalized = re.sub(r'[`*_]', '', title).strip().lower()
+    normalized = re.sub(r'^\d+(?:\.\d+)*\s*[\)\].:\-–—]*\s*', '', normalized)
+    return normalized
+
+
+def remove_markdown_sections(content: str, headings_to_remove: List[str]) -> str:
+    """Verwijder markdown-secties op basis van headingtitel.
+
+    De sectie wordt verwijderd tot aan de volgende heading van hetzelfde of
+    hogere niveau. Code fences worden gerespecteerd.
+    """
+    if not content.strip() or not headings_to_remove:
+        return content
+
+    targets = {normalize_heading_title(heading) for heading in headings_to_remove}
+    lines = content.splitlines(keepends=True)
+    filtered_lines: List[str] = []
+    skip_level: Optional[int] = None
+    in_code_fence = False
+
+    for line in lines:
+        stripped = line.lstrip()
+        if stripped.startswith('```'):
+            in_code_fence = not in_code_fence
+
+        if not in_code_fence:
+            heading_match = re.match(r'^(#{1,6})\s+(.*)$', stripped)
+            if heading_match:
+                level = len(heading_match.group(1))
+                title = normalize_heading_title(heading_match.group(2))
+
+                if skip_level is not None and level <= skip_level:
+                    skip_level = None
+
+                if skip_level is None and title in targets:
+                    skip_level = level
+                    continue
+
+        if skip_level is None:
+            filtered_lines.append(line)
+
+    return ''.join(filtered_lines)
+
+
+def strip_first_markdown_heading(content: str) -> str:
+    """Verwijder de eerste markdown-heading uit de tekstbody."""
+    lines = content.splitlines(keepends=True)
+    trimmed_lines = list(lines)
+
+    while trimmed_lines and not trimmed_lines[0].strip():
+        trimmed_lines.pop(0)
+
+    if trimmed_lines and re.match(r'^#{1,6}\s+', trimmed_lines[0].lstrip()):
+        trimmed_lines.pop(0)
+        while trimmed_lines and not trimmed_lines[0].strip():
+            trimmed_lines.pop(0)
+
+    return ''.join(trimmed_lines)
+
+
+DOCUMENT_SECTION_FILTERS = {
+    "constitutie": [
+        "Herkomstverantwoording",
+        "Wijzigingslog",
+        "Gerelateerde Doctrines en Normatieve Artefacten",
+    ],
+    "charter": [
+        "Herkomstverantwoording",
+        "Change Log",
+    ],
+    "contract": [
+        "Metadata",
+    ],
+}
+
+
+def prepare_document_for_execution(content: Optional[str], document_type: str) -> str:
+    """Maak documentinhoud geschikt voor execution output."""
+    if not content:
+        return ""
+
+    prepared = strip_frontmatter_block(content)
+    prepared = remove_markdown_sections(prepared, DOCUMENT_SECTION_FILTERS.get(document_type, []))
+    prepared = strip_first_markdown_heading(prepared)
+    prepared = re.sub(r'\n{3,}', '\n\n', prepared)
+
+    return prepared.strip()
+
+
+def filter_execution_params(params: Dict[str, str]) -> Dict[str, str]:
+    """Toon alleen parameters die betekenisvol zijn in de execution wrapper."""
+    filtered = dict(params)
+
+    if filtered.get('value_stream_fase'):
+        for redundant_key in ('vs', 'value_stream', 'fase'):
+            filtered.pop(redundant_key, None)
+
+    return filtered
+
+
+def format_execution_params(params: Dict[str, str]) -> str:
+    """Formatteer parameters voor de execution wrapper."""
+    filtered_params = filter_execution_params(params)
+    if not filtered_params:
+        return "  (geen)"
+
+    preferred_order = ['agent_naam', 'agent', 'value_stream_fase']
+    ordered_keys = [key for key in preferred_order if key in filtered_params]
+    ordered_keys.extend([key for key in filtered_params.keys() if key not in ordered_keys])
+
+    return "\n".join([f"  - `{key}`: {filtered_params[key]}" for key in ordered_keys])
+
+
+def format_execution_intro(metadata: Dict, agent_name: str, intent: str) -> str:
+    """Bouw de compacte openingszin van een execution file."""
+    return (
+        f"Voer de intent `{intent}` uit voor de agent `{agent_name}` "
+        "op basis van onderstaande input en kaders uit grondslagen, beleid, charter en contract."
+    )
+
+
+def format_bronhouding_section(metadata: Dict) -> str:
+    """Formatteer bronhouding voor opname in execution wrapper."""
+    bronhouding = metadata.get('bronhouding')
+    if not bronhouding:
+        return ""
+
+    instruction = BRONHOUDING_INSTRUCTIES.get(bronhouding)
+    if not instruction:
+        print(f"WARNING: Onbekende bronhouding '{bronhouding}'. Geldige waarden: {', '.join(BRONHOUDING_INSTRUCTIES.keys())}")
+        return ""
+
+    return f"## Bronhouding: {bronhouding}\n\n{instruction}\n\n"
+
+
 def assemble_full_instructions(metadata: Dict, prompt_content: str, prompt_file: str, 
                                params: Dict, input_content: str, 
                                input_files_content: Dict,
@@ -1030,44 +1183,51 @@ def assemble_full_instructions(metadata: Dict, prompt_content: str, prompt_file:
     5. Agent Contract (intent-specifieke instructies)
     """
     parts = []
-    
+    grondslagen_parts = []
+
     # 1. Constitutie (fundament uit canon)
     constitutie = load_constitutie()
     if constitutie:
-        parts.append("# Constitutie\n\n")
-        parts.append(constitutie)
-        parts.append("\n\n---\n\n")
+        prepared_constitutie = prepare_document_for_execution(constitutie, "constitutie")
+        if prepared_constitutie:
+            grondslagen_parts.append("## Constitutie\n\n")
+            grondslagen_parts.append(prepared_constitutie)
+            grondslagen_parts.append("\n\n")
 
     # 2. Workspace Beleid (uit beleid-workspace.md)
     if beleid_content and beleid_content.strip():
-        parts.append("# Workspace Beleid\n\n")
-        parts.append(beleid_content.strip())
-        parts.append("\n\n---\n\n")
+        prepared_beleid = prepare_document_for_execution(beleid_content.strip(), "beleid")
+        if prepared_beleid:
+            grondslagen_parts.append("## Workspace-beleid\n\n")
+            grondslagen_parts.append(prepared_beleid)
+            grondslagen_parts.append("\n\n")
 
-    # 3. Bronhouding
-    bronhouding = metadata.get('bronhouding')
-    if bronhouding and bronhouding in BRONHOUDING_INSTRUCTIES:
-        parts.append(f"## Bronhouding: {bronhouding}\n\n")
-        parts.append(BRONHOUDING_INSTRUCTIES[bronhouding])
-        parts.append("\n\n---\n\n")
-    elif bronhouding:
-        print(f"WARNING: Onbekende bronhouding '{bronhouding}'. Geldige waarden: {', '.join(BRONHOUDING_INSTRUCTIES.keys())}")
+    if grondslagen_parts:
+        parts.append("# Grondslagen\n\n")
+        parts.extend(grondslagen_parts)
+        parts.append("---\n\n")
 
     # 4. Agent Charter
     charter_content, charter_path = load_charter(prompt_file, metadata, params)
     if charter_content:
-        parts.append("# Agent Charter\n\n")
-        parts.append(charter_content)
-        parts.append("\n\n---\n\n")
+        prepared_charter = prepare_document_for_execution(charter_content, "charter")
+        if prepared_charter:
+            parts.append("# Agent Charter\n\n")
+            parts.append(prepared_charter)
+            parts.append("\n\n---\n\n")
     
     # 5. Agent Contract (intent-specifieke instructies)
     agent_instructions = load_agent_instructions(prompt_file, metadata, params)
     if agent_instructions:
-        parts.append("# Agent Contract\n\n")
-        parts.append(agent_instructions)
+        prepared_contract = prepare_document_for_execution(agent_instructions, "contract")
+        if prepared_contract:
+            parts.append("# Agent Contract\n\n")
+            parts.append(prepared_contract)
     elif prompt_content.strip():
-        parts.append("# Agent Contract\n\n")
-        parts.append(prompt_content)
+        prepared_prompt_content = prepare_document_for_execution(prompt_content, "contract")
+        if prepared_prompt_content:
+            parts.append("# Agent Contract\n\n")
+            parts.append(prepared_prompt_content)
     
     combined = ''.join(parts)
     final_instructions = replace_placeholders(combined, params, input_content, input_files_content)
@@ -1144,7 +1304,14 @@ def write_execution_file(filepath: str, metadata: Dict, params: Dict, final_prom
         print("=" * 80)
         return False
     
-    params_text = "\n".join([f"  - `{k}`: {v}" for k, v in params.items()]) if params else "  (geen)"
+    display_params = dict(params)
+    display_params.setdefault('agent', agent_name)
+    if value_stream_fase:
+        display_params.setdefault('value_stream_fase', value_stream_fase)
+
+    params_text = format_execution_params(display_params)
+    intro_text = format_execution_intro(metadata, agent_name, intent)
+    bronhouding_text = format_bronhouding_section(metadata)
     
     header = f"""---
 execution_id: {hash_digest}
@@ -1155,20 +1322,11 @@ value_stream_fase: {value_stream_fase}
 canon_ref: {canon_hash}
 ---
 
-**Voer de volgende instructie uit:**
+{intro_text}
 
-# Agent Execution: {agent_name} — {intent}
-
-**Execution ID**: `{hash_digest}`  
-**Timestamp**: {timestamp}  
-**Canon Reference**: {canon_hash}  
-**Value Stream**: {value_stream_fase}
-
-## Parameters
+{bronhouding_text}## Parameters
 
 {params_text}
-
-## Instructies
 
 """
     
@@ -1452,7 +1610,7 @@ def genereer_instructies_main(args: argparse.Namespace) -> int:
 
 def load_task_file(file_path: Path) -> Dict:
     """Laad een task JSON file."""
-    with open(file_path, 'r', encoding='utf-8') as f:
+    with open(file_path, 'r', encoding='utf-8-sig') as f:
         return json.load(f)
 
 

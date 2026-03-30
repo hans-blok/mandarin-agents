@@ -1,3 +1,9 @@
+---
+agent: core-framework-architect
+intent: structureer-totaal-view
+versie: 1.0.0
+---
+
 # Core-framework-architect — Structureer Totaal View
 
 ## Rolbeschrijving (korte samenvatting)

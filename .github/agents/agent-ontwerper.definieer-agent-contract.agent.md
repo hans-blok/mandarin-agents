@@ -24,9 +24,12 @@ De Agent-ontwerper creëert agent-contract documenten voor elke intent uit de bo
 - intent_naam: Naam van de specifieke intent waarvoor contract wordt gedefinieerd (type: string, kebab-case, bijv. "definieer-charter", "analyseer-hypothese").
 Standaard is dat voor alle intents in "Voorstellen agent contracten" sectie in boundary een template wordt aangemaakt. Wanneer deze parameter is opgegeven, wordt alleen voor deze intent een contract gegenereerd.
 
-- boundary_file: Pad naar het agent-boundary document (type: string, default: afgeleid uit `agent_naam` en `value_stream_fase`).
+- boundary_file: Pad naar het agent-boundary document (type: string, default: automatisch afgeleid uit `agent_naam` en folder-structuur).
 - template_file: Override voor agent-contract template locatie (type: string, default: "artefacten/aeo/aeo.02.agent-ontwerper/templates/agent-contract-intent.template.md").
 - referenties: Lijst van referentie-documenten of bestaande contracten als voorbeeld (type: list[string]).
+
+**Afgeleide informatie** (automatisch gedetecteerd):
+- value_stream_fase: Gedetecteerd uit folder-patroon `artefacten/{vs}/{vs}.{fase}.{agent-naam}/`
 
 **Afgeleide informatie** (geëxtraheerd uit boundary):
 - capability_boundary: Context voor contract-scope
@@ -112,7 +115,7 @@ versie: 1.0.0
 De Agent-ontwerper:
 - stopt wanneer boundary_file niet bestaat of niet te lezen is;
 - stopt wanneer intent_naam niet voorkomt in "Voorstellen agent contracten" sectie van boundary;
-- stopt wanneer agent_naam, intent_naam of value_stream_fase ontbreekt of incorrect format heeft;
+- stopt wanneer agent_naam of intent_naam ontbreekt, of wanneer value_stream_fase niet afleidbaar is uit folder-structuur of boundary;
 - vraagt om verduidelijking wanneer intent-beschrijving in boundary te vaag is om contract te formuleren;
 - escaleert naar capability-architect voor boundary-verfijning bij ontbrekende intent-definitie;
 - escaleert naar agent-curator voor ecosysteem-analyse als intent overlap heeft met andere agents;

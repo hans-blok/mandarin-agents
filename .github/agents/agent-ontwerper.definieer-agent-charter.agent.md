@@ -21,7 +21,10 @@ De Agent-ontwerper creëert het agent-charter document dat identiteit, rol, gren
 - agent_naam: Naam van de agent waarvoor het charter wordt gedefinieerd (type: string, kebab-case).
 
 **Optionele parameters**:
-- boundary_file: Pad naar het agent-boundary document (type: string, default: afgeleid uit `agent_naam` en `value_stream_fase`).
+- boundary_file: Pad naar het agent-boundary document (type: string, default: automatisch afgeleid uit `agent_naam` en folder-structuur).
+
+**Afgeleide informatie** (automatisch gedetecteerd):
+- value_stream_fase: Gedetecteerd uit folder-patroon `artefacten/{vs}/{vs}.{fase}.{agent-naam}/`
 
 **Afgeleide informatie** (geëxtraheerd uit boundary):
 - capability_boundary: Externe verantwoordelijkheid in één zin

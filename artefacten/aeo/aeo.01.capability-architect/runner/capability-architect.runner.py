@@ -20,7 +20,7 @@ import sys
 
 AGENT_NAAM = "capability-architect"
 VALUE_STREAM = "aeo"
-FASE = "02"
+FASE = "01"
 
 
 def get_workspace_root() -> Path:

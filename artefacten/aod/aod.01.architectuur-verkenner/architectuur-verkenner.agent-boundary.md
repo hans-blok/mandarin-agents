@@ -132,7 +132,7 @@ versie: 1.0.0
 
 ## Herkomstverantwoording
 
-- **Template**: `artefacten/aeo/aeo.02.capability-architect/templates/agent-boundary.template.md`
-- **Executor**: capability-architect (aeo.02)
+- **Template**: `artefacten/aeo/aeo.01.capability-architect/templates/agent-boundary.template.md`
+- **Executor**: capability-architect (aeo.01)
 - **Canon reference**: ceb3327
 - **Datum**: 2026-03-28

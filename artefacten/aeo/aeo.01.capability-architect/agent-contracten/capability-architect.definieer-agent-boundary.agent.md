@@ -46,7 +46,7 @@ intent: definieer-agent-boundary
 output:
   - type: agent-boundary
     herkomstpositie: initiërend
-    template: artefacten/aeo/aeo.02.capability-architect/templates/agent-boundary.template.md
+    template: artefacten/aeo/aeo.01.capability-architect/templates/agent-boundary.template.md
 ```
 
 **VERPLICHT**: Het bestand MOET worden weggeschreven naar de workspace (niet alleen voorgesteld).
@@ -54,11 +54,11 @@ output:
 **Bestandsformaat vereisten**:
 1. **Moet YAML frontmatter bevatten**: agent, value_stream, value_stream_fase, versie
 2. **value_stream en value_stream_fase**: Gebruik de waarden uit de INPUT parameter `value_stream_fase`, NIET van de executor agent
-3. **Moet template volgen**: Gebruik `artefacten/aeo/aeo.02.capability-architect/templates/agent-boundary.template.md`
+3. **Moet template volgen**: Gebruik `artefacten/aeo/aeo.01.capability-architect/templates/agent-boundary.template.md`
 4. **Classificatie checkboxes**: Gebruik checkbox syntax `- [ ]` en `- [x]` uit template
 5. **Intent naming**: Alle voorgestelde intents MOETEN starten met canoniek werkwoord uit `doctrine-intent-naming.md` (meestal "definieer" voor structurerende definitie)
 
-**Outputformaat** (volgens `artefacten/aeo/aeo.02.capability-architect/templates/agent-boundary.template.md`):
+**Outputformaat** (volgens `artefacten/aeo/aeo.01.capability-architect/templates/agent-boundary.template.md`):
 ```markdown
 ---
 agent: {agent_naam}
@@ -121,7 +121,7 @@ versie: 1.0.0
 **Formaat-normering**: 
 - Default formaat: **Markdown** (.md), conform Principe 9
 - Alternatieve formaten alleen op expliciete verzoek
-- Markdown bevat structuur volgens `artefacten/aeo/aeo.02.capability-architect/templates/agent-boundary.template.md`
+- Markdown bevat structuur volgens `artefacten/aeo/aeo.01.capability-architect/templates/agent-boundary.template.md`
 
 ### Foutafhandeling
 
@@ -142,7 +142,7 @@ De Capability-architect:
 
 ### Stappen
 1. **Analyseer input**: Begrijp korte_beschrijving en domein, extraheer vs en fase uit value_stream_fase PARAMETER (niet van executor agent)
-2. **Raadpleeg template**: Gebruik `artefacten/aeo/aeo.02.capability-architect/templates/agent-boundary.template.md` als vaste structuurbron
+2. **Raadpleeg template**: Gebruik `artefacten/aeo/aeo.01.capability-architect/templates/agent-boundary.template.md` als vaste structuurbron
 3. **Raadpleeg doctrine**: Check doctrine-intent-naming.md voor canonieke werkwoorden (meestal "definieer")
 4. **Definieer verantwoordelijkheid**: Formuleer externe verantwoordelijkheid in één zin
 5. **Bepaal boundary**: Expliciteer wat wél en níet binnen scope valt (minimaal 3 bullets per sectie)
@@ -203,10 +203,10 @@ Logging-formaat: Markdown append naar `audit/agent-instructions.log.md`
 
 ## Metadata
 
-**Intent-ID**: `aeo.02.capability-architect.definieer-agent-boundary`  
+**Intent-ID**: `aeo.01.capability-architect.definieer-agent-boundary`  
 **Versie**: 1.0.0  
 **Value Stream**: Agent Ecosysteem Ontwikkeling (aeo)  
-**Fase**: 02 — Ecosysteeminrichting  
+**Fase**: 01 — Grondslagvorming  
 **Classificatie**: 
 - Vormingsfase: Ordening
 - Betekeniseffect: Normerend

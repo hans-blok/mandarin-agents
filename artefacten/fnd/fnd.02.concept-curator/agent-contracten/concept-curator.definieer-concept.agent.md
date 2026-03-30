@@ -1,3 +1,9 @@
+---
+agent: concept-curator
+intent: definieer-concept
+versie: 1.0.0
+---
+
 # Concept-Curator — Definieer Concept
 
 ## Rolbeschrijving (korte samenvatting)

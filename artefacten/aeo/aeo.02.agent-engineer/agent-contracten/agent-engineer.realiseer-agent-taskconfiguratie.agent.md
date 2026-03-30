@@ -1,8 +1,14 @@
+---
+agent: agent-engineer
+intent: realiseer-agent-taskconfiguratie
+versie: 1.1.0
+---
+
 # Agent-engineer — Realiseer Agent Taskconfiguratie
 
 ## Rolbeschrijving (korte samenvatting)
 
-De Agent-engineer genereert en actualiseert VSCode task-definities (`tasks.json` of equivalent) voor alle intents van een agent, zodat elke intent aanroepbaar is via de VSCode task-interface.
+De agent-engineer genereert en actualiseert VSCode task-definities voor alle intents van een agent, zodat elke intent aanroepbaar is via de VSCode task-interface en de bestaande doelagent-runner.
 
 **VERPLICHT**: Raadpleeg de agent charter voor volledige context, grenzen en werkwijze.  
 **Conventie**: Charter bevindt zich in `agent-engineer.charter.md` in de parent folder van dit contract.
@@ -14,26 +20,26 @@ De Agent-engineer genereert en actualiseert VSCode task-definities (`tasks.json`
 **Verplichte parameters**:
 - agent_naam: Naam van de agent waarvoor tasks worden gerealiseerd (type: string, kebab-case format).
 
-- agent_contracts: Paden naar agent-contractbestanden (type: array of strings, relatieve paden binnen workspace). Automatisch gedetecteerd via workspace-structuur.
-
 **Optionele parameters**:
 - geen
 
+**Afgeleide informatie**:
+- agent-contracten: automatisch gedetecteerd via de workspace-structuur
+- value_stream_fase, `vs` en `fase`: afgeleid uit de agentfolder
+- runner-pad: afgeleid als `artefacten/{vs}/{vs}.{fase}.{agent_naam}/runner/{agent_naam}.runner.py`
+
 ### Output (wat komt eruit)
 
-De Agent-engineer levert:
-- **Task-configuratiebestand** (JSON): Voor elke intent één VSCode task-definitie met:
-  - Unieke task-label: `{vs}.{fase} - {Agent-naam}: {Intent-naam}`
-  - Type: process of shell (conform task_type parameter)
-  - Command en argumenten voor aanroep via run_prompt.py of equivalent
-  - Afhankelijkheden en input-variabelen indien nodig
-  - Correct geconfigureerde working directory
-- **Validatierapport**: Overzicht van gerealiseerde tasks met ID's en labels
-- **Consistentie-check resultaat**: Verificatie dat elke intent een task heeft en geen dubbele ID's bestaan
+De agent-engineer levert één task-configuratiebestand:
 
-**Deliverable bestand**: `artefacten/{vs}/{vs}.{fase}.{agent_naam}/tasks/{vs}-{fase}.{agent_naam}.tasks.json` (afgeleid uit agent_naam parameter en workspace-structuur)
+`artefacten/{vs}/{vs}.{fase}.{agent_naam}/tasks/{vs}-{fase}.{agent_naam}.tasks.json`
 
-**Outputformaat** (standaard VSCode tasks.json structuur):
+Dit bestand bevat:
+- `version: 2.0.0`
+- een `tasks`-array met per intent precies één `process`-task
+- een `inputs`-array met één `promptString`-invoer per contractparameter
+
+**Outputformaat** (representatieve VSCode tasks.json structuur):
 ```json
 {
   "version": "2.0.0",
@@ -43,16 +49,23 @@ De Agent-engineer levert:
       "type": "process",
       "command": "python",
       "args": [
-        "scripts/run_prompt.py",
-        "--agent", "{agent}",
-        "--intent", "{intent}",
-        "--prompt-file", "artefacten/{vs}/{vs}.{fase}.{agent}/prompts/mandarin.{agent}.{intent}.prompt.md"
+        "artefacten/{vs}/{vs}.{fase}.{agent}/runner/{agent}.runner.py",
+        "{intent}",
+        "--{contract-parameter-kebab-case}",
+        "${input:in_{agent}_{intent}_{parameter}}"
       ],
       "problemMatcher": [],
-      "group": {
-        "kind": "build",
-        "isDefault": false
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
       }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "in_{agent}_{intent}_{parameter}",
+      "type": "promptString",
+      "description": "{parameter-beschrijving}"
     }
   ]
 }
@@ -60,92 +73,73 @@ De Agent-engineer levert:
 
 **Formaat-normering**: 
 - Task-configuratie is JSON (VSCode standaard, geen Markdown alternatief)
-- Validatierapport is Markdown conform Principe 9
 - JSON volgt VSCode tasks.json schema v2.0.0
 
 ### Foutafhandeling
 
 De Agent-engineer:
-- stopt wanneer geen agent-contracten gevonden of leesbaar zijn;
-- stopt wanneer target agent folder niet bestaat of tasks-pad niet schrijfbaar is;
-- stopt wanneer bestaande task-configuratie corrupt is (ongeldige JSON);
-- waarschuwt maar stopt NIET wanneer bestaande tasks dubbele labels hebben (rapporteert dit in validatierapport);
-- escaleert naar agent-smeder voor contract-verfijning bij onduidelijke intentdefinities;
-- escaleert naar engineer-steward voor workspace-configuratie problemen buiten task-generatie.
+- stopt wanneer de doelagent niet via contract-discovery kan worden gevonden;
+- stopt wanneer geen leesbare agent-contracten of geldige intents worden gevonden;
+- stopt wanneer het tasks-pad niet kan worden aangemaakt of beschreven;
+- overschrijft het bestaande task-configuratiebestand deterministisch;
+- vereist contract-verfijning door agent-ontwerper wanneer intent- of parameterinformatie onvoldoende expliciet is.
 
-Task-definities bevatten deterministisch afleidbare configuratie uit agent-contracten, geen creatieve interpretaties.
+Task-definities bevatten uitsluitend deterministisch afleidbare configuratie uit agent-contracten en folderstructuur.
 
 ---
 
 ## Werkwijze
 
 ### Stappen (Batch-uitvoering)
-1. **Analyseren (Eénmalig)**:
-  - Lokaliseer agent-contracten op basis van workspace-conventie en/of parameter `agent_contracts`
-  - Extraheer agent_naam, value_stream_fase, en alle intents uit de gevonden agent-contracten
-  - Bepaal target folder: `artefacten/{vs}/{vs}.{fase}.{agent_naam}/tasks/`
-  - Lees bestaande task-configuratie uit `{target_folder}/{vs}-{fase}.{agent_naam}.tasks.json` indien aanwezig
-   - Identificeer welke tasks nieuw moeten zijn en welke geactualiseerd
-2. **Genereren (Intern)**:
-   - Stel voor elke intent een task-definitie op
-   - Zorg voor unieke labels en consistente argumenten
-   - Merge met bestaande configuratie indien van toepassing
-3. **Valideren (Intern)**:
-   - Check op dubbele task-ID's of labels
-   - Verificeer dat command-paden kloppen (run_prompt.py, prompt-files)
-   - Controleer dat elke intent een task heeft
-4. **Uitvoeren (Batch output)**:
-  - Maak tasks folder aan indien deze niet bestaat
-  - Schrijf task-configuratie naar `artefacten/{vs}/{vs}.{fase}.{agent_naam}/tasks/{vs}-{fase}.{agent_naam}.tasks.json`
-   - Genereer validatierapport met lijst van gerealiseerde tasks
+1. **Analyseren**:
+  - lokaliseer de agentfolder en contracten via workspace-conventie;
+  - leid `vs`, `fase`, `value_stream_fase` en het runner-pad af;
+  - extraheer per contract de intent plus verplichte en optionele parameters.
+2. **Genereren**:
+  - stel voor elke intent een `process`-task op;
+  - vertaal contractparameters naar CLI-argumenten in kebab-case;
+  - maak per unieke parameterprompt een `inputs`-item aan.
+3. **Uitvoeren**:
+  - maak de tasks-folder aan indien nodig;
+  - schrijf het volledige JSON-bestand deterministisch weg;
+  - rapporteer via console-output het aantal tasks en inputs.
 
 ### Kwaliteitsborging
-- Elke intent uit gedetecteerde agent-contracten heeft een task-definitie
-- Geen dubbele task-labels binnen één configuratiebestand
-- Alle command-paden verwijzen naar bestaande of te-creëren bestanden
-- Task-type consistent (allemaal "process" of allemaal "shell", geen mix zonder reden)
-- JSON valide en parseable door VSCode
+- Elke intent uit gedetecteerde agent-contracten heeft één task-definitie.
+- Elke task heeft `type: process`, `command: python` en `presentation.reveal/panel`.
+- Elke contractparameter resulteert in een CLI-argument en een input-definitie.
+- JSON is valide en parseable door VSCode.
 
 ---
 
 ## Governance
 
 **Doctrine-naleving:**
+- **doctrine-bronhouding-en-exploratie.md**:
+  - Input-gebonden bronhouding: alleen expliciete input en afleidbare workspace-context gebruiken
+  - Geen aanvullende kennis of exploratieve invulling buiten de meegeleverde context
 - **doctrine-agent-charter-normering.md** (v2.1.0, AEO.DOC.001):
-  - Principe 1 (Identiteit vóór Implementatie): Tasks maken agents aanroepbaar (externe interface)
+  - Principe 1 (Identiteit vóór Implementatie): Tasks maken bestaande agent-runners aanroepbaar (externe interface)
   - Principe 2 (Eenduidige Verantwoordelijkheid): Eén task per intent
   - Principe 5 (Evolutionaire Integriteit): Task-configuratie versioned via workspace version control
-  - Principe 7 (Transparante Verantwoording): Logging van gerealiseerde tasks
+  - Principe 7 (Transparante Verantwoording): Console-output maakt gerealiseerde aantallen zichtbaar
+- **doctrine-runner-discipline-en-runner-kernel.md**:
+  - Task-configuraties verwijzen consistent naar de doelagent-runner
+  - Geen creatieve of agent-specifieke afwijkingen in aanroepstructuur zonder expliciete reden
 
 **Canon-consultatie:**
-- Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream aeo
-- Bootstrap via `scripts/bootstrap_canon_consult.py` (automatisch door run_prompt.py)
+- de directe subcommand `realiseer-agent-taskconfiguratie` voert zelf geen canon-consultatie uit;
+- wanneer deze intent via de ecosysteem-coordinator wordt gestart, wordt governance-context daar vooraf samengesteld en vastgelegd.
 
 **Transparantie-verplichtingen:**
 
-Bij uitvoering logt de agent:
-- ✓ Gelezen bestanden: gedetecteerde agent-contracten, tasks-bestand (indien bestaand)
-- ✓ Aangemaakte bestanden: `artefacten/{vs}/{vs}.{fase}.{agent_naam}/tasks/{vs}-{fase}.{agent_naam}.tasks.json` (indien nieuw)
-- ✓ Gewijzigde bestanden: `artefacten/{vs}/{vs}.{fase}.{agent_naam}/tasks/{vs}-{fase}.{agent_naam}.tasks.json` (indien geactualiseerd)
-- ✓ Validatierapport: volledig overzicht van gerealiseerde tasks
-
-Logging-formaat: Markdown append naar `audit/agent-instructions.log.md`
+Bij uitvoering rapporteert de runner via console-output ten minste:
+- het pad van het geschreven task-configuratiebestand;
+- het aantal gerealiseerde tasks;
+- het aantal gerealiseerde inputs.
 
 **Escalatie-paden:**
-- → agent-smeder: voor contract-verfijning of onduidelijke intent-beschrijving
-- → engineer-steward: voor workspace-configuratie problemen of corrupt task-bestand
-- STOP: bij ontbrekende/onleesbare agent-contracten, bij ongeldig task-output pad, bij corrupt bestaand task-bestand
+- contract-verfijning verloopt via agent-ontwerper;
+- STOP: bij ontbrekende/onleesbare agent-contracten, ontbrekende agentcontext of onschrijfbaar task-outputpad.
 
 ---
-
-## Metadata
-
-**Intent-ID**: `aeo.02.agent-engineer.realiseer-agent-taskconfiguratie`  
-**Versie**: 1.0.0  
-**Value Stream**: Agent Ecosysteem Ontwikkeling (aeo)  
-**Fase**: 02 — Ecosysteeminrichting  
-**Classificatie**: 
-- Betekeniseffect: Realiserend
-- Interventieniveau: Werk
-- Werking: Inhoudelijk
-- Bron-houding: Input-gebonden

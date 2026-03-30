@@ -1,11 +1,19 @@
+---
+agent: agent-engineer
+intent: realiseer-agent-runner
+versie: 1.2.0
+---
+
 # Agent-engineer — Realiseer Agent Runner
 
 ## Rolbeschrijving (korte samenvatting)
 
-De Agent-engineer genereert Python runner-scripts voor alle intents van een agent, zodat elke intent programmatisch aanroepbaar is met correcte parameter-handling, logging en foutafhandeling.
+De agent-engineer genereert centrale Python runners voor doelagents, zodat elke intent van die agent via één vaste voordeur aanroepbaar is en execution-file generatie gedelegeerd kan worden aan de ecosysteem-coordinator.
 
 **VERPLICHT**: Raadpleeg de agent charter voor volledige context, grenzen en werkwijze.  
 **Conventie**: Charter bevindt zich in `agent-engineer.charter.md` in de parent folder van dit contract.
+
+**Status**: Operationeel realisatiepad.
 
 ## Contract
 
@@ -21,63 +29,48 @@ De Agent-engineer genereert Python runner-scripts voor alle intents van een agen
 
 ### Output (wat komt eruit)
 
-De Agent-engineer levert:
-- **Runner-scripts** (`.py`): Voor elke intent één Python script met:
-  - Correcte imports (argparse, run_prompt.py, logging)
-  - Parameter-parsing gebaseerd op agent-contract input-specificatie
-  - Aanroep van run_prompt.py met juiste argumenten
-  - Foutafhandeling conform agent-contract escalatiepaden
-  - Logging naar audit/agent-instructions.log.md
-  - Docstring met korte beschrijving van intent
-- **Validatierapport**: Overzicht van gerealiseerde runners met bestandsnamen en status
+De agent-engineer levert één centraal runnerbestand per doelagent:
 
-**Deliverable bestanden**: `{runner_output_folder}/{agent}-{intent}.runner.py`
+`artefacten/{vs}/{vs}.{fase}.{agent}/runner/{agent}.runner.py`
 
-**Outputformaat** (standaard Python runner structuur):
+Of, wanneer `runner_output_folder` expliciet is opgegeven:
+
+`{runner_output_folder}/{agent}.runner.py`
+
+De runner bevat:
+- één argparse-subcommand per gedetecteerde intent;
+- per intent CLI-parameters afgeleid uit verplichte en optionele contractparameters;
+- een gedeelde delegatiefunctie die `ecosysteem-coordinator.runner.py genereer-instructies` aanroept;
+- een vaste `TARGET_AGENT`-constante voor de doelagent.
+
+**Outputformaat** (operationele doelstructuur):
 ```python
 #!/usr/bin/env python3
 """
-Runner voor agent-engineer intent: {intent-naam}
-
-Gegenereerd door agent-engineer op basis van:
-- Contract-discovery: artefacten/{vs}/{vs}.{fase}.{agent}/agent-contracten/
-- Contract: artefacten/{vs}/{vs}.{fase}.{agent}/agent-contracten/{agent}.{intent}.agent.md
+Runner voor agent: {agent}
 """
 
 import argparse
+import os
+import subprocess
 import sys
 from pathlib import Path
 
-# Imports voor run_prompt.py (workspace-specifiek)
-sys.path.insert(0, str(Path(__file__).parent))
-from run_prompt import run_agent_intent
+
+TARGET_AGENT = "{agent}"
 
 
-def main():
-    parser = argparse.ArgumentParser(
-        description="{Intent-naam} - {Korte rolbeschrijving uit contract}"
-    )
-    
-    # Parameters gebaseerd op agent-contract input-specificatie
-    parser.add_argument("--{param1}", required=True, help="{param1-beschrijving}")
-    parser.add_argument("--{param2}", required=False, default={default}, help="{param2-beschrijving}")
-    
+def run_intent(intent: str, params: dict[str, str]) -> int:
+    ...
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=f"Runner voor agent: {TARGET_AGENT}")
+    subparsers = parser.add_subparsers(dest="intent", required=True)
+    # intent-parsers afgeleid uit contracten
+
     args = parser.parse_args()
-    
-    # Aanroep van run_prompt.py
-    result = run_agent_intent(
-        agent="{agent}",
-        intent="{intent}",
-        prompt_file="artefacten/{vs}/{vs}.{fase}.{agent}/prompts/mandarin.{agent}.{intent}.prompt.md",
-        parameters=vars(args)
-    )
-    
-    if not result.success:
-        print(f"Error: {result.error_message}", file=sys.stderr)
-        sys.exit(1)
-    
-    print(f"Output: {result.output_file}")
-    return 0
+    return run_intent(args.intent, params)
 
 
 if __name__ == "__main__":
@@ -85,50 +78,43 @@ if __name__ == "__main__":
 ```
 
 **Formaat-normering**: 
-- Runners zijn Python-scripts (geen Markdown alternatief, dit is uitvoerbare code)
-- Validatierapport is Markdown conform Principe 9
-- Python code volgt PEP 8 en bevat type hints waar relevant
+- runners zijn Python-scripts (geen Markdown alternatief);
+- de gegenereerde runner bevat alleen deterministisch afleidbare parser- en delegatielogica;
+- de runner bevat geen domein-specifieke business logic.
 
 ### Foutafhandeling
 
 De Agent-engineer:
-- stopt wanneer contract_folder (indien opgegeven) niet bestaat of leeg is;
-- stopt wanneer geen agent-contracten gevonden of leesbaar zijn;
-- stopt wanneer agent-contracten niet leesbaar zijn of geen input-sectie bevatten;
-- stopt wanneer runner_output_folder niet bestaat en niet aangemaakt kan worden;
-- vraagt om verduidelijking wanneer bestaande runners aanwezig zijn en overwrite_existing=false;
-- escaleert naar agent-smeder voor contract-verfijning bij ontbrekende of onduidelijke input-specificaties;
-- escaleert naar engineer-steward voor complexe runner-implementaties buiten standaard-patroon.
-
-Runner-scripts bevatten ALLEEN deterministisch afleidbare logica uit contract (parameter-parsing, run_prompt aanroep), geen domein-specifieke business logic.
+- stopt wanneer de doelagent niet via contract-discovery kan worden gevonden;
+- stopt wanneer de opgegeven `contract_folder` niet bestaat of geen `.agent.md` bestanden bevat;
+- stopt wanneer geen intents uit de contractset kunnen worden afgeleid;
+- stopt wanneer het doelrunnerbestand al bestaat en `overwrite_existing` niet expliciet `true` is;
+- vereist contractverfijning door agent-ontwerper wanneer parameter- of intentinformatie onvoldoende expliciet is.
 
 ---
 
 ## Werkwijze
 
 ### Stappen (Batch-uitvoering)
-1. **Analyseren (Eénmalig)**:
-    - Lokaliseer agent-contracten via workspace-conventie en/of `contract_folder`
-    - Extraheer agent_naam, value_stream_fase, en alle intents uit agent-contracten
-   - Extraheer per contract de input-parameters (verplicht en optioneel)
-    - Bepaal runner-bestandsnamen volgens conventie
-2. **Genereren (Intern)**:
-   - Stel voor elke intent een runner-script op in geheugen
-   - Genereer argparse-configuratie gebaseerd op contract input-sectie
-   - Zorg voor correcte run_prompt.py aanroep met juiste paden
-   - Voeg foutafhandeling toe conform contract escalatiepaden
-3. **Uitvoeren (Batch output)**:
-   - Schrijf alle `.runner.py` bestanden naar runner_output_folder
-   - Maak bestanden executable (chmod +x op Unix-systemen)
-   - Genereer validatierapport met overzicht van gerealiseerde runners
+1. **Context ontdekken**:
+    - lokaliseer de doelagent via contract-discovery of expliciete contractfolder;
+    - bepaal `vs`, `fase`, `value_stream_fase` en het outputpad.
+2. **Contracten analyseren**:
+    - lees alle doelcontracten;
+    - extraheer intents en hun verplichte en optionele parameters.
+3. **Runner genereren**:
+    - genereer één centrale runner met subcommands voor alle intents;
+    - genereer CLI-argumenten in kebab-case op basis van contractparameters;
+    - voeg een delegatiefunctie toe richting de ecosysteem-coordinator.
+4. **Schrijven en rapporteren**:
+    - schrijf het runnerbestand weg;
+    - rapporteer via console-output het doelpad en het aantal verwerkte contracten.
 
 ### Kwaliteitsborging
-- Elke intent uit gedetecteerde agent-contracten heeft een runner-script
-- Alle verplichte parameters uit contract zijn required arguments in runner
-- Alle optionele parameters uit contract hebben default values in runner
-- Runner-scripts zijn syntactisch valide Python (parseable zonder errors)
-- Paden naar prompt-files in runners zijn correct en relatief tot workspace root
-- Bestandsnaamconventie gevolgd: `{agent}-{intent}.runner.py`
+- Elke gedetecteerde intent heeft een subcommand in de gegenereerde runner.
+- Elke contractparameter resulteert in een CLI-argument.
+- De runner is syntactisch valide Python.
+- Delegatie verloopt consequent via `ecosysteem-coordinator.runner.py genereer-instructies`.
 
 ---
 
@@ -136,40 +122,21 @@ Runner-scripts bevatten ALLEEN deterministisch afleidbare logica uit contract (p
 
 **Doctrine-naleving:**
 - **doctrine-agent-charter-normering.md** (v2.1.0, AEO.DOC.001):
-  - Principe 1 (Identiteit vóór Implementatie): Runners maken contract programmatisch aanroepbaar
-  - Principe 2 (Eenduidige Verantwoordelijkheid): Eén runner per intent
-  - Principe 5 (Evolutionaire Integriteit): Runners versioned via workspace version control
-  - Principe 7 (Transparante Verantwoording): Logging ingebouwd in runners
+    - Principe 1 (Identiteit vóór Implementatie): één centrale runner vormt de vaste voordeur van de agent
+    - Principe 2 (Eenduidige Verantwoordelijkheid): de runner beperkt zich tot parser- en delegatielogica
+    - Principe 5 (Evolutionaire Integriteit): runner-generatie is versioned via workspace version control
 
 **Canon-consultatie:**
-- Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream aeo
-- Bootstrap via `scripts/bootstrap_canon_consult.py` (automatisch door run_prompt.py)
+- de generator zelf voert geen canon-consultatie uit;
+- governance-opbouw voor execution-files blijft bij de ecosysteem-coordinator, die door de gegenereerde runner wordt aangeroepen.
 
 **Transparantie-verplichtingen:**
 
-Bij uitvoering logt de agent:
-- ✓ Gelezen bestanden: alle gedetecteerde agent-contract bestanden
-- ✓ Aangemaakte bestanden: alle nieuwe `.runner.py` bestanden
-- ✓ Gewijzigde bestanden: geactualiseerde `.runner.py` bestanden (indien overwrite_existing=true)
-- ✓ Validatierapport: volledig overzicht van gerealiseerde runners
-
-Logging-formaat: Markdown append naar `audit/agent-instructions.log.md`
+Bij uitvoering rapporteert de runner-generator via console-output:
+- het pad van het gegenereerde runnerbestand;
+- het aantal verwerkte contracten.
 
 **Escalatie-paden:**
-- → agent-smeder: voor contract-verfijning of ontbrekende input-specificaties
-- → engineer-steward: voor complexe runner-implementaties of custom business logic
-- STOP: bij ontbrekende/onleesbare agent-contracten, bij lege contract_folder (indien opgegeven)
-
----
-
-## Metadata
-
-**Intent-ID**: `aeo.02.agent-engineer.realiseer-agent-runner`  
-**Versie**: 1.0.0  
-**Value Stream**: Agent Ecosysteem Ontwikkeling (aeo)  
-**Fase**: 02 — Ecosysteeminrichting  
-**Classificatie**: 
-- Betekeniseffect: Realiserend
-- Interventieniveau: Werk
-- Werking: Inhoudelijk
-- Bron-houding: Input-gebonden
+- contractverfijning verloopt via agent-ontwerper;
+- engineer-steward is alleen nodig voor aanvullende domeinspecifieke runnerlogica buiten het delegatiepatroon;
+- STOP: bij ontbrekende agentcontext, ongeldige contractfolder of bestaand runnerbestand zonder expliciete overwrite-toestemming.

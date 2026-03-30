@@ -56,63 +56,43 @@
         "reveal": "always",
         "panel": "shared"
       }
-    },
-    {
-      "label": "aeo.02 - agent-engineer: pipeline",
-      "type": "process",
-      "command": "python",
-      "args": [
-        "artefacten/aeo/aeo.02.agent-engineer/runner/agent-engineer.runner.py",
-        "pipeline",
-        "${input:in_agent_engineer_pipeline_agent}"
-      ],
-      "problemMatcher": [],
-      "presentation": {
-        "reveal": "always",
-        "panel": "shared"
-      }
     }
   ],
   "inputs": [
     {
       "id": "in_agent_engineer_realiseer_agent_prompts_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'agent_naam' (realiseer-agent-prompts)"
+      "description": "Naam van de agent waarvoor prompts worden gerealiseerd"
     },
     {
       "id": "in_agent_engineer_realiseer_agent_prompts_intent",
       "type": "promptString",
-      "description": "Waarde voor 'intent' (realiseer-agent-prompts) (Optioneel)"
+      "description": "Specifieke intent waarvoor prompt wordt gerealiseerd (Optioneel)"
     },
     {
       "id": "in_agent_engineer_realiseer_agent_runner_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'agent_naam' (realiseer-agent-runner)"
+      "description": "Naam van de agent waarvoor runners worden gerealiseerd"
     },
     {
       "id": "in_agent_engineer_realiseer_agent_runner_contract_folder",
       "type": "promptString",
-      "description": "Waarde voor 'contract_folder' (realiseer-agent-runner) (Optioneel)"
+      "description": "Pad naar de folder met agent-contracten (Optioneel)"
     },
     {
       "id": "in_agent_engineer_realiseer_agent_runner_runner_output_folder",
       "type": "promptString",
-      "description": "Waarde voor 'runner_output_folder' (realiseer-agent-runner) (Optioneel)"
+      "description": "Folder voor gegenereerde runners (Optioneel)"
     },
     {
       "id": "in_agent_engineer_realiseer_agent_runner_overwrite_existing",
       "type": "promptString",
-      "description": "Waarde voor 'overwrite_existing' (realiseer-agent-runner) (Optioneel)"
+      "description": "Of bestaande runner-scripts overschreven mogen worden (Optioneel)"
     },
     {
       "id": "in_agent_engineer_realiseer_agent_taskconfiguratie_agent_naam",
       "type": "promptString",
-      "description": "Waarde voor 'agent_naam' (realiseer-agent-taskconfiguratie)"
-    },
-    {
-      "id": "in_agent_engineer_pipeline_agent",
-      "type": "promptString",
-      "description": "Agent naam voor pipeline (of leeg + --all voor alle agents)"
+      "description": "Naam van de agent waarvoor tasks worden gerealiseerd"
     }
   ]
 }

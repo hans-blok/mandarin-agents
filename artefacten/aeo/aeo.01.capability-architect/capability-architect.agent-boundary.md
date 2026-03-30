@@ -1,7 +1,7 @@
 ---
 agent: capability-architect
 value_stream: aeo
-value_stream_fase: aeo.02
+value_stream_fase: aeo.01
 kaderdefinities: geen
 versie: 1.1.0
 ---
@@ -47,7 +47,7 @@ versie: 1.1.0
 	- [ ] Exploratief (gebruikt generatieve capaciteiten, aannames expliciet)
 
 ## Opereert in Value stream fasen
-- Agent Ecosysteem Ontwikkeling (aeo) - fase 02 (Ecosysteeminrichting)
+- Agent Ecosysteem Ontwikkeling (aeo) - fase 01 (Grondslagvorming)
 
 ## Toelichting
 
@@ -101,5 +101,5 @@ versie: 1.1.0
 
 ## Referentie naar criteria (optioneel)
 
-- Nummering/positionering: `aeo.02` is logisch omdat capability-definitie voorafgaat aan chartering, engineering en validatie van agents.
+- Nummering/positionering: `aeo.01` is logisch omdat capability-definitie de grondslagen van agentboundaries legt die nodig zijn voordat chartering, engineering en validatie van agents kan plaatsvinden.
 - Canon-consistentie: boundary is observeerbaar, normerend en canon-gebonden geformuleerd als basis voor vervolgartefacten.

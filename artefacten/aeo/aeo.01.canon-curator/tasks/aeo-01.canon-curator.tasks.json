@@ -1,0 +1,84 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "aeo.01 - canon-curator: adviseer-grondslag-verbeteringen",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/aeo/aeo.01.canon-curator/runner/canon-curator.runner.py",
+        "adviseer-grondslag-verbeteringen",
+        "--scope",
+        "${input:in_canon_curator_adviseer_grondslag_verbeteringen_scope}",
+        "--focus",
+        "${input:in_canon_curator_adviseer_grondslag_verbeteringen_focus}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.01 - canon-curator: valideer-grondslag-consistentie",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/aeo/aeo.01.canon-curator/runner/canon-curator.runner.py",
+        "valideer-grondslag-consistentie",
+        "--scope",
+        "${input:in_canon_curator_valideer_grondslag_consistentie_scope}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.01 - canon-curator: valideer-terminologische-scherpte",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/aeo/aeo.01.canon-curator/runner/canon-curator.runner.py",
+        "valideer-terminologische-scherpte",
+        "--scope",
+        "${input:in_canon_curator_valideer_terminologische_scherpte_scope}",
+        "--termenlijst",
+        "${input:in_canon_curator_valideer_terminologische_scherpte_termenlijst}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "in_canon_curator_adviseer_grondslag_verbeteringen_scope",
+      "type": "promptString",
+      "description": "Pad of selectie van grondslag-artefacten waarvoor verbeteradvies wordt gevraagd"
+    },
+    {
+      "id": "in_canon_curator_adviseer_grondslag_verbeteringen_focus",
+      "type": "promptString",
+      "description": "Specifiek verbeterdomein om op te richten (Optioneel)"
+    },
+    {
+      "id": "in_canon_curator_valideer_grondslag_consistentie_scope",
+      "type": "promptString",
+      "description": "Pad of selectie van te toetsen grondslag-artefacten binnen de canon"
+    },
+    {
+      "id": "in_canon_curator_valideer_terminologische_scherpte_scope",
+      "type": "promptString",
+      "description": "Pad of selectie van te toetsen grondslag-artefacten binnen de canon"
+    },
+    {
+      "id": "in_canon_curator_valideer_terminologische_scherpte_termenlijst",
+      "type": "promptString",
+      "description": "Expliciete lijst van termen om specifiek te controleren (Optioneel)"
+    }
+  ]
+}

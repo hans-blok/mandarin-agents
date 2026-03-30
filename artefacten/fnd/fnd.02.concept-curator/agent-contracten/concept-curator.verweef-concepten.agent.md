@@ -1,3 +1,9 @@
+---
+agent: concept-curator
+intent: verweef-concepten
+versie: 1.0.0
+---
+
 # Concept Curator — Verweef Concepten
 
 ## Rolbeschrijving (korte samenvatting)

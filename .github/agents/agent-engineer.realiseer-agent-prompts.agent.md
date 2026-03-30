@@ -1,8 +1,14 @@
+---
+agent: agent-engineer
+intent: realiseer-agent-prompts
+versie: 1.1.0
+---
+
 # Agent-engineer — Realiseer Agent Prompts
 
 ## Rolbeschrijving (korte samenvatting)
 
-De Agent-engineer genereert en actualiseert promptbestanden voor alle intents van een agent, zodat de agent aanroepbaar is via gestandaardiseerde prompt-artefacten.
+De agent-engineer genereert promptbestanden voor alle intents van een agent op basis van boundary- en contract-discovery, zodat de agent aanroepbaar is via gestandaardiseerde prompt-artefacten.
 
 **VERPLICHT**: Raadpleeg de agent charter voor volledige context, grenzen en werkwijze.  
 **Conventie**: Charter bevindt zich in `agent-engineer.charter.md` in de parent folder van dit contract.
@@ -10,115 +16,107 @@ De Agent-engineer genereert en actualiseert promptbestanden voor alle intents va
 ## Contract
 
 ### Input (wat gaat erin)
+
 **Verplichte parameters**:
-- agent_naam: Naam van de agent waarvoor prompts worden gerealiseerd (type: string, kebab-case format). Agent-contracten worden automatisch gedetecteerd via workspace-structuur.
+- agent_naam: Naam van de agent waarvoor prompts worden gerealiseerd (type: string, kebab-case format).
 
 **Optionele parameters**:
 - intent: Specifieke intent waarvoor prompt wordt gerealiseerd (type: string, kebab-case format). Indien niet opgegeven, worden prompts voor alle intents gegenereerd.
 
+**Afgeleide informatie**:
+- agent-contracten: automatisch gedetecteerd via `artefacten/{vs}/{vs}.{fase}.{agent}/agent-contracten/`
+- boundary-bestand: automatisch afgeleid via `artefacten/{vs}/{vs}.{fase}.{agent}/{agent}.agent-boundary.md`
+- value_stream_fase: afgeleid uit de agentfolder
+- bronhouding: afgeleid uit de aangevinkte classificatie in de boundary
+
 ### Output (wat komt eruit)
 
-De Agent-engineer levert:
-- **Promptbestanden** (`.prompt.md`): Voor elke intent uit de agent-contracten één prompt-artefact met uitsluitend:
-  - YAML frontmatter met metadata (agent, intent, versie, input-parameters)
-- **Validatierapport**: Overzicht van gerealiseerde prompts met status (nieuw/geactualiseerd/error)
+De agent-engineer levert voor elke geselecteerde intent één promptbestand in:
 
-**Deliverable bestanden**: `artefacten/{vs}/{vs}.{fase}.{agent}/prompts/mandarin.{agent}.{intent}.prompt.md` (Markdown met uitsluitend YAML frontmatter)
+`artefacten/{vs}/{vs}.{fase}.{agent}/prompts/mandarin.{agent}.{intent}.prompt.md`
 
-**Outputformaat** (standaard structuur per prompt):
+Het promptbestand bevat uitsluitend YAML frontmatter met minimaal deze velden:
+
 ```markdown
 ---
-agent: {agent-naam}
-intent: {intent-kortschrift}
+agent: mandarin.{agent}
+intent: {intent}
+bronhouding: {bronhouding-uit-boundary}
 versie: 1.0.0
 input_parameters:
-  - {parameter-naam}
-  - {parameter-naam}
+  - {verplichte-parameter}
+  - {optionele-parameter}
+value_stream_fase: {vs}.{fase}
+
 ---
 ```
 
-**Formaat-normering**: 
-- Default formaat: **Markdown** (.md), conform Principe 9
-- Promptbestanden zijn altijd Markdown (geen alternatief formaat)
-- YAML frontmatter is verplicht onderdeel van elke prompt
+De volgorde van `input_parameters` volgt de contractvolgorde: eerst verplichte parameters, daarna optionele parameters.
+
+Naast de bestanden zelf rapporteert de runner via console-output hoeveel promptbestanden zijn gerealiseerd.
 
 ### Foutafhandeling
 
-De Agent-engineer:
-- stopt wanneer geen agent-contracten gevonden of leesbaar zijn;
-- stopt wanneer agent_naam niet afgeleid kan worden uit agent-contracten;
-- stopt wanneer value_stream_fase niet afgeleid kan worden uit agent-contracten;
-- overschrijft bestaande promptbestanden altijd (deterministisch updategedrag);
-- escaleert naar agent-smeder voor contract-verfijning bij onduidelijke intentdefinities;
-- rapporteert maar stopt NIET bij ontbrekende agent-contract bestanden (prompts kunnen vóór contracten worden gerealiseerd).
+De agent-engineer:
+- stopt wanneer de doelagent niet via contract-discovery kan worden gevonden;
+- stopt wanneer het boundary-bestand ontbreekt;
+- stopt wanneer geen leesbare agent-contracten of geen geldige intents worden gevonden;
+- stopt wanneer na filtering geen promptbestand wordt gegenereerd;
+- overschrijft bestaande promptbestanden deterministisch;
+- vereist contract- of boundary-verfijning door agent-ontwerper wanneer intent- of parameterinformatie onvoldoende expliciet is.
 
-Promptbestanden bevatten GEEN implementatie-logica, alleen metadata en verwijzingen naar contract en charter.
+Promptbestanden bevatten geen uitvoeringslogica en geen duplicatie van contracttekst buiten de afgeleide metadata.
 
 ---
 
 ## Werkwijze
 
 ### Stappen (Batch-uitvoering)
-1. **Analyseren (Eénmalig)**:
-  - Lokaliseer agent-contracten op basis van workspace-conventie en/of parameter `agent_contracts`
-  - Extraheer agent_naam, value_stream_fase, en alle intents uit agent-contracten
-   - Bepaal doelfolder voor prompts volgens conventie
-   - Controleer of doelfolder bestaat (maak aan indien nodig)
-2. **Genereren (Intern)**:
-   - Stel voor elke intent een prompt-artefact op in geheugen
-   - Zorg voor consistente metadata (versie 1.0.0 voor nieuwe, behoud bestaande versie bij actualisatie)
-   - Genereer correcte verwijzingen naar contract en charter
-3. **Uitvoeren (Batch output)**:
-   - Schrijf alle `.prompt.md` bestanden naar doelfolder
-   - Genereer validatierapport met overzicht van gerealiseerde prompts
+1. **Context ontdekken**:
+   - lokaliseer de agentfolder via contract-discovery;
+   - leid `vs`, `fase`, `value_stream_fase` en het boundary-bestand af;
+   - lees de boundary om de bronhouding te bepalen.
+2. **Contracten analyseren**:
+   - lees alle agent-contracten van de doelagent;
+   - filter optioneel op één intent;
+   - extraheer verplichte en optionele inputparameters uit de contracttekst.
+3. **Promptbestanden genereren**:
+   - stel per intent de YAML frontmatter op;
+   - schrijf de promptbestanden naar de prompts-folder van de doelagent.
+4. **Rapporteren**:
+   - toon in de console hoeveel promptbestanden zijn gerealiseerd en welke bestanden zijn geschreven.
 
 ### Kwaliteitsborging
-- Elke intent uit gedetecteerde agent-contracten heeft een prompt-bestand
-- YAML frontmatter bevat minimaal: agent, intent, versie, input_parameters (indien aanwezig in contract)
-- Verwijzingen naar contract en charter zijn correcte relatieve paden
-- Bestandsnaamconventie gevolgd: `mandarin.{agent}.{intent}.prompt.md`
-- Geen duplicaties van contract-inhoud in prompt (alleen referenties)
+- Elke geselecteerde intent resulteert in precies één promptbestand.
+- YAML frontmatter bevat minimaal `agent`, `intent`, `bronhouding`, `versie`, `input_parameters` en `value_stream_fase`.
+- Bestandsnaamconventie: `mandarin.{agent}.{intent}.prompt.md`.
+- De promptinhoud bestaat alleen uit frontmatter; er wordt geen extra body toegevoegd.
 
 ---
 
 ## Governance
 
 **Doctrine-naleving:**
-- **doctrine-agent-charter-normering.md** (v2.1.0, AEO.DOC.001):
-  - Principe 1 (Identiteit vóór Implementatie): Prompts verwijzen naar contract, geen duplicatie
-  - Principe 2 (Eenduidige Verantwoordelijkheid): Eén prompt per intent
-  - Principe 5 (Evolutionaire Integriteit): Versioning ingebouwd (start bij 1.0.0)
-  - Principe 7 (Transparante Verantwoording): Logging van gerealiseerde prompts
-  - Principe 9 (Output-formaat Normering): Markdown met YAML frontmatter
+- **doctrine-bronhouding-en-exploratie.md**:
+  - bronhouding wordt niet vrij geïnterpreteerd maar afgeleid uit de boundary;
+  - inputparameters zijn volledig herleidbaar tot contracttekst.
+- **doctrine-agent-charter-normering.md**:
+  - één promptbestand per intent;
+  - output is Markdown met YAML frontmatter;
+  - versie wordt deterministisch op `1.0.0` gezet bij generatie.
 
 **Canon-consultatie:**
-- Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream aeo
-- Bootstrap via `scripts/bootstrap_canon_consult.py` (automatisch door run_prompt.py)
+- de directe subcommand `realiseer-agent-prompts` voert zelf geen canon-consultatie uit;
+- wanneer deze intent via de ecosysteem-coordinator wordt gestart, wordt governance-context daar vooraf samengesteld en vastgelegd.
 
 **Transparantie-verplichtingen:**
 
-Bij uitvoering logt de agent:
-- ✓ Gelezen bestanden: alle gedetecteerde agent-contract bestanden
-- ✓ Aangemaakte bestanden: alle nieuwe `.prompt.md` bestanden
-- ✓ Gewijzigde bestanden: geactualiseerde `.prompt.md` bestanden
+Bij uitvoering rapporteert de runner via console-output:
+- hoeveel promptbestanden zijn gerealiseerd;
+- welke promptbestanden zijn geschreven.
 
-Logging-formaat: Markdown append naar `audit/agent-instructions.log.md`
+Een apart auditbestand wordt door dit subcommand niet zelfstandig weggeschreven.
 
 **Escalatie-paden:**
-- → agent-smeder: voor contract-verfijning of onduidelijke intent-beschrijving
-- → engineer-steward: NIET (dit is realisatie van aanroep-artefacten, geen runner-implementatie)
-- STOP: bij ontbrekende/onleesbare agent-contracten, bij ontbrekende intents-sectie
-
----
-
-## Metadata
-
-**Intent-ID**: `aeo.02.agent-engineer.realiseer-agent-prompts`  
-**Versie**: 1.0.0  
-**Value Stream**: Agent Ecosysteem Ontwikkeling (aeo)  
-**Fase**: 02 — Ecosysteeminrichting  
-**Classificatie**: 
-- Betekeniseffect: Realiserend
-- Interventieniveau: Werk
-- Werking: Inhoudelijk
-- Bron-houding: Input-gebonden
+- contract- of boundary-verfijning verloopt via agent-ontwerper;
+- STOP: bij ontbrekende boundary, ontbrekende/onleesbare contracten of ontbreken van geldige intentmetadata.

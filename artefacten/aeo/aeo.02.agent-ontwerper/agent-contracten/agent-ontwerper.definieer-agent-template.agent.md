@@ -133,7 +133,7 @@ Voor agents die dit template gebruiken:
 
 De Agent-ontwerper:
 - stopt wanneer boundary_file niet bestaat of niet te lezen is;
-- stopt wanneer agent_naam, template_naam of value_stream_fase ontbreekt of incorrect format heeft;
+- stopt wanneer agent_naam ontbreekt, of wanneer value_stream_fase niet afleidbaar is uit folder-structuur of boundary;
 - stopt wanneer output_type niet herkend wordt (moet zijn: document, data-structure, diagram, configuration);
 - vraagt om verduidelijking wanneer output-beschrijving in boundary te vaag is om template-structuur te bepalen;
 - vraagt om voorbeeldstructuur wanneer output_type onduidelijk of complex is;

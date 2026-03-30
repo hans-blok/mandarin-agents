@@ -1,7 +1,7 @@
 ---
 workspace: mandarin-agents
 value_stream: aeo
-value_stream-fasen: ["aeo.02", "aeo.03"]
+value_stream-fasen: ["aeo.01", "aeo.02", "aeo.03"]
 canon_github_url: https://github.com/hans-blok/mandarin-canon.git
 
 # Grondslagen-patronen per value stream voor canon consultatie
@@ -73,7 +73,7 @@ Andere domeinen vallen buiten deze workspace en horen in andere repositories. Vo
   - **Subfolder `/templates`**: Bevat herbruikbare templates voor prompt, contract, charter en runner
   - **Subfolder `/agent-contracten`**: Bevat alle agent-contract beschrijvingen (`.agent.md`) per intent
   - **Subfolder `/prompts`**: Bevat alle prompt-bestanden (`.prompt.md`) per intent
-  - **Voorbeeld**: `artefacten/aeo/aeo.02.agent-smeder/` met subfolders `templates/`, `agent-contracten/` en `prompts/`
+  - **Voorbeeld**: `artefacten/aeo/aeo.02.agent-ontwerper/` met subfolders `templates/`, `agent-contracten/` en `prompts/`
   - Deze structuur zorgt ervoor dat gelijksoortige artefact-types bij elkaar staan en de parent folder overzichtelijk blijft
 - **Traceerbaarheid**: Elk agent-artefact (charter, contract, prompt) moet traceerbaar zijn naar governance-documenten en canonical bronnen via expliciete verwijzingen
 - **JSON Schema conformiteit**: Alle JSON-output (zoals agents-publicatie.json) moet valideren tegen de gedefinieerde schemas in de `/schemas` folder
@@ -84,4 +84,4 @@ Andere domeinen vallen buiten deze workspace en horen in andere repositories. Vo
 
 ---
 
-*Laatste update: 2026-02-08 door Hans Blok*
+*Laatste update: 2026-03-29 door GitHub Copilot*

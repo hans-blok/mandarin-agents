@@ -1,3 +1,9 @@
+---
+agent: core-framework-architect
+intent: structureer-passieve-structuur
+versie: 1.0.0
+---
+
 # Core-framework-architect — Structureer Passieve Structuur
 
 ## Rolbeschrijving (korte samenvatting)

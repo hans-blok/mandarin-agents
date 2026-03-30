@@ -115,7 +115,7 @@ versie: 1.0.0
 De Agent-ontwerper:
 - stopt wanneer boundary_file niet bestaat of niet te lezen is;
 - stopt wanneer intent_naam niet voorkomt in "Voorstellen agent contracten" sectie van boundary;
-- stopt wanneer agent_naam, intent_naam of value_stream_fase ontbreekt of incorrect format heeft;
+- stopt wanneer agent_naam of intent_naam ontbreekt, of wanneer value_stream_fase niet afleidbaar is uit folder-structuur of boundary;
 - vraagt om verduidelijking wanneer intent-beschrijving in boundary te vaag is om contract te formuleren;
 - escaleert naar capability-architect voor boundary-verfijning bij ontbrekende intent-definitie;
 - escaleert naar agent-curator voor ecosysteem-analyse als intent overlap heeft met andere agents;

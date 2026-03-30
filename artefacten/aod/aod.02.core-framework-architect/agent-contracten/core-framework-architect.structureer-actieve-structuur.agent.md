@@ -1,3 +1,9 @@
+---
+agent: core-framework-architect
+intent: structureer-actieve-structuur
+versie: 1.0.0
+---
+
 # Core-framework-architect — Structureer Actieve Structuur
 
 ## Rolbeschrijving (korte samenvatting)

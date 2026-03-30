@@ -1,4 +1,12 @@
 agents:
+- id: capability-architect
+  name: workspace.capability-architect
+  type: uitvoerend
+  valueStream: aeo
+  charter: artefacten/aeo/aeo.01.capability-architect/capability-architect.charter.md
+  prompts:
+  - .github/prompts/mandarin.capability-architect.definieer-agent-boundary.prompt.md
+  runners: []
 - id: agent-curator
   name: workspace.agent-curator
   type: uitvoerend
@@ -31,14 +39,6 @@ agents:
   - .github/prompts/mandarin.agent-ontwerper.definieer-agent-contract.prompt.md
   - .github/prompts/mandarin.agent-ontwerper.definieer-agent-template.prompt.md
   runners: []
-- id: capability-architect
-  name: workspace.capability-architect
-  type: uitvoerend
-  valueStream: aeo
-  charter: artefacten/aeo/aeo.02.capability-architect/capability-architect.charter.md
-  prompts:
-  - .github/prompts/mandarin.capability-architect.definieer-agent-boundary.prompt.md
-  runners: []
 - id: ecosysteem-beschrijver
   name: workspace.ecosysteem-beschrijver
   type: uitvoerend
@@ -49,6 +49,16 @@ agents:
   - .github/prompts/mandarin.ecosysteem-beschrijver.beschrijf-ecosysteem-artefacten.prompt.md
   - .github/prompts/mandarin.ecosysteem-beschrijver.beschrijf-ecosysteem-contracten.prompt.md
   - .github/prompts/mandarin.ecosysteem-beschrijver.beschrijf-ecosysteem-value-streams-agents.prompt.md
+  runners: []
+- id: documentatie-omvormer
+  name: workspace.documentatie-omvormer
+  type: uitvoerend
+  valueStream: fnd
+  charter: artefacten/fnd/fnd.01.documentatie-omvormer/documentatie-omvormer.charter.md
+  prompts:
+  - .github/prompts/mandarin.documentatie-omvormer.genereer-correcte-links.prompt.md
+  - .github/prompts/mandarin.documentatie-omvormer.genereer-navigatiebestand.prompt.md
+  - .github/prompts/mandarin.documentatie-omvormer.genereer-publicatiestructuur.prompt.md
   runners: []
 - id: ecosysteem-coordinator
   name: workspace.ecosysteem-coordinator

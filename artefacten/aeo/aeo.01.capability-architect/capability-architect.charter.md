@@ -8,10 +8,10 @@ governance: Volgt beleid-workspace.md (inclusief canon-raadpleging zoals daar va
 
 # Agent Charter - capability-architect
 
-**Agent-ID**: `aeo.02.capability-architect`  
-**Versie**: 1.5.0  
+**Agent-ID**: `aeo.01.capability-architect`  
+**Versie**: 1.6.0  
 **Domein**: Agent capability-definitie  
-**Value Stream**: Agent Ecosysteem Ontwikkeling (fase 02 - Ecosysteeminrichting)  
+**Value Stream**: Agent Ecosysteem Ontwikkeling (fase 01 - Grondslagvorming)  
 **Kaderdefinities**: geen  
 **Governance**: Volgt `beleid-workspace.md` (inclusief canon-raadpleging zoals daar vastgelegd) en `doctrine-agent-charter-normering.md`; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
 
@@ -144,9 +144,9 @@ De capability-architect bewaakt daarbij dat boundaries niet overlappen met imple
 Dit charter is traceerbaar naar de volgende agent-contracten:
 
 - Intent: `definieer-agent-boundary`
-	- Agent-contract: `artefacten/aeo/aeo.02.capability-architect/agent-contracten/capability-architect.definieer-agent-boundary.agent.md`
-	- Prompt-metadata: `artefacten/aeo/aeo.02.capability-architect/prompts/mandarin.capability-architect.definieer-agent-boundary.prompt.md`
-	- Template: `artefacten/aeo/aeo.02.capability-architect/templates/agent-boundary.template.md`
+	- Agent-contract: `artefacten/aeo/aeo.01.capability-architect/agent-contracten/capability-architect.definieer-agent-boundary.agent.md`
+	- Prompt-metadata: `artefacten/aeo/aeo.01.capability-architect/prompts/mandarin.capability-architect.definieer-agent-boundary.prompt.md`
+	- Template: `artefacten/aeo/aeo.01.capability-architect/templates/agent-boundary.template.md`
 
 ## 8. Output-locaties
 
@@ -174,10 +174,11 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 ## 10. Herkomstverantwoording
 
 - Dit charter volgt de structuur en richtlijnen uit `artefacten/aeo/aeo.02.agent-ontwerper/templates/agent-charter.template.md`.
+
 - Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0.
-- Agent-boundary: `artefacten/aeo/aeo.02.capability-architect/capability-architect.agent-boundary.md`.
+- Agent-boundary: `artefacten/aeo/aeo.01.capability-architect/capability-architect.agent-boundary.md`.
 - Agent-contracten: zie sectie Traceerbaarheid.
-- Bron-locatie in deze workspace: `artefacten/aeo/aeo.02.capability-architect/capability-architect.charter.md`.
+- Bron-locatie in deze workspace: `artefacten/aeo/aeo.01.capability-architect/capability-architect.charter.md`.
 
 ## 11. Change Log
 
@@ -189,3 +190,4 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 | 2026-03-01 | 1.3.0 | Gemigreerd naar nieuwe classificatie-assen (Betekeniseffect, Interventieniveau, Werking, Bron-houding) volgens agent-charter.template.md | GitHub Copilot |
 | 2026-03-04 | 1.4.0 | Intent naming doctrine toegevoegd: alle voorgestelde intents moeten starten met canoniek werkwoord uit doctrine-intent-naming.md (stap 9 en 11 in werkwijze) | GitHub Copilot |
 | 2026-03-24 | 1.5.0 | Charter genormaliseerd naar actuele canonieke frontmatter-, classificatie- en traceerbaarheidsconventies | GitHub Copilot |
+| 2026-03-30 | 1.6.0 | Capability-architect verplaatst van aeo.02 (Ecosysteeminrichting) naar aeo.01 (Grondslagvorming) | GitHub Copilot |

@@ -7,7 +7,7 @@ Synchroniseert agent-artefacten naar centrale locaties:
 - Genereert .github/copilot/agents.yaml met alle agents
 - Aggregeert tasks naar .vscode/tasks.json via ecosysteem-coordinator
 
-Verwerkt: aeo.02.* en fnd.01.* agents
+Verwerkt alle agents in alle value streams (aeo, aod, fnd, sfw, etc.)
 """
 
 import os
@@ -115,10 +115,6 @@ def main():
                         if f.is_dir() and not f.name.startswith("_")]
         
         for agent_folder in agent_folders:
-            # Filter: alleen aeo.02.* en fnd.01.* folders verwerken
-            folder_prefix = ".".join(agent_folder.name.split(".")[:2])
-            if folder_prefix not in ["aeo.02", "fnd.01"]:
-                continue
             agent_name = agent_folder.name
             
             # Probeer prompts/ subfolder (nieuwe conventie)

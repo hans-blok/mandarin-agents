@@ -1,3 +1,9 @@
+---
+agent: concept-curator
+intent: rapporteer-concept-status
+versie: 1.0.0
+---
+
 # Concept-Curator — Rapporteer Concept Status
 
 ## Rolbeschrijving (korte samenvatting)

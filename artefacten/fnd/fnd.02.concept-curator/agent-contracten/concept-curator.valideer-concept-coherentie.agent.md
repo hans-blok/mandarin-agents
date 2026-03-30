@@ -1,3 +1,9 @@
+---
+agent: concept-curator
+intent: valideer-concept-coherentie
+versie: 1.0.0
+---
+
 # Concept-Curator — Valideer Concept Coherentie
 
 ## Rolbeschrijving (korte samenvatting)

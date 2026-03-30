@@ -2,11 +2,11 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "aeo.02 - capability-architect: definieer-agent-boundary",
+      "label": "aeo.01 - capability-architect: definieer-agent-boundary",
       "type": "process",
       "command": "python",
       "args": [
-        "artefacten/aeo/aeo.02.capability-architect/runner/capability-architect.runner.py",
+        "artefacten/aeo/aeo.01.capability-architect/runner/capability-architect.runner.py",
         "definieer-agent-boundary",
         "--agent-naam",
         "${input:in_capability_architect_definieer_agent_boundary_agent_naam}",

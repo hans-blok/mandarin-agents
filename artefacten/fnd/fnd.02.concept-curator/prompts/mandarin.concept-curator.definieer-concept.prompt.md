@@ -1,6 +1,7 @@
 ---
 agent: mandarin.concept-curator
 intent: definieer-concept
+bronhouding: Input-gebonden
 versie: 1.0.0
 input_parameters:
   - term

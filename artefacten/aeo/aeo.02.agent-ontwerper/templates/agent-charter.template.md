@@ -7,10 +7,10 @@ versie: 1.1.0
 
 # Agent Charter - {agent-naam}
 
-**Agent-ID**: `{value-stream-code}.{fase-nummer}.{agent-naam}`  
+**Agent-ID**: `{value_stream_fase}.{agent-naam}`  
 **Versie**: 1.0.0  
 **Domein**: {hoofddomein van de agent}  
-**Value Stream**: {value-stream-naam} (fase {fase-nummer} - {fase-naam})  
+**Value Stream Fase**: `{value_stream_fase}` (bijv. aeo.01)  
 **Kaderdefinities**: {kaderdefinities — lijst van canonieke paden, of "geen"}  
 **Governance**: Volgt `beleid-workspace.md` (inclusief canon-raadpleging zoals daar vastgelegd) en `doctrine-agent-charter-normering.md`; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
 
@@ -152,7 +152,7 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 - Dit charter volgt de structuur uit `artefacten/aeo/aeo.02.agent-smeder/templates/agent-charter.template.md`
 - Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0
 - Agent-contracten en prompt-metadata: zie sectie Traceerbaarheid
-- Bron-locatie in deze workspace: `artefacten/{vs}.{fase}.{agent}/{agent}.charter.md` (per-agentfolder voor value stream {value-stream-naam}, fase {fase-nummer})
+- Bron-locatie in deze workspace: `artefacten/{vs}/{value_stream_fase}.{agent}/{agent}.charter.md`
 - {Publicatiekopie indien van toepassing: `charters-agents/{agent}.charter.md`}
 - {Relevante externe referenties, standaarden of documentatie indien van toepassing}
 
@@ -172,10 +172,7 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 
 **Identificatie:**
 - `{agent-naam}`: Kebab-case agent-naam (bijv. "engineer-steward", "hypothese-vormer")
-- `{value-stream-code}`: Drieletter code (aeo, sfw, aod, kvl, miv, fnd)
-- `{fase-nummer}`: Twee-cijfer fase (01, 02, 03)
-- `{value-stream-naam}`: Volledige naam (bijv. "Agent Ecosysteem Ontwikkeling")
-- `{fase-naam}`: Volledige fase-naam (bijv. "Ecosysteeminrichting", "Grondslagvorming")
+- `{value_stream_fase}`: Value stream code met fase-nummer (bijv. aeo.01, sfw.02, fnd.01)
 
 **Inhoudelijk:**
 - `{hoofddomein}`: Primair domein van operatie (1-5 woorden)
