@@ -1,7 +1,7 @@
 ---
 agent: ecosysteem-coordinator
 intent: aggregeer-tasks
-versie: 1.0.0
+versie: 1.1.0
 ---
 
 # Ecosysteem-coordinator — Aggregeer Tasks
@@ -30,6 +30,10 @@ Geen parameters vereist: de scope wordt volledig bepaald door de workspace-confi
 
 **Automatisch gelezen uit `beleid-workspace.md`**:
 - `value_stream-fasen`: Lijst van extra te verwerken fasen (bijv. `["aeo.02", "sfw.01"]`)
+
+**Defensieve maatregelen (verplicht)**:
+- Alleen de YAML frontmatter key `value_stream-fasen` in `beleid-workspace.md` bepaalt scope. Illustraties, voorbeelden en toelichtende opsommingen elders in het beleidsdocument mogen nooit als declaratieve input worden geïnterpreteerd.
+- De eerste verwerkingsstap is het parsen van de YAML frontmatter. Bij ontbreken van `value_stream-fasen` faalt het proces hard — geen fallback, geen inferentie uit documentinhoud, geen alternatieve bronnen.
 
 **Altijd meegenomen**:
 - `fnd.01`: Fundamentele agents worden altijd toegevoegd, ongeacht workspace-configuratie
@@ -89,7 +93,7 @@ output:
 
 De ecosysteem-coordinator:
 - stopt wanneer `beleid-workspace.md` niet gevonden kan worden;
-- stopt wanneer `value_stream-fasen` ontbreekt of leeg is in `beleid-workspace.md`;
+- stopt wanneer `value_stream-fasen` ontbreekt of leeg is in de YAML frontmatter van `beleid-workspace.md` (hard fail — geen zoeken in documentinhoud of andere bronnen);
 - stopt wanneer geen task-bestanden gevonden worden voor de geconfigureerde fasen;
 - stopt wanneer een task-bestand ongeldige JSON bevat;
 - waarschuwt bij duplicate task labels (neemt laatste waarde);

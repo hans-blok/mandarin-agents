@@ -1,7 +1,7 @@
 ---
 workspace: mandarin-agents
 value_stream: aeo
-value_stream-fasen: ["aeo.01", "aeo.02", "aeo.03"]
+value_stream-fasen: ["fnd.01", "aeo.01", "aeo.02", "aeo.03"]
 canon_github_url: https://github.com/hans-blok/mandarin-canon.git
 
 # Grondslagen-patronen per value stream voor canon consultatie

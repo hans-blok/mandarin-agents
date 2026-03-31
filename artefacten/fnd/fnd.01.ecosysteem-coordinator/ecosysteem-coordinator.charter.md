@@ -1,17 +1,18 @@
 ---
 agent: ecosysteem-coordinator
-versie: 1.0.0
+versie: 1.1.0
 domein: Ecosysteem-lifecycle
 value_stream: fnd
+value_stream_fase: fnd.01
 governance: Volgt beleid-workspace.md en doctrine-agent-charter-normering.md
 ---
 
 # Agent Charter - ecosysteem-coordinator
 
 **Agent-ID**: `fnd.01.ecosysteem-coordinator`  
-**Versie**: 1.0.0  
+**Versie**: 1.1.0  
 **Domein**: Ecosysteem-lifecycle  
-**Value Stream**: Fundamentele Agents (fase 01 - Infrastructuur)  
+**Value Stream Fase**: `fnd.01`  
 **Governance**: Volgt `beleid-workspace.md` (inclusief canon-raadpleging zoals daar vastgelegd) en `doctrine-agent-charter-normering.md`; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
 
 ## Mandarin-agent-classificatie (4 orthogonale assen)
@@ -84,6 +85,10 @@ De ecosysteem-coordinator fungeert als infrastructurele laag die alle agents ond
    Leest de geconfigureerde `value_stream-fasen` uit `beleid-workspace.md` en aggregeert alle bijbehorende task-bestanden naar één globale `.vscode/tasks.json`. Geen parameters vereist; scope wordt volledig bepaald door het beleid.
    → Intent: `aggregeer-tasks`
 
+   **Defensieve maatregelen:**
+   - Illustraties, voorbeelden en toelichtende opsommingen in beleidsdocumenten mogen nooit als declaratieve input worden geïnterpreteerd. Alleen de YAML frontmatter key `value_stream-fasen` bepaalt scope — geen enkele andere tekstuele vermelding van value streams in het document.
+   - De eerste stap van aggregeer-tasks is het parsen van de YAML frontmatter van `beleid-workspace.md`. Bij ontbreken van de key `value_stream-fasen` faalt het proces hard met een foutmelding — er wordt niet gezocht naar alternatieve bronnen, inferentie of fallback-patronen.
+
 ## 5. Grenzen
 
 ### Wat de ecosysteem-coordinator WEL doet
@@ -115,13 +120,15 @@ De ecosysteem-coordinator fungeert als infrastructurele laag die alle agents ond
 6. Append naar `audit/agent-instructions.log.md`
 
 **aggregeer-tasks:**
-1. Lees `value_stream-fasen` uit `beleid-workspace.md` frontmatter
-2. Scan artefacten/**/tasks/ voor JSON bestanden per geconfigureerde fase
-3. Scan .vscode/tasks/ voor handmatige task-bestanden
-4. Parse en valideer JSON structuren
-5. Aggregeer tasks en inputs arrays met deduplicatie
-6. Write samengevoegde tasks.json naar .vscode/tasks.json
-7. Report bronbestanden, fasen en task-counts
+1. Lees `beleid-workspace.md` en parse uitsluitend de YAML frontmatter
+2. Valideer dat key `value_stream-fasen` aanwezig en niet-leeg is; bij ontbreken: hard falen met foutmelding (geen fallback, geen inferentie uit documentinhoud)
+3. Illustratieve voorbeelden of toelichtende tekst in het beleidsdocument worden nooit als configuratie-input geïnterpreteerd
+4. Scan artefacten/**/tasks/ voor JSON bestanden per geconfigureerde fase
+5. Scan .vscode/tasks/ voor handmatige task-bestanden
+6. Parse en valideer JSON structuren
+7. Aggregeer tasks en inputs arrays met deduplicatie
+8. Write samengevoegde tasks.json naar .vscode/tasks.json
+9. Report bronbestanden, fasen en task-counts
 
 ## 7. Traceerbaarheid (contract <-> charter)
 
@@ -173,3 +180,4 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 | Datum | Versie | Wijziging | Auteur |
 |-------|--------|-----------|--------|
 | 2026-03-07 | 1.0.0 | Initiële charter ecosysteem-coordinator op basis van boundary en migratie-analyse | Agent Ontwerper |
+| 2026-03-31 | 1.1.0 | Defensieve maatregelen aggregeer-tasks: hard-fail bij ontbreken value_stream-fasen, negatie-regel voor voorbeelden in beleidsdocumenten | GitHub Copilot |

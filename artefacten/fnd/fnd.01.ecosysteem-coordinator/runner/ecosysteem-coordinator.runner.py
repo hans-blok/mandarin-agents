@@ -324,6 +324,28 @@ def find_boundary_file(agent_naam: str, search_root: Path = None) -> Optional[Pa
     return None
 
 
+def find_charter_file(agent_naam: str, search_root: Path = None) -> Optional[Path]:
+    """Zoek charter file voor gegeven agent naam.
+    
+    Args:
+        agent_naam: Naam van de agent
+        search_root: Root folder om in te zoeken (default: agent source root)
+    """
+    if search_root is None:
+        search_root = get_agent_source_root()
+    
+    artefacten = search_root / "artefacten"
+    if not artefacten.exists():
+        return None
+    
+    charter_name = f"{agent_naam}.charter.md"
+    for match in artefacten.rglob(charter_name):
+        if agent_naam in str(match):
+            return match
+    
+    return None
+
+
 def parse_params(param_list: List[str]) -> Dict[str, str]:
     """Parse parameter lijst naar dictionary."""
     params = {}
@@ -1419,8 +1441,6 @@ def genereer_instructies_main(args: argparse.Namespace) -> int:
         print("=" * 80)
         print()
         
-        boundary_file = None
-        
         print(f"[1/2] Zoek prompt file voor intent '{args.intent}'...")
         prompt_file = find_prompt_file(args.intent, args.agent)
         
@@ -1469,11 +1489,11 @@ def genereer_instructies_main(args: argparse.Namespace) -> int:
             if 'agent_naam' in params and params['agent_naam'] != args.agent:
                 print(f"  >> Target agent gedetecteerd: '{params['agent_naam']}'")
                 
-                target_boundary = find_boundary_file(params['agent_naam'])
-                if target_boundary:
-                    print(f"  [OK] Target boundary gevonden: {target_boundary}")
+                target_charter = find_charter_file(params['agent_naam'])
+                if target_charter:
+                    print(f"  [OK] Target charter gevonden: {target_charter}")
                     try:
-                        with open(target_boundary, 'r', encoding='utf-8') as f:
+                        with open(target_charter, 'r', encoding='utf-8') as f:
                             target_content = f.read()
                             target_meta = frontmatter.loads(target_content)
                             if target_meta.metadata:
@@ -1485,30 +1505,28 @@ def genereer_instructies_main(args: argparse.Namespace) -> int:
                                     fase_parts = target_meta.metadata['value_stream_fase'].split('.')
                                     if len(fase_parts) == 2:
                                         params['fase'] = fase_parts[1]
-                                params['boundary_file'] = str(target_boundary)
                     except Exception as e:
-                        print(f"  ⚠ Kan target boundary niet lezen: {e}")
+                        print(f"  ⚠ Kan target charter niet lezen: {e}")
             
             if 'vs' not in params or not params.get('vs'):
-                if not boundary_file:
-                    boundary_file = find_boundary_file(args.agent)
+                source_charter = find_charter_file(args.agent)
                     
-                if boundary_file:
+                if source_charter:
                     try:
-                        with open(boundary_file, 'r', encoding='utf-8') as f:
-                            boundary_content = f.read()
-                            boundary_meta = frontmatter.loads(boundary_content)
-                            if boundary_meta.metadata:
-                                if 'value_stream' in boundary_meta.metadata:
-                                    params['vs'] = boundary_meta.metadata['value_stream']
-                                    params['value_stream'] = boundary_meta.metadata['value_stream']
-                                if 'value_stream_fase' in boundary_meta.metadata:
-                                    params['value_stream_fase'] = boundary_meta.metadata['value_stream_fase']
-                                    fase_parts = boundary_meta.metadata['value_stream_fase'].split('.')
+                        with open(source_charter, 'r', encoding='utf-8') as f:
+                            charter_content = f.read()
+                            charter_meta = frontmatter.loads(charter_content)
+                            if charter_meta.metadata:
+                                if 'value_stream' in charter_meta.metadata:
+                                    params['vs'] = charter_meta.metadata['value_stream']
+                                    params['value_stream'] = charter_meta.metadata['value_stream']
+                                if 'value_stream_fase' in charter_meta.metadata:
+                                    params['value_stream_fase'] = charter_meta.metadata['value_stream_fase']
+                                    fase_parts = charter_meta.metadata['value_stream_fase'].split('.')
                                     if len(fase_parts) == 2:
                                         params['fase'] = fase_parts[1]
                     except Exception as e:
-                        print(f"  ⚠ Kan boundary metadata niet lezen: {e}")
+                        print(f"  ⚠ Kan charter metadata niet lezen: {e}")
             print()
         
     else:
@@ -1719,10 +1737,17 @@ def merge_tasks(tasks_folder: Path, workspace_root: Path, filter_fase: str = Non
 def aggregeer_tasks_main(args: argparse.Namespace) -> int:
     """Hoofdfunctie voor aggregeer-tasks.
 
-    Verwijdert de huidige tasks.json en bouwt deze opnieuw op:
-    1. Altijd fnd.01 (fundamentele agents)
-    2. Plus value_stream-fasen uit beleid-workspace.md
-    
+    Werkwijze (conform charter v1.1.0):
+    1. Lees beleid-workspace.md en parse uitsluitend de YAML frontmatter
+    2. Valideer dat key value_stream-fasen aanwezig en niet-leeg is (hard fail)
+    3. Alleen YAML frontmatter bepaalt scope — geen inferentie uit documentinhoud
+    4. Scan artefacten/**/tasks/ voor JSON bestanden per geconfigureerde fase
+    5. Scan .vscode/tasks/ voor handmatige task-bestanden
+    6. Parse en valideer JSON structuren
+    7. Aggregeer tasks en inputs arrays met deduplicatie
+    8. Write samengevoegde tasks.json naar .vscode/tasks.json
+    9. Report bronbestanden, fasen en task-counts
+
     Leest task-bestanden uit mandarin-agents (agent source).
     Schrijft naar de huidige workspace (cwd).
     Logt naar /logs met archivering van bestaande logs naar /logs/history.
@@ -1755,6 +1780,9 @@ def aggregeer_tasks_main(args: argparse.Namespace) -> int:
 
 def _execute_aggregeer_tasks(args: argparse.Namespace, agent_source: Path, target_workspace: Path, log_file: Path) -> int:
     """Voer de eigenlijke aggregeer-tasks uit (met logging actief).
+
+    Scope wordt volledig bepaald door value_stream-fasen in beleid-workspace.md
+    YAML frontmatter. Geen hardcoded fasen, geen inferentie uit documentinhoud.
     
     Args:
         agent_source: Root van mandarin-agents (bron van task-bestanden)
@@ -1775,19 +1803,29 @@ def _execute_aggregeer_tasks(args: argparse.Namespace, agent_source: Path, targe
         print(f"✗ Verwijderd: {output_file}")
         print()
 
-    # Lees beleid uit target workspace
+    # Lees beleid uit target workspace (alleen YAML frontmatter)
     workspace_config = load_workspace_config()
-    geconfigureerde_fasen = workspace_config.get('value_stream-fasen', [])
+    geconfigureerde_fasen = workspace_config.get('value_stream-fasen')
 
-    # Bouw fasenlijst: fnd.01 altijd + geconfigureerde fasen
-    fasen = ["fnd.01"]
-    for fase in geconfigureerde_fasen:
-        if fase not in fasen:
-            fasen.append(fase)
+    if not geconfigureerde_fasen:
+        print()
+        print("=" * 80)
+        print("ERROR: 'value_stream-fasen' ontbreekt of is leeg in beleid-workspace.md YAML frontmatter")
+        print("=" * 80)
+        print()
+        print("De key 'value_stream-fasen' in de YAML frontmatter van beleid-workspace.md is de")
+        print("enige declaratieve bron voor scope-bepaling. Illustraties of voorbeelden elders")
+        print("in het document worden niet als configuratie geïnterpreteerd.")
+        print()
+        print("Voeg toe aan de YAML frontmatter van beleid-workspace.md:")
+        print('  value_stream-fasen: ["aeo.01", "aeo.02"]')
+        print()
+        return 1
 
-    print(f"Fundamentele fase: fnd.01 (altijd)")
-    print(f"Geconfigureerde fasen in beleid-workspace.md: {geconfigureerde_fasen}")
-    print(f"Totaal te verwerken fasen: {fasen}")
+    # Scope volledig bepaald door beleid-workspace.md (charter v1.1.0)
+    fasen = list(dict.fromkeys(geconfigureerde_fasen))  # deduplicatie, volgorde behouden
+
+    print(f"Geconfigureerde fasen in beleid-workspace.md: {fasen}")
     print()
 
     merged: Dict[str, Any] = {"version": "2.0.0", "tasks": [], "inputs": []}

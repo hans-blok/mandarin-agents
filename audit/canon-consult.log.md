@@ -9406,3 +9406,32 @@
 | `grondslagen\aeo` | `doctrine-mandarin-agents-output-structuur.md` |
 | `grondslagen\aeo` | `mandarin-domeinconcepten.md` |
 
+
+---
+
+## Canon Consultation — 2026-03-30T21:27:18
+
+- **Agent**: canon-curator
+- **Value Stream**: aeo
+- **Workspace File**: `C:\git\mandarin-agents\artefacten\aeo\aeo.01.canon-curator\prompts\mandarin.canon-curator.valideer-grondslag-consistentie.prompt.md`
+- **Intent**: valideer-grondslag-consistentie
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: ed83120
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*`
+- **Charter**: `C:\git\mandarin-agents\artefacten\aeo\aeo.01.canon-curator\canon-curator.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen/.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `doctrine-bronhouding-en-exploratie,.md` |
+| `grondslagen\.algemeen` | `review-checklist.md` |
+| `grondslagen\.algemeen` | `verplichte-bootstrap-header.md` |
+| `grondslagen\.algemeen` | `workspace-doctrine.md` |
+
