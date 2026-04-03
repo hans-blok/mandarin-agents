@@ -1,3 +1,9 @@
+---
+agent: agent-ontwerper
+versie: 0.1.0
+digest: b5a5
+status: vers
+---
 ﻿---
 agent: agent-ontwerper
 intent: leg-vast-agent-contract

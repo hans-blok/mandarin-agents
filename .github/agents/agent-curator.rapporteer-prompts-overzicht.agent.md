@@ -2,8 +2,9 @@
 agent: agent-curator
 intent: rapporteer-prompts-overzicht
 versie: 1.0.0
+digest: 9191
+status: vers
 ---
-
 # Agent-curator — Rapporteer Prompts Overzicht
 
 ## Rolbeschrijving (korte samenvatting)

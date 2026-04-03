@@ -4,8 +4,9 @@ template_naam: beschrijf-ecosysteem-contracten
 versie: 1.0.0
 output_type: document
 doel: Geeft een gestructureerd overzicht van alle agent-contracten in het ecosysteem — per agent, per intent — met de kerngegevens uit elke contract-frontmatter en input/output-synopsis.
+digest: 52bc
+status: vers
 ---
-
 # Template: Ecosysteem Contractenoverzicht
 
 ## Doel en gebruik

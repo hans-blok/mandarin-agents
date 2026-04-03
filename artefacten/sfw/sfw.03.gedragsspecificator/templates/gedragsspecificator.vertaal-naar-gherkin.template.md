@@ -1,3 +1,9 @@
+---
+agent: gedragsspecificator
+versie: 0.1.0
+digest: fd9c
+status: vers
+---
 Feature: {Feature Naam}
   As a {rol}
   I want {doel}

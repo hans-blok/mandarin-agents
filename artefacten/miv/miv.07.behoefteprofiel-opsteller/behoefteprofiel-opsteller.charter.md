@@ -4,8 +4,9 @@ value_stream: miv
 value_stream_fase: miv.07
 kaderdefinities: geen
 versie: 1.0.0
+digest: db3b
+status: vers
 ---
-
 # Agent Charter - behoefteprofiel-opsteller
 
 **Agent-ID**: `miv.07.behoefteprofiel-opsteller`  

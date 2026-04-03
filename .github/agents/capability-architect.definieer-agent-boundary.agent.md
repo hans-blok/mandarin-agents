@@ -1,3 +1,10 @@
+---
+agent: capability-architect
+intent: definieer-agent-boundary
+versie: 0.1.0
+digest: 4ad3
+status: vers
+---
 ﻿---
 agent: capability-architect
 intent: definieer-agent-boundary

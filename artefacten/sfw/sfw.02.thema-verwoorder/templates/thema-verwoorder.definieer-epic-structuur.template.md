@@ -1,3 +1,9 @@
+---
+agent: thema-verwoorder
+versie: 0.1.0
+digest: 32c0
+status: vers
+---
 # Epic: {epic_titel}
 
 ## Broncontext

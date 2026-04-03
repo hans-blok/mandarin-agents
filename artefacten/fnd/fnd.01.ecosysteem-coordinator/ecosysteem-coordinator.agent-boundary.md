@@ -3,8 +3,9 @@ agent: ecosysteem-coordinator
 value_stream: fnd
 value_stream_fase: fnd.01
 versie: 1.0.0
+digest: 39ed
+status: vers
 ---
-
 # Agent Boundary: Ecosysteem-coordinator
 
 **agent-naam**: ecosysteem-coordinator

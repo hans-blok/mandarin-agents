@@ -26,7 +26,7 @@ FASE = "02"
 
 def get_workspace_root() -> Path:
     """Detecteer workspace root relatief aan dit script, met fallback naar cwd."""
-    candidate = Path(__file__).resolve().parent.parent.parent.parent
+    candidate = Path(__file__).resolve().parent.parent.parent.parent.parent
     if (candidate / "artefacten").exists():
         return candidate
     return Path.cwd()
@@ -161,6 +161,10 @@ def definieer_agent_charter_main(args: argparse.Namespace) -> int:
     """
     value_stream_fase, _ = find_agent_folder(args.agent_naam)
     boundary_file = args.boundary_file or derive_boundary_file(args.agent_naam, value_stream_fase)
+
+    print(f"  Discovery: boundary          = {boundary_file}")
+    print(f"  Discovery: value_stream_fase = {value_stream_fase}")
+
     params = {
         "agent_naam": args.agent_naam,
         "boundary_file": boundary_file,
@@ -173,26 +177,24 @@ def definieer_agent_contract_main(args: argparse.Namespace) -> int:
     """
     Intent: definieer-agent-contract
 
-    Genereert een agent-contract voor een specifieke intent op basis van de boundary.
+    Genereert agent-contracten voor alle intents in de boundary.
+    Convention over Configuration: template, intents en referenties worden
+    automatisch afgeleid uit de folder-structuur en boundary.
 
     Verplichte parameters: agent_naam
-    Optionele parameters:  intent_naam, template_file, referenties
     Afgeleid:              boundary_file, value_stream_fase (uit folder-structuur)
     """
     value_stream_fase, _ = find_agent_folder(args.agent_naam)
     boundary_file = args.boundary_file or derive_boundary_file(args.agent_naam, value_stream_fase)
+
+    print(f"  Discovery: boundary          = {boundary_file}")
+    print(f"  Discovery: value_stream_fase = {value_stream_fase}")
+
     params = {
         "agent_naam": args.agent_naam,
         "boundary_file": boundary_file,
         "value_stream_fase": value_stream_fase,
     }
-    if args.intent_naam:
-        params["intent_naam"] = args.intent_naam
-    if args.template_file:
-        params["template_file"] = args.template_file
-    if args.referenties:
-        params["referenties"] = args.referenties
-
     return run_generate_instructions("definieer-agent-contract", params)
 
 
@@ -200,27 +202,24 @@ def definieer_agent_template_main(args: argparse.Namespace) -> int:
     """
     Intent: definieer-agent-template
 
-    Genereert een output-template voor een agent op basis van de boundary.
-    Standaard voor alle intents in de boundary; optioneel gefilterd op één intent.
+    Genereert output-templates voor alle intents in de boundary.
+    Convention over Configuration: intents en inspiratiebestanden worden
+    automatisch afgeleid uit de folder-structuur en boundary.
 
     Verplichte parameters: agent_naam
-    Optionele parameters:  intent, file_naam_inspiratie
     Afgeleid:              boundary_file, value_stream_fase (uit folder-structuur)
     """
     value_stream_fase, _ = find_agent_folder(args.agent_naam)
     boundary_file = derive_boundary_file(args.agent_naam, value_stream_fase)
+
+    print(f"  Discovery: boundary          = {boundary_file}")
+    print(f"  Discovery: value_stream_fase = {value_stream_fase}")
+
     params = {
         "agent_naam": args.agent_naam,
         "boundary_file": boundary_file,
         "value_stream_fase": value_stream_fase,
     }
-    intent_filter = args.intent_filter or None
-    file_naam_inspiratie = args.file_naam_inspiratie or None
-    if intent_filter:
-        params["intent"] = intent_filter
-    if file_naam_inspiratie:
-        params["file_naam_inspiratie"] = file_naam_inspiratie
-
     return run_generate_instructions("definieer-agent-template", params)
 
 
@@ -266,23 +265,11 @@ def main() -> int:
     )
     p_contract.add_argument(
         "--boundary-file", required=False, default=None,
-        help="Pad naar het agent-boundary document (optioneel, wordt automatisch afgeleid)",
+        help=argparse.SUPPRESS,
     )
     p_contract.add_argument(
         "--value-stream-fase", required=False, default=None,
         help=argparse.SUPPRESS,
-    )
-    p_contract.add_argument(
-        "--intent-naam", required=False, default=None,
-        help='Naam van de specifieke intent; leeg = alle intents in boundary',
-    )
-    p_contract.add_argument(
-        "--template-file", required=False, default=None,
-        help="Override voor agent-contract template locatie",
-    )
-    p_contract.add_argument(
-        "--referenties", required=False, default=None,
-        help="Komma-gescheiden paden naar referentie-documenten",
     )
 
     # ── definieer-agent-template ─────────────────────────────────────────────
@@ -293,14 +280,6 @@ def main() -> int:
     p_template.add_argument(
         "--agent-naam", required=True,
         help="Naam van de agent waarvoor templates worden gedefinieerd (kebab-case)",
-    )
-    p_template.add_argument(
-        "--intent", dest="intent_filter", required=False, nargs='?', const=None, default=None,
-        help="Filter: genereer template alleen voor deze intent (leeg = alle intents)",
-    )
-    p_template.add_argument(
-        "--file-naam-inspiratie", required=False, nargs='?', const=None, default=None,
-        help="Bestandspad in temp/ dat dient als inspiratie voor de templatestructuur",
     )
     p_template.add_argument(
         "--value-stream-fase", required=False, default=None,

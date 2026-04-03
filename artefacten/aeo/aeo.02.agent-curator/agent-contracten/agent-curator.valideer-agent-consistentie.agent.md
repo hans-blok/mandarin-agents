@@ -2,8 +2,9 @@
 agent: agent-curator
 intent: valideer-agent-consistentie
 versie: 1.0.0
+digest: bc40
+status: vers
 ---
-
 # Agent-curator — Valideer Agent Consistentie
 
 ## Rolbeschrijving (korte samenvatting)

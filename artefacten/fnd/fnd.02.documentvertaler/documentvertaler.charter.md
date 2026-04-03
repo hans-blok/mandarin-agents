@@ -3,8 +3,9 @@ agent: documentvertaler
 value_stream: fnd
 value_stream_fase: fnd.02
 versie: 1.0.0
+digest: ce0d
+status: vers
 ---
-
 # Agent Charter - documentvertaler
 
 **Agent-ID**: `fnd.02.documentvertaler`  

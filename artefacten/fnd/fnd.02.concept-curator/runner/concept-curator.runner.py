@@ -25,7 +25,7 @@ TARGET_AGENT = 'concept-curator'
 def find_ecosysteem_coordinator_runner() -> Path:
     """Zoek de ecosysteem-coordinator runner."""
     this_file = Path(__file__).resolve()
-    repo_root = this_file.parent.parent.parent.parent
+    repo_root = this_file.parent.parent.parent.parent.parent
 
     candidate = repo_root / "artefacten" / "fnd" / "fnd.01.ecosysteem-coordinator" / "runner" / "ecosysteem-coordinator.runner.py"
     if candidate.exists():

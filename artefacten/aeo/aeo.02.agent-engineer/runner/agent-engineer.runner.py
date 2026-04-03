@@ -51,7 +51,7 @@ def find_ecosysteem_coordinator_runner() -> Path:
     """Zoek de ecosysteem-coordinator runner."""
     # Probeer relatief pad vanuit deze runner
     this_file = Path(__file__).resolve()
-    repo_root = this_file.parent.parent.parent.parent
+    repo_root = this_file.parent.parent.parent.parent.parent
     
     candidate = repo_root / "artefacten" / "fnd" / "fnd.01.ecosysteem-coordinator" / "runner" / "ecosysteem-coordinator.runner.py"
     if candidate.exists():
@@ -82,7 +82,7 @@ def run_generate_instructions(agent_naam: str, intent: str, params: Dict[str, st
     hash_input = f"{timestamp}{agent_naam}".encode('utf-8')
     hash_str = hashlib.md5(hash_input).hexdigest()[:4].lower()
     
-    repo_root = Path(__file__).resolve().parent.parent.parent.parent
+    repo_root = Path(__file__).resolve().parent.parent.parent.parent.parent
     if not (repo_root / "artefacten").exists():
         repo_root = Path.cwd()
     
@@ -359,11 +359,46 @@ def realiseer_agent_taskconfiguratie_main(args: argparse.Namespace) -> int:
             print("ERROR: Geen tasks gegenereerd; geen leesbare agent-contracten gevonden")
             return 1
 
+        if context['agent_naam'] == 'agent-engineer':
+            pipeline_input_id = 'in_agent_engineer_pipeline_agent'
+            tasks.append({
+                'label': f"{context['value_stream_fase']} - {context['agent_naam']}: pipeline",
+                'type': 'process',
+                'command': 'python',
+                'args': [
+                    runner_path,
+                    'pipeline',
+                    f"${{input:{pipeline_input_id}}}",
+                ],
+                'problemMatcher': [],
+                'presentation': {
+                    'reveal': 'always',
+                    'panel': 'shared',
+                },
+            })
+
+            if pipeline_input_id not in seen_inputs:
+                inputs.append({
+                    'id': pipeline_input_id,
+                    'type': 'promptString',
+                    'description': 'Agent naam voor pipeline',
+                })
+                seen_inputs.add(pipeline_input_id)
+
         task_config = {
             'version': '2.0.0',
             'tasks': tasks,
             'inputs': inputs,
         }
+
+        if context['agent_naam'] == 'agent-engineer':
+            expected_label = f"{context['value_stream_fase']} - {context['agent_naam']}: pipeline"
+            labels = {task.get('label') for task in tasks}
+            input_ids = {item.get('id') for item in inputs}
+            if expected_label not in labels:
+                raise ValueError('Pipeline-taak ontbreekt in agent-engineer taskconfiguratie')
+            if 'in_agent_engineer_pipeline_agent' not in input_ids:
+                raise ValueError('Pipeline-input ontbreekt in agent-engineer taskconfiguratie')
 
         task_file = tasks_dir / f"{context['vs']}-{context['fase']}.{context['agent_naam']}.tasks.json"
         task_file.write_text(json.dumps(task_config, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
@@ -477,7 +512,7 @@ TARGET_AGENT = {target_agent!r}
 def find_ecosysteem_coordinator_runner() -> Path:
     """Zoek de ecosysteem-coordinator runner."""
     this_file = Path(__file__).resolve()
-    repo_root = this_file.parent.parent.parent.parent
+    repo_root = this_file.parent.parent.parent.parent.parent
 
     candidate = repo_root / "artefacten" / "fnd" / "fnd.01.ecosysteem-coordinator" / "runner" / "ecosysteem-coordinator.runner.py"
     if candidate.exists():

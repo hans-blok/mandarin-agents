@@ -1,3 +1,9 @@
+---
+agent: agent-ontwerper
+versie: 0.1.0
+digest: 47a6
+status: vers
+---
 ﻿---
 agent: agent-ontwerper
 intent: leg-vast-agent-charter

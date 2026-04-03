@@ -70,6 +70,58 @@
       }
     },
     {
+      "label": "aeo.01 - canon-curator: adviseer-grondslag-verbeteringen",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.01.canon-curator/runner/canon-curator.runner.py",
+        "adviseer-grondslag-verbeteringen",
+        "--scope",
+        "${input:in_canon_curator_adviseer_grondslag_verbeteringen_scope}",
+        "--focus",
+        "${input:in_canon_curator_adviseer_grondslag_verbeteringen_focus}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.01 - canon-curator: valideer-grondslag-consistentie",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.01.canon-curator/runner/canon-curator.runner.py",
+        "valideer-grondslag-consistentie",
+        "--scope",
+        "${input:in_canon_curator_valideer_grondslag_consistentie_scope}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.01 - canon-curator: valideer-terminologische-scherpte",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.01.canon-curator/runner/canon-curator.runner.py",
+        "valideer-terminologische-scherpte",
+        "--scope",
+        "${input:in_canon_curator_valideer_terminologische_scherpte_scope}",
+        "--termenlijst",
+        "${input:in_canon_curator_valideer_terminologische_scherpte_termenlijst}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
       "label": "aeo.01 - capability-architect: definieer-agent-boundary",
       "type": "process",
       "command": "python",
@@ -280,7 +332,7 @@
       "args": [
         "./artefacten/aeo/aeo.02.agent-engineer/runner/agent-engineer.runner.py",
         "pipeline",
-        "${input:in_agent_engineer_pipeline_agent_naam}"
+        "${input:in_agent_engineer_pipeline_agent}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -312,13 +364,7 @@
         "./artefacten/aeo/aeo.02.agent-ontwerper/runner/agent-ontwerper.runner.py",
         "definieer-agent-contract",
         "--agent-naam",
-        "${input:in_agent_ontwerper_definieer_agent_contract_agent_naam}",
-        "--intent-naam",
-        "${input:in_agent_ontwerper_definieer_agent_contract_intent_naam}",
-        "--template-file",
-        "${input:in_agent_ontwerper_definieer_agent_contract_template_file}",
-        "--referenties",
-        "${input:in_agent_ontwerper_definieer_agent_contract_referenties}"
+        "${input:in_agent_ontwerper_definieer_agent_contract_agent_naam}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -334,11 +380,7 @@
         "./artefacten/aeo/aeo.02.agent-ontwerper/runner/agent-ontwerper.runner.py",
         "definieer-agent-template",
         "--agent-naam",
-        "${input:in_agent_ontwerper_definieer_agent_template_agent_naam}",
-        "--intent",
-        "${input:in_agent_ontwerper_definieer_agent_template_intent}",
-        "--file-naam-inspiratie",
-        "${input:in_agent_ontwerper_definieer_agent_template_file_naam_inspiratie}"
+        "${input:in_agent_ontwerper_definieer_agent_template_agent_naam}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -421,6 +463,35 @@
       }
     },
     {
+      "label": "Artefact Digest: verify",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "scripts/artefact_digest.py",
+        "verify",
+        "--verbose"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Artefact Digest: update (alle bestanden)",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "scripts/artefact_digest.py",
+        "update"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
       "label": "Agent: Execute (Generate + Save)",
       "type": "process",
       "command": "powershell",
@@ -470,6 +541,31 @@
       "id": "in_documentatie_omvormer_genereer_correcte_links_exclude_patterns",
       "type": "promptString",
       "description": "Waarde voor 'exclude_patterns' (genereer-correcte-links) (Optioneel)"
+    },
+    {
+      "id": "in_canon_curator_adviseer_grondslag_verbeteringen_scope",
+      "type": "promptString",
+      "description": "Pad of selectie van grondslag-artefacten waarvoor verbeteradvies wordt gevraagd"
+    },
+    {
+      "id": "in_canon_curator_adviseer_grondslag_verbeteringen_focus",
+      "type": "promptString",
+      "description": "Specifiek verbeterdomein om op te richten (Optioneel)"
+    },
+    {
+      "id": "in_canon_curator_valideer_grondslag_consistentie_scope",
+      "type": "promptString",
+      "description": "Pad of selectie van te toetsen grondslag-artefacten binnen de canon"
+    },
+    {
+      "id": "in_canon_curator_valideer_terminologische_scherpte_scope",
+      "type": "promptString",
+      "description": "Pad of selectie van te toetsen grondslag-artefacten binnen de canon"
+    },
+    {
+      "id": "in_canon_curator_valideer_terminologische_scherpte_termenlijst",
+      "type": "promptString",
+      "description": "Expliciete lijst van termen om specifiek te controleren (Optioneel)"
     },
     {
       "id": "in_capability_architect_definieer_agent_boundary_agent_naam",
@@ -549,9 +645,9 @@
       "description": "Naam van de agent waarvoor tasks worden gerealiseerd"
     },
     {
-      "id": "in_agent_engineer_pipeline_agent_naam",
+      "id": "in_agent_engineer_pipeline_agent",
       "type": "promptString",
-      "description": "Naam van de agent waarvoor de volledige pipeline wordt uitgevoerd (prompts + runner + tasks)"
+      "description": "Agent naam voor pipeline"
     },
     {
       "id": "in_agent_ontwerper_definieer_agent_charter_agent_naam",
@@ -564,34 +660,9 @@
       "description": "Agent naam (kebab-case, bijv. hypothese-vormer)"
     },
     {
-      "id": "in_agent_ontwerper_definieer_agent_contract_intent_naam",
-      "type": "promptString",
-      "description": "Intent naam (optioneel; leeg = alle intents in boundary)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_contract_template_file",
-      "type": "promptString",
-      "description": "Override voor contract template (optioneel, leeg = standaard template)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_contract_referenties",
-      "type": "promptString",
-      "description": "Komma-gescheiden referentiedocumenten (optioneel)"
-    },
-    {
       "id": "in_agent_ontwerper_definieer_agent_template_agent_naam",
       "type": "promptString",
       "description": "Agent naam (kebab-case, bijv. hypothese-vormer)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_template_intent",
-      "type": "promptString",
-      "description": "Filter op intent naam (optioneel; leeg = alle intents in boundary)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_template_file_naam_inspiratie",
-      "type": "promptString",
-      "description": "Bestand in temp/ als inspiratie voor templatestructuur (optioneel)"
     },
     {
       "id": "in_ecosysteem_beschrijver_beschrijf_agent_positionering_agent_naam",

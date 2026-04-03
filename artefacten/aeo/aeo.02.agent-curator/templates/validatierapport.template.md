@@ -4,8 +4,9 @@ template_naam: validatierapport
 versie: 1.0.0
 output_type: document
 doel: Gestructureerd rapport van de canonieke consistentietoetsing van één agent of een set agents binnen een value stream fase.
+digest: 8b33
+status: vers
 ---
-
 # Template: Validatierapport
 
 ## Doel en gebruik

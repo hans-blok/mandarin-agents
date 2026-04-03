@@ -1,3 +1,9 @@
+---
+agent: core-framework-architect
+versie: 0.1.0
+digest: 81cc
+status: vers
+---
 # {ecosysteem_naam} — Gedragslaag Definitie
 
 **Versie**: {versie}  

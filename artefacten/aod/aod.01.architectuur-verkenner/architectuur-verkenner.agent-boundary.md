@@ -4,8 +4,9 @@ value_stream: aod
 value_stream_fase: aod.01
 kaderdefinities: TOGAF ADM Fase A (Architecture Vision)
 versie: 1.0.0
+digest: 7fbe
+status: vers
 ---
-
 # Agent Boundary: Architectuur-verkenner
 
 **agent-naam**: architectuur-verkenner  

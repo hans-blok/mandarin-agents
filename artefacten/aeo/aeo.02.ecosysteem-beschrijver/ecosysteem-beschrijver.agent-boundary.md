@@ -3,8 +3,9 @@ agent: ecosysteem-beschrijver
 value_stream: aeo
 value_stream_fase: aeo.02
 versie: 1.0.0
+digest: 5f91
+status: vers
 ---
-
 # Agent Boundary: Ecosysteem-beschrijver
 
 **agent-naam**: ecosysteem-beschrijver  

@@ -2,8 +2,9 @@
 agent: agent-engineer
 intent: realiseer-agent-prompts
 versie: 1.1.0
+digest: 4dad
+status: vers
 ---
-
 # Agent-engineer — Realiseer Agent Prompts
 
 ## Rolbeschrijving (korte samenvatting)

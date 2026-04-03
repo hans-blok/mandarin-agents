@@ -1,3 +1,9 @@
+---
+agent: concept-curator
+versie: 0.1.0
+digest: 25ae
+status: vers
+---
 # Agent Charter - concept-curator
 
 **Agent-ID**: `fnd.02.concept-curator`  

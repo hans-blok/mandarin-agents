@@ -2,8 +2,9 @@
 agent: documentatie-omvormer
 intent: genereer-correcte-links
 versie: 1.0.0
+digest: a6bd
+status: vers
 ---
-
 # Documentatie-omvormer — Genereer Correcte Links
 
 ## Rolbeschrijving (korte samenvatting)

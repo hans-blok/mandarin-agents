@@ -3,8 +3,9 @@ agent: agent-ontwerper
 intent: leg-vast-agent-prompt
 versie: 1.0.0
 # Template voor agent charters. Generiek bruikbaar voor alle agents. De vastlegging van het intent hier is een bron voor het goed vastleggen van het agent-contract.
+digest: fc6f
+status: vers
 ---
-
 ---
 # Prompt Metadata (placeholders invullen)
 agent: mandarin.{agent-naam}

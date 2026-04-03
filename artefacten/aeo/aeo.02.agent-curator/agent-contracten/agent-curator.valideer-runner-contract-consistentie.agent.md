@@ -2,8 +2,9 @@
 agent: agent-curator
 intent: valideer-runner-contract-consistentie
 versie: 1.0.0
+digest: a51f
+status: vers
 ---
-
 # Agent-curator — Valideer Runner-Contract Consistentie
 
 ## Rolbeschrijving (korte samenvatting)

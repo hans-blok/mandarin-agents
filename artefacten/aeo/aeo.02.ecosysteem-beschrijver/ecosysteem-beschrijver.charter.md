@@ -4,8 +4,9 @@ versie: 1.4.0
 domein: Ecosysteem-documentatie en -positionering
 value_stream: Agent Ecosysteem Ontwikkeling
 governance: Volgt beleid-workspace.md (inclusief canon-raadpleging zoals daar vastgelegd) en doctrine-agent-charter-normering.md; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
+digest: c53e
+status: vers
 ---
-
 # Agent Charter — ecosysteem-beschrijver
 
 **Agent-ID**: `aeo.02.ecosysteem-beschrijver`  

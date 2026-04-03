@@ -1,4 +1,14 @@
 agents:
+- id: canon-curator
+  name: workspace.canon-curator
+  type: uitvoerend
+  valueStream: aeo
+  charter: artefacten/aeo/aeo.01.canon-curator/canon-curator.charter.md
+  prompts:
+  - .github/prompts/mandarin.canon-curator.adviseer-grondslag-verbeteringen.prompt.md
+  - .github/prompts/mandarin.canon-curator.valideer-grondslag-consistentie.prompt.md
+  - .github/prompts/mandarin.canon-curator.valideer-terminologische-scherpte.prompt.md
+  runners: []
 - id: capability-architect
   name: workspace.capability-architect
   type: uitvoerend
@@ -50,6 +60,17 @@ agents:
   - .github/prompts/mandarin.ecosysteem-beschrijver.beschrijf-ecosysteem-contracten.prompt.md
   - .github/prompts/mandarin.ecosysteem-beschrijver.beschrijf-ecosysteem-value-streams-agents.prompt.md
   runners: []
+- id: core-framework-architect
+  name: workspace.core-framework-architect
+  type: uitvoerend
+  valueStream: aod
+  charter: artefacten/aod/aod.02.core-framework-architect/core-framework-architect.charter.md
+  prompts:
+  - .github/prompts/mandarin.core-framework-architect.structureer-actieve-structuur.prompt.md
+  - .github/prompts/mandarin.core-framework-architect.structureer-gedrag.prompt.md
+  - .github/prompts/mandarin.core-framework-architect.structureer-passieve-structuur.prompt.md
+  - .github/prompts/mandarin.core-framework-architect.structureer-totaal-view.prompt.md
+  runners: []
 - id: documentatie-omvormer
   name: workspace.documentatie-omvormer
   type: uitvoerend
@@ -68,4 +89,63 @@ agents:
   prompts:
   - .github/prompts/mandarin.ecosysteem-coordinator.aggregeer-tasks.prompt.md
   - .github/prompts/mandarin.ecosysteem-coordinator.genereer-instructies.prompt.md
+  runners: []
+- id: concept-curator
+  name: workspace.concept-curator
+  type: uitvoerend
+  valueStream: fnd
+  charter: artefacten/fnd/fnd.02.concept-curator/concept-curator.charter.md
+  prompts:
+  - .github/prompts/mandarin.concept-curator.definieer-concept.prompt.md
+  - .github/prompts/mandarin.concept-curator.rapporteer-concept-status.prompt.md
+  - .github/prompts/mandarin.concept-curator.valideer-concept-coherentie.prompt.md
+  - .github/prompts/mandarin.concept-curator.verweef-concepten.prompt.md
+  runners: []
+- id: documentvertaler
+  name: workspace.documentvertaler
+  type: uitvoerend
+  valueStream: fnd
+  charter: artefacten/fnd/fnd.02.documentvertaler/documentvertaler.charter.md
+  prompts:
+  - .github/prompts/mandarin.documentvertaler.zet-om-naar-docx.prompt.md
+  runners: []
+- id: behoefteprofiel-opsteller
+  name: workspace.behoefteprofiel-opsteller
+  type: uitvoerend
+  valueStream: miv
+  charter: artefacten/miv/miv.07.behoefteprofiel-opsteller/behoefteprofiel-opsteller.charter.md
+  prompts:
+  - .github/prompts/mandarin.behoefteprofiel-opsteller.beschrijf-selectiecriteria.prompt.md
+  - .github/prompts/mandarin.behoefteprofiel-opsteller.formuleer-behoefteprofiel.prompt.md
+  - .github/prompts/mandarin.behoefteprofiel-opsteller.structureer-eisenpakket.prompt.md
+  runners: []
+- id: hypothese-vormer
+  name: workspace.hypothese-vormer
+  type: uitvoerend
+  valueStream: sfw
+  charter: artefacten/sfw/sfw.01.hypothese-vormer/hypothese-vormer.charter.md
+  prompts:
+  - .github/prompts/mandarin.hypothese-vormer.beschrijf-aannames.prompt.md
+  - .github/prompts/mandarin.hypothese-vormer.beschrijf-hypothese.prompt.md
+  - .github/prompts/mandarin.hypothese-vormer.beschrijf-toetsbaarheid.prompt.md
+  runners: []
+- id: thema-verwoorder
+  name: workspace.thema-verwoorder
+  type: uitvoerend
+  valueStream: sfw
+  charter: artefacten/sfw/sfw.02.thema-verwoorder/thema-verwoorder.charter.md
+  prompts:
+  - .github/prompts/mandarin.thema-verwoorder.definieer-epic-structuur.prompt.md
+  - .github/prompts/mandarin.thema-verwoorder.definieer-thematische-scope.prompt.md
+  - .github/prompts/mandarin.thema-verwoorder.definieer-verbeter-voorstel.prompt.md
+  runners: []
+- id: gedragsspecificator
+  name: workspace.gedragsspecificator
+  type: uitvoerend
+  valueStream: sfw
+  charter: artefacten/sfw/sfw.03.gedragsspecificator/gedragsspecificator.charter.md
+  prompts:
+  - .github/prompts/mandarin.gedragsspecificator.specificeer-gedrag.prompt.md
+  - .github/prompts/mandarin.gedragsspecificator.valideer-scenario-consistentie.prompt.md
+  - .github/prompts/mandarin.gedragsspecificator.vertaal-naar-gherkin.prompt.md
   runners: []

@@ -1,3 +1,9 @@
+---
+agent: core-framework-architect
+versie: 0.1.0
+digest: de66
+status: vers
+---
 # {ecosysteem_naam} — Actieve Structuur Definitie
 
 **Versie**: {versie}  

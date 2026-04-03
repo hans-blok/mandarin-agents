@@ -1,3 +1,9 @@
+---
+agent: ecosysteem-beschrijver
+versie: 0.1.0
+digest: 3d99
+status: vers
+---
 ﻿---
 agent: ecosysteem-beschrijver
 template_naam: beschrijf-ecosysteem-value-streams-agents

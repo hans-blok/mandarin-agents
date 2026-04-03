@@ -3,8 +3,9 @@ agent: core-framework-architect
 value_stream: aod
 value_stream_fase: aod.02
 versie: 1.3.0
+digest: ee5f
+status: vers
 ---
-
 # Agent Boundary: Core-framework-architect
 
 **agent-naam**: core-framework-architect

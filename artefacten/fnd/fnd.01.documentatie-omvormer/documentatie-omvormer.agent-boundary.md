@@ -4,8 +4,9 @@ value_stream: fnd
 value_stream_fase: fnd.01
 kaderdefinities: geen
 versie: 1.0.0
+digest: 88ec
+status: vers
 ---
-
 # Agent Boundary: Documentatie-omvormer
 
 **agent-naam**: documentatie-omvormer  

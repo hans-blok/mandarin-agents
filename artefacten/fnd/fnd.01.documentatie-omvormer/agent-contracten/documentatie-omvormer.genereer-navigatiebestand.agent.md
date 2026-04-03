@@ -2,8 +2,9 @@
 agent: documentatie-omvormer
 intent: genereer-navigatiebestand
 versie: 1.0.0
+digest: f565
+status: vers
 ---
-
 # Documentatie-omvormer — Genereer Navigatiebestand
 
 ## Rolbeschrijving (korte samenvatting)

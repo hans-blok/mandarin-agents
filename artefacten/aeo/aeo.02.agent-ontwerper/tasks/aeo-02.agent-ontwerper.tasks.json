@@ -25,13 +25,7 @@
         "artefacten/aeo/aeo.02.agent-ontwerper/runner/agent-ontwerper.runner.py",
         "definieer-agent-contract",
         "--agent-naam",
-        "${input:in_agent_ontwerper_definieer_agent_contract_agent_naam}",
-        "--intent-naam",
-        "${input:in_agent_ontwerper_definieer_agent_contract_intent_naam}",
-        "--template-file",
-        "${input:in_agent_ontwerper_definieer_agent_contract_template_file}",
-        "--referenties",
-        "${input:in_agent_ontwerper_definieer_agent_contract_referenties}"
+        "${input:in_agent_ontwerper_definieer_agent_contract_agent_naam}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -47,11 +41,7 @@
         "artefacten/aeo/aeo.02.agent-ontwerper/runner/agent-ontwerper.runner.py",
         "definieer-agent-template",
         "--agent-naam",
-        "${input:in_agent_ontwerper_definieer_agent_template_agent_naam}",
-        "--intent",
-        "${input:in_agent_ontwerper_definieer_agent_template_intent}",
-        "--file-naam-inspiratie",
-        "${input:in_agent_ontwerper_definieer_agent_template_file_naam_inspiratie}"
+        "${input:in_agent_ontwerper_definieer_agent_template_agent_naam}"
       ],
       "problemMatcher": [],
       "presentation": {
@@ -72,34 +62,9 @@
       "description": "Agent naam (kebab-case, bijv. hypothese-vormer)"
     },
     {
-      "id": "in_agent_ontwerper_definieer_agent_contract_intent_naam",
-      "type": "promptString",
-      "description": "Intent naam (optioneel; leeg = alle intents in boundary)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_contract_template_file",
-      "type": "promptString",
-      "description": "Override voor contract template (optioneel, leeg = standaard template)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_contract_referenties",
-      "type": "promptString",
-      "description": "Komma-gescheiden referentiedocumenten (optioneel)"
-    },
-    {
       "id": "in_agent_ontwerper_definieer_agent_template_agent_naam",
       "type": "promptString",
       "description": "Agent naam (kebab-case, bijv. hypothese-vormer)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_template_intent",
-      "type": "promptString",
-      "description": "Filter op intent naam (optioneel; leeg = alle intents in boundary)"
-    },
-    {
-      "id": "in_agent_ontwerper_definieer_agent_template_file_naam_inspiratie",
-      "type": "promptString",
-      "description": "Bestand in temp/ als inspiratie voor templatestructuur (optioneel)"
     }
   ]
 }

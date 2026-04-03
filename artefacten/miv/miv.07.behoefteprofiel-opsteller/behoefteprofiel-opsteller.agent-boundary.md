@@ -4,8 +4,9 @@ value_stream: miv
 value_stream_fase: miv.07
 kaderdefinities: geen
 versie: 1.0.0
+digest: eef8
+status: vers
 ---
-
 # Agent Boundary: Behoefteprofiel-opsteller
 
 **agent-naam**: behoefteprofiel-opsteller  

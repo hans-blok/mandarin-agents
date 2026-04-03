@@ -5,8 +5,9 @@ domein: Ecosysteem-lifecycle
 value_stream: fnd
 value_stream_fase: fnd.01
 governance: Volgt beleid-workspace.md en doctrine-agent-charter-normering.md
+digest: 421d
+status: vers
 ---
-
 # Agent Charter - ecosysteem-coordinator
 
 **Agent-ID**: `fnd.01.ecosysteem-coordinator`  

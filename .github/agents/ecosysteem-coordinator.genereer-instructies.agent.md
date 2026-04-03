@@ -2,8 +2,9 @@
 agent: ecosysteem-coordinator
 intent: genereer-instructies
 versie: 1.0.0
+digest: 53cd
+status: vers
 ---
-
 # Ecosysteem-coordinator — Genereer Instructies
 
 ## Rolbeschrijving (korte samenvatting)

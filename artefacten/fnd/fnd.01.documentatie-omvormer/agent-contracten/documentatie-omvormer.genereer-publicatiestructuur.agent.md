@@ -2,8 +2,9 @@
 agent: documentatie-omvormer
 intent: genereer-publicatiestructuur
 versie: 1.0.0
+digest: f8b7
+status: vers
 ---
-
 # Documentatie-omvormer — Genereer Publicatiestructuur
 
 ## Rolbeschrijving (korte samenvatting)

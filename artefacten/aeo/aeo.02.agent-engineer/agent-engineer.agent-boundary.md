@@ -3,8 +3,9 @@ agent: agent-engineer
 value_stream: aeo
 value_stream_fase: aeo.02
 versie: 1.0.0
+digest: 8532
+status: vers
 ---
-
 # Agent Boundary: Agent-engineer
 
 **agent-naam**: agent-engineer  

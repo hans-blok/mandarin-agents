@@ -4,8 +4,9 @@ versie: 1.0.0
 domein: Ecosysteemcontrole en canonieke consistentieborging
 value_stream: Agent Ecosysteem Ontwikkeling (aeo)
 governance: Volgt beleid-workspace.md (inclusief canon-raadpleging zoals daar vastgelegd) en doctrine-agent-charter-normering.md; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
+digest: 48a8
+status: vers
 ---
-
 # Agent Charter - agent-curator
 
 **Agent-ID**: `aeo.02.agent-curator`  

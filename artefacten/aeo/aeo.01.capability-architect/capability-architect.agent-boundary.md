@@ -4,8 +4,9 @@ value_stream: aeo
 value_stream_fase: aeo.01
 kaderdefinities: geen
 versie: 1.1.0
+digest: 7b01
+status: vers
 ---
-
 # Agent Boundary: Capability-architect
 
 **agent-naam**: capability-architect  

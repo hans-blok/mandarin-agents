@@ -65,6 +65,15 @@ Andere domeinen vallen buiten deze workspace en horen in andere repositories. Vo
 - **Strategische analyse**: Marktonderzoek, business cases en investeringsbeslissingen horen in MIV-workspaces (Markt- en Investeringsvorming)
 - **Infrastructuur en tooling**: Server-configuratie, deployment-pipelines en basis-tooling horen in FND-workspaces (Foundation)
 
+## Convention over Configuration
+
+Deze workspace hanteert het principe **Convention over Configuration** (*charter-driven self-discovery*):
+
+- **Minimale invoer**: Agents en runners verwachten alleen de strikt noodzakelijke parameters van de gebruiker (typisch alleen `agent_naam`).
+- **Automatische ontdekking**: Alle overige artefacten — boundary, charter, templates, intents, referenties — worden automatisch afgeleid uit de folder-structuur en naamconventies.
+- **Charter als beleidsbron**: Het charter van een agent bepaalt welke artefacten relevant zijn voor die agent. De boundary bepaalt welke intents bestaan.
+- **Geen redundante invoer**: Parameters die uit conventie of charter af te leiden zijn, worden niet aan de gebruiker gevraagd.
+
 ## Workspace-specifieke aanvullingen
 
 - **Agent-naamgeving**: Alle agents volgen de conventie `{value-stream}.{fase}.{agent-naam}` voor folder-structuur en een lowercase-hyphen-separated naamgeving voor agent-namen

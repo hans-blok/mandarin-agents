@@ -25,7 +25,7 @@ FASE = "01"
 
 def get_workspace_root() -> Path:
     """Detecteer workspace root relatief aan dit script, met fallback naar cwd."""
-    candidate = Path(__file__).resolve().parent.parent.parent.parent
+    candidate = Path(__file__).resolve().parent.parent.parent.parent.parent
     if (candidate / "artefacten").exists():
         return candidate
     return Path.cwd()

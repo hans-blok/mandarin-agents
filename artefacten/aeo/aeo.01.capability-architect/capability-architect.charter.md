@@ -1,3 +1,9 @@
+---
+agent: capability-architect
+versie: 0.1.0
+digest: ae6e
+status: vers
+---
 ﻿---
 agent: capability-architect
 versie: 1.5.0

@@ -4,8 +4,9 @@ template_naam: definieer-architectuur-keuze-document
 versie: 1.0.0
 output_type: document
 doel: Legt een architectuurkeuze gestructureerd vast met context, opties, afwegingen, advies en consequenties — vergelijkbaar met een ADR maar zonder het formele besluit (dat wordt door een andere agent of stakeholder genomen).
+digest: 55b0
+status: vers
 ---
-
 # Template: Architectuur-keuze-document
 
 ## Doel en gebruik

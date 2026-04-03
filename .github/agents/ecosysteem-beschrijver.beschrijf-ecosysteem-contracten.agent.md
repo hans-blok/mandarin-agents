@@ -2,8 +2,9 @@
 agent: ecosysteem-beschrijver
 intent: beschrijf-ecosysteem-contracten
 versie: 1.0.0
+digest: 1a38
+status: vers
 ---
-
 # Ecosysteem-beschrijver — Beschrijf Ecosysteem Contracten
 
 ## Rolbeschrijving (korte samenvatting)

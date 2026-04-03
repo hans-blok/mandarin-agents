@@ -5,8 +5,9 @@ domein: Canon-governance en grondslag-kwaliteitsbewaking
 value_stream_fase: aeo.01
 kaderdefinities: geen
 governance: Volgt beleid-workspace.md (inclusief canon-raadpleging zoals daar vastgelegd) en doctrine-agent-charter-normering.md
+digest: a878
+status: vers
 ---
-
 # Agent Charter - Canon-curator
 
 **Agent-ID**: `aeo.01.canon-curator`  

@@ -3,8 +3,9 @@ agent: concept-curator
 value_stream: fnd
 value_stream_fase: fnd.02
 versie: 1.0.0
+digest: 251c
+status: vers
 ---
-
 # Agent Boundary: Concept Curator
 
 **agent-naam**: concept-curator

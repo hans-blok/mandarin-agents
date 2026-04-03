@@ -2,8 +2,9 @@
 agent: ecosysteem-beschrijver
 intent: beschrijf-agent-positionering
 versie: 1.0.0
+digest: fbbc
+status: vers
 ---
-
 # Ecosysteem-beschrijver — Beschrijf Agent Positionering
 
 ## Rolbeschrijving (korte samenvatting)

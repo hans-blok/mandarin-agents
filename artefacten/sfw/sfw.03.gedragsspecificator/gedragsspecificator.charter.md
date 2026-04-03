@@ -1,3 +1,9 @@
+---
+agent: gedragsspecificator
+versie: 0.1.0
+digest: db0e
+status: vers
+---
 # Agent Charter - gedragsspecificator
 
 **Agent-ID**: `sfw.03.gedragsspecificator`

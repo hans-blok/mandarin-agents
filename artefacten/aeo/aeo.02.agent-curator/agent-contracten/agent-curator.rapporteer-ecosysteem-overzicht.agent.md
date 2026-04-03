@@ -2,8 +2,9 @@
 agent: agent-curator
 intent: rapporteer-ecosysteem-overzicht
 versie: 1.0.0
+digest: b4b8
+status: vers
 ---
-
 # Agent-curator — Rapporteer Ecosysteem Overzicht
 
 ## Rolbeschrijving (korte samenvatting)

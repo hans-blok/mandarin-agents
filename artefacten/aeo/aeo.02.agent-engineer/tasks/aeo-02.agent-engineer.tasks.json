@@ -56,6 +56,21 @@
         "reveal": "always",
         "panel": "shared"
       }
+    },
+    {
+      "label": "aeo.02 - agent-engineer: pipeline",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/aeo/aeo.02.agent-engineer/runner/agent-engineer.runner.py",
+        "pipeline",
+        "${input:in_agent_engineer_pipeline_agent}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
     }
   ],
   "inputs": [
@@ -93,6 +108,11 @@
       "id": "in_agent_engineer_realiseer_agent_taskconfiguratie_agent_naam",
       "type": "promptString",
       "description": "Naam van de agent waarvoor tasks worden gerealiseerd"
+    },
+    {
+      "id": "in_agent_engineer_pipeline_agent",
+      "type": "promptString",
+      "description": "Agent naam voor pipeline"
     }
   ]
 }

@@ -1,4 +1,9 @@
-
+---
+agent: gedragsspecificator
+versie: 0.1.0
+digest: edaa
+status: vers
+---
 # Gedragsspecificatie voor {Feature/Capability Naam}
 
 > **Repository Synchronisatie**: Voer altijd eerst een `git pull` uit op de `mandarin-agents` repository (`https://github.com/hans-blok/mandarin-agents.git`) voordat je deze specificatie opstelt of gebruikt. Zo werk je gegarandeerd met de meest actuele brondata en instructies.

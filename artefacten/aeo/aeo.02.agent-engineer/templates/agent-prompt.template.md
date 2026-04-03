@@ -3,8 +3,9 @@ agent: agent-engineer
 intent: realiseer-agent-prompts
 versie: 1.0.0
 # Template voor minimalistische agent prompts (uitsluitend YAML)
+digest: 90f9
+status: vers
 ---
-
 ---
 # Prompt Metadata (placeholders invullen)
 agent: mandarin.{agent-naam}

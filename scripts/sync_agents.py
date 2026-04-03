@@ -63,6 +63,41 @@ def extract_value_stream_from_path(agent_path):
         return parts[0]
     return "utility"
 
+
+def refresh_agent_engineer_tasks(workspace_root):
+    """Herbouw agent-engineer taskbron voordat aggregatie plaatsvindt."""
+    runner_path = workspace_root / "artefacten" / "aeo" / "aeo.02.agent-engineer" / "runner" / "agent-engineer.runner.py"
+    if not runner_path.exists():
+        print(f"[Waarschuwing] agent-engineer runner niet gevonden: {runner_path}")
+        return False
+
+    env = os.environ.copy()
+    env["PYTHONIOENCODING"] = "utf-8"
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(runner_path),
+            "realiseer-agent-taskconfiguratie",
+            "--agent-naam",
+            "agent-engineer",
+        ],
+        cwd=str(workspace_root),
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    if result.returncode == 0:
+        print("  ✓ agent-engineer taskbron ververst")
+        return True
+
+    print("  ✗ Fout bij verversen agent-engineer taskbron")
+    if result.stderr:
+        print(result.stderr.strip())
+    elif result.stdout:
+        print(result.stdout.strip())
+    return False
+
 def main():
     """Synchroniseer alle agent assets en genereer agents.yaml."""
     print("[sync_agents] Start synchronisatie...")
@@ -192,7 +227,12 @@ def main():
         build_agents_yaml(agents_data, agents_yaml_path)
         print()
     
-    # 5. Aggregeer tasks via ecosysteem-coordinator
+    # 5. Ververs agent-engineer taskbron zodat aggregatie altijd vanuit actuele bron vertrekt
+    print("[Info] Ververs agent-engineer taskbron...")
+    refresh_agent_engineer_tasks(workspace_root)
+    print()
+
+    # 6. Aggregeer tasks via ecosysteem-coordinator
     print("[Info] Aggregeer tasks naar .vscode/tasks.json...")
     runner_path = workspace_root / "artefacten" / "fnd" / "fnd.01.ecosysteem-coordinator" / "runner" / "ecosysteem-coordinator.runner.py"
     if runner_path.exists():

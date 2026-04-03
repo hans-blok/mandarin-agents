@@ -2,8 +2,9 @@
 agent: agent-ontwerper
 intent: definieer-agent-template
 versie: 1.0.0
+digest: 286a
+status: vers
 ---
-
 # Agent-ontwerper — Definieer Agent Template
 
 ## Rolbeschrijving (korte samenvatting)

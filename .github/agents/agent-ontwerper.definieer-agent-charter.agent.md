@@ -2,8 +2,9 @@
 agent: agent-ontwerper
 intent: definieer-agent-charter
 versie: 1.0.0
+digest: f363
+status: vers
 ---
-
 # Agent-ontwerper — Definieer Agent Charter
 
 ## Rolbeschrijving (korte samenvatting)

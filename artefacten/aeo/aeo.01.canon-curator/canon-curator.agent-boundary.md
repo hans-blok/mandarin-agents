@@ -4,8 +4,9 @@ value_stream: aeo
 value_stream_fase: aeo.01
 kaderdefinities: geen
 versie: 1.0.0
+digest: afaa
+status: vers
 ---
-
 # Agent Boundary: Canon-curator
 
 **agent-naam**: canon-curator  

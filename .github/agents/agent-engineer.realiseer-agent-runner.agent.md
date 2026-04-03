@@ -2,8 +2,9 @@
 agent: agent-engineer
 intent: realiseer-agent-runner
 versie: 1.2.0
+digest: d4ac
+status: vers
 ---
-
 # Agent-engineer — Realiseer Agent Runner
 
 ## Rolbeschrijving (korte samenvatting)

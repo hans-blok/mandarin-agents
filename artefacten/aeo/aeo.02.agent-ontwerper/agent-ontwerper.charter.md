@@ -4,8 +4,9 @@ versie: 1.2.0
 domein: Agent-identiteitsconstitutie
 value_stream: Agent Ecosysteem Ontwikkeling (aeo)
 governance: Volgt beleid-workspace.md (inclusief canon-raadpleging zoals daar vastgelegd) en doctrine-agent-charter-normering.md; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
+digest: aee6
+status: vers
 ---
-
 # Agent Charter - agent-ontwerper
 
 **Agent-ID**: `aeo.02.agent-ontwerper`  

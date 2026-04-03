@@ -1,5 +1,7 @@
 ---
 hypothese_code: {hypothese_code}
+digest: 4b78
+status: vers
 ---
 # Template: definieer-thematische-scope
 

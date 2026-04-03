@@ -3,8 +3,9 @@ template: mkdocs-yml
 versie: 1.0.0
 agent: documentatie-omvormer
 doel: Template voor genereren van mkdocs.yml configuratiebestanden
+digest: e8d9
+status: vers
 ---
-
 # MkDocs Configuration Template
 
 Dit template wordt gebruikt door de documentatie-omvormer om mkdocs.yml bestanden te genereren.

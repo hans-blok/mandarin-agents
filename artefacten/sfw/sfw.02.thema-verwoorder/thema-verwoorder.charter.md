@@ -1,3 +1,9 @@
+---
+agent: thema-verwoorder
+versie: 0.1.0
+digest: 2b19
+status: vers
+---
 # Bootstrap-Header
 
 - Constitutie:

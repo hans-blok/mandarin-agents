@@ -4,8 +4,9 @@ template_naam: beschrijf-ecosysteem-artefacten
 versie: 1.0.0
 output_type: document
 doel: Inventariseert alle aanwezige artefacten in het agent-ecosysteem per agent — welke bestanden aanwezig zijn, van welk type, op welk pad — volledig feitelijk.
+digest: 4994
+status: vers
 ---
-
 # Template: Ecosysteem Artefacten-inventaris
 
 ## Doel en gebruik

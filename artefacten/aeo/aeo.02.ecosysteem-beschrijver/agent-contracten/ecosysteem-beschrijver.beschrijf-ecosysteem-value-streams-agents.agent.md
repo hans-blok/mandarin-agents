@@ -2,8 +2,9 @@
 agent: ecosysteem-beschrijver
 intent: beschrijf-ecosysteem-value-streams-agents
 versie: 1.0.0
+digest: 9d40
+status: vers
 ---
-
 # Ecosysteem-beschrijver — Beschrijf Ecosysteem Value Streams & Agents
 
 ## Rolbeschrijving (korte samenvatting)

@@ -4,8 +4,9 @@ template_naam: ecosysteem-overzicht
 versie: 1.0.0
 output_type: document
 doel: Overzichtsdocument van alle agents in het ecosysteem met hun status, artefactenvolledigheid en canonieke consistentie — primair bedoeld voor human-in-the-loop sturing.
+digest: d02d
+status: vers
 ---
-
 # Template: Ecosysteem-overzicht
 
 ## Doel en gebruik

@@ -1,3 +1,9 @@
+---
+agent: core-framework-architect
+versie: 0.1.0
+digest: ac88
+status: vers
+---
 # {ecosysteem_naam} — Totaal Architectuur View
 
 **Versie**: {versie}  

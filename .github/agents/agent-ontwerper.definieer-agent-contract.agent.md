@@ -2,8 +2,9 @@
 agent: agent-ontwerper
 intent: definieer-agent-contract
 versie: 1.0.0
+digest: 18e9
+status: vers
 ---
-
 # Agent-ontwerper — Definieer Agent Contract
 
 ## Rolbeschrijving (korte samenvatting)

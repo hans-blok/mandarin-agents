@@ -5,8 +5,9 @@ versie: 1.2.0
 herkomstpositie: voortbouwend
 output_type: document
 doel: Beschrijft de positionering van een agent als context diagram — wie roept de agent aan, welke externe diensten gebruikt de agent.
+digest: becc
+status: vers
 ---
-
 # Template: Agent Positionering — Context Diagram
 
 ## Doel en gebruik

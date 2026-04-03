@@ -5,9 +5,9 @@ versie: 1.1.0
 # Template voor het definiëren van agent boundaries.
 # Definieert de servicegrens: wat de agent wél en níet doet.
 # Validatie en beoordeling van overlap/kwaliteit wordt gedaan door Agent Curator.
+digest: b490
+status: vers
 ---
-
-
 # Agent Boundary Document Template
 
 Dit template beschrijft de OUTPUT van de capability-architect.

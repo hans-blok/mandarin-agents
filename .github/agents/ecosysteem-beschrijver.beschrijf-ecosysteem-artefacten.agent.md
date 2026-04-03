@@ -2,8 +2,9 @@
 agent: ecosysteem-beschrijver
 intent: beschrijf-ecosysteem-artefacten
 versie: 1.0.0
+digest: f8ae
+status: vers
 ---
-
 # Ecosysteem-beschrijver — Beschrijf Ecosysteem Artefacten
 
 ## Rolbeschrijving (korte samenvatting)

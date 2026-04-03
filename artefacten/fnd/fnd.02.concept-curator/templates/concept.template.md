@@ -1,4 +1,9 @@
-
+---
+agent: concept-curator
+versie: 0.1.0
+digest: 33d6
+status: vers
+---
 ## {{Conceptnaam}}
 
 ### Definitie 

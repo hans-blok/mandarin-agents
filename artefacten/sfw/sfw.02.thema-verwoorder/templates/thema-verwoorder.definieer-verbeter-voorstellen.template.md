@@ -1,3 +1,9 @@
+---
+agent: thema-verwoorder
+versie: 0.1.0
+digest: d534
+status: vers
+---
 # Verbetervoorstellen: {thema_code}
 
 ## Broncontext

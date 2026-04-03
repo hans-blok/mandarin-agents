@@ -4,8 +4,9 @@ versie: 1.0.0
 domein: Hypothese-formulering en besluitvorbereiding
 value_stream: Software Product Development
 governance: Volgt beleid-workspace.md en doctrine-agent-charter-normering.md
+digest: d15e
+status: vers
 ---
-
 # Agent Charter - hypothese-vormer
 
 **Agent-ID**: `sfw.01.hypothese-vormer`  

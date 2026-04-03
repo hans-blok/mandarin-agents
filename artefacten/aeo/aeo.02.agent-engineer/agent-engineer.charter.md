@@ -1,3 +1,9 @@
+---
+agent: agent-engineer
+versie: 0.1.0
+digest: a9e3
+status: vers
+---
 # Agent Charter - agent-engineer
 
 **Agent-ID**: `aeo.02.agent-engineer`  

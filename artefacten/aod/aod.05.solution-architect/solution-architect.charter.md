@@ -1,3 +1,9 @@
+---
+agent: solution-architect
+versie: 0.1.0
+digest: 5248
+status: vers
+---
 # Agent Charter - solution-architect
 
 **Agent-ID**: `aod.05.solution-architect`  

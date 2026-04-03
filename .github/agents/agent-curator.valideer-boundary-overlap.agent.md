@@ -2,8 +2,9 @@
 agent: agent-curator
 intent: valideer-boundary-overlap
 versie: 1.0.0
+digest: dedc
+status: vers
 ---
-
 # Agent-curator — Valideer Boundary Overlap
 
 ## Rolbeschrijving (korte samenvatting)

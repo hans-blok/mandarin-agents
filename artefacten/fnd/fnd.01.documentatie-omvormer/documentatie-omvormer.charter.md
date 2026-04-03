@@ -5,8 +5,9 @@ domein: Documentatie-representatie
 value_stream: Fundamental Infrastructure (fnd)
 kaderdefinities: geen
 governance: Volgt beleid-workspace.md en doctrine-agent-charter-normering.md
+digest: db93
+status: vers
 ---
-
 # Agent Charter - documentatie-omvormer
 
 **Agent-ID**: `fnd.01.documentatie-omvormer`  

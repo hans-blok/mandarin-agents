@@ -1,3 +1,9 @@
+---
+agent: core-framework-architect
+versie: 0.1.0
+digest: 57bd
+status: vers
+---
 # Agent Charter - core-framework-architect
 
 **Agent-ID**: `aod.02.core-framework-architect`  

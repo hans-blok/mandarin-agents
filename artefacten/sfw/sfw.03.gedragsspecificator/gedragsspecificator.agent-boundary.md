@@ -3,8 +3,9 @@ agent: gedragsspecificator
 value_stream: sfw
 value_stream_fase: sfw.03
 versie: 1.0.0
+digest: c22c
+status: vers
 ---
-
 # Agent Boundary: gedragsspecificator
 
 agent-naam: gedragsspecificator

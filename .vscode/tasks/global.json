@@ -11,6 +11,35 @@
       }
     },
     {
+      "label": "Artefact Digest: verify",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "scripts/artefact_digest.py",
+        "verify",
+        "--verbose"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Artefact Digest: update (alle bestanden)",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "scripts/artefact_digest.py",
+        "update"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
       "label": "Agent: Execute (Generate + Save)",
       "type": "process",
       "command": "powershell",

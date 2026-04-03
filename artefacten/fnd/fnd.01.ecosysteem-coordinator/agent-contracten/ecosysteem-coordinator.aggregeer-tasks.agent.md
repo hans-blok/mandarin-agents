@@ -2,8 +2,9 @@
 agent: ecosysteem-coordinator
 intent: aggregeer-tasks
 versie: 1.1.0
+digest: a329
+status: vers
 ---
-
 # Ecosysteem-coordinator — Aggregeer Tasks
 
 ## Rolbeschrijving (korte samenvatting)

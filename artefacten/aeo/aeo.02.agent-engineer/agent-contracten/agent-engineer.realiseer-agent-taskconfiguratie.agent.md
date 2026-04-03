@@ -2,8 +2,9 @@
 agent: agent-engineer
 intent: realiseer-agent-taskconfiguratie
 versie: 1.1.0
+digest: 0e61
+status: vers
 ---
-
 # Agent-engineer — Realiseer Agent Taskconfiguratie
 
 ## Rolbeschrijving (korte samenvatting)
