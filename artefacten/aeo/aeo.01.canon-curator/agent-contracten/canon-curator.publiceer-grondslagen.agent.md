@@ -2,14 +2,14 @@
 agent: canon-curator
 intent: publiceer-grondslagen
 versie: 1.0.0
-digest: 5278
+digest: 98c3
 status: vers
 ---
 # Canon-curator — Publiceer Grondslagen
 
 ## Rolbeschrijving (korte samenvatting)
 
-De Canon-curator scant de volledige `grondslagen/` map van de canon-workspace en genereert een machineleesbaar register als `grondslagen.json`, gevalideerd tegen `grondslagen.schema.json`. De uitvoering is volledig programmatisch — zonder LLM-consultatie.
+De Canon-curator scant de volledige `grondslagen/` map van de canon-workspace en genereert een machineleesbaar register als `grondslagen/grondslagen.json`, gevalideerd tegen `grondslagen.schema.json`. De uitvoering is volledig deterministisch en programmatisch — zonder LLM-consultatie of inferentie.
 
 **VERPLICHT**: Raadpleeg de agent charter voor volledige context, grenzen en werkwijze.  
 **Conventie**: Charter bevindt zich in `canon-curator.charter.md` in de parent folder van dit contract.
@@ -24,44 +24,68 @@ De Canon-curator scant de volledige `grondslagen/` map van de canon-workspace en
 - `canon_pad`: Pad naar mandarin-canon workspace (resolved als sibling van repo-root)
 - `grondslagen_dir`: `{canon_pad}/grondslagen/`
 - `schema_pad`: `{canon_pad}/grondslagen.schema.json`
-- `output_pad`: `{canon_pad}/grondslagen.json`
+- `output_pad`: `{canon_pad}/grondslagen/grondslagen.json`
 
 ### Output (wat komt eruit)
 
 De Canon-curator levert:
-- **`grondslagen.json`** in de canon-workspace root, conform `grondslagen.schema.json`:
-  - `metadata`: publicatie_timestamp, publicatie_datum, versie, aantal_grondslagen, generator, canon_pad
-  - `grondslagen`: gesorteerde array van entries, elk met:
-    - `bron`: relatief pad t.o.v. canon-root (bijv. `grondslagen/.algemeen/doctrine-traceability.md`)
-    - `scope`: `algemeen` | `{vs}` | `{vs}.{fase}` (afgeleid uit mapstructuur)
-    - `type`: `doctrine` | `constitutie` | `beleid` | `normering` | `kaderdefinitie` | `concept`
-    - `titel`: eerste `# H1` header uit het bestand (fallback: bestandsnaam, getiteld)
-    - `versie`: uit YAML frontmatter van het bestand (leeg indien absent)
-    - `digest`: 4-karakter MD5-digest uit YAML frontmatter (leeg indien absent)
-    - `status`: `vers` | `muf` | `rot` uit YAML frontmatter (leeg indien absent)
+- **`grondslagen/grondslagen.json`** in de canon-workspace, conform `grondslagen.schema.json`, met een genormaliseerde structuur:
+  - `versie`: Versienummer van de publicatie
+  - `gegenereerd`: ISO 8601 timestamp (UTC) van het moment van generatie
+  - `algemeen`: Grondslagen die ecosysteem-breed gelden (`.algemeen/`, `value-streams/`, `kaderdefinities/`, e.d.)
+  - `value_streams`: Object per value stream (sleutel = VS-code in hoofdletters, bijv. `AEO`), elk met:
+    - `code`: VS-code
+    - `naam`: Volledige naam (voor bekende VS-codes)
+    - `grondslagen`: Bestanden direct in `{vs}/` (zonder fase-subfolder)
+    - `fasen`: Object per fasecode (`01`, `02`, ...), elk met `code` en `grondslagen[]`
 
-**Scope-afleiding** (op basis van relatief pad t.o.v. `grondslagen/`):
+  Elk grondslag-entry bevat:
+  - `naam`: Bestandsnaam (bijv. `doctrine-traceability.md`)
+  - `pad`: Relatief pad t.o.v. `grondslagen/` (bijv. `.algemeen/doctrine-traceability.md`)
+  - `type`: Zie type-afleiding tabel hieronder
+  - `titel`: Eerste `# H1` header uit het bestand (fallback: bestandsnaam, getiteld)
+  - `digest_header`: Digest zoals opgeslagen in de YAML frontmatter (`"0000"` als absent)
+  - `digest_berekend`: Live berekende MD5-digest van de body op moment van publicatie
+  - `status_header`: Status zoals vermeld in de YAML frontmatter — dit is een feitelijke rapportage van wat het bestand claimt, geen oordeel over inhoudelijke kwaliteit
 
-| Pad-patroon | Scope |
+> **Let op**: `publiceer-grondslagen` rapporteert feiten — geen oordelen. Wanneer `digest_header ≠ digest_berekend` spreekt men van *drift*: het bestand is gewijzigd na de laatste digest-registratie. Het oordeel of dit een inconsistentie of probleem vormt is de verantwoordelijkheid van de `valideer-grondslag-consistentie` intent.
+
+**Classificatie-regels**:
+
+| Pad-patroon (t.o.v. `grondslagen/`) | Bucket in JSON |
 |---|---|
-| `.algemeen/...` | `algemeen` |
-| `{vs}/...` (geen subfase-subfolder) | `{vs}` (bijv. `aeo`) |
-| `{vs}/{vs}.{nr}.*/...` | `{vs}.{nr}` (bijv. `aeo.03`) |
+| `.algemeen/...` | `algemeen[]` |
+| `value-streams/...` | `algemeen[]` |
+| `kaderdefinities/...` | `algemeen[]` |
+| `{vs}/bestand.md` (geen fase-subfolder) | `value_streams[VS].grondslagen[]` |
+| `{vs}/{vs}.{NN}.*/bestand.md` | `value_streams[VS].fasen[NN].grondslagen[]` |
 
-**Type-afleiding** (op basis van bestandsnaam):
+VS-herkenning: eerste padsegment matcht `^[a-z]{2,5}$` (geen punt, geen koppelteken).
+
+**Type-afleiding** (op basis van pad en bestandsnaam):
 
 | Patroon | Type |
 |---|---|
-| `*doctrine*` | `doctrine` |
-| `*constitutie*` | `constitutie` |
-| `*beleid*` | `beleid` |
-| `*normering*` of `*checklist*` | `normering` |
-| `*kaderdefinitie*` | `kaderdefinitie` |
-| overig | `concept` |
+| pad begint met `value-streams/` of naam bevat `value-stream` | `value-stream` |
+| pad begint met `kaderdefinities/` of naam bevat `kaderdefinitie` | `kaderdefinitie` |
+| naam bevat `doctrine` | `doctrine` |
+| naam bevat `constitutie` | `constitutie` |
+| naam bevat `concepten` | `concepten` |
+| naam bevat `checklist` | `checklist` |
+| overig | `grondslag` |
 
-**Deliverable bestand**: `{canon_pad}/grondslagen.json`
+**Digest-semantiek**:
 
-**VERPLICHT**: Het bestand wordt programmatisch gegenereerd door de runner en weggeschreven naar de canon-workspace root. Een bestaand `grondslagen.json` wordt overschreven zonder bevestiging.
+| Situatie | `digest_header` | `status_header` |
+|---|---|---|
+| Frontmatter `digest` aanwezig | waarde uit frontmatter | waarde uit frontmatter `status` |
+| Frontmatter `digest` absent of leeg | `0000` (sentinel) | `rot` (fallback) |
+
+Wanneer `digest_header ≠ digest_berekend` is er sprake van *drift*: het bestand is gewijzigd na de laatste digest-registratie. Dit is een signaalgegeven voor `valideer-grondslag-consistentie` — geen oordeel.
+
+**Deliverable bestand**: `{canon_pad}/grondslagen/grondslagen.json`
+
+**VERPLICHT**: Het bestand wordt deterministisch gegenereerd door de runner (geen LLM, geen inferentie) en weggeschreven naar `grondslagen/grondslagen.json` in de canon-workspace. Een bestaand bestand wordt overschreven zonder bevestiging.
 
 **Formaat-normering**:
 - JSON, conform `grondslagen.schema.json`

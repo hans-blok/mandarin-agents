@@ -3,7 +3,7 @@ template: mkdocs-yml
 versie: 1.0.0
 agent: documentatie-omvormer
 doel: Template voor genereren van mkdocs.yml configuratiebestanden
-digest: e8d9
+digest: 7d3a
 status: vers
 ---
 # MkDocs Configuration Template
@@ -98,6 +98,7 @@ theme:
 # 4. Custom Styling
 # ------------------------------------------------------------
 extra_css:
+  - assets/stylesheets/responsive.css
 {{#each extra_css}}
   - {{this}}
 {{/each}}

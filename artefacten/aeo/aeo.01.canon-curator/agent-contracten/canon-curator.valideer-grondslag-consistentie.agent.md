@@ -2,14 +2,14 @@
 agent: canon-curator
 intent: valideer-grondslag-consistentie
 versie: 1.0.0
-digest: 307c
+digest: c514
 status: vers
 ---
 # Canon-curator — Valideer Grondslag-consistentie
 
 ## Rolbeschrijving (korte samenvatting)
 
-De Canon-curator toetst grondslag-artefacten op interne consistentie door contradicterende bepalingen, dode verwijzingen en structurele conflicten tussen canonieke documenten te identificeren, en levert bij elke bevinding een inhoudelijk verbetervoorstel.
+De Canon-curator toetst grondslag-artefacten op interne consistentie door contradicterende bepalingen, dode verwijzingen en structurele conflicten tussen canonieke documenten te identificeren, en levert bij elke bevinding een inhoudelijk verbetervoorstel. **Deze intent levert het oordeel over de inhoudelijke kwaliteit van grondslag-artefacten.** Het `grondslagen/grondslagen.json` register (gegenereerd door `publiceer-grondslagen`) dient als signaalbron: artefacten met digest-drift (`digest_header ≠ digest_berekend`) zijn de meest waarschijnlijke kandidaten voor nader onderzoek.
 
 **VERPLICHT**: Raadpleeg de agent charter voor volledige context, grenzen en werkwijze.  
 **Conventie**: Charter bevindt zich in `canon-curator.charter.md` in de parent folder van dit contract.
@@ -24,6 +24,7 @@ De Canon-curator toetst grondslag-artefacten op interne consistentie door contra
 **Optionele parameters**:
 - ernst-filter: Minimaal ernst-niveau om te rapporteren (type: string, waarden: "kritiek", "hoog", "midden", "laag", default: alle niveaus).
 - referentie-set: Expliciete lijst van canonieke normen om tegen te toetsen (type: list[string], default: alle van toepassing zijnde grondslagen binnen de scope).
+- grondslagen-register: Pad naar `grondslagen/grondslagen.json` (type: string, default: automatisch opgelost via canon-pad). Wanneer opgegeven, worden artefacten met digest-drift (`digest_header ≠ digest_berekend`) bij voorkeur als eerste getoetst — zij zijn gewijzigd na de laatste digest-registratie en daarmee de meest waarschijnlijke bronnen van nieuwe inconsistentie.
 
 **Afgeleide informatie** (automatisch gedetecteerd):
 - value_stream_fase: `aeo.01` (vast voor canon-curator)

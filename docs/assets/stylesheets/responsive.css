@@ -1,0 +1,25 @@
+/* ============================================================
+   Responsive overrides — Mandarin publicatie
+   Eigendom: Publicatie Steward
+   Doel: Correcte weergave op smallere schermen (mobiel, tablet)
+   ============================================================ */
+
+/* Tabellen: horizontaal scrollen als te breed voor scherm */
+.md-typeset table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Afbeeldingen nooit breder dan de container */
+.md-typeset img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Mermaid-diagrammen: horizontaal scrollen als te breed */
+.md-typeset .mermaid,
+.md-typeset [class^="mermaid"] {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}

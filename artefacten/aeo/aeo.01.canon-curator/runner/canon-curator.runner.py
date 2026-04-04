@@ -14,12 +14,13 @@ Deze runner delegeert execution-file generatie aan ecosysteem-coordinator.runner
 
 from pathlib import Path
 import argparse
+import hashlib
 import json
 import os
 import re
 import subprocess
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 TARGET_AGENT = 'canon-curator'
@@ -111,46 +112,105 @@ def extract_title(body: str) -> str:
     return ""
 
 
-def infer_scope(rel_path: str) -> str:
-    """Leid scope af uit het relatieve pad t.o.v. grondslagen/.
+# Bekende value stream codes en namen
+_VS_NAMEN: dict[str, str] = {
+    "AEO": "Agent Ecosysteem Ontwikkeling",
+    "AOD": "Architectuur Ontwerp & Documentatie",
+    "FND": "Fundament",
+    "MIV": "Markt en Inkoop Verkenning",
+    "SFW": "Software",
+}
 
-    .algemeen/... -> "algemeen"
-    aeo/...       -> "aeo"
-    aeo/aeo.03.*/ -> "aeo.03"
+
+def classify_path(rel_to_grondslagen: str) -> tuple:
+    """Classificeer een pad t.o.v. grondslagen/ in een van drie buckets.
+
+    Returns:
+        ('algemeen',)              — algemeen[] array
+        ('vs', 'AEO')              — value_streams[VS].grondslagen[]
+        ('fase', 'AEO', '03')      — value_streams[VS].fasen[NN].grondslagen[]
     """
-    parts = rel_path.replace("\\", "/").split("/")
-    if not parts:
-        return "algemeen"
+    parts = rel_to_grondslagen.replace("\\", "/").split("/")
     first = parts[0]
-    if first == ".algemeen":
-        return "algemeen"
-    vs = first
-    if len(parts) >= 2:
-        subfolder = parts[1]
-        subparts = subfolder.split(".", 2)
-        if len(subparts) >= 2 and subparts[0] == vs:
-            return f"{vs}.{subparts[1]}"
-    return vs
+
+    # .algemeen/ of thematische mappen zonder VS-code (value-streams/, kaderdefinities/, ...)
+    if first.startswith(".") or not re.match(r'^[a-z]{2,5}$', first):
+        return ("algemeen",)
+
+    vs_code = first.upper()
+
+    # Fase-submap: aeo/aeo.03.automatisering-en-pipeline/...
+    if len(parts) >= 3:
+        second = parts[1]
+        m = re.match(rf'^{re.escape(first)}\.([0-9]{{2}})\.',  second)
+        if m:
+            return ("fase", vs_code, m.group(1))
+
+    return ("vs", vs_code)
 
 
-def infer_type(filename: str) -> str:
-    """Leid type af uit bestandsnaam."""
+def infer_type(rel_to_grondslagen: str, filename: str) -> str:
+    """Leid type af, conform schema enum: constitutie | doctrine | concepten |
+    kaderdefinitie | checklist | value-stream | grondslag."""
+    rel = rel_to_grondslagen.replace("\\", "/")
     name = filename.lower()
+    if rel.startswith("value-streams/") or "value-stream" in name:
+        return "value-stream"
+    if rel.startswith("kaderdefinities/") or "kaderdefinitie" in name:
+        return "kaderdefinitie"
     if "doctrine" in name:
         return "doctrine"
     if "constitutie" in name:
         return "constitutie"
-    if "beleid" in name:
-        return "beleid"
-    if "normering" in name or "checklist" in name:
-        return "normering"
-    if "kaderdefinitie" in name:
-        return "kaderdefinitie"
-    return "concept"
+    if "concepten" in name:
+        return "concepten"
+    if "checklist" in name:
+        return "checklist"
+    return "grondslag"
+
+
+def _make_entry(md_file: Path, grondslagen_dir: Path) -> dict:
+    """Bouw een grondslag-entry van een markdown bestand. Volledig deterministisch.
+
+    Bevat twee digest-velden als ruwe data:
+    - digest_header: zoals opgeslagen in de YAML frontmatter (wat het bestand claimt)
+    - digest_berekend: live berekend op moment van publicatie (wat het bestand werkelijk is)
+    - status_header: de status zoals vermeld in de YAML frontmatter — geen oordeel, alleen feitrapportage
+
+    Het oordeel over inhoudelijke kwaliteit of consistentie is niet de taak van publiceer-grondslagen;
+    dat is de verantwoordelijkheid van valideer-grondslag-consistentie.
+    """
+    rel = md_file.relative_to(grondslagen_dir).as_posix()
+    content = md_file.read_text(encoding="utf-8")
+    fields, body = parse_frontmatter(content)
+
+    naam = md_file.name
+    titel = extract_title(body) or md_file.stem.replace("-", " ").title()
+    doc_type = infer_type(rel, naam)
+
+    digest_header = fields.get("digest", "0000")
+    digest_berekend = hashlib.md5(body.encode("utf-8")).hexdigest()[:4]
+    status_header = fields.get("status", "rot")
+
+    return {
+        "naam": naam,
+        "pad": rel,
+        "type": doc_type,
+        "titel": titel,
+        "digest_header": digest_header,
+        "digest_berekend": digest_berekend,
+        "status_header": status_header,
+    }
 
 
 def handle_publiceer_grondslagen() -> int:
-    """Programmatische handler voor publiceer-grondslagen intent."""
+    """Programmatische handler voor publiceer-grondslagen intent.
+
+    Volledig deterministisch. Geen LLM of inferentie.
+    Berekent dual-digest (digest_header uit frontmatter + digest_berekend live)
+    en genereert een genormaliseerde JSON-structuur per value stream en fase.
+    Output: {canon}/grondslagen/grondslagen.json
+    """
     try:
         canon_path = find_canon_path()
     except FileNotFoundError as e:
@@ -159,7 +219,7 @@ def handle_publiceer_grondslagen() -> int:
 
     grondslagen_dir = canon_path / "grondslagen"
     schema_path = canon_path / "grondslagen.schema.json"
-    output_path = canon_path / "grondslagen.json"
+    output_path = grondslagen_dir / "grondslagen.json"  # inside grondslagen/
 
     if not grondslagen_dir.exists():
         print(f"[ERROR] grondslagen/ map niet gevonden in {canon_path}", file=sys.stderr)
@@ -169,44 +229,47 @@ def handle_publiceer_grondslagen() -> int:
         return 1
 
     print(f"[INFO] Scannen van {grondslagen_dir} ...")
-    entries = []
-    for md_file in sorted(grondslagen_dir.rglob("*.md")):
-        rel_to_canon = md_file.relative_to(canon_path).as_posix()
-        rel_to_grondslagen = md_file.relative_to(grondslagen_dir).as_posix()
-        try:
-            content = md_file.read_text(encoding="utf-8")
-        except Exception as e:
-            print(f"  [WARNING] Kan {rel_to_canon} niet lezen: {e}")
-            continue
-        fields, body = parse_frontmatter(content)
-        title = extract_title(body) or md_file.stem.replace("-", " ").title()
-        scope = infer_scope(rel_to_grondslagen)
-        doc_type = infer_type(md_file.name)
-        entry: dict = {
-            "bron": rel_to_canon,
-            "scope": scope,
-            "type": doc_type,
-            "titel": title,
-            "versie": fields.get("versie", ""),
-            "digest": fields.get("digest", ""),
-            "status": fields.get("status", ""),
-        }
-        entries.append(entry)
-        print(f"  + {rel_to_canon} [{scope}] [{doc_type}]")
 
-    now = datetime.now()
+    algemeen: list = []
+    value_streams: dict = {}
+
+    for md_file in sorted(grondslagen_dir.rglob("*.md")):
+        rel = md_file.relative_to(grondslagen_dir).as_posix()
+        try:
+            entry = _make_entry(md_file, grondslagen_dir)
+        except Exception as e:
+            print(f"  [WARNING] Kan {rel} niet verwerken: {e}")
+            continue
+
+        bucket = classify_path(rel)
+        label = f"[{entry['status_header']}] {'match' if entry['digest_header'] == entry['digest_berekend'] else 'DRIFT'}"
+        print(f"  + {rel}  {bucket[0]}  {entry['type']}  {label}")
+
+        if bucket[0] == "algemeen":
+            algemeen.append(entry)
+        elif bucket[0] == "vs":
+            vs = bucket[1]
+            value_streams.setdefault(vs, {"code": vs, "grondslagen": [], "fasen": {}})
+            if vs in _VS_NAMEN:
+                value_streams[vs]["naam"] = _VS_NAMEN[vs]
+            value_streams[vs]["grondslagen"].append(entry)
+        elif bucket[0] == "fase":
+            vs, fase_code = bucket[1], bucket[2]
+            value_streams.setdefault(vs, {"code": vs, "grondslagen": [], "fasen": {}})
+            if vs in _VS_NAMEN:
+                value_streams[vs]["naam"] = _VS_NAMEN[vs]
+            value_streams[vs]["fasen"].setdefault(fase_code, {"code": fase_code, "grondslagen": []})
+            value_streams[vs]["fasen"][fase_code]["grondslagen"].append(entry)
+
+    now = datetime.now(timezone.utc)
     publicatie = {
-        "metadata": {
-            "publicatie_timestamp": now.isoformat(),
-            "publicatie_datum": now.strftime("%Y-%m-%d"),
-            "versie": "1.0",
-            "aantal_grondslagen": len(entries),
-            "generator": "canon-curator.runner.py",
-            "canon_pad": str(canon_path),
-        },
-        "grondslagen": entries,
+        "versie": "1.0.0",
+        "gegenereerd": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "algemeen": algemeen,
+        "value_streams": value_streams,
     }
 
+    # Schema-validatie (soft fail)
     try:
         import jsonschema  # type: ignore
         schema = json.loads(schema_path.read_text(encoding="utf-8"))
@@ -217,8 +280,12 @@ def handle_publiceer_grondslagen() -> int:
     except Exception as e:
         print(f"[WARNING] Schema-validatie mislukt: {e}")
 
+    total = len(algemeen) + sum(
+        len(vs["grondslagen"]) + sum(len(f["grondslagen"]) for f in vs["fasen"].values())
+        for vs in value_streams.values()
+    )
     output_path.write_text(json.dumps(publicatie, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(f"[INFO] Geschreven: {output_path} ({len(entries)} grondslagen)")
+    print(f"[INFO] Geschreven: {output_path} ({total} grondslagen, {len(value_streams)} value streams)")
     return 0
 
 

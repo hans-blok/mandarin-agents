@@ -2,7 +2,7 @@
 agent: documentatie-omvormer
 intent: genereer-publicatiestructuur
 versie: 1.0.0
-digest: f8b7
+digest: e316
 status: vers
 ---
 # Documentatie-omvormer — Genereer Publicatiestructuur
@@ -32,6 +32,7 @@ De documentatie-omvormer levert:
   - Alle bronbestanden getransformeerd naar docs/-compatibele structuur
   - Mappenstructuur herleidbaar naar input of expliciete structuur_regels
   - Geen nieuwe inhoud, samenvattingen of interpretaties toegevoegd
+- **`docs/assets/stylesheets/responsive.css`** — altijd aangemaakt als vaste deliverable, inhoud zie hieronder
 - **Transformatie-rapport** met overzicht van verplaatste bestanden
 
 **Deliverable bestand**: `{doel_folder}/` (volledige mappenstructuur)
@@ -40,6 +41,9 @@ De documentatie-omvormer levert:
 ```
 docs/
 ├── index.md
+├── assets/
+│   └── stylesheets/
+│       └── responsive.css
 ├── {sectie-1}/
 │   ├── index.md
 │   └── {document-1}.md
@@ -47,10 +51,36 @@ docs/
     └── {document-2}.md
 ```
 
+**Canonieke inhoud van `responsive.css`** (byte-voor-byte reproduceerbaar, geen inhoudelijke keuze):
+```css
+/* Responsive overrides — Mandarin publicatie */
+
+/* Tabellen: horizontaal scrollen als te breed voor scherm */
+.md-typeset table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Afbeeldingen nooit breder dan de container */
+.md-typeset img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Mermaid-diagrammen: horizontaal scrollen als te breed */
+.md-typeset .mermaid,
+.md-typeset [class^="mermaid"] {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+```
+
 **Formaat-normering**: 
 - Output is altijd een mappenstructuur met markdown-bestanden
 - Bestandsnamen worden niet gewijzigd, alleen locaties
 - Inhoud blijft 100% ongewijzigd
+- `responsive.css` is een vaste structurele deliverable — geen inhoudelijke beslissing
 
 ### Foutafhandeling
 

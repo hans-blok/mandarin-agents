@@ -1039,16 +1039,15 @@ def load_constitutie() -> Optional[str]:
 
 
 def load_doctrines_for_fase(value_stream_fase: str) -> Tuple[str, List[str]]:
-    """Laad doctrine-bestanden voor de gegeven value_stream_fase via convention-based discovery.
+    """Laad doctrine-bestanden voor de gegeven value_stream_fase via grondslagen.json manifest.
 
     Hiërarchie (altijd cumulatief, van algemeen naar specifiek):
-      1. grondslagen/.algemeen/doctrine-*.md   — altijd, voor alle agents
-      2. grondslagen/{vs}/doctrine-*.md         — voor de value stream
-      3. grondslagen/{vs}/{vs}.{fase}.*/doctrine-*.md — voor de specifieke fase
+      1. manifest["algemeen"]                           — type=="doctrine", altijd
+      2. manifest["value_streams"][VS]["grondslagen"]   — type=="doctrine", voor de value stream
+      3. manifest["value_streams"][VS]["fasen"][fase]   — type=="doctrine", voor de specifieke fase
 
-    Folderstructuur is de mapping; geen configuratie nodig.
-    Convention over Configuration: een nieuw doctrine-bestand op de juiste locatie
-    wordt automatisch opgepikt zonder wijzigingen in charter of runner.
+    De manifest-structuur van grondslagen/grondslagen.json in mandarin-canon is leidend.
+    Bij digest-mismatch: waarschuwing, document toch geladen (soft fail).
 
     Args:
         value_stream_fase: Bijv. 'aeo.02' of 'miv.07'
@@ -1063,8 +1062,9 @@ def load_doctrines_for_fase(value_stream_fase: str) -> Tuple[str, List[str]]:
     if len(parts) < 2:
         return "", []
 
-    vs = parts[0]
-    fase = parts[1]
+    vs = parts[0]        # e.g. "aeo"
+    fase = parts[1]      # e.g. "02"
+    vs_key = vs.upper()  # manifest-sleutels zijn hoofdletters: "AEO"
 
     workspace_root = get_workspace_root()
     canon_path = workspace_root.parent / "mandarin-canon"
@@ -1072,34 +1072,72 @@ def load_doctrines_for_fase(value_stream_fase: str) -> Tuple[str, List[str]]:
         print(f"  [Doctrines] Canon pad niet gevonden: {canon_path}", file=sys.stderr)
         return "", []
 
-    patterns = [
-        f"grondslagen/.algemeen/doctrine-*.md",
-        f"grondslagen/{vs}/doctrine-*.md",
-        f"grondslagen/{vs}/{vs}.{fase}.*/doctrine-*.md",
-    ]
+    manifest_path = canon_path / "grondslagen" / "grondslagen.json"
+    if not manifest_path.exists():
+        print(f"  [Doctrines] grondslagen.json niet gevonden: {manifest_path}", file=sys.stderr)
+        return "", []
 
+    try:
+        with open(manifest_path, "r", encoding="utf-8") as f:
+            manifest = json.load(f)
+    except Exception as e:
+        print(f"  [Doctrines] Kon grondslagen.json niet lezen: {e}", file=sys.stderr)
+        return "", []
+
+    # Verzamel entries op 3 niveaus (alleen type=="doctrine")
+    entries: List[dict] = []
+
+    for entry in manifest.get("algemeen", []):
+        if isinstance(entry, dict) and entry.get("type") == "doctrine":
+            entries.append(entry)
+
+    vs_data = manifest.get("value_streams", {}).get(vs_key, {})
+    for entry in vs_data.get("grondslagen", []):
+        if isinstance(entry, dict) and entry.get("type") == "doctrine":
+            entries.append(entry)
+
+    fase_data = vs_data.get("fasen", {}).get(fase, {})
+    for entry in fase_data.get("grondslagen", []):
+        if isinstance(entry, dict) and entry.get("type") == "doctrine":
+            entries.append(entry)
+
+    # Laad bestanden en verifieer digesten
     seen: Set[str] = set()
     loaded_files: List[str] = []
     content_parts: List[str] = []
 
-    for pattern in patterns:
-        full_pattern = str(canon_path / pattern)
-        for match in sorted(glob.glob(full_pattern, recursive=True)):
-            if not os.path.isfile(match):
-                continue
-            rel_path = os.path.relpath(match, str(canon_path)).replace("\\", "/")
-            if rel_path in seen:
-                continue
-            seen.add(rel_path)
-            try:
-                with open(match, "r", encoding="utf-8") as f:
-                    raw = f.read()
-                body = strip_frontmatter_block(raw).strip()
-                if body:
-                    content_parts.append(f"### {rel_path}\n\n{body}\n")
-                    loaded_files.append(rel_path)
-            except Exception as e:
-                print(f"  [Doctrines] Fout bij laden {rel_path}: {e}", file=sys.stderr)
+    for entry in entries:
+        pad = entry.get("pad", "")
+        if not pad or pad in seen:
+            continue
+        seen.add(pad)
+        file_path = canon_path / "grondslagen" / pad
+        if not file_path.exists():
+            print(f"  [Doctrines] Bestand niet gevonden: {pad}", file=sys.stderr)
+            continue
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                raw = f.read()
+        except Exception as e:
+            print(f"  [Doctrines] Fout bij laden {pad}: {e}", file=sys.stderr)
+            continue
+
+        body = strip_frontmatter_block(raw).strip()
+
+        # Digest verificatie (soft fail bij mismatch)
+        expected_digest = entry.get("digest", "")
+        if expected_digest:
+            actual_digest = hashlib.md5(body.encode("utf-8")).hexdigest()[:4]
+            if actual_digest != expected_digest:
+                print(
+                    f"  [Doctrines] Digest mismatch voor {pad}: "
+                    f"manifest={expected_digest}, bestand={actual_digest} (doctrine geladen)",
+                    file=sys.stderr,
+                )
+
+        if body:
+            content_parts.append(f"### {pad}\n\n{body}\n")
+            loaded_files.append(pad)
 
     return "\n\n".join(content_parts), loaded_files
 
@@ -1903,9 +1941,17 @@ def _execute_aggregeer_tasks(args: argparse.Namespace, agent_source: Path, targe
         return 1
 
     # Scope volledig bepaald door beleid-workspace.md (charter v1.1.0)
-    fasen = list(dict.fromkeys(geconfigureerde_fasen))  # deduplicatie, volgorde behouden
+    # fnd.01 wordt altijd meegenomen (ecosysteem-coordinator is cross-cutting)
+    FND_FASE = "fnd.01"
+    fasen_raw = list(dict.fromkeys(geconfigureerde_fasen))  # deduplicatie, volgorde behouden
+    if FND_FASE not in fasen_raw:
+        fasen = [FND_FASE] + fasen_raw
+        print(f"ℹ️  fnd.01 automatisch toegevoegd (cross-cutting fase)")
+    else:
+        fasen = fasen_raw
 
-    print(f"Geconfigureerde fasen in beleid-workspace.md: {fasen}")
+    print(f"Geconfigureerde fasen in beleid-workspace.md: {fasen_raw}")
+    print(f"Effectieve fasen (incl. fnd.01): {fasen}")
     print()
 
     merged: Dict[str, Any] = {"version": "2.0.0", "tasks": [], "inputs": []}
@@ -1973,8 +2019,12 @@ def _execute_aggregeer_tasks(args: argparse.Namespace, agent_source: Path, targe
     print(f"Totaal: {len(merged['tasks'])} tasks uit {totaal_bestanden} bestanden")
 
     if totaal_bestanden == 0:
-        print("ERROR: Geen task-bestanden gevonden voor geconfigureerde fasen.")
-        return 1
+        print("WARNING: Geen task-bestanden gevonden voor geconfigureerde fasen.")
+        print("         fnd.01 (ecosysteem-coordinator) is altijd aanwezig — controleer of")
+        print("         de geconfigureerde fasen bestaan in mandarin-agents/artefacten/.")
+        # Geen harde fout: fnd.01 kan ook geen bestanden hebben in edge-cases;
+        # we schrijven een leeg tasks.json zodat VS Code niet klaagt.
+        pass
 
     if args.dry_run:
         print(f"\n[DRY-RUN] Zou schrijven naar: {output_file}")

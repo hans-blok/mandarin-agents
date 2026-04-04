@@ -9740,3 +9740,111 @@
 | `grondslagen\aeo` | `mandarin-domeinconcepten.md` |
 | `grondslagen\aeo` | `mandarin-ecosysteem-ordeningsconcepten.md` |
 
+
+---
+
+## Canon Consultation — 2026-04-04T15:28:51
+
+- **Agent**: documentatie-omvormer
+- **Value Stream**: unknown
+- **Workspace File**: `C:\git\mandarin-agents\artefacten\fnd\fnd.01.documentatie-omvormer\prompts\mandarin.documentatie-omvormer.genereer-navigatiebestand.prompt.md`
+- **Intent**: genereer-navigatiebestand
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: cc6ac9e
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*`
+- **Charter**: `C:\git\mandarin-agents\artefacten\fnd\fnd.01.documentatie-omvormer\documentatie-omvormer.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen/.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `doctrine-bronhouding-en-exploratie.md` |
+| `grondslagen\.algemeen` | `doctrine-traceability.md` |
+
+
+---
+
+## Canon Consultation — 2026-04-04T15:41:31
+
+- **Agent**: documentatie-omvormer
+- **Value Stream**: unknown
+- **Workspace File**: `C:\git\mandarin-agents\artefacten\fnd\fnd.01.documentatie-omvormer\prompts\mandarin.documentatie-omvormer.genereer-publicatiestructuur.prompt.md`
+- **Intent**: genereer-publicatiestructuur
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: cc6ac9e
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*`
+- **Charter**: `C:\git\mandarin-agents\artefacten\fnd\fnd.01.documentatie-omvormer\documentatie-omvormer.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen/.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `doctrine-bronhouding-en-exploratie.md` |
+| `grondslagen\.algemeen` | `doctrine-traceability.md` |
+
+
+---
+
+## Canon Consultation — 2026-04-04T15:48:37
+
+- **Agent**: documentatie-omvormer
+- **Value Stream**: unknown
+- **Workspace File**: `C:\git\mandarin-agents\artefacten\fnd\fnd.01.documentatie-omvormer\prompts\mandarin.documentatie-omvormer.genereer-publicatiestructuur.prompt.md`
+- **Intent**: genereer-publicatiestructuur
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: cc6ac9e
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*`
+- **Charter**: `C:\git\mandarin-agents\artefacten\fnd\fnd.01.documentatie-omvormer\documentatie-omvormer.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen/.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `doctrine-bronhouding-en-exploratie.md` |
+| `grondslagen\.algemeen` | `doctrine-traceability.md` |
+
+
+---
+
+## Canon Consultation — 2026-04-04T19:43:41
+
+- **Agent**: documentatie-omvormer
+- **Value Stream**: unknown
+- **Workspace File**: `C:\git\mandarin-agents\artefacten\fnd\fnd.01.documentatie-omvormer\prompts\mandarin.documentatie-omvormer.genereer-publicatiestructuur.prompt.md`
+- **Intent**: genereer-publicatiestructuur
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: cc6ac9e
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*`
+- **Charter**: `C:\git\mandarin-agents\artefacten\fnd\fnd.01.documentatie-omvormer\documentatie-omvormer.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen/.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `doctrine-bronhouding-en-exploratie.md` |
+| `grondslagen\.algemeen` | `doctrine-traceability.md` |
+
