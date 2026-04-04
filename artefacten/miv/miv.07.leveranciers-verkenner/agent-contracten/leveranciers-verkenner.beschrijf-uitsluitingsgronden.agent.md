@@ -2,8 +2,9 @@
 agent: leveranciers-verkenner
 intent: beschrijf-uitsluitingsgronden
 versie: 1.0.0
+digest: 31dc
+status: vers
 ---
-
 # Leveranciers-verkenner — Beschrijf Uitsluitingsgronden
 
 ## Rolbeschrijving (korte samenvatting)

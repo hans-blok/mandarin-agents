@@ -52,6 +52,20 @@
         "reveal": "always",
         "panel": "shared"
       }
+    },
+    {
+      "label": "aeo.01 - canon-curator: publiceer-grondslagen",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/aeo/aeo.01.canon-curator/runner/canon-curator.runner.py",
+        "publiceer-grondslagen"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
     }
   ],
   "inputs": [

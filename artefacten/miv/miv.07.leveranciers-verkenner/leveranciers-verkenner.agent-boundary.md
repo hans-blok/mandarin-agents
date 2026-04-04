@@ -4,6 +4,8 @@ value_stream: miv
 value_stream_fase: miv.07
 kaderdefinities: geen
 versie: 1.0.0
+digest: fa97
+status: vers
 ---
 # Agent Boundary: Leveranciers-verkenner
 

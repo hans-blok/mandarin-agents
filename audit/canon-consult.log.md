@@ -9597,3 +9597,146 @@
 | `grondslagen\.algemeen` | `doctrine-bronhouding-en-exploratie.md` |
 | `grondslagen\.algemeen` | `doctrine-traceability.md` |
 
+
+---
+
+## Canon Consultation — 2026-04-03T12:57:44
+
+- **Agent**: hypothese-vormer
+- **Value Stream**: sfw
+- **Workspace File**: `C:\git\mandarin-agents\artefacten\sfw\sfw.01.hypothese-vormer\prompts\mandarin.hypothese-vormer.beschrijf-hypothese.prompt.md`
+- **Intent**: beschrijf-hypothese
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: 8f0c816
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*`
+- **Charter**: `C:\git\mandarin-agents\artefacten\sfw\sfw.01.hypothese-vormer\hypothese-vormer.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen/.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `doctrine-bronhouding-en-exploratie.md` |
+| `grondslagen\.algemeen` | `doctrine-traceability.md` |
+
+
+---
+
+## Canon Consultation — 2026-04-04T09:44:07
+
+- **Agent**: leveranciers-verkenner
+- **Value Stream**: miv
+- **Workspace File**: `C:\git\mandarin-agents\artefacten\aeo\aeo.02.agent-ontwerper\prompts\mandarin.agent-ontwerper.definieer-agent-contract.prompt.md`
+- **Intent**: definieer-agent-contract
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: c3338ed
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*`
+- **Charter**: `C:\git\mandarin-agents\artefacten\aeo\aeo.02.agent-ontwerper\agent-ontwerper.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen/.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `doctrine-bronhouding-en-exploratie.md` |
+| `grondslagen\.algemeen` | `doctrine-traceability.md` |
+
+
+---
+
+## Canon Consultation — 2026-04-04T09:44:14
+
+- **Agent**: leveranciers-verkenner
+- **Value Stream**: miv
+- **Workspace File**: `C:\git\mandarin-agents\artefacten\aeo\aeo.02.agent-ontwerper\prompts\mandarin.agent-ontwerper.definieer-agent-contract.prompt.md`
+- **Intent**: definieer-agent-contract
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: c3338ed
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*`
+- **Charter**: `C:\git\mandarin-agents\artefacten\aeo\aeo.02.agent-ontwerper\agent-ontwerper.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen/.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `doctrine-bronhouding-en-exploratie.md` |
+| `grondslagen\.algemeen` | `doctrine-traceability.md` |
+
+
+---
+
+## Canon Consultation — 2026-04-04T09:44:25
+
+- **Agent**: agent-curator
+- **Value Stream**: aeo
+- **Workspace File**: `C:\git\mandarin-agents\artefacten\aeo\aeo.02.agent-ontwerper\prompts\mandarin.agent-ontwerper.definieer-agent-charter.prompt.md`
+- **Intent**: definieer-agent-charter
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: c3338ed
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*,grondslagen/aeo/*`
+- **Charter**: `C:\git\mandarin-agents\artefacten\aeo\aeo.02.agent-ontwerper\agent-ontwerper.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen/.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `doctrine-bronhouding-en-exploratie.md` |
+| `grondslagen\.algemeen` | `doctrine-traceability.md` |
+| `grondslagen\aeo` | `doctrine-agent-charter-normering.md` |
+| `grondslagen\aeo` | `doctrine-intent-naming.md` |
+| `grondslagen\aeo` | `mandarin-domeinconcepten.md` |
+| `grondslagen\aeo` | `mandarin-ecosysteem-ordeningsconcepten.md` |
+
+
+---
+
+## Canon Consultation — 2026-04-04T09:44:35
+
+- **Agent**: agent-curator
+- **Value Stream**: aeo
+- **Workspace File**: `C:\git\mandarin-agents\artefacten\aeo\aeo.02.agent-ontwerper\prompts\mandarin.agent-ontwerper.definieer-agent-charter.prompt.md`
+- **Intent**: definieer-agent-charter
+- **Method**: manual
+- **Canon Path**: `C:\git\mandarin-canon`
+- **Branch**: main
+- **SHA**: c3338ed
+- **Grondslagen Patterns**: `grondslagen/.algemeen/*,grondslagen/aeo/*`
+- **Charter**: `C:\git\mandarin-agents\artefacten\aeo\aeo.02.agent-ontwerper\agent-ontwerper.charter.md`
+
+### Consulted Files
+
+| Folder | Bestand |
+|--------|---------|
+| `grondslagen/.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `checklist.agents.md` |
+| `grondslagen\.algemeen` | `conceptuele-grondslagen.md` |
+| `grondslagen\.algemeen` | `constitutie.md` |
+| `grondslagen\.algemeen` | `doctrine-bronhouding-en-exploratie.md` |
+| `grondslagen\.algemeen` | `doctrine-traceability.md` |
+| `grondslagen\aeo` | `doctrine-agent-charter-normering.md` |
+| `grondslagen\aeo` | `doctrine-intent-naming.md` |
+| `grondslagen\aeo` | `mandarin-domeinconcepten.md` |
+| `grondslagen\aeo` | `mandarin-ecosysteem-ordeningsconcepten.md` |
+

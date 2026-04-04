@@ -2,8 +2,9 @@
 agent: leveranciers-verkenner
 intent: beschrijf-longlist
 versie: 1.0.0
+digest: d01e
+status: vers
 ---
-
 # Leveranciers-verkenner — Beschrijf Longlist
 
 ## Rolbeschrijving (korte samenvatting)

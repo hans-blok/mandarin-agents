@@ -1038,6 +1038,72 @@ def load_constitutie() -> Optional[str]:
     return None
 
 
+def load_doctrines_for_fase(value_stream_fase: str) -> Tuple[str, List[str]]:
+    """Laad doctrine-bestanden voor de gegeven value_stream_fase via convention-based discovery.
+
+    Hiërarchie (altijd cumulatief, van algemeen naar specifiek):
+      1. grondslagen/.algemeen/doctrine-*.md   — altijd, voor alle agents
+      2. grondslagen/{vs}/doctrine-*.md         — voor de value stream
+      3. grondslagen/{vs}/{vs}.{fase}.*/doctrine-*.md — voor de specifieke fase
+
+    Folderstructuur is de mapping; geen configuratie nodig.
+    Convention over Configuration: een nieuw doctrine-bestand op de juiste locatie
+    wordt automatisch opgepikt zonder wijzigingen in charter of runner.
+
+    Args:
+        value_stream_fase: Bijv. 'aeo.02' of 'miv.07'
+
+    Returns:
+        Tuple van (geconcateneerde doctrine-inhoud, lijst van geladen bestandspaden)
+    """
+    if not value_stream_fase:
+        return "", []
+
+    parts = value_stream_fase.split(".")
+    if len(parts) < 2:
+        return "", []
+
+    vs = parts[0]
+    fase = parts[1]
+
+    workspace_root = get_workspace_root()
+    canon_path = workspace_root.parent / "mandarin-canon"
+    if not canon_path.exists():
+        print(f"  [Doctrines] Canon pad niet gevonden: {canon_path}", file=sys.stderr)
+        return "", []
+
+    patterns = [
+        f"grondslagen/.algemeen/doctrine-*.md",
+        f"grondslagen/{vs}/doctrine-*.md",
+        f"grondslagen/{vs}/{vs}.{fase}.*/doctrine-*.md",
+    ]
+
+    seen: Set[str] = set()
+    loaded_files: List[str] = []
+    content_parts: List[str] = []
+
+    for pattern in patterns:
+        full_pattern = str(canon_path / pattern)
+        for match in sorted(glob.glob(full_pattern, recursive=True)):
+            if not os.path.isfile(match):
+                continue
+            rel_path = os.path.relpath(match, str(canon_path)).replace("\\", "/")
+            if rel_path in seen:
+                continue
+            seen.add(rel_path)
+            try:
+                with open(match, "r", encoding="utf-8") as f:
+                    raw = f.read()
+                body = strip_frontmatter_block(raw).strip()
+                if body:
+                    content_parts.append(f"### {rel_path}\n\n{body}\n")
+                    loaded_files.append(rel_path)
+            except Exception as e:
+                print(f"  [Doctrines] Fout bij laden {rel_path}: {e}", file=sys.stderr)
+
+    return "\n\n".join(content_parts), loaded_files
+
+
 def strip_frontmatter_block(content: str) -> str:
     """Verwijder een optioneel YAML frontmatter-blok aan het begin."""
     if not content.startswith('---'):
@@ -1223,6 +1289,20 @@ def assemble_full_instructions(metadata: Dict, prompt_content: str, prompt_file:
             grondslagen_parts.append("## Workspace-beleid\n\n")
             grondslagen_parts.append(prepared_beleid)
             grondslagen_parts.append("\n\n")
+
+    # 3. Doctrines (convention-based, op basis van value_stream_fase)
+    value_stream_fase = params.get('value_stream_fase') or ""
+    if value_stream_fase:
+        doctrine_content, doctrine_files = load_doctrines_for_fase(value_stream_fase)
+        if doctrine_content:
+            print(f"  [Doctrines] Geladen voor '{value_stream_fase}' ({len(doctrine_files)} bestand(en)):")
+            for df in doctrine_files:
+                print(f"    - {df}")
+            grondslagen_parts.append("## Doctrines\n\n")
+            grondslagen_parts.append(doctrine_content)
+            grondslagen_parts.append("\n\n")
+        else:
+            print(f"  [Doctrines] Geen doctrine-bestanden gevonden voor '{value_stream_fase}'")
 
     if grondslagen_parts:
         parts.append("# Grondslagen\n\n")

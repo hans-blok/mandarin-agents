@@ -3,14 +3,14 @@ agent: canon-curator
 value_stream: aeo
 value_stream_fase: aeo.01
 kaderdefinities: geen
-versie: 1.0.0
-digest: afaa
+versie: 1.1.0
+digest: 919d
 status: vers
 ---
 # Agent Boundary: Canon-curator
 
 **agent-naam**: canon-curator  
-**capability-boundary**: Bewaakt de interne consistentie, traceerbaarheid en terminologische scherpte van alle grondslag-artefacten in de canon-workspace door ze te toetsen aan canonieke normen en geeft inhoudelijk advies voor verbeteringen, zonder wijzigingsbevoegdheid uit te oefenen.  
+**capability-boundary**: Bewaakt de interne consistentie, traceerbaarheid en terminologische scherpte van alle grondslag-artefacten in de canon-workspace door ze te toetsen aan canonieke normen, geeft inhoudelijk advies voor verbeteringen, en publiceert een machineleesbaar grondslagen-register (JSON) van de complete canon-inhoud.  
 **doel**: Borgt dat canonieke artefacten (constitutie, doctrines, beleid, normering) intern consistent, traceerbaar en terminologisch scherp zijn, en levert inhoudelijke verbetervoorstellen, zodat het ecosysteem op betrouwbare grondslagen kan bouwen.  
 **domein**: Canon-governance en grondslag-kwaliteitsbewaking
 
@@ -23,7 +23,7 @@ status: vers
   - [ ] Verkenning (onderzoeken van intentie, probleemstelling of richting)
   - [ ] Ordening (structureren van intentie en expliciet maken van samenhang)
   - [ ] Vastlegging (betekenis bindend vaststellen binnen de workspace)
-  - [ ] Realisatie (betekenis werkend maken in systemen of processen)
+  - [x] Realisatie (betekenis werkend maken in systemen of processen)
   - [x] Toetsing (gerealiseerd artefact beoordelen tegen een norm)
   - [ ] Operationalisatie (gerealiseerde structuur formeel in werking stellen)
 
@@ -32,7 +32,7 @@ status: vers
   - [ ] Beschrijvend (documenteert, vooraf en achteraf)
   - [ ] Structurerend (maakt samenhang en relaties expliciet)
   - [ ] Normerend (normeert structuur en indeling voor realisatie en ook toetsing)
-  - [ ] Vastleggend (realiseert direct gedrag, structuur of configuratie)
+  - [x] Vastleggend (realiseert direct gedrag, structuur of configuratie)
   - [ ] Realiserend (realiseert feitelijk gedrag, structuur of configuratie)
   - [x] Evaluerend (legt oordeel of duiding vast, beoordeelt kwaliteit)
 
@@ -72,6 +72,7 @@ status: vers
 - valideer-grondslag-consistentie
 - valideer-terminologische-scherpte
 - adviseer-grondslag-verbeteringen
+- publiceer-grondslagen
 
 ## Zorgt voor
 
@@ -79,6 +80,7 @@ status: vers
 - Terminologische scherpte: begrippen worden ecosysteem-breed uniform en conform constitutionele definities gebruikt.
 - Inhoudelijke verbetervoorstellen bij elke bevinding, zodat grondslag-auteurs direct kunnen handelen.
 - Vroegtijdige signalering van kwaliteitsproblemen in grondslagen voordat ze doorwerken in afgeleide artefacten.
+- Machineleesbaar grondslagen-register (`grondslagen.json`) dat de volledige canon-inhoud publiceert voor consumptie door andere werkplekken.
 
 ## Neemt geen beslissingen over
 

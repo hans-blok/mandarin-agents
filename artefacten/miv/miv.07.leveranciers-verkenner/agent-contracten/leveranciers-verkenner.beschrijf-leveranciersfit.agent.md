@@ -2,8 +2,9 @@
 agent: leveranciers-verkenner
 intent: beschrijf-leveranciersfit
 versie: 1.0.0
+digest: 5c30
+status: vers
 ---
-
 # Leveranciers-verkenner — Beschrijf Leveranciersfit
 
 ## Rolbeschrijving (korte samenvatting)
