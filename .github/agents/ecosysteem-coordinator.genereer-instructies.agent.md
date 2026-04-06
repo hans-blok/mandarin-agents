@@ -1,15 +1,20 @@
 ---
 agent: ecosysteem-coordinator
 intent: genereer-instructies
-versie: 1.0.0
-digest: 53cd
+versie: 1.2.0
+digest: cc4a
 status: vers
 ---
 # Ecosysteem-coordinator — Genereer Instructies
 
 ## Rolbeschrijving (korte samenvatting)
 
-Assembleert execution-ready instructiebestanden door canon-context, agent charter, contract en prompt templates samen te voegen tot een volledig uitvoerbaar bestand voor LLM-executie.
+Voert **broninjectie** uit voor een opgegeven agent en intent. De runner assembleert twee soorten bronnen:
+
+- **Kaderbronnen** — het normatieve kader dat de executie stuurt: constitutie, workspace-beleid, doctrines, agent charter en agent contract (in die volgorde). Welke doctrines worden opgenomen, wordt vóór inhoudelijke opname bepaald door het **bronselectiebeleid** (`bronselectiebeleid.json` in mandarin-canon).
+- **Werkbronnen** — het uitvoeringsmateriaal: de opgegeven parameters en prompt-specifieke instructies
+
+Het resultaat van de bronassemblage is het **bronpakket**: de execution file in `executions/` die het LLM als volledige context ontvangt. Het bronpakket is opgebouwd als een gelaagde inhoudsstructuur met 7 afzonderlijke secties (zie Output).
 
 **VERPLICHT**: Raadpleeg de agent charter voor volledige context, grenzen en werkwijze.  
 **Conventie**: Charter bevindt zich in `ecosysteem-coordinator.charter.md` in de parent folder van dit contract.
@@ -23,7 +28,7 @@ Assembleert execution-ready instructiebestanden door canon-context, agent charte
 - intent: Intent naam voor instructie-generatie (type: string, kebab-case).
 
 **Optionele parameters**:
-- execution_file: Pad waar execution-bestand wordt geschreven (type: string, default: auto-generated in prompt-instructions/).
+- execution_file: Pad waar execution-bestand wordt geschreven (type: string, default: auto-generated in executions/).
 - params: Key=value parameters voor placeholder substitutie (type: list[string], format: "key=value").
 - skip_bootstrap: Sla canon-consultatie over (type: boolean, default: false, alleen voor development).
 - method: Execution method voor audit (type: string, choices: manual|runner|pipeline, default: manual).
@@ -31,45 +36,97 @@ Assembleert execution-ready instructiebestanden door canon-context, agent charte
 ### Output (wat komt eruit)
 
 De ecosysteem-coordinator levert:
-- **Execution bestand**: Volledig samengesteld instructiebestand met metadata header
-  - YAML frontmatter met execution_id, timestamp, agent, intent, canon_ref
-  - Canon-context (geraadpleegde grondslagen indien niet skipped)
-  - Agent charter content
-  - Agent contract content
-  - Prompt-specifieke instructies
-- **Console output**: Samenvatting en pad naar gegenereerd bestand
+- **Het bronpakket** (execution file): het samengestelde geheel van kaderbronnen en werkbronnen als gelaagde inhoudsstructuur, opgebouwd uit 7 secties:
+  1. YAML frontmatter: `execution_id`, `execution_digest`, `timestamp`, `agent`, `intent`, `value_stream_fase`, `canon_ref`, `bronhouding`, `modus`
+  2. Opdracht en parameters
+  3. Geldende bronhouding en bronregime (excerpt bronhouding-doctrine + bronselectierapport)
+  4. Normatieve grondslagen (constitutie → workspace-beleid → geselecteerde doctrines)
+  5. Agentcontext (charter → contract → prompt)
+  6. Werkbronnen (optioneel — input-bestanden)
+  7. Bronmanifest en traceerbaarheid (tabel alle bronnen, incl. uitgesloten met reden, opnamevorm en reden_van_opname)
+- **Het execution-trace-bestand** (`.trace.yaml`): apart traceerbaarheidsartefact naast het execution-bestand met execution-anker (execution_id + execution_digest) en per-bron bronpad, type, digest, reden_van_opname, opnamevorm
+- **Console output**: samenvatting van de bronassemblage, bronselectieprofiel en pad naar het bronpakket
 
-**Deliverable bestand**: `prompt-instructions/{timestamp}-{agent}.{intent}.md`
+**Deliverable bestand**: `executions/{hash}.{agent}.{intent}.md` (execution-bestand) + `executions/{hash}.{agent}.{intent}.trace.yaml` (trace-bestand)
 
-**Outputformaat** (execution bestand):
+**Outputformaat** (bronpakket / execution file):
 ```markdown
 ---
 execution_id: {4-char-hash}
+execution_digest: {12-char-sha256}
 timestamp: {ISO-8601}
 agent: {agent}
 intent: {intent}
 value_stream_fase: {vs.fase}
 canon_ref: {commit-sha}
+bronhouding: {bronhouding-type}
+modus: handmatig
 ---
 
-**Voer de volgende instructie uit:**
+# Opdracht
 
-# Agent Execution: {agent} — {intent}
+Voer de intent `{intent}` uit voor de agent `{agent}`...
 
 ## Parameters
 - {key}: {value}
 
-## Instructies
+---
 
-{charter content}
+# Geldende bronhouding en bronregime
+
+{excerpt doctrine-bronhouding-en-exploratie}
+
+## Actief bronregime: {bronhouding-type}
+
+{instructie}
+
+## Bronselectie
+- Toegepast profiel: `{sleutel}`
+- Opgenomen doctrines (N): ...
+- Uitgesloten doctrines (M): ...
 
 ---
 
-{contract content}
+# Normatieve grondslagen
+
+## Constitutie
+{content}
+
+## Workspace-beleid
+{content}
+
+## Doctrines
+### {pad}
+{content}
 
 ---
 
-{prompt content}
+# Agentcontext
+
+## Charter
+{content}
+
+## Contract
+{content}
+
+## Prompt
+{content}
+
+---
+
+# Werkbronnen  *(optioneel)*
+## {bestandsnaam}
+{content}
+
+---
+
+# Bronmanifest
+
+| Bron | Bronrol | Type | Digest | Status | Opname | Opnamevorm | Reden |
+|------|---------|------|--------|--------|--------|------------|-------|
+| constitutie.md | kaderbron | constitutie | `{digest}` | {status} | opgenomen | volledig | altijd verplicht (structureel) |
+| {doctrine} | kaderbron | doctrine | `{digest}` | {status} | opgenomen | volledig | bronselectieprofiel '{sleutel}' |
+| {doctrine} | kaderbron | doctrine | `{digest}` | {status} | uitgesloten: profiel `{sleutel}` | — | uitgesloten: profiel '{sleutel}' |
 ```
 
 **Formaat-normering**: 
@@ -91,20 +148,28 @@ De ecosysteem-coordinator:
 ## Werkwijze
 
 ### Stappen
-1. **Consulteer canon**: Roep `consulteer-canon` intent aan (tenzij skip_bootstrap)
+1. **Consulteer canon**: Registreer canon SHA als audit-anker (tenzij skip_bootstrap)
 2. **Locate agent artefacten**: Zoek agent folder in artefacten/{vs}/{vs}.{fase}.{agent}/
-3. **Load charter**: Lees {agent}.charter.md
-4. **Load contract**: Zoek {agent}.{intent}.agent.md in agent-contracten/
-5. **Load prompt**: Zoek mandarin.{agent}.{intent}.prompt.md in prompts/
-6. **Substitute parameters**: Vervang placeholders met opgegeven params
-7. **Assemble execution file**: Combineer alle componenten met metadata header
-8. **Write output**: Schrijf naar execution_file pad
-9. **Log to audit**: Append naar audit/agent-instructions.log.md
+3. **Bronselectie**: Raadpleeg `bronselectiebeleid.json` in mandarin-canon en bepaal de doctrine-whitelist voor `{agent}.{intent}` vóór inhoudelijke opname; bronhouding-doctrine is altijd verplicht
+4. **Laad kaderbronnen** in volgorde:
+   - Constitutie (uit mandarin-canon)
+   - Workspace-beleid (`beleid-workspace.md`)
+   - Geselecteerde doctrines (gefilterd op basis van bronselectiebeleid + value_stream_fase)
+   - Charter (`{agent}.charter.md`)
+   - Contract (`{agent}.{intent}.agent.md`)
+5. **Laad werkbronnen**: parameters en prompt-specifieke instructies (`mandarin.{agent}.{intent}.prompt.md`)
+6. **Voer placeholder-substitutie uit**: werkbronnen injecteren in templates
+7. **Stel het bronpakket samen** als 7-laagse inhoudsstructuur
+8. **Schrijf het bronpakket**: naar execution_file pad; bereken `execution_digest` (SHA-256 van body, 12 hex tekens)
+9. **Schrijf trace-bestand**: genereer `{hash}.{agent}.{intent}.trace.yaml` naast het execution-bestand met execution-anker + per-bron opnameregistratie
+10. **Log to audit**: Append naar audit/agent-instructions.log.md
 
 ### Kwaliteitsborging
-- Execution ID is uniek (timestamp + agent hash)
-- Canon reference is altijd aanwezig (of expliciet "skipped")
-- Alle gelezen bestanden worden gelogd voor traceerbaarheid
+- Execution ID is uniek (timestamp + agent hash); execution_digest is inhoudgebonden (SHA-256 body)
+- Execution-anker (execution_id + execution_digest) aanwezig in zowel execution-bestand als trace-bestand
+- Canon reference is altijd aanwezig als audit-anker (of expliciet "skipped")
+- Kaderbronnen zijn altijd aanwezig en in de juiste volgorde
+- Alle bronnen worden geregistreerd met opnamevorm en reden_van_opname in bronmanifest én trace-bestand
 
 ---
 
@@ -123,10 +188,11 @@ De ecosysteem-coordinator:
 **Transparantie-verplichtingen:**
 
 Bij uitvoering logt de agent:
-- ✓ Alle gelezen bestanden (charter, contract, prompt)
-- ✓ Gegenereerd execution bestand (pad en execution_id)
-- ✓ Parameters die zijn gesubstitueerd
-- ✓ Canon commit reference
+- ✓ Alle geladen kaderbronnen (constitutie, beleid, doctrines, charter, contract) met paden
+- ✓ Alle geladen werkbronnen (parameters, prompt)
+- ✓ Gegenereerd bronpakket (pad, execution_id en execution_digest)
+- ✓ Gegenereerd trace-bestand (pad)
+- ✓ Canon commit reference (audit-anker)
 
 Logging-formaat: Markdown append naar `audit/agent-instructions.log.md`
 

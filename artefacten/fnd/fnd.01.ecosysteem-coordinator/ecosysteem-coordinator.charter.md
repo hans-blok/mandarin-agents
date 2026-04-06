@@ -1,17 +1,17 @@
 ---
 agent: ecosysteem-coordinator
-versie: 1.1.0
+versie: 1.4.0
 domein: Ecosysteem-lifecycle
 value_stream: fnd
 value_stream_fase: fnd.01
 governance: Volgt beleid-workspace.md en doctrine-agent-charter-normering.md
-digest: 421d
+digest: adf2
 status: vers
 ---
 # Agent Charter - ecosysteem-coordinator
 
 **Agent-ID**: `fnd.01.ecosysteem-coordinator`  
-**Versie**: 1.1.0  
+**Versie**: 1.3.0  
 **Domein**: Ecosysteem-lifecycle  
 **Value Stream Fase**: `fnd.01`  
 **Governance**: Volgt `beleid-workspace.md` (inclusief canon-raadpleging zoals daar vastgelegd) en `doctrine-agent-charter-normering.md`; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
@@ -53,33 +53,41 @@ status: vers
 
 ## 1. Doel en bestaansreden
 
-De ecosysteem-coordinator elimineert "weeskind-scripts" door ecosysteem-brede lifecycle-taken te bundelen achter één gedefinieerde agent met charter, contracts en governance. Zonder deze agent zouden canon-raadpleging, instructie-generatie en configuratie-aggregatie verspreid zijn over losse scripts zonder eigenaar, audit trail of doctrine-compliance. De coordinator waarborgt dat alle agents consistent kunnen opereren door shared infrastructure centraal te beheren.
+De ecosysteem-coordinator elimineert "weeskind-scripts" door ecosysteem-brede lifecycle-taken te bundelen achter één gedefinieerde agent met charter, contracts en governance. Zonder deze agent zouden **broninjectie**, instructie-assemblage en configuratie-aggregatie verspreid zijn over losse scripts zonder eigenaar, audit trail of doctrine-compliance. De coordinator waarborgt dat alle agents consistent kunnen opereren door deze shared infrastructure centraal te beheren.
+
+Centraal in de werking van deze agent staat het concept **broninjectie**: voor elke agent-executie voert de coordinator een **bronassemblage** uit — het selecteren, ordenen en samenvoegen van **kaderbronnen** (constitutie, workspace-beleid, doctrines, charter, contract) en **werkbronnen** (parameters) tot één samenhangend **bronpakket** dat het LLM als context ontvangt. Het bronpakket is de execution file in `executions/`.
 
 ## 2. Capability boundary
 
-**Input**: Agent-naam, intent en workspace-context voor instructie-generatie; geen parameters voor task-aggregatie.
-**Processing**: Orkestreert ecosysteem-brede lifecycle-taken (instructie-assemblage, task-aggregatie) die geen individuele agent toebehoort.
-**Output**: Execution-bestanden, samengevoegde tasks.json; raakt geen agent-inhoud aan.
+**Input**:
+- Voor `genereer-instructies`: agent-naam en intent als werkbronnen; kaderbronnen worden automatisch geladen (constitutie, beleid, doctrines, charter, contract)
+- Voor `aggregeer-tasks`: geen parameters — scope uitsluitend bepaald door `value_stream-fasen` in `beleid-workspace.md`
+
+**Processing**: Voert broninjectie uit voor `genereer-instructies` (bronassemblage → bronpakket); aggregeert workspace-scopegebonden task-configuraties voor `aggregeer-tasks`.
+
+**Output**: Het bronpakket als execution file (`executions/`); samengevoegde `.vscode/tasks.json`. Raakt geen agent-inhoud aan.
 
 **Grenzen**:
-- Assembleert alleen; creëert geen nieuwe agent-definities
+- Assembleert en injecteert alleen; creëert geen nieuwe agent-definities
+- Wijzigt geen kaderbronnen — het bronregime (beleid-workspace.md) bepaalt wát mag worden geïnjecteerd
 
 ## 3. Rol en verantwoordelijkheid
 
 De ecosysteem-coordinator fungeert als infrastructurele laag die alle agents ondersteunt zonder zelf inhoudelijke beslissingen te nemen. Waar andere agents verantwoordelijk zijn voor het definiëren (capability-architect), ontwerpen (agent-ontwerper), realiseren (agent-engineer) en valideren (agent-curator) van agents, is de coordinator verantwoordelijk voor de *operationele ondersteuning* die deze agents nodig hebben om te functioneren.
 
 **Deze agent zorgt ervoor dat:**
-- Instructie-bestanden consistent worden geassembleerd uit charter + contract + prompt
+- Broninjectie consistent wordt uitgevoerd: elke executie krijgt een volledig bronpakket met alle kaderbronnen en werkbronnen in de juiste volgorde
 - Task-configuraties automatisch worden geaggregeerd zonder handmatig beheer
 - Alle cross-cutting concerns één eigenaar hebben met duidelijke governance
 
 **De ecosysteem-coordinator bewaakt daarbij:**
-- Uniformiteit van execution-bestanden onafhankelijk van welke agent wordt aangeroepen
+- Uniformiteit van het bronpakket onafhankelijk van welke agent wordt aangeroepen
+- Onveranderlijkheid van kaderbronnen: de coordinator leest, selecteert en injecteert — maar past nooit de inhoud van kaderbronnen aan
 
 ## 4. Kerntaken
 
-1. **Assembleren van instructies**  
-   Combineert agent charter, contract en prompt templates tot execution-ready instructiebestanden met volledige metadata.
+1. **Broninjectie — genereer instructies**  
+   Voert bronassemblage uit voor een opgegeven agent en intent: selecteert de relevante kaderbronnen (constitutie, workspace-beleid, doctrines, charter, contract) en werkbronnen (parameters), ordent deze conform het bronregime en voegt ze samen tot één bronpakket — de execution file die het LLM als context ontvangt.
    → Intent: `genereer-instructies`
 
 2. **Aggregeren van tasks**  
@@ -93,12 +101,15 @@ De ecosysteem-coordinator fungeert als infrastructurele laag die alle agents ond
 ## 5. Grenzen
 
 ### Wat de ecosysteem-coordinator WEL doet
-- Assembleert execution-bestanden uit bestaande artefacten
-- Voert placeholder-substitutie uit in templates
+- Voert broninjectie uit: assembleert kaderbronnen en werkbronnen tot een bronpakket (execution file)
+- Bepaalt de volgorde van kaderbronnen conform het bronregime (constitutie → beleid → doctrines → charter → contract)
+- Voert placeholder-substitutie uit in templates (werkbronnen injecteren)
 - Aggregeert task-configuraties uit meerdere bronnen
 - Voert `bootstrap:` declaraties uit prompt frontmatter uit
 
 ### Wat de ecosysteem-coordinator NIET doet
+- Wijzigt geen kaderbronnen — constitutie, doctrines, charters en contracten zijn read-only input
+- Bepaalt niet welke kaderbronnen geldig zijn (→ dat is het bronregime in beleid-workspace.md)
 - Schrijft geen agent-charters of -contracts (→ agent-ontwerper)
 - Scaffoldt geen runners of prompts (→ agent-engineer)
 - Beoordeelt geen inhoudelijke kwaliteit van agents (→ agent-curator)
@@ -112,13 +123,15 @@ De ecosysteem-coordinator fungeert als infrastructurele laag die alle agents ond
 
 ### Algemene werkwijze per intent
 
-**genereer-instructies:**
+**genereer-instructies (bronassemblage → bronpakket):**
 1. Locate agent folder in artefacten/{vs}/{vs}.{fase}.{agent}/
-2. Load charter, contract en prompt bestanden
-3. Substitute parameters in templates
-4. Assemble execution file met metadata header
-5. Write output naar execution_file pad
-6. Append naar `audit/agent-instructions.log.md`
+2. Raadpleeg `bronselectiebeleid.json` (in mandarin-canon) en bepaal de doctrine-whitelist voor deze `agent.intent` — vóór inhoudelijke opname
+3. Laad kaderbronnen in volgorde: constitutie → beleid → geselecteerde doctrines → charter → contract
+4. Laad werkbronnen: parameters en prompt-specifieke instructies
+5. Stel het bronpakket samen als gelaagd execution-bestand (7 secties: opdracht, bronhouding/regime, normatieve grondslagen, agentcontext, werkbronnen, bronmanifest)
+6. Schrijf het bronpakket naar execution_file pad
+7. Bereken `execution_digest` (SHA-256 van body, 12 hex tekens) en schrijf het execution-trace-bestand (`.trace.yaml`) naast het execution-bestand
+8. Append naar `audit/agent-instructions.log.md`
 
 **aggregeer-tasks:**
 1. Lees `beleid-workspace.md` en parse uitsluitend de YAML frontmatter
@@ -150,8 +163,18 @@ Dit charter is traceerbaar naar de volgende agent-contracten en prompt-metadata:
 De ecosysteem-coordinator legt alle resultaten vast in de workspace:
 
 - `audit/agent-instructions.log.md` — Gegenereerde instructies met execution metadata
-- `prompt-instructions/{timestamp}-{agent}.{intent}.md` — Execution-ready instructiebestanden
+- `executions/{timestamp}-{agent}.{intent}.md` — Execution-bestanden (bronpakketten), opgebouwd als 7-laagse inhoudsstructuur:
+  1. YAML frontmatter (execution_id, execution_digest, timestamp, agent, intent, value_stream_fase, canon_ref, bronhouding, modus)
+  2. Opdracht en parameters
+  3. Geldende bronhouding en bronregime (doctrine-excerpt + bronselectierapport)
+  4. Normatieve grondslagen (constitutie + beleid + geselecteerde doctrines)
+  5. Agentcontext (charter + contract + prompt)
+  6. Werkbronnen (optioneel — input-bestanden)
+  7. Bronmanifest en traceerbaarheid (tabel alle bronnen incl. uitgesloten, met opnamevorm en reden)
+- `executions/{timestamp}-{agent}.{intent}.trace.yaml` — Execution-trace-bestand: execution-anker (execution_id + execution_digest) + per-bron bronpad, type, digest, reden_van_opname, opnamevorm
 - `.vscode/tasks.json` — Geaggregeerde task-configuraties
+
+**Bronselectiebeleid** (in `mandarin-canon/grondslagen/bronselectiebeleid.json`): Bepaalt per `agent.intent` welke doctrines worden opgenomen in **sectie 4 (Normatieve grondslagen)**. Sleutelvolgorde: `agent.intent` → `*.intent` → `*.*` → include-all fallback. De bronhouding-doctrine (`doctrine-bronhouding-en-exploratie.md`) valt buiten dit schema en wordt altijd structureel geladen voor **sectie 3** (niet via bronselectiebeleid).
 
 ## 9. Logging bij handmatige initialisatie
 
@@ -182,3 +205,6 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 |-------|--------|-----------|--------|
 | 2026-03-07 | 1.0.0 | Initiële charter ecosysteem-coordinator op basis van boundary en migratie-analyse | Agent Ontwerper |
 | 2026-03-31 | 1.1.0 | Defensieve maatregelen aggregeer-tasks: hard-fail bij ontbreken value_stream-fasen, negatie-regel voor voorbeelden in beleidsdocumenten | GitHub Copilot |
+| 2026-04-06 | 1.2.0 | Broninjectie-terminologie geïntroduceerd: bronassemblage, bronpakket, kaderbron, werkbron — §1, §2, §3, §4, §5, §6 herschreven | GitHub Copilot |
+| 2026-04-06 | 1.3.0 | Bronselectiebeleid (bronselectiebeleid.json in mandarin-canon) en gelaagde 7-sectiestructuur execution-bestand — §6 en §8 bijgewerkt | GitHub Copilot |
+| 2026-04-06 | 1.4.0 | Execution-anker: execution_digest + bronhouding + modus aan YAML frontmatter; execution-trace-bestand (.trace.yaml); opnamevorm + reden_van_opname in bronmanifest; dedup-guard bronhouding verwijderd — §6 stap 7+8 bijgewerkt, §8 uitgebreid | GitHub Copilot |

@@ -44,7 +44,7 @@ def run_generate_instructions(agent_naam: str, intent: str, params: dict):
     result = subprocess.run(cmd, env=env)
     
     if result.returncode == 0:
-        print(f"\n\033[1mInstructies gegenereerd. Bekijk prompt-instructions/ folder.\033[0m")
+        print(f"\n\033[1mInstructies gegenereerd. Bekijk executions/ folder.\033[0m")
     else:
         print(f"❌ Fout opgetreden bij genereren instructies voor {intent}.", file=sys.stderr)
         sys.exit(result.returncode)

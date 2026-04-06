@@ -53,7 +53,7 @@ def run_generate_instructions(agent_naam: str, intent: str, params: Dict[str, st
     if not (repo_root / "artefacten").exists():
         repo_root = Path.cwd()
 
-    exec_dir = repo_root / "prompt-instructions"
+    exec_dir = repo_root / "executions"
     exec_dir.mkdir(exist_ok=True)
     filename = exec_dir / f"{timestamp}-{agent_naam}.{intent}.md"
 

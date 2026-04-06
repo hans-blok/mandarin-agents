@@ -2,18 +2,18 @@
 agent: ecosysteem-coordinator
 intent: aggregeer-tasks
 versie: 1.1.0
-digest: a329
+digest: afb0
 status: vers
 ---
 # Ecosysteem-coordinator — Aggregeer Tasks
 
 ## Rolbeschrijving (korte samenvatting)
 
-Verwijdert de bestaande `.vscode/tasks.json` en bouwt deze opnieuw op met:
-1. **Altijd**: Alle tasks uit `fnd.01` (fundamentele agents)
-2. **Plus**: Alle tasks voor fasen geconfigureerd in `beleid-workspace.md` (`value_stream-fasen`)
+Aggregeer workspace-scopegebonden task-configuraties tot één uitvoerbare `.vscode/tasks.json`. De scope wordt volledig bepaald door `value_stream-fasen` in `beleid-workspace.md` — geen parameters vereist.
 
-Geen parameters vereist: de scope wordt volledig bepaald door de workspace-configuratie.
+Altijd inbegrepen:
+1. Alle tasks uit `fnd.01` (fundamentele agents)
+2. Alle tasks voor fasen geconfigureerd in `beleid-workspace.md` (`value_stream-fasen`)
 
 **VERPLICHT**: Raadpleeg de agent charter voor volledige context, grenzen en werkwijze.  
 **Conventie**: Charter bevindt zich in `ecosysteem-coordinator.charter.md` in de parent folder van dit contract.

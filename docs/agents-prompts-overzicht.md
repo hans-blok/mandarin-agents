@@ -382,7 +382,7 @@ Assembleert execution-ready instructiebestanden door canon-context, charter, con
 #### Output
 
 - **type:** Markdown  
-- **bestand:** `prompt-instructions/{hash}.{agent}.{intent}.md`
+- **bestand:** `executions/{hash}.{agent}.{intent}.md`
 
 ---
 

@@ -1038,7 +1038,11 @@ def load_constitutie() -> Optional[str]:
     return None
 
 
-def load_doctrines_for_fase(value_stream_fase: str) -> Tuple[str, List[str]]:
+def load_doctrines_for_fase(
+    value_stream_fase: str,
+    agent: Optional[str] = None,
+    intent: Optional[str] = None,
+) -> Tuple[str, List[str], List[dict], List[dict], str]:
     """Laad doctrine-bestanden voor de gegeven value_stream_fase via grondslagen.json manifest.
 
     Hiërarchie (altijd cumulatief, van algemeen naar specifiek):
@@ -1046,21 +1050,25 @@ def load_doctrines_for_fase(value_stream_fase: str) -> Tuple[str, List[str]]:
       2. manifest["value_streams"][VS]["grondslagen"]   — type=="doctrine", voor de value stream
       3. manifest["value_streams"][VS]["fasen"][fase]   — type=="doctrine", voor de specifieke fase
 
-    De manifest-structuur van grondslagen/grondslagen.json in mandarin-canon is leidend.
-    Bij digest-mismatch: waarschuwing, document toch geladen (soft fail).
+    Wanneer agent en intent zijn opgegeven, wordt bronselectiebeleid.json geraadpleegd om de
+    doctrine-kandidaten te filteren vóór inhoudelijke opname (eerste en belangrijkste mitigatie
+    tegen omvanggroei).
 
     Args:
         value_stream_fase: Bijv. 'aeo.02' of 'miv.07'
+        agent: Optioneel — agent-naam voor bronselectie (bijv. 'agent-ontwerper')
+        intent: Optioneel — intent-naam voor bronselectie (bijv. 'definieer-agent-charter')
 
     Returns:
-        Tuple van (geconcateneerde doctrine-inhoud, lijst van geladen bestandspaden)
+        Tuple van (geconcateneerde doctrine-inhoud, lijst van geladen bestandspaden,
+                   geselecteerde entries, uitgesloten entries, matched bronselectiesleutel)
     """
     if not value_stream_fase:
-        return "", []
+        return "", [], [], [], "fallback"
 
     parts = value_stream_fase.split(".")
     if len(parts) < 2:
-        return "", []
+        return "", [], [], [], "fallback"
 
     vs = parts[0]        # e.g. "aeo"
     fase = parts[1]      # e.g. "02"
@@ -1070,43 +1078,53 @@ def load_doctrines_for_fase(value_stream_fase: str) -> Tuple[str, List[str]]:
     canon_path = workspace_root.parent / "mandarin-canon"
     if not canon_path.exists():
         print(f"  [Doctrines] Canon pad niet gevonden: {canon_path}", file=sys.stderr)
-        return "", []
+        return "", [], [], [], "fallback"
 
     manifest_path = canon_path / "grondslagen" / "grondslagen.json"
     if not manifest_path.exists():
         print(f"  [Doctrines] grondslagen.json niet gevonden: {manifest_path}", file=sys.stderr)
-        return "", []
+        return "", [], [], [], "fallback"
 
     try:
         with open(manifest_path, "r", encoding="utf-8") as f:
             manifest = json.load(f)
     except Exception as e:
         print(f"  [Doctrines] Kon grondslagen.json niet lezen: {e}", file=sys.stderr)
-        return "", []
+        return "", [], [], [], "fallback"
 
     # Verzamel entries op 3 niveaus (alleen type=="doctrine")
-    entries: List[dict] = []
+    all_entries: List[dict] = []
 
     for entry in manifest.get("algemeen", []):
         if isinstance(entry, dict) and entry.get("type") == "doctrine":
-            entries.append(entry)
+            all_entries.append(entry)
 
     vs_data = manifest.get("value_streams", {}).get(vs_key, {})
     for entry in vs_data.get("grondslagen", []):
         if isinstance(entry, dict) and entry.get("type") == "doctrine":
-            entries.append(entry)
+            all_entries.append(entry)
 
     fase_data = vs_data.get("fasen", {}).get(fase, {})
     for entry in fase_data.get("grondslagen", []):
         if isinstance(entry, dict) and entry.get("type") == "doctrine":
-            entries.append(entry)
+            all_entries.append(entry)
 
-    # Laad bestanden en verifieer digesten
+    # Bronselectie: filter kandidaten op basis van bronselectiebeleid.json
+    if agent and intent:
+        geselecteerd, uitgesloten, matched_sleutel = bepaal_bronselectie(
+            agent, intent, all_entries, canon_path
+        )
+    else:
+        geselecteerd = all_entries
+        uitgesloten = []
+        matched_sleutel = "fallback"
+
+    # Laad bestanden en verifieer digesten (alleen geselecteerde entries)
     seen: Set[str] = set()
     loaded_files: List[str] = []
     content_parts: List[str] = []
 
-    for entry in entries:
+    for entry in geselecteerd:
         pad = entry.get("pad", "")
         if not pad or pad in seen:
             continue
@@ -1139,7 +1157,86 @@ def load_doctrines_for_fase(value_stream_fase: str) -> Tuple[str, List[str]]:
             content_parts.append(f"### {pad}\n\n{body}\n")
             loaded_files.append(pad)
 
-    return "\n\n".join(content_parts), loaded_files
+    return "\n\n".join(content_parts), loaded_files, geselecteerd, uitgesloten, matched_sleutel
+
+
+def bepaal_bronselectie(
+    agent: str,
+    intent: str,
+    entries: List[dict],
+    canon_path: Path,
+) -> Tuple[List[dict], List[dict], str]:
+    """Bepaal welke doctrine-entries van toepassing zijn voor deze agent+intent.
+
+    Sleutelvolgorde: '{agent}.{intent}' → '*.{intent}' → '*.*' → fallback (include-all).
+
+    Args:
+        agent: Agent-naam (bijv. 'agent-ontwerper')
+        intent: Intent-naam (bijv. 'definieer-agent-charter')
+        entries: Doctrine-manifest-entries (type=='doctrine') al gefilterd
+        canon_path: Pad naar mandarin-canon root
+
+    Returns:
+        Tuple van (geselecteerd, uitgesloten, matched_sleutel)
+    """
+    beleid_path = canon_path / "grondslagen" / "bronselectiebeleid.json"
+    if not beleid_path.exists():
+        return entries, [], "fallback"
+
+    try:
+        with open(beleid_path, "r", encoding="utf-8") as f:
+            beleid = json.load(f)
+    except Exception as e:
+        print(f"  [Bronselectie] Kon bronselectiebeleid.json niet lezen: {e}", file=sys.stderr)
+        return entries, [], "fallback"
+
+    intents_map = beleid.get("intents", {})
+    lookup_keys = [
+        f"{agent}.{intent}",
+        f"*.{intent}",
+        "*.*",
+    ]
+
+    matched_sleutel = None
+    whitelist = None
+    for key in lookup_keys:
+        if key in intents_map:
+            matched_sleutel = key
+            whitelist = intents_map[key].get("verplicht", None)
+            break
+
+    if whitelist is None:
+        fallback = beleid.get("fallback", "include-all")
+        if fallback == "include-all":
+            return entries, [], "fallback"
+        return [], entries, "fallback-exclude-all"
+
+    whitelist_set = set(whitelist)
+    geselecteerd = [e for e in entries if e.get("naam", "") in whitelist_set]
+    uitgesloten = [e for e in entries if e.get("naam", "") not in whitelist_set]
+    print(
+        f"  [Bronselectie] Profiel '{matched_sleutel}': "
+        f"{len(geselecteerd)} opgenomen, {len(uitgesloten)} uitgesloten",
+        file=sys.stderr,
+    )
+    return geselecteerd, uitgesloten, matched_sleutel
+
+
+def load_bronhouding_doctrine() -> Optional[str]:
+    """Laad de bronhouding-doctrine altijd, ongeacht bronselectie.
+
+    Retourneert de content van doctrine-bronhouding-en-exploratie.md uit mandarin-canon.
+    """
+    workspace_root = get_workspace_root()
+    canon_path = workspace_root.parent / "mandarin-canon"
+    bronhouding_path = canon_path / "grondslagen" / ".algemeen" / "doctrine-bronhouding-en-exploratie.md"
+    if not bronhouding_path.exists():
+        return None
+    try:
+        with open(bronhouding_path, "r", encoding="utf-8") as f:
+            return f.read()
+    except Exception:
+        return None
 
 
 def strip_frontmatter_block(content: str) -> str:
@@ -1281,105 +1378,365 @@ def format_execution_intro(metadata: Dict, agent_name: str, intent: str) -> str:
     )
 
 
-def format_bronhouding_section(metadata: Dict) -> str:
-    """Formatteer bronhouding voor opname in execution wrapper."""
+def build_section_opdracht(agent_name: str, intent: str, metadata: Dict, params: Dict) -> str:
+    """Sectie 2: Opdracht en parameters."""
+    intro = format_execution_intro(metadata, agent_name, intent)
+    params_text = format_execution_params(params)
     bronhouding = metadata.get('bronhouding')
-    if not bronhouding:
-        return ""
-
-    instruction = BRONHOUDING_INSTRUCTIES.get(bronhouding)
-    if not instruction:
-        print(f"WARNING: Onbekende bronhouding '{bronhouding}'. Geldige waarden: {', '.join(BRONHOUDING_INSTRUCTIES.keys())}")
-        return ""
-
-    return f"## Bronhouding: {bronhouding}\n\n{instruction}\n\n"
+    bronhouding_label = f"\n\n**Bronhouding**: {bronhouding}" if bronhouding else ""
+    return f"# Opdracht\n\n{intro}{bronhouding_label}\n\n## Parameters\n\n{params_text}\n\n"
 
 
-def assemble_full_instructions(metadata: Dict, prompt_content: str, prompt_file: str, 
-                               params: Dict, input_content: str, 
-                               input_files_content: Dict,
-                               beleid_content: str = None) -> Tuple[str, Optional[str]]:
-    """Stel volledige agent-instructies samen uit alle bronnen.
-    
-    Volgorde (verplicht volgens constitutie leesvolgorde):
-    1. Constitutie (fundament uit canon)
-    2. Workspace Beleid (uit beleid-workspace.md)
-    3. Bronhouding (methode-specifieke instructies)
-    4. Agent Charter (identiteit en grenzen)
-    5. Agent Contract (intent-specifieke instructies)
-    """
-    parts = []
-    grondslagen_parts = []
+def build_section_bronhouding_bronregime(
+    bronhouding_type: Optional[str],
+    bronhouding_doctrine_content: Optional[str],
+    geselecteerd: List[dict],
+    uitgesloten: List[dict],
+    matched_sleutel: str,
+) -> str:
+    """Sectie 3: Geldende bronhouding en bronregime."""
+    parts = ["# Geldende bronhouding en bronregime\n\n"]
 
-    # 1. Constitutie (fundament uit canon)
-    constitutie = load_constitutie()
+    if bronhouding_doctrine_content:
+        prepared = prepare_document_for_execution(bronhouding_doctrine_content, "doctrine")
+        if prepared:
+            parts.append(prepared)
+            parts.append("\n\n")
+
+    if bronhouding_type:
+        instruction = BRONHOUDING_INSTRUCTIES.get(bronhouding_type, "")
+        if instruction:
+            parts.append(f"## Actief bronregime: {bronhouding_type}\n\n{instruction}\n\n")
+
+    parts.append("## Bronselectie\n\n")
+    parts.append(f"- **Toegepast profiel**: `{matched_sleutel}`\n")
+    if geselecteerd:
+        parts.append(f"- **Opgenomen doctrines** ({len(geselecteerd)}):\n")
+        for e in geselecteerd:
+            parts.append(f"  - `{e.get('naam', '?')}` — {e.get('titel', '')}\n")
+    if uitgesloten:
+        parts.append(f"- **Uitgesloten doctrines** ({len(uitgesloten)}):\n")
+        for e in uitgesloten:
+            parts.append(f"  - `{e.get('naam', '?')}` — {e.get('titel', '')}\n")
+    parts.append("\n")
+    return "".join(parts)
+
+
+def build_section_normatieve_grondslagen(
+    constitutie: Optional[str],
+    beleid_content: Optional[str],
+    doctrine_content: str,
+    doctrine_files: List[str],
+    value_stream_fase: str,
+) -> str:
+    """Sectie 4: Normatieve grondslagen (constitutie + beleid + geselecteerde doctrines)."""
+    parts = ["# Normatieve grondslagen\n\n"]
+
     if constitutie:
-        prepared_constitutie = prepare_document_for_execution(constitutie, "constitutie")
-        if prepared_constitutie:
-            grondslagen_parts.append("## Constitutie\n\n")
-            grondslagen_parts.append(prepared_constitutie)
-            grondslagen_parts.append("\n\n")
+        prepared = prepare_document_for_execution(constitutie, "constitutie")
+        if prepared:
+            parts.append("## Constitutie\n\n")
+            parts.append(prepared)
+            parts.append("\n\n")
 
-    # 2. Workspace Beleid (uit beleid-workspace.md)
     if beleid_content and beleid_content.strip():
-        prepared_beleid = prepare_document_for_execution(beleid_content.strip(), "beleid")
-        if prepared_beleid:
-            grondslagen_parts.append("## Workspace-beleid\n\n")
-            grondslagen_parts.append(prepared_beleid)
-            grondslagen_parts.append("\n\n")
+        prepared = prepare_document_for_execution(beleid_content.strip(), "beleid")
+        if prepared:
+            parts.append("## Workspace-beleid\n\n")
+            parts.append(prepared)
+            parts.append("\n\n")
 
-    # 3. Doctrines (convention-based, op basis van value_stream_fase)
-    value_stream_fase = params.get('value_stream_fase') or ""
-    if value_stream_fase:
-        doctrine_content, doctrine_files = load_doctrines_for_fase(value_stream_fase)
-        if doctrine_content:
+    if doctrine_content:
+        if doctrine_files:
             print(f"  [Doctrines] Geladen voor '{value_stream_fase}' ({len(doctrine_files)} bestand(en)):")
             for df in doctrine_files:
                 print(f"    - {df}")
-            grondslagen_parts.append("## Doctrines\n\n")
-            grondslagen_parts.append(doctrine_content)
-            grondslagen_parts.append("\n\n")
-        else:
-            print(f"  [Doctrines] Geen doctrine-bestanden gevonden voor '{value_stream_fase}'")
+        parts.append("## Doctrines\n\n")
+        parts.append(doctrine_content)
+        parts.append("\n\n")
+    elif value_stream_fase:
+        print(f"  [Doctrines] Geen doctrine-bestanden gevonden voor '{value_stream_fase}'")
 
-    if grondslagen_parts:
-        parts.append("# Grondslagen\n\n")
-        parts.extend(grondslagen_parts)
-        parts.append("---\n\n")
+    return "".join(parts)
 
-    # 4. Agent Charter
-    charter_content, charter_path = load_charter(prompt_file, metadata, params)
+
+def build_section_agentcontext(
+    charter_content: Optional[str],
+    contract_content: Optional[str],
+    prompt_content: str,
+) -> str:
+    """Sectie 5: Agentcontext (charter + contract + prompt)."""
+    parts = ["# Agentcontext\n\n"]
+
     if charter_content:
-        prepared_charter = prepare_document_for_execution(charter_content, "charter")
-        if prepared_charter:
-            parts.append("# Agent Charter\n\n")
-            parts.append(prepared_charter)
-            parts.append("\n\n---\n\n")
-    
-    # 5. Agent Contract (intent-specifieke instructies)
-    agent_instructions = load_agent_instructions(prompt_file, metadata, params)
-    if agent_instructions:
-        prepared_contract = prepare_document_for_execution(agent_instructions, "contract")
-        if prepared_contract:
-            parts.append("# Agent Contract\n\n")
-            parts.append(prepared_contract)
+        prepared = prepare_document_for_execution(charter_content, "charter")
+        if prepared:
+            parts.append("## Charter\n\n")
+            parts.append(prepared)
+            parts.append("\n\n")
+
+    if contract_content:
+        prepared = prepare_document_for_execution(contract_content, "contract")
+        if prepared:
+            parts.append("## Contract\n\n")
+            parts.append(prepared)
+            parts.append("\n\n")
     elif prompt_content.strip():
-        prepared_prompt_content = prepare_document_for_execution(prompt_content, "contract")
-        if prepared_prompt_content:
-            parts.append("# Agent Contract\n\n")
-            parts.append(prepared_prompt_content)
-    
-    combined = ''.join(parts)
+        prepared = prepare_document_for_execution(prompt_content, "contract")
+        if prepared:
+            parts.append("## Prompt\n\n")
+            parts.append(prepared)
+            parts.append("\n\n")
+
+    return "".join(parts)
+
+
+def build_section_werkbronnen(input_files_content: Dict) -> str:
+    """Sectie 6: Werkbronnen (optioneel — weglaten als leeg)."""
+    if not input_files_content:
+        return ""
+
+    parts = ["# Werkbronnen\n\n"]
+    for key, content in input_files_content.items():
+        if content and content.strip():
+            label = Path(key).name if key else key
+            parts.append(f"## {label}\n\n")
+            parts.append(content.strip())
+            parts.append("\n\n")
+
+    if len(parts) == 1:  # alleen de header, geen inhoud
+        return ""
+    return "".join(parts)
+
+
+def build_section_bronmanifest(manifest_entries: List[Dict]) -> str:
+    """Sectie 7: Bronmanifest en traceerbaarheid."""
+    if not manifest_entries:
+        return ""
+
+    lines = [
+        "# Bronmanifest\n\n",
+        "| Bron | Bronrol | Type | Digest | Status | Opname | Opnamevorm | Reden |\n",
+        "|------|---------|------|--------|--------|--------|------------|-------|\n",
+    ]
+    for e in manifest_entries:
+        naam = e.get("naam", "—")
+        bronrol = e.get("bronrol", "kaderbron")
+        bron_type = e.get("type", "—")
+        digest = e.get("digest", "—")
+        status = e.get("status", "—")
+        opname = e.get("opname", "opgenomen")
+        opnamevorm = e.get("opnamevorm") or "—"
+        reden = e.get("reden_van_opname", "—")
+        lines.append(f"| `{naam}` | {bronrol} | {bron_type} | `{digest}` | {status} | {opname} | {opnamevorm} | {reden} |\n")
+    lines.append("\n")
+    return "".join(lines)
+
+
+def assemble_full_instructions(metadata: Dict, prompt_content: str, prompt_file: str,
+                               params: Dict, input_content: str,
+                               input_files_content: Dict,
+                               beleid_content: str = None) -> Tuple[str, Optional[str], List[Dict]]:
+    """Stel volledige agent-instructies samen als gelaagd execution-bestand (7 secties).
+
+    Structuur:
+    1. YAML frontmatter             — via write_execution_file
+    2. Opdracht en parameters       — introductiezin + parameters
+    3. Geldende bronhouding/regime  — doctrine-excerpt + bronselectierapport
+    4. Normatieve grondslagen       — constitutie + beleid + gefilterde doctrines
+    5. Agentcontext                 — charter + contract + prompt
+    6. Werkbronnen                  — input-bestanden (optioneel)
+    7. Bronmanifest                 — traceerbaarheidstabel van alle bronnen
+    """
+    agent_name = metadata.get('agent', params.get('agent', 'unknown')).split('.')[-1]
+    intent = metadata.get('intent', params.get('intent', 'unknown'))
+    value_stream_fase = params.get('value_stream_fase') or ""
+
+    bronmanifest_entries: List[Dict] = []
+
+    # --- Sectie 2: Opdracht en parameters ---
+    section_opdracht = build_section_opdracht(agent_name, intent, metadata, params)
+
+    # --- Bronnen laden ---
+    # 3a. Bronhouding-doctrine (altijd, structureel — buiten bronselectiebeleid.json)
+    bronhouding_doctrine_raw = load_bronhouding_doctrine()
+    bronmanifest_entries.append({
+        "naam": "doctrine-bronhouding-en-exploratie.md",
+        "bronrol": "kaderbron",
+        "type": "doctrine",
+        "digest": "—",
+        "status": "altijd opgenomen",
+        "opname": "opgenomen (verplicht)",
+        "opnamevorm": "volledig",
+        "reden_van_opname": "altijd verplicht (structureel)",
+    })
+
+    # 3b. Constitutie
+    constitutie = load_constitutie()
+    bronmanifest_entries.append({
+        "naam": "constitutie.md",
+        "bronrol": "kaderbron",
+        "type": "constitutie",
+        "digest": "—",
+        "status": "geladen" if constitutie else "niet gevonden",
+        "opname": "opgenomen" if constitutie else "niet beschikbaar",
+        "opnamevorm": "volledig" if constitutie else None,
+        "reden_van_opname": "altijd verplicht (structureel)",
+    })
+
+    # 3c. Workspace-beleid
+    if beleid_content and beleid_content.strip():
+        bronmanifest_entries.append({
+            "naam": "beleid-workspace.md",
+            "bronrol": "kaderbron",
+            "type": "beleid",
+            "digest": "—",
+            "status": "geladen",
+            "opname": "opgenomen",
+            "opnamevorm": "volledig",
+            "reden_van_opname": "altijd verplicht (structureel)",
+        })
+
+    # 3d. Doctrines (gefilterd door bronselectiebeleid)
+    doctrine_content = ""
+    doctrine_files: List[str] = []
+    geselecteerd_entries: List[dict] = []
+    uitgesloten_entries: List[dict] = []
+    matched_sleutel = "fallback"
+
+    if value_stream_fase:
+        doctrine_content, doctrine_files, geselecteerd_entries, uitgesloten_entries, matched_sleutel = \
+            load_doctrines_for_fase(value_stream_fase, agent=agent_name, intent=intent)
+
+    for e in geselecteerd_entries:
+        naam = e.get("naam", "?")
+        bronmanifest_entries.append({
+            "naam": naam,
+            "bronrol": "kaderbron",
+            "type": "doctrine",
+            "digest": e.get("digest_berekend", e.get("digest", "—")),
+            "status": e.get("status_header", "—"),
+            "opname": "opgenomen",
+            "opnamevorm": "volledig",
+            "reden_van_opname": f"bronselectieprofiel '{matched_sleutel}'",
+        })
+    for e in uitgesloten_entries:
+        bronmanifest_entries.append({
+            "naam": e.get("naam", "?"),
+            "bronrol": "kaderbron",
+            "type": "doctrine",
+            "digest": e.get("digest_berekend", e.get("digest", "—")),
+            "status": e.get("status_header", "—"),
+            "opname": f"uitgesloten: profiel `{matched_sleutel}`",
+            "opnamevorm": None,
+            "reden_van_opname": f"uitgesloten: profiel '{matched_sleutel}'",
+        })
+
+    # --- Sectie 3: Geldende bronhouding en bronregime ---
+    section_bronhouding = build_section_bronhouding_bronregime(
+        bronhouding_type=metadata.get('bronhouding'),
+        bronhouding_doctrine_content=bronhouding_doctrine_raw,
+        geselecteerd=geselecteerd_entries,
+        uitgesloten=uitgesloten_entries,
+        matched_sleutel=matched_sleutel,
+    )
+
+    # --- Sectie 4: Normatieve grondslagen ---
+    section_grondslagen = build_section_normatieve_grondslagen(
+        constitutie=constitutie,
+        beleid_content=beleid_content,
+        doctrine_content=doctrine_content,
+        doctrine_files=doctrine_files,
+        value_stream_fase=value_stream_fase,
+    )
+
+    # --- Sectie 5: Agentcontext ---
+    charter_content, charter_path = load_charter(prompt_file, metadata, params)
+    contract_content = load_agent_instructions(prompt_file, metadata, params)
+
+    if charter_content:
+        charter_naam = Path(charter_path).name if charter_path else "charter.md"
+        bronmanifest_entries.append({
+            "naam": charter_naam,
+            "bronrol": "kaderbron",
+            "type": "charter",
+            "digest": "—",
+            "status": "geladen",
+            "opname": "opgenomen",
+            "opnamevorm": "volledig",
+            "reden_van_opname": f"agent-charter voor {agent_name}",
+        })
+    if contract_content:
+        bronmanifest_entries.append({
+            "naam": f"{agent_name}.{intent}.agent.md",
+            "bronrol": "kaderbron",
+            "type": "contract",
+            "digest": "—",
+            "status": "geladen",
+            "opname": "opgenomen",
+            "opnamevorm": "volledig",
+            "reden_van_opname": f"agent-contract voor {agent_name}.{intent}",
+        })
+    if prompt_content.strip():
+        prompt_naam = Path(prompt_file).name if prompt_file else "prompt.md"
+        bronmanifest_entries.append({
+            "naam": prompt_naam,
+            "bronrol": "kaderbron",
+            "type": "prompt",
+            "digest": "—",
+            "status": "geladen",
+            "opname": "opgenomen" if not contract_content else "agentcontext (naast contract)",
+            "opnamevorm": "volledig",
+            "reden_van_opname": "agentprompt",
+        })
+
+    section_agentcontext = build_section_agentcontext(
+        charter_content=charter_content,
+        contract_content=contract_content,
+        prompt_content=prompt_content,
+    )
+
+    # --- Sectie 6: Werkbronnen ---
+    for key in input_files_content:
+        bronmanifest_entries.append({
+            "naam": Path(key).name if key else key,
+            "bronrol": "werkbron",
+            "type": "input",
+            "digest": "—",
+            "status": "geladen",
+            "opname": "opgenomen",
+            "opnamevorm": "volledig",
+            "reden_van_opname": "werkbron (opgegeven input)",
+        })
+    section_werkbronnen = build_section_werkbronnen(input_files_content)
+
+    # --- Sectie 7: Bronmanifest ---
+    section_bronmanifest = build_section_bronmanifest(bronmanifest_entries)
+
+    # Samenvoegen
+    combined = "".join([
+        section_opdracht,
+        "---\n\n",
+        section_bronhouding,
+        "---\n\n",
+        section_grondslagen,
+        "---\n\n",
+        section_agentcontext,
+    ])
+    if section_werkbronnen:
+        combined += "---\n\n" + section_werkbronnen
+    combined += "---\n\n" + section_bronmanifest
+
     final_instructions = replace_placeholders(combined, params, input_content, input_files_content)
-    
-    return final_instructions, charter_path
+
+    return final_instructions, charter_path, bronmanifest_entries
 
 
-def write_execution_file(filepath: str, metadata: Dict, params: Dict, final_prompt: str) -> bool:
+def write_execution_file(filepath: str, metadata: Dict, params: Dict, final_prompt: str) -> Optional[str]:
     """Schrijf execution-ready instructies naar bestand met metadata header.
     
     Returns:
-        True als succesvol, False bij fout.
+        execution_digest (12-char SHA-256 van de body) als succesvol, None bij fout.
     """
     execution_file = Path(filepath)
     execution_file.parent.mkdir(parents=True, exist_ok=True)
@@ -1442,39 +1799,90 @@ def write_execution_file(filepath: str, metadata: Dict, params: Dict, final_prom
         print("=" * 80)
         print("ERROR: Geen geldige canon SHA gevonden")
         print("=" * 80)
-        return False
-    
-    display_params = dict(params)
-    display_params.setdefault('agent', agent_name)
-    if value_stream_fase:
-        display_params.setdefault('value_stream_fase', value_stream_fase)
+        return None
 
-    params_text = format_execution_params(display_params)
-    intro_text = format_execution_intro(metadata, agent_name, intent)
-    bronhouding_text = format_bronhouding_section(metadata)
-    
+    execution_digest = hashlib.sha256(final_prompt.encode('utf-8')).hexdigest()[:12]
+    bronhouding = metadata.get('bronhouding', 'onbekend')
+    modus = metadata.get('modus', 'handmatig')
+
     header = f"""---
 execution_id: {hash_digest}
+execution_digest: {execution_digest}
 timestamp: {timestamp}
 agent: {agent_name}
 intent: {intent}
 value_stream_fase: {value_stream_fase}
 canon_ref: {canon_hash}
+bronhouding: {bronhouding}
+modus: {modus}
 ---
 
-{intro_text}
-
-{bronhouding_text}## Parameters
-
-{params_text}
-
 """
-    
+
     with open(execution_file, 'w', encoding='utf-8') as f:
         f.write(header)
         f.write(final_prompt)
-    
-    return True
+
+    return execution_digest
+
+
+def write_trace_file(execution_filepath: str, metadata: Dict,
+                     bronmanifest_entries: List[Dict], execution_digest: str) -> bool:
+    """Schrijf een execution-trace-bestand (.trace.yaml) naast het execution-bestand.
+
+    Bevat het execution-anker (execution_id + execution_digest) en per bron:
+    bronpad, type, digest, reden_van_opname, opnamevorm.
+
+    Returns:
+        True als succesvol, False bij fout (niet fataal — logt een waarschuwing).
+    """
+    try:
+        import yaml
+    except ImportError:
+        print("WARNING: PyYAML niet geïnstalleerd — trace-bestand overgeslagen.")
+        return False
+
+    trace_path = Path(execution_filepath).with_suffix('.trace.yaml')
+
+    execution_id = metadata.get('execution_id', Path(execution_filepath).stem.split('.')[0])
+    agent_name = metadata.get('agent', 'unknown').split('.')[-1]
+    intent = metadata.get('intent', 'unknown')
+    timestamp = metadata.get('timestamp', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    value_stream_fase = metadata.get('value_stream_fase', 'unknown')
+    bronhouding = metadata.get('bronhouding', 'onbekend')
+    modus = metadata.get('modus', 'handmatig')
+
+    bronnen = []
+    for e in bronmanifest_entries:
+        entry = {
+            'bronpad': e.get('naam', '—'),
+            'type': e.get('type', '—'),
+            'digest': e.get('digest', '—'),
+            'reden_van_opname': e.get('reden_van_opname', '—'),
+            'opnamevorm': e.get('opnamevorm'),
+        }
+        bronnen.append(entry)
+
+    trace_data = {
+        'execution_id': execution_id,
+        'execution_digest': execution_digest,
+        'agent': agent_name,
+        'intent': intent,
+        'timestamp': timestamp,
+        'value_stream_fase': value_stream_fase,
+        'bronhouding': bronhouding,
+        'modus': modus,
+        'bronnen': bronnen,
+    }
+
+    try:
+        with open(trace_path, 'w', encoding='utf-8') as f:
+            yaml.dump(trace_data, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
+        print(f"[OK] Trace-bestand geschreven: {trace_path}")
+        return True
+    except Exception as e:
+        print(f"WARNING: Kon trace-bestand niet schrijven: {e}")
+        return False
 
 
 def log_agent_instructions(metadata: Dict, params: Dict, final_prompt: str, 
@@ -1694,8 +2102,9 @@ def genereer_instructies_main(args: argparse.Namespace) -> int:
             print("ERROR: Kon minimal template niet laden.")
             return 1
         final_prompt = replace_placeholders(minimal_content, params, "", None)
+        bronmanifest_entries: List[Dict] = []
     else:
-        final_prompt, _ = assemble_full_instructions(metadata, prompt_content, args.prompt_file, params, input_content, input_files_content, beleid_content)
+        final_prompt, _, bronmanifest_entries = assemble_full_instructions(metadata, prompt_content, args.prompt_file, params, input_content, input_files_content, beleid_content)
     
     log_mode = getattr(args, 'log_mode', 'full')
     log_agent_instructions(metadata, params, final_prompt, args.prompt_file, log_mode)
@@ -1708,9 +2117,9 @@ def genereer_instructies_main(args: argparse.Namespace) -> int:
         # Expliciet opgegeven execution file
         execution_file_path = args.execution_file
     elif not no_save:
-        # Auto-genereer pad naar prompt-instructions/ in target workspace (cwd)
+        # Auto-genereer pad naar executions/ in target workspace (cwd)
         target_workspace = get_target_workspace()
-        prompt_instructions_dir = target_workspace / "prompt-instructions"
+        prompt_instructions_dir = target_workspace / "executions"
         
         agent_name = metadata.get('agent', 'unknown').split('.')[-1]
         intent = metadata.get('intent', 'unknown')
@@ -1721,12 +2130,13 @@ def genereer_instructies_main(args: argparse.Namespace) -> int:
         execution_file_path = str(prompt_instructions_dir / f"{hash_digest}.{agent_name}.{intent}.md")
     
     if execution_file_path:
-        success = write_execution_file(execution_file_path, metadata, params, final_prompt)
-        if not success:
+        execution_digest = write_execution_file(execution_file_path, metadata, params, final_prompt)
+        if execution_digest is None:
             print("ERROR: Kon execution file niet schrijven.")
             return 1
         print()
         print(f"[OK] Execution file geschreven: {execution_file_path}")
+        write_trace_file(execution_file_path, metadata, bronmanifest_entries, execution_digest)
     
     print()
     print("=" * 80)
@@ -2639,7 +3049,7 @@ def main():
     p_gen.add_argument("--skip-bootstrap", action="store_true", help="Skip canon bootstrap")
     p_gen.add_argument("--log-mode", type=str, default="full", choices=["full", "compact"])
     p_gen.add_argument("--bootstrap-quiet", action="store_true", help="Compacte bootstrap output")
-    p_gen.add_argument("--no-save", action="store_true", help="Schrijf geen execution file naar prompt-instructions/")
+    p_gen.add_argument("--no-save", action="store_true", help="Schrijf geen execution file naar executions/")
 
     # aggregeer-tasks
     p_activeer = subparsers.add_parser("aggregeer-tasks", help="Aggregeer tasks op basis van beleid-workspace.md value_stream-fasen")

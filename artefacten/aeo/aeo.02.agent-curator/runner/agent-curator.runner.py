@@ -460,7 +460,7 @@ def handle_rapporteer_prompts_overzicht() -> int:
     ``genereer-instructies`` voor ``agent-curator.rapporteer-prompts-overzicht``.
 
     Deze runner genereert daarmee een execution-ready instructiebestand in
-    de map ``prompt-instructions/``, conform de bestaande One Agent, One Runner
+    de map ``executions/``, conform de bestaande One Agent, One Runner
     architectuur (ecosysteem-coordinator als centrale instructie-assembler).
     
     Returns:
@@ -512,7 +512,7 @@ def handle_rapporteer_prompts_overzicht() -> int:
 
     if exit_code == 0:
         print("\n[SUCCESS] Instructies voor rapporteer-prompts-overzicht gegenereerd.")
-        print("Kijk in de map 'prompt-instructions/' voor het execution-bestand.")
+        print("Kijk in de map 'executions/' voor het execution-bestand.")
     else:
         print(f"\n[ERROR] ecosysteem-coordinator runner eindigde met exit code {exit_code}", file=sys.stderr)
 

@@ -25,7 +25,7 @@ mandarin-agents/
 â”‚   â””â”€â”€ assets/
 â”œâ”€â”€ scripts/              # Ondersteunende scripts
 â”‚   â””â”€â”€ copy_prompts_mandarin_agents.py
-â”œâ”€â”€ prompt-instructions/  # Execution-ready prompts voor runners/LLM
+â”œâ”€â”€ executions/           # Execution-bestanden (bronpakketten) voor runners/LLM
 â”œâ”€â”€ audit/                # Logfiles (canon consult, agent-instructions)
 â”œâ”€â”€ concepts/             # Conceptuele documentatie (domein- en ordeningsconcepten)
 â”œâ”€â”€ mkdocs.yml            # Site-configuratie voor GitHub Pages / MkDocs
@@ -89,14 +89,14 @@ python artefacten/aeo/aeo.02.agent-curator/runner/agent-curator.runner.py public
 Na het draaien van deze runner kun je de gegenereerde overzichtsbestanden
 vinden in `docs/`.
 
-## Prompt-instructies
+## Execution-bestanden
 
 Wanneer je `genereer-instructies` (via de ecosysteem-coordinator) of
 `rapporteer-prompts-overzicht` (via de agent-curator runner) gebruikt,
-worden execution-bestanden aangemaakt in `prompt-instructions/`:
+worden execution-bestanden aangemaakt in `executions/`:
 
 ```text
-prompt-instructions/
+executions/
 â”œâ”€â”€ <hash>.agent-curator.rapporteer-prompts-overzicht.md
 â””â”€â”€ history/
 ```

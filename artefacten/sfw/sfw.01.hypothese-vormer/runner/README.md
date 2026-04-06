@@ -32,7 +32,7 @@ De `hypothese-vormer.runner.py` is een **dunne schil** (façade) die:
 │                                                             │
 │  → Leest charter, prompt, boundary uit mandarin-agents      │
 │  → Assembleert volledige instructies                        │
-│  → Schrijft naar prompt-instructions/                       │
+│  → Schrijft naar executions/                       │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -85,8 +85,8 @@ python hypothese-vormer.runner.py beschrijf-toetsbaarheid \
 ## Output
 
 De gegenereerde instructies worden weggeschreven naar:
-- `{workspace}/prompt-instructions/{hash}.{agent}.{intent}.md` (actief instructiebestand)
-- `{workspace}/prompt-instructions/history/{timestamp}-{agent}.{intent}.md` (archief)
+- `{workspace}/executions/{hash}.{agent}.{intent}.md` (actief instructiebestand)
+- `{workspace}/executions/history/{timestamp}-{agent}.{intent}.md` (archief)
 
 ## Gerelateerde bestanden
 

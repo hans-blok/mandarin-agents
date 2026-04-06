@@ -1,7 +1,7 @@
 ---
 agent: agent-engineer
 versie: 0.1.0
-digest: a9e3
+digest: 466a
 status: vers
 ---
 # Agent Charter - agent-engineer
@@ -175,7 +175,7 @@ De agent-engineer legt alle resultaten vast in de workspace:
 - `artefacten/{vs}/{vs}.{fase}.{agent}/prompts/mandarin.{agent}.{intent}.prompt.md` — Promptbestanden per intent met YAML frontmatter
 - `artefacten/{vs}/{vs}.{fase}.{agent}/tasks/{vs}-{fase}.{agent}.tasks.json` — VSCode task-configuratie per agent die de doelagent-runner aanspreekt
 - `artefacten/{vs}/{vs}.{fase}.{agent}/runner/{agent}.runner.py` — Centrale doelagent-runner met subcommands voor alle gedetecteerde intents
-- `prompt-instructions/{timestamp}-{agent}.{intent}.md` — Execution-files die via de ecosysteem-coordinator worden opgebouwd
+- `executions/{timestamp}-{agent}.{intent}.md` — Execution-files die via de ecosysteem-coordinator worden opgebouwd
 - `logs/{timestamp}.agent-engineer-pipeline.log` — Pipeline-log met status per uitgevoerde intent
 
 Alle Markdown-output wordt standaard in Markdown (.md) gegenereerd conform Principe 9 (Output-formaat Normering). Task-configuratie is JSON (VSCode standaard). Runners zijn Python-scripts.

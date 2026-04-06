@@ -3,7 +3,7 @@ agent: ecosysteem-coordinator
 value_stream: fnd
 value_stream_fase: fnd.01
 versie: 1.0.0
-digest: 39ed
+digest: 8058
 status: vers
 ---
 # Agent Boundary: Ecosysteem-coordinator
@@ -67,7 +67,7 @@ status: vers
 - Prompt-bestanden met frontmatter metadata
 
 **Welke outputs levert de agent?**
-- Execution-bestanden in `prompt-instructions/` folder
+- Execution-bestanden in `executions/` folder
 - Geaggregeerde `tasks.json` configuratie
 
 ---

@@ -1,14 +1,16 @@
-# Agent Execution Files
+# Execution-bestanden
 
-Deze folder bevat gegenereerde agent-instructies voor lokale uitvoering.
+Deze folder bevat gegenereerde execution-bestanden (**bronpakketten**) voor lokale uitvoering.
+Een execution-bestand is het resultaat van bronassemblage door de ecosysteem-coordinator:
+het bevat de volledige samengestelde instructies die een LLM als context ontvangt.
 
 ## Bestandsformaat
 
-`<hash>.<agent-naam>.<intent>.md`
+`<timestamp>-<agent-naam>.<intent>.md`
 
-**Hash**: 4-karakter MD5 hash van timestamp + agent-naam voor unieke identificatie  
-**Agent-naam**: De uitvoerende agent (bijv. `agent-smeder`, `capability-architect`)  
-**Intent**: De specifieke taak (bijv. `leg-vast-agent-charter`)
+**Timestamp**: `yyyyMMddHHmmss` voor chronologische ordening  
+**Agent-naam**: De uitvoerende agent (bijv. `agent-ontwerper`, `capability-architect`)  
+**Intent**: De specifieke taak (bijv. `definieer-agent-charter`)
 
 ## Generatie
 
@@ -33,4 +35,4 @@ Alle bestanden zijn traceerbaar via:
 - Agent-naam (wie voert uit)
 - Intent (wat wordt gedaan)
 
-**Opmerking**: Deze bestanden zijn lokaal en worden niet gecommit naar git (zie `.gitignore`).
+**Opmerking**: Execution-bestanden zijn lokaal en worden niet gecommit naar git (zie `.gitignore`).

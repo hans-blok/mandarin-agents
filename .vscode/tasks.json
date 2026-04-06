@@ -497,7 +497,7 @@
       "command": "powershell",
       "args": [
         "-Command",
-        "$timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = '${input:agentName}'; $intent = '${input:intentName}'; $filename = \"prompt-instructions/$timestamp-$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python artefacten/aeo/aeo.02.agent-engineer/runner/agent-engineer.runner.py generate-instructions --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
+        "$timestamp = Get-Date -Format 'yyyyMMddHHmmss'; $agent = '${input:agentName}'; $intent = '${input:intentName}'; $filename = \"executions/$timestamp-$agent.$intent.md\"; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $env:PYTHONIOENCODING='utf-8'; python artefacten/aeo/aeo.02.agent-engineer/runner/agent-engineer.runner.py generate-instructions --agent $agent --intent $intent --execution-file $filename; if ($LASTEXITCODE -eq 0) { code $filename }"
       ],
       "problemMatcher": [],
       "presentation": {

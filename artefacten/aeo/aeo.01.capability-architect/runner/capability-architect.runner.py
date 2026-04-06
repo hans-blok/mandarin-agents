@@ -71,7 +71,7 @@ def run_generate_instructions(intent: str, params: dict) -> int:
     hash_str = hashlib.md5(hash_input).hexdigest()[:4].lower()
 
     root = get_workspace_root()
-    exec_dir = root / "prompt-instructions"
+    exec_dir = root / "executions"
     exec_dir.mkdir(exist_ok=True)
     exec_file = exec_dir / f"{timestamp}-{AGENT_NAAM}.{intent}.md"
 

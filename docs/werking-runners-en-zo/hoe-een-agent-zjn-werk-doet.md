@@ -32,7 +32,7 @@ De `hypothese-vormer.runner.py` is een **dunne schil** (façade) die:
 │                                                             │
 │  → Leest charter, prompt, boundary uit mandarin-agents      │
 │  → Assembleert volledige instructies                        │
-│  → Schrijft naar prompt-instructions/                       │
+│  → Schrijft naar executions/                       │
 └─────────────────────────────────────────────────────────────┘
 ```
 ## Sequence Diagram
@@ -45,7 +45,7 @@ sequenceDiagram
   participant Coordinator as ecosysteem-coordinator.runner.py
   participant Canon as mandarin-canon/
   participant Mandarin as mandarin-agents/
-  participant Output as prompt-instructions/
+  participant Output as executions/
   participant Copilot as VS Code Copilot Chat
   participant LLM as LLM (Claude/GPT)
   participant Artefacten as artefacten/
@@ -75,7 +75,7 @@ sequenceDiagram
   
   Coordinator->>Coordinator: 7c. Assembleer instructies<br/>(constitutie + grondslagen + charter + prompt + parameters)
   
-  Coordinator->>Output: 8. Schrijf naar prompt-instructions/
+  Coordinator->>Output: 8. Schrijf naar executions/
   Output-->>Coordinator: {hash}.hypothese-vormer.beschrijf-hypothese.md
   
   Coordinator-->>Runner: Gereed
@@ -124,13 +124,13 @@ sequenceDiagram
    - Leest de **constitutie** en relevante **grondslagen** uit de canon
    - Leest het **charter**, de **prompt** en de **boundary** van de agent uit mandarin-agents
    - Assembleert alles tot één instructiebestand
-8. Het instructiebestand wordt weggeschreven naar `prompt-instructions/`
+8. Het instructiebestand wordt weggeschreven naar `executions/`
    - Hoofdbestand: `{hash}.{agent}.{intent}.md`
-   - Kopie in: `prompt-instructions/history/`
+   - Kopie in: `executions/history/`
 
 ### Fase 3: Instructies uitvoeren
 
-9. **Open het gegenereerde instructiebestand** uit `prompt-instructions/`
+9. **Open het gegenereerde instructiebestand** uit `executions/`
 10. **Kopieer de volledige inhoud** (of selecteer en gebruik Copilot Chat)
 11. **Plak in VS Code Copilot Chat** (of een andere LLM-interface)
 12. De LLM leest de instructies en voert de taak uit:
@@ -152,7 +152,7 @@ Task starten → Runner → Coordinator → Instructiebestand → Copilot Chat �
 | Stap | Actie | Resultaat |
 |------|-------|-----------|
 | 1-4 | Task selecteren en parameters invoeren | Runner wordt gestart |
-| 5-8 | Instructie-assemblage | Instructiebestand in `prompt-instructions/` |
+| 5-8 | Instructie-assemblage | Instructiebestand in `executions/` |
 | 9-12 | Instructies naar LLM sturen | Artefact gegenereerd |
 | 13-15 | Review en commit | Werk opgeslagen in git |
 
@@ -207,8 +207,8 @@ python hypothese-vormer.runner.py beschrijf-toetsbaarheid \
 ## Output
 
 De gegenereerde instructies worden weggeschreven naar:
-- `{workspace}/prompt-instructions/{hash}.{agent}.{intent}.md` (actief instructiebestand)
-- `{workspace}/prompt-instructions/history/{timestamp}-{agent}.{intent}.md` (archief)
+- `{workspace}/executions/{hash}.{agent}.{intent}.md` (actief instructiebestand)
+- `{workspace}/executions/history/{timestamp}-{agent}.{intent}.md` (archief)
 
 ## Gerelateerde bestanden
 
