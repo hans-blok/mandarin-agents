@@ -1,15 +1,22 @@
 ---
-agent: agent-engineer
-intent: realiseer-agent-prompts
+# IDENTIFICATIE
+template-id: "005"
+template-naam: agent-prompt
+
+# RELATIES
+artefact-type-id: "005"
+agent-id: aeo.02.agent-engineer
+
+# META-DATA
 versie: 1.0.0
-# Template voor minimalistische agent prompts (uitsluitend YAML)
-digest: 90f9
 status: vers
+digest: 5009
 ---
 ---
 # Prompt Metadata (placeholders invullen)
 agent: mandarin.{agent-naam}
 intent: {intent-kortschrift}
+template: {template-uit-doelcontract-of-~}
 bronhouding: {bronhouding}
 versie: 1.0.0
 input_parameters:
@@ -39,7 +46,13 @@ value_stream_fase: {value-stream-code}.{fase-nummer}
    - Moet consistent zijn met de bronhouding gedeclareerd in het charter (classificatie-as)
    - Voorbeeld: "Exploratief" (gebruikt generatieve capaciteiten, aannames expliciet)
 
-4. {value-stream-code}.{fase-nummer}
+4. {template-uit-doelcontract-of-~}
+  - Verplicht veld volgens doctrine-templategebruik.md
+  - Deze waarde wordt primair afgeleid uit het doelcontract van de intent waarvoor het promptbestand wordt gerealiseerd
+  - Gebruik een relatief workspace-pad wanneer een expliciet template geldt
+  - Gebruik `~` wanneer het doelcontract expliciet geen afzonderlijk template aanwijst
+
+5. {value-stream-code}.{fase-nummer}
    - Value stream code + fase nummer
    - Voorbeeld: "aeo.02", "sfw.01", "fnd.02"
    - Bepaalt welke grondslagen worden geladen uit beleid-workspace.md (base code)

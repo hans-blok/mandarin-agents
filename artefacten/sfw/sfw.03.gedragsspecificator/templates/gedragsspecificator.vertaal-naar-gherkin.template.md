@@ -1,8 +1,16 @@
 ---
-agent: gedragsspecificator
+# IDENTIFICATIE
+template-id: "029"
+template-naam: gedragsspecificator.vertaal-naar-gherkin
+
+# RELATIES
+artefact-type-id: "029"
+agent-id: sfw.03.gedragsspecificator
+
+# META-DATA
 versie: 0.1.0
-digest: fd9c
 status: vers
+digest: fd9c
 ---
 Feature: {Feature Naam}
   As a {rol}

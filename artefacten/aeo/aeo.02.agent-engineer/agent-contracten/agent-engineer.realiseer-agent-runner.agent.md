@@ -1,6 +1,7 @@
 ---
 agent: agent-engineer
 intent: realiseer-agent-runner
+intent-id: aeo.02.agent-engineer.03
 versie: 1.2.0
 digest: d4ac
 status: vers
@@ -37,6 +38,14 @@ De agent-engineer levert één centraal runnerbestand per doelagent:
 Of, wanneer `runner_output_folder` expliciet is opgegeven:
 
 `{runner_output_folder}/{agent}.runner.py`
+
+**Contractuele templatebinding**:
+```yaml
+output:
+    - type: agent-runner
+        herkomstpositie: initiërend
+        template: ~
+```
 
 De runner bevat:
 - één argparse-subcommand per gedetecteerde intent;
@@ -82,6 +91,7 @@ if __name__ == "__main__":
 - runners zijn Python-scripts (geen Markdown alternatief);
 - de gegenereerde runner bevat alleen deterministisch afleidbare parser- en delegatielogica;
 - de runner bevat geen domein-specifieke business logic.
+- `template: ~` is expliciet omdat de volledige doelstructuur van de runner in dit contract is vastgelegd en geen afzonderlijk templatebestand vereist.
 
 ### Foutafhandeling
 
@@ -126,6 +136,8 @@ De Agent-engineer:
     - Principe 1 (Identiteit vóór Implementatie): één centrale runner vormt de vaste voordeur van de agent
     - Principe 2 (Eenduidige Verantwoordelijkheid): de runner beperkt zich tot parser- en delegatielogica
     - Principe 5 (Evolutionaire Integriteit): runner-generatie is versioned via workspace version control
+- **doctrine-templategebruik.md** (v1.0.0):
+    - ook zonder apart template moet de contractuele templatekeuze expliciet `~` zijn
 
 **Canon-consultatie:**
 - de generator zelf voert geen canon-consultatie uit;

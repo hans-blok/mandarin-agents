@@ -1,6 +1,7 @@
 ---
 agent: hypothese-vormer
 intent: beschrijf-toetsbaarheid
+intent-id: sfw.01.hypothese-vormer.03
 versie: 1.0.0
 digest: 1c04
 status: vers
@@ -91,6 +92,12 @@ De Hypothese-vormer levert:
 - Eerste toetsstap maximaal 1 week uitvoeringstijd, minimale investering
 - Criteria zijn concreet en observeerbaar (niet vaag of subjectief)
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/hypothese-template.md
+```
+
 ### Foutafhandeling
 
 De Hypothese-vormer:
@@ -149,6 +156,9 @@ De Hypothese-vormer:
   - Principe 2 (Eenduidige Verantwoordelijkheid): Focus op toetsbaarheid, niet op uitvoering
   - Principe 7 (Transparante Verantwoording): Herkomst toetsbaarheid gedocumenteerd
   - Principe 9 (Output-formaat Normering): Markdown als default
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream sfw

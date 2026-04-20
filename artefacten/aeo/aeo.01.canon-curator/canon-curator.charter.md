@@ -1,5 +1,6 @@
 ---
 agent: canon-curator
+agent-id: aeo.01.canon-curator
 versie: 1.4.0
 domein: Canon-governance en grondslag-kwaliteitsbewaking
 value_stream_fase: aeo.01
@@ -201,7 +202,7 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 
 - Dit charter volgt de structuur uit `artefacten/aeo/aeo.02.agent-ontwerper/templates/agent-charter.template.md` v1.1.0
 - Boundary: `artefacten/aeo/aeo.01.canon-curator/canon-curator.agent-boundary.md` v1.1.0
-- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie v2.5.1, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0
+- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie v2.5.1, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0 en `doctrine-templategebruik.md` (v1.0.0)
 - Agent-contracten: zie sectie Traceerbaarheid
 - Bron-locatie in deze workspace: `artefacten/aeo/aeo.01.canon-curator/canon-curator.charter.md`
 - Executor: agent-ontwerper (aeo.02)

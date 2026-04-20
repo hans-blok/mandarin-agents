@@ -1,6 +1,7 @@
 ---
 agent: mandarin.behoefteprofiel-opsteller
 intent: structureer-eisenpakket
+intent-id: miv.07.behoefteprofiel-opsteller.03
 bronhouding: Externe-bron-gebonden
 versie: 1.0.0
 input_parameters:
@@ -9,5 +10,6 @@ input_parameters:
   - prioriteringsgrondslag
   - aanvullende_toelichting
 value_stream_fase: miv.07
+template: ~
 
 ---

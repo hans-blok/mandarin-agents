@@ -1,6 +1,7 @@
 ---
 agent: core-framework-architect
 intent: structureer-totaal-view
+intent-id: aod.02.core-framework-architect.04
 versie: 1.0.0
 digest: 1920
 status: vers
@@ -82,6 +83,12 @@ De Core-framework-architect levert:
 - Verwijzingen naar detail-documenten voor complete definitie
 - Traceability matrix toont end-to-end relaties business tot technologie
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/core-framework-architect.structureer-totaal-view.template.md
+```
+
 ### Foutafhandeling
 
 De Core-framework-architect:
@@ -134,6 +141,9 @@ Totaal view bevat GEEN implementatie-details, alleen ArchiMate integrale modelin
   - Principe 7 (Transparante Verantwoording): ADRs documenteren integratiekeuzes, traceability traceerbaar
   - Principe 9 (Output-formaat Normering): Markdown als default
 - **ArchiMate 3.1 Specification**: Volgt ArchiMate layered view metamodel voor integrale modeling
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream aod

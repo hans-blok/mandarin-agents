@@ -1,6 +1,7 @@
 ---
 agent: core-framework-architect
 intent: structureer-passieve-structuur
+intent-id: aod.02.core-framework-architect.03
 versie: 1.0.0
 digest: fd0c
 status: vers
@@ -65,6 +66,12 @@ De Core-framework-architect levert:
 - Element IDs volgen conventie: {laag_prefix}.{type_prefix}.{volgnummer} (bijv. "APP.DATA.001")
 - Domein-specifieke naamgeving voor objecten (bijv. "Ritopdracht", "Factuurstatus")
 
+**Contractuele templatebinding**:
+
+```yaml
+template: ~
+```
+
 ### Foutafhandeling
 
 De Core-framework-architect:
@@ -115,6 +122,9 @@ Passieve structuur bevat GEEN implementatie-details (database schema DDL, code),
   - Principe 7 (Transparante Verantwoording): ADRs documenteren datastructuurbeslissingen
   - Principe 9 (Output-formaat Normering): Markdown als default
 - **ArchiMate 3.1 Specification**: Volgt ArchiMate passive structure metamodel voor objecten en relaties
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream aod

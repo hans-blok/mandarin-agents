@@ -1,5 +1,6 @@
 ---
 agent: solution-architect
+agent-id: aod.05.solution-architect
 versie: 0.1.0
 digest: 5248
 status: vers
@@ -177,7 +178,7 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 ## 10. Herkomstverantwoording
 
 - Dit charter volgt de structuur en richtlijnen uit `artefacten/aeo/aeo.02.agent-ontwerper/templates/agent-charter.template.md`
-- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.4.0
+- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.4.0 en `doctrine-templategebruik.md` (v1.0.0)
 - Agent-boundary: `artefacten/aod/aod.05.solution-architect/agent-boundary-solution-architect.md` (gedefinieerd door capability-architect, Execution ID: 2ee6)
 - Agent-contracten: zie sectie Traceerbaarheid
 - Kaderdefinitie: `grondslagen/kaderdefinities/togaf.kaderdefinitie.md` (canon commit ceb3327)

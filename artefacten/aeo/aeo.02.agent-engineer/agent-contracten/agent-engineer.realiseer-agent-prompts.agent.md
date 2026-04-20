@@ -1,6 +1,7 @@
 ---
 agent: agent-engineer
 intent: realiseer-agent-prompts
+intent-id: aeo.02.agent-engineer.01
 versie: 1.1.0
 digest: 4dad
 status: vers
@@ -36,12 +37,21 @@ De agent-engineer levert voor elke geselecteerde intent één promptbestand in:
 
 `artefacten/{vs}/{vs}.{fase}.{agent}/prompts/mandarin.{agent}.{intent}.prompt.md`
 
+**Contractuele templatebinding**:
+```yaml
+output:
+   - type: agent-prompt-metadata
+      herkomstpositie: initiërend
+      template: templates/agent-prompt.template.md
+```
+
 Het promptbestand bevat uitsluitend YAML frontmatter met minimaal deze velden:
 
 ```markdown
 ---
 agent: mandarin.{agent}
 intent: {intent}
+template: {template-uit-contract-of-~}
 bronhouding: {bronhouding-uit-boundary}
 versie: 1.0.0
 input_parameters:
@@ -90,6 +100,7 @@ Promptbestanden bevatten geen uitvoeringslogica en geen duplicatie van contractt
 ### Kwaliteitsborging
 - Elke geselecteerde intent resulteert in precies één promptbestand.
 - YAML frontmatter bevat minimaal `agent`, `intent`, `bronhouding`, `versie`, `input_parameters` en `value_stream_fase`.
+- YAML frontmatter bevat ook `template`, exact gespiegeld vanuit het doelcontract van de intent.
 - Bestandsnaamconventie: `mandarin.{agent}.{intent}.prompt.md`.
 - De promptinhoud bestaat alleen uit frontmatter; er wordt geen extra body toegevoegd.
 
@@ -105,6 +116,10 @@ Promptbestanden bevatten geen uitvoeringslogica en geen duplicatie van contractt
   - één promptbestand per intent;
   - output is Markdown met YAML frontmatter;
   - versie wordt deterministisch op `1.0.0` gezet bij generatie.
+- **doctrine-templategebruik.md** (v1.0.0):
+   - prompt-YAML bevat verplicht een `template`-eigenschap;
+   - de promptwaarde wordt primair afgeleid uit het doelcontract;
+   - mismatch tussen contract en prompt is een validatiefout.
 
 **Canon-consultatie:**
 - de directe subcommand `realiseer-agent-prompts` voert zelf geen canon-consultatie uit;

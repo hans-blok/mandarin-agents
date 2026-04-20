@@ -1,0 +1,168 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "miv.07 - positionering-en-monetisatie-toetser: signaleer-spanningsvelden",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/miv/miv.07.positionering-en-monetisatie-toetser/runner/positionering-en-monetisatie-toetser.runner.py",
+        "signaleer-spanningsvelden",
+        "--longlist-bron",
+        "${input:in_positionering_en_monetisatie_toetser_signaleer_spanningsvelden_longlist_bron}",
+        "--spanningsveld-focus",
+        "${input:in_positionering_en_monetisatie_toetser_signaleer_spanningsvelden_spanningsveld_focus}",
+        "--strategische-kaders",
+        "${input:in_positionering_en_monetisatie_toetser_signaleer_spanningsvelden_strategische_kaders}",
+        "--te-analyseren-kandidaten",
+        "${input:in_positionering_en_monetisatie_toetser_signaleer_spanningsvelden_te_analyseren_kandidaten}",
+        "--output-naam",
+        "${input:in_positionering_en_monetisatie_toetser_signaleer_spanningsvelden_output_naam}",
+        "--aanvullende-context",
+        "${input:in_positionering_en_monetisatie_toetser_signaleer_spanningsvelden_aanvullende_context}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "miv.07 - positionering-en-monetisatie-toetser: stel-toetsingsrapport-op",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/miv/miv.07.positionering-en-monetisatie-toetser/runner/positionering-en-monetisatie-toetser.runner.py",
+        "stel-toetsingsrapport-op",
+        "--toetsing-bron",
+        "${input:in_positionering_en_monetisatie_toetser_stel_toetsingsrapport_op_toetsing_bron}",
+        "--spanningsvelden-bron",
+        "${input:in_positionering_en_monetisatie_toetser_stel_toetsingsrapport_op_spanningsvelden_bron}",
+        "--longlist-bron",
+        "${input:in_positionering_en_monetisatie_toetser_stel_toetsingsrapport_op_longlist_bron}",
+        "--output-naam",
+        "${input:in_positionering_en_monetisatie_toetser_stel_toetsingsrapport_op_output_naam}",
+        "--aanvullende-context",
+        "${input:in_positionering_en_monetisatie_toetser_stel_toetsingsrapport_op_aanvullende_context}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "miv.07 - positionering-en-monetisatie-toetser: toets-strategische-compatibiliteit",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "artefacten/miv/miv.07.positionering-en-monetisatie-toetser/runner/positionering-en-monetisatie-toetser.runner.py",
+        "toets-strategische-compatibiliteit",
+        "--longlist-bron",
+        "${input:in_positionering_en_monetisatie_toetser_toets_strategische_compatibiliteit_longlist_bron}",
+        "--strategische-kaders",
+        "${input:in_positionering_en_monetisatie_toetser_toets_strategische_compatibiliteit_strategische_kaders}",
+        "--selectiecriteria-bron",
+        "${input:in_positionering_en_monetisatie_toetser_toets_strategische_compatibiliteit_selectiecriteria_bron}",
+        "--te-toetsen-kandidaten",
+        "${input:in_positionering_en_monetisatie_toetser_toets_strategische_compatibiliteit_te_toetsen_kandidaten}",
+        "--output-naam",
+        "${input:in_positionering_en_monetisatie_toetser_toets_strategische_compatibiliteit_output_naam}",
+        "--aanvullende-context",
+        "${input:in_positionering_en_monetisatie_toetser_toets_strategische_compatibiliteit_aanvullende_context}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "in_positionering_en_monetisatie_toetser_signaleer_spanningsvelden_longlist_bron",
+      "type": "promptString",
+      "description": "Pad naar bestaand longlist-document met kandidaat-leveranciers"
+    },
+    {
+      "id": "in_positionering_en_monetisatie_toetser_signaleer_spanningsvelden_spanningsveld_focus",
+      "type": "promptString",
+      "description": "Beschrijving van de spanningsveld-dimensies die moeten worden gesignaleerd"
+    },
+    {
+      "id": "in_positionering_en_monetisatie_toetser_signaleer_spanningsvelden_strategische_kaders",
+      "type": "promptString",
+      "description": "Beschrijving van de geldende positioneringskaders als context voor spanningsveld-interpretatie (Optioneel)"
+    },
+    {
+      "id": "in_positionering_en_monetisatie_toetser_signaleer_spanningsvelden_te_analyseren_kandidaten",
+      "type": "promptString",
+      "description": "Subset van leveranciers uit de longlist die moeten worden geanalyseerd (Optioneel)"
+    },
+    {
+      "id": "in_positionering_en_monetisatie_toetser_signaleer_spanningsvelden_output_naam",
+      "type": "promptString",
+      "description": "Logische naam voor het outputbestand (Optioneel)"
+    },
+    {
+      "id": "in_positionering_en_monetisatie_toetser_signaleer_spanningsvelden_aanvullende_context",
+      "type": "promptString",
+      "description": "Extra technische of contractuele context over de leveranciers (Optioneel)"
+    },
+    {
+      "id": "in_positionering_en_monetisatie_toetser_stel_toetsingsrapport_op_toetsing_bron",
+      "type": "promptString",
+      "description": "Pad naar bestaand strategische-compatibiliteitstoetsing-document"
+    },
+    {
+      "id": "in_positionering_en_monetisatie_toetser_stel_toetsingsrapport_op_spanningsvelden_bron",
+      "type": "promptString",
+      "description": "Pad naar bestaand spanningsvelden-overzicht"
+    },
+    {
+      "id": "in_positionering_en_monetisatie_toetser_stel_toetsingsrapport_op_longlist_bron",
+      "type": "promptString",
+      "description": "Pad naar het originele longlist-document voor contextcompletiteit (Optioneel)"
+    },
+    {
+      "id": "in_positionering_en_monetisatie_toetser_stel_toetsingsrapport_op_output_naam",
+      "type": "promptString",
+      "description": "Logische naam voor het outputbestand (Optioneel)"
+    },
+    {
+      "id": "in_positionering_en_monetisatie_toetser_stel_toetsingsrapport_op_aanvullende_context",
+      "type": "promptString",
+      "description": "Extra context die in het rapport moet worden meegenomen (Optioneel)"
+    },
+    {
+      "id": "in_positionering_en_monetisatie_toetser_toets_strategische_compatibiliteit_longlist_bron",
+      "type": "promptString",
+      "description": "Pad naar bestaand longlist-document met kandidaat-leveranciers"
+    },
+    {
+      "id": "in_positionering_en_monetisatie_toetser_toets_strategische_compatibiliteit_strategische_kaders",
+      "type": "promptString",
+      "description": "Beschrijving van de geldende positioneringskaders en monetisatie-logica waarop getoetst wordt"
+    },
+    {
+      "id": "in_positionering_en_monetisatie_toetser_toets_strategische_compatibiliteit_selectiecriteria_bron",
+      "type": "promptString",
+      "description": "Pad naar bestaand selectiecriteria-document als aanvullende context voor de toetsing (Optioneel)"
+    },
+    {
+      "id": "in_positionering_en_monetisatie_toetser_toets_strategische_compatibiliteit_te_toetsen_kandidaten",
+      "type": "promptString",
+      "description": "Subset van leveranciers uit de longlist die moeten worden getoetst (Optioneel)"
+    },
+    {
+      "id": "in_positionering_en_monetisatie_toetser_toets_strategische_compatibiliteit_output_naam",
+      "type": "promptString",
+      "description": "Logische naam voor het outputbestand (Optioneel)"
+    },
+    {
+      "id": "in_positionering_en_monetisatie_toetser_toets_strategische_compatibiliteit_aanvullende_context",
+      "type": "promptString",
+      "description": "Extra strategische context of bekende constraints die relevant zijn voor de toetsing (Optioneel)"
+    }
+  ]
+}

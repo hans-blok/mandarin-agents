@@ -1,5 +1,6 @@
 ---
 agent: gedragsspecificator
+agent-id: sfw.03.gedragsspecificator
 value_stream: sfw
 value_stream_fase: sfw.03
 versie: 1.0.0

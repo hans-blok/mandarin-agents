@@ -1,5 +1,6 @@
 ---
 agent: capability-architect
+agent-id: aeo.01.capability-architect
 versie: 0.1.0
 digest: ae6e
 status: vers
@@ -181,7 +182,7 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 
 - Dit charter volgt de structuur en richtlijnen uit `artefacten/aeo/aeo.02.agent-ontwerper/templates/agent-charter.template.md`.
 
-- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0.
+- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0. en `doctrine-templategebruik.md` (v1.0.0)
 - Agent-boundary: `artefacten/aeo/aeo.01.capability-architect/capability-architect.agent-boundary.md`.
 - Agent-contracten: zie sectie Traceerbaarheid.
 - Bron-locatie in deze workspace: `artefacten/aeo/aeo.01.capability-architect/capability-architect.charter.md`.

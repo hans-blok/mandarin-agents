@@ -1,5 +1,6 @@
 ---
 agent: concept-curator
+agent-id: fnd.02.concept-curator
 value_stream: fnd
 value_stream_fase: fnd.02
 versie: 1.0.0

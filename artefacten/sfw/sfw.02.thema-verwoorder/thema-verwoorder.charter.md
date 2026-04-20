@@ -1,5 +1,6 @@
 ---
 agent: thema-verwoorder
+agent-id: sfw.02.thema-verwoorder
 versie: 0.1.0
 digest: 2b19
 status: vers
@@ -160,7 +161,7 @@ Dit voldoet aan **Norm 10.4** uit `doctrine-agent-charter-normering.md` en geldt
 
 De thema-verwoorder baseert zich op aangeleverde themacontext en legt output traceerbaar vast.
 
-- Governance: `beleid-workspace.md` + mandarin-canon repository
+- Governance: `beleid-workspace.md` + mandarin-canon repository, `doctrine-templategebruik.md` (v1.0.0)
 - Agent-contracten: zie Traceerbaarheid
 - Resultaten: `artefacten/thema-verwoorder/`
 

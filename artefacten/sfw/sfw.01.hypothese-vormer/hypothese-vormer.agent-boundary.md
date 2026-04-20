@@ -1,5 +1,6 @@
 ---
 agent: hypothese-vormer
+agent-id: sfw.01.hypothese-vormer
 value_stream: sfw
 value_stream_fase: sfw.01
 versie: 1.0.0

@@ -1,11 +1,13 @@
 ---
 agent: mandarin.ecosysteem-beschrijver
 intent: beschrijf-agent-positionering
+intent-id: aeo.02.ecosysteem-beschrijver.01
 bronhouding: Input-gebonden
 versie: 1.0.0
 input_parameters:
   - agent_naam
 value_stream_fase: aeo.02
+template: templates/beschrijf-agent-positionering.template.md
 
 ---
 

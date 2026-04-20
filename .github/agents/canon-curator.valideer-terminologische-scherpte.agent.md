@@ -1,6 +1,7 @@
 ---
 agent: canon-curator
 intent: valideer-terminologische-scherpte
+intent-id: aeo.01.canon-curator.01
 versie: 1.0.0
 digest: 2b9a
 status: vers
@@ -48,6 +49,12 @@ De Canon-curator levert:
 - Default formaat: **Markdown** (.md), conform Principe 9
 - Alternatieve formaten alleen op expliciete verzoek
 
+**Contractuele templatebinding**:
+
+```yaml
+template: ~
+```
+
 ### Foutafhandeling
 
 De Canon-curator:
@@ -88,6 +95,9 @@ De Canon-curator:
   - Principe 4 (Scheiding van Wat en Hoe): Contract specificeert input/output, niet implementatie
   - Principe 7 (Transparante Verantwoording): Alle bevindingen herleidbaar naar constitutionele artikelen
   - Principe 9 (Output-formaat Normering): Markdown als default
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream aeo

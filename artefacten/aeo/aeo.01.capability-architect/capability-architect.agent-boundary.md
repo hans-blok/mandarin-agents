@@ -1,5 +1,6 @@
 ---
 agent: capability-architect
+agent-id: aeo.01.capability-architect
 value_stream: aeo
 value_stream_fase: aeo.01
 kaderdefinities: geen

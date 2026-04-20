@@ -1,6 +1,7 @@
 ---
 agent: gedragsspecificator
 intent: valideer-scenario-consistentie
+intent-id: sfw.03.gedragsspecificator.02
 versie: 0.1.0
 digest: 9b15
 status: vers
@@ -32,6 +33,12 @@ Valideert Gherkin-scenario's tegen functionele specificaties en ubiquitous langu
 **Formaat**:
 - Markdown (.md)
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/gedragsspecificator.valideer-scenario-consistentie.template.md
+```
+
 ### Foutafhandeling
 
 De agent stopt wanneer:
@@ -46,6 +53,9 @@ Escalatie:
 **Doctrine-naleving:**
 - Controleert of terminologie in features consistent is met de specificatie.
 - Controleert op ambiguïteit en interpreteerbaarheid.
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 ## Metadata
 

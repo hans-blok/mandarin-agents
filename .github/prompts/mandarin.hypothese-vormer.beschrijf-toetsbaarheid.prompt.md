@@ -1,6 +1,7 @@
 ---
 agent: mandarin.hypothese-vormer
 intent: beschrijf-toetsbaarheid
+intent-id: sfw.01.hypothese-vormer.03
 bronhouding: Exploratief
 versie: 1.0.0
 input_parameters:
@@ -11,5 +12,6 @@ input_parameters:
   - beschikbare_metrics
   - acceptatie_drempel
 value_stream_fase: sfw.01
+template: templates/hypothese-template.md
 
 ---

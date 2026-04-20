@@ -1,6 +1,7 @@
 ---
 agent: agent-engineer
 intent: realiseer-agent-taskconfiguratie
+intent-id: aeo.02.agent-engineer.02
 versie: 1.1.0
 digest: 0e61
 status: vers
@@ -34,6 +35,14 @@ De agent-engineer genereert en actualiseert VSCode task-definities voor alle int
 De agent-engineer levert één task-configuratiebestand:
 
 `artefacten/{vs}/{vs}.{fase}.{agent_naam}/tasks/{vs}-{fase}.{agent_naam}.tasks.json`
+
+**Contractuele templatebinding**:
+```yaml
+output:
+  - type: tasks-configuratie
+    herkomstpositie: initiërend
+    template: ~
+```
 
 Dit bestand bevat:
 - `version: 2.0.0`
@@ -75,6 +84,7 @@ Dit bestand bevat:
 **Formaat-normering**: 
 - Task-configuratie is JSON (VSCode standaard, geen Markdown alternatief)
 - JSON volgt VSCode tasks.json schema v2.0.0
+- `template: ~` is expliciet omdat de volledige vorm in dit contract en het JSON-schema al voldoende is gespecificeerd
 
 ### Foutafhandeling
 
@@ -127,6 +137,8 @@ Task-definities bevatten uitsluitend deterministisch afleidbare configuratie uit
 - **doctrine-runner-discipline-en-runner-kernel.md**:
   - Task-configuraties verwijzen consistent naar de doelagent-runner
   - Geen creatieve of agent-specifieke afwijkingen in aanroepstructuur zonder expliciete reden
+- **doctrine-templategebruik.md** (v1.0.0):
+  - ook voor configuratie-output moet expliciet worden vastgelegd dat geen afzonderlijk template geldt (`template: ~`)
 
 **Canon-consultatie:**
 - de directe subcommand `realiseer-agent-taskconfiguratie` voert zelf geen canon-consultatie uit;

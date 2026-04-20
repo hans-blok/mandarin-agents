@@ -1,6 +1,7 @@
 ---
 agent: thema-verwoorder
 intent: definieer-epic-structuur
+intent-id: sfw.02.thema-verwoorder.02
 versie: 0.1.0
 digest: 18a0
 status: vers
@@ -34,6 +35,12 @@ Deze intent beschrijft het gestructureerd vastleggen van een epic volgens SAFe-c
 **Outputlocaties**: artefacten/sfw/sfw.02.thema-verwoorder/epics/
 **Formaat**: Markdown (.md) volgens template
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/thema-verwoorder.definieer-epic-structuur.template.md
+```
+
 ### Foutafhandeling
 - STOP: thema_code of auteur ontbreekt
 - STOP: thematische scope bestand voor thema_code niet gevonden of niet toegankelijk
@@ -45,6 +52,9 @@ Deze intent beschrijft het gestructureerd vastleggen van een epic volgens SAFe-c
 - Volgt doctrine-agent-charter-normering.md (Principe 1, 2, 7, 9)
 - Transparantie: alle output en beslissingen worden gelogd
 - Canon-consultatie verplicht bij boundary-wijzigingen
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 ## Metadata
 Intent-ID: sfw.02.thema-verwoorder.definieer-epic-structuur  

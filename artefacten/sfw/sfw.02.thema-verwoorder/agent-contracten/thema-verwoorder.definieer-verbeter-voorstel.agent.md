@@ -1,6 +1,7 @@
 ---
 agent: thema-verwoorder
 intent: definieer-verbeter-voorstel
+intent-id: sfw.02.thema-verwoorder.03
 versie: 0.1.0
 digest: 4da6
 status: vers
@@ -34,6 +35,12 @@ Deze intent beschrijft het genereren van meerdere verbetervoorstellen voor een t
 **Outputlocaties**: artefacten/sfw/sfw.02.thema-verwoorder/verbeteringen/
 **Formaat**: Markdown (.md) volgens template
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/thema-verwoorder.definieer-verbeter-voorstellen.template.md
+```
+
 ### Foutafhandeling
 - STOP: thema_code of auteur ontbreekt
 - STOP: thematische scope voor thema_code niet gevonden
@@ -44,6 +51,9 @@ Deze intent beschrijft het genereren van meerdere verbetervoorstellen voor een t
 - Volgt doctrine-agent-charter-normering.md (Principe 1, 2, 7, 9)
 - Transparantie: alle output en beslissingen worden gelogd
 - Canon-consultatie verplicht bij boundary-wijzigingen
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 ## Metadata
 Intent-ID: sfw.02.thema-verwoorder.definieer-verbeter-voorstellen  

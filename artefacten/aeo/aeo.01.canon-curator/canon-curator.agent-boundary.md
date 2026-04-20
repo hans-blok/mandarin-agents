@@ -1,5 +1,6 @@
 ---
 agent: canon-curator
+agent-id: aeo.01.canon-curator
 value_stream: aeo
 value_stream_fase: aeo.01
 kaderdefinities: geen

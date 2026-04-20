@@ -1,8 +1,16 @@
 ---
-agent: thema-verwoorder
+# IDENTIFICATIE
+template-id: "024"
+template-naam: thema-verwoorder.definieer-epic-structuur
+
+# RELATIES
+artefact-type-id: "024"
+agent-id: sfw.02.thema-verwoorder
+
+# META-DATA
 versie: 0.1.0
-digest: 32c0
 status: vers
+digest: 32c0
 ---
 # Epic: {epic_titel}
 

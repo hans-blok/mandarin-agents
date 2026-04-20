@@ -1,5 +1,6 @@
 ---
 agent: leveranciers-verkenner
+agent-id: miv.07.leveranciers-verkenner
 value_stream: miv
 value_stream_fase: miv.07
 kaderdefinities: geen

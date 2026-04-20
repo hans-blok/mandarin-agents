@@ -1,6 +1,7 @@
 ---
 agent: agent-curator
 intent: valideer-boundary-overlap
+intent-id: aeo.02.agent-curator.01
 versie: 1.0.0
 digest: dedc
 status: vers
@@ -39,6 +40,14 @@ De agent-curator levert:
   - Escalatie-lijst naar capability-architect voor herbepaling van boundaries
 
 **Deliverable bestand**: `artefacten/{vs}/{vs}.{fase}/agent-curator.valideer-boundary-overlap.rapport.md`
+
+**Contractuele templatebinding**:
+```yaml
+output:
+  - type: validatierapport-boundary-overlap
+    herkomstpositie: initiërend
+    template: templates/validatierapport.template.md
+```
 
 **VERPLICHT**: Het bestand MOET worden weggeschreven naar de workspace.
 
@@ -88,6 +97,9 @@ De agent-curator:
   - Principe 2 (Eenduidige Verantwoordelijkheid): Toetst of elke capability precies één eigenaar heeft
   - Principe 7 (Transparante Verantwoording): Bevindingen transparant gerapporteerd per agentpaar
   - Principe 9 (Output-formaat Normering): Markdown als default
+- **doctrine-templategebruik.md** (v1.0.0):
+  - contract legt expliciet vast welk template voor dit rapport geldt
+  - prompt-YAML moet dezelfde templatekeuze spiegelen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen

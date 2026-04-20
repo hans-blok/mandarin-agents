@@ -1,5 +1,6 @@
 ---
 agent: core-framework-architect
+agent-id: aod.02.core-framework-architect
 value_stream: aod
 value_stream_fase: aod.02
 versie: 1.3.0

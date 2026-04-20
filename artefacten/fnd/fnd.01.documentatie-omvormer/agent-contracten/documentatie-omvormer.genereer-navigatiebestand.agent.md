@@ -1,6 +1,7 @@
 ---
 agent: documentatie-omvormer
 intent: genereer-navigatiebestand
+intent-id: fnd.01.documentatie-omvormer.02
 versie: 1.0.0
 digest: f565
 status: vers
@@ -51,6 +52,12 @@ nav:
 - Titels worden niet geïnterpreteerd, alleen overgenomen
 - Structuur is herleidbaar naar input
 
+**Contractuele templatebinding**:
+
+```yaml
+template: ~
+```
+
 ### Foutafhandeling
 
 De documentatie-omvormer:
@@ -95,6 +102,9 @@ De documentatie-omvormer:
   - Principe 2 (Eenduidige Verantwoordelijkheid): Navigatie-generatie, geen inhoud
   - Principe 7 (Transparante Verantwoording): Nav-fragment toont resultaat
 - **Betekenis-blindheid**: Agent interpreteert geen documentinhoud voor ordening
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Niet van toepassing — agent is input-gebonden, niet canon-gebonden

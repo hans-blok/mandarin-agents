@@ -1,6 +1,7 @@
 ---
 agent: agent-curator
 intent: rapporteer-ecosysteem-overzicht
+intent-id: aeo.02.agent-curator.04
 versie: 1.0.0
 digest: b4b8
 status: vers
@@ -36,6 +37,14 @@ De agent-curator levert:
 - Het overzicht vervangt het vorige overzicht (fixed filename, overschrijft bij elke run)
 
 **Deliverable bestand**: `docs/agents-overzicht.md`
+
+**Contractuele templatebinding**:
+```yaml
+output:
+  - type: ecosysteem-overzicht
+    herkomstpositie: initiërend
+    template: templates/ecosysteem-overzicht.template.md
+```
 
 **VERPLICHT**: Het bestand MOET worden weggeschreven naar de workspace.
 
@@ -83,6 +92,9 @@ De agent-curator:
 - **doctrine-agent-charter-normering.md** (v2.1.0, AEO.DOC.001):
   - Principe 7 (Transparante Verantwoording): Overzicht maakt ecosysteemstatus observeerbaar
   - Principe 9 (Output-formaat Normering): Markdown als default
+- **doctrine-templategebruik.md** (v1.0.0):
+  - contract legt expliciet vast welk template voor dit overzicht geldt
+  - prompt-YAML moet dezelfde templatekeuze spiegelen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen

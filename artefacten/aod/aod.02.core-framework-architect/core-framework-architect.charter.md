@@ -1,5 +1,6 @@
 ---
 agent: core-framework-architect
+agent-id: aod.02.core-framework-architect
 versie: 0.1.0
 digest: 57bd
 status: vers
@@ -184,7 +185,7 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 ## 10. Herkomstverantwoording
 
 - Dit charter volgt de structuur uit `artefacten/aeo/aeo.02.agent-smeder/templates/agent-charter.template.md`.
-- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0.
+- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0. en `doctrine-templategebruik.md` (v1.0.0)
 - Agent-contracten en prompt-metadata: zie sectie Traceerbaarheid.
 - Bron-locatie in deze workspace: `artefacten/aod/aod.02.core-framework-architect/core-framework-architect.charter.md`.
 - ArchiMate 3.1 specificatie: gebruikt als modelleertaal voor alle landschap-definities.

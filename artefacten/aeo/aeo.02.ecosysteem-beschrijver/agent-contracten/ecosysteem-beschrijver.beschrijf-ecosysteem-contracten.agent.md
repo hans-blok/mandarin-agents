@@ -1,6 +1,7 @@
 ---
 agent: ecosysteem-beschrijver
 intent: beschrijf-ecosysteem-contracten
+intent-id: aeo.02.ecosysteem-beschrijver.03
 versie: 1.0.0
 digest: 1a38
 status: vers
@@ -80,6 +81,12 @@ timestamp: {yyyy-mm-dd HH:MM}
 - Versie: overgenomen uit contract-frontmatter of "—" als ontbreekt
 - Geen evaluatie of oordeel — alleen feitelijke inventarisatie
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/beschrijf-ecosysteem-contracten.template.md
+```
+
 ### Foutafhandeling
 
 De ecosysteem-beschrijver:
@@ -102,6 +109,9 @@ De ecosysteem-beschrijver:
   - Principe 2 (Eenduidige Verantwoordelijkheid): Eén intent, één contractenoverzicht
   - Principe 7 (Transparante Verantwoording): Bronbestanden en delta expliciet vermeld in output
   - Principe 9 (Output-formaat Normering): Markdown als default
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Niet van toepassing — ecosysteem-beschrijver is input-gebonden, geen canon-consultatie vereist

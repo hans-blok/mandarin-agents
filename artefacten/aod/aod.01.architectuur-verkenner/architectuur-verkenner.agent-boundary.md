@@ -1,5 +1,6 @@
 ---
 agent: architectuur-verkenner
+agent-id: aod.01.architectuur-verkenner
 value_stream: aod
 value_stream_fase: aod.01
 kaderdefinities: TOGAF ADM Fase A (Architecture Vision)

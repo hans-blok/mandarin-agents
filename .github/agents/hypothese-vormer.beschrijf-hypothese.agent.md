@@ -1,6 +1,7 @@
 ---
 agent: hypothese-vormer
 intent: beschrijf-hypothese
+intent-id: sfw.01.hypothese-vormer.02
 versie: 1.0.0
 digest: ce07
 status: vers
@@ -98,6 +99,12 @@ De Hypothese-vormer levert:
 - Objectief perspectief: "De hypothese luidt" (niet "Wij geloven")
 - Maximaal 3 aannames (niet meer, mag minder)
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/hypothese-template.md
+```
+
 ### Foutafhandeling
 
 De Hypothese-vormer:
@@ -152,6 +159,9 @@ De Hypothese-vormer:
   - Principe 4 (Scheiding van Wat en Hoe): Contract = wat wordt ontvangen/geleverd
   - Principe 7 (Transparante Verantwoording): Herkomstverantwoording in document
   - Principe 9 (Output-formaat Normering): Markdown als default
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream sfw

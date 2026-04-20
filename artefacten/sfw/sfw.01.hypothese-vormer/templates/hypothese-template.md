@@ -1,3 +1,17 @@
+---
+# IDENTIFICATIE
+template-id: "020"
+template-naam: hypothese
+
+# RELATIES
+artefact-type-id: "020"
+agent-id: sfw.01.hypothese-vormer
+
+# META-DATA
+versie: 0.1.0
+status: vers
+digest: 7161
+---
 # Hypothese: [KORTE TITEL]
 
 **Datum**: [yyyy-mm-dd]  

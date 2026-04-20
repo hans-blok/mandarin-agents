@@ -1,6 +1,7 @@
 ---
 agent: ecosysteem-beschrijver
 intent: beschrijf-ecosysteem-artefacten
+intent-id: aeo.02.ecosysteem-beschrijver.02
 versie: 1.0.0
 digest: f8ae
 status: vers
@@ -67,6 +68,12 @@ timestamp: {yyyy-mm-dd HH:MM}
 - Tabellen per agent, één rij per artefact
 - Aanwezigheid: ✓ (aanwezig) of — (ontbreekt)
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/beschrijf-ecosysteem-artefacten.template.md
+```
+
 ### Foutafhandeling
 
 De ecosysteem-beschrijver:
@@ -89,6 +96,9 @@ De ecosysteem-beschrijver:
   - Principe 2 (Eenduidige Verantwoordelijkheid): Eén intent, één artefactenoverzicht
   - Principe 7 (Transparante Verantwoording): Bronbestanden expliciet vermeld in output
   - Principe 9 (Output-formaat Normering): Markdown als default
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Niet van toepassing — ecosysteem-beschrijver is input-gebonden, geen canon-consultatie vereist

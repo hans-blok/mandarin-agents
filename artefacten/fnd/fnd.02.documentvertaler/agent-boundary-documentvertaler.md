@@ -1,5 +1,6 @@
 ---
 agent: documentvertaler
+agent-id: fnd.02.documentvertaler
 value_stream: fnd
 value_stream_fase: fnd.02
 versie: 1.0.0

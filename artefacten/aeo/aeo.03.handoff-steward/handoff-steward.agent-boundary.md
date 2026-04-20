@@ -1,5 +1,6 @@
 ---
 agent: handoff-steward
+agent-id: aeo.03.handoff-steward
 value_stream: aeo
 value_stream_fase: aeo.03
 kaderdefinities: geen

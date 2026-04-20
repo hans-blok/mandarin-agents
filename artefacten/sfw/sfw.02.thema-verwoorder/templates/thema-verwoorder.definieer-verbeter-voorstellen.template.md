@@ -1,8 +1,16 @@
 ---
-agent: thema-verwoorder
+# IDENTIFICATIE
+template-id: "026"
+template-naam: thema-verwoorder.definieer-verbeter-voorstellen
+
+# RELATIES
+artefact-type-id: "026"
+agent-id: sfw.02.thema-verwoorder
+
+# META-DATA
 versie: 0.1.0
-digest: d534
 status: vers
+digest: d534
 ---
 # Verbetervoorstellen: {thema_code}
 

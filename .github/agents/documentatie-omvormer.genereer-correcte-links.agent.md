@@ -1,6 +1,7 @@
 ---
 agent: documentatie-omvormer
 intent: genereer-correcte-links
+intent-id: fnd.01.documentatie-omvormer.01
 versie: 1.0.0
 digest: a6bd
 status: vers
@@ -60,6 +61,12 @@ De documentatie-omvormer levert in de chat:
 - Correcties zijn suggesties, geen automatische wijzigingen
 - Linktekst blijft ongewijzigd
 
+**Contractuele templatebinding**:
+
+```yaml
+template: ~
+```
+
 ### Foutafhandeling
 
 De documentatie-omvormer:
@@ -100,6 +107,9 @@ De documentatie-omvormer:
   - Principe 2 (Eenduidige Verantwoordelijkheid): Linkvalidatie, geen automatische correctie
   - Principe 7 (Transparante Verantwoording): Volledig rapport van alle bevindingen
 - **Betekenis-blindheid**: Agent interpreteert geen linkcontext of documentinhoud
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Niet van toepassing — agent is input-gebonden, niet canon-gebonden

@@ -1,12 +1,16 @@
 ---
-agent: capability-architect
-intent: definieer-agent-boundary
+# IDENTIFICATIE
+template-id: "001"
+template-naam: agent-boundary
+
+# RELATIES
+artefact-type-id: "001"
+agent-id: aeo.01.capability-architect
+
+# META-DATA
 versie: 1.1.0
-# Template voor het definiëren van agent boundaries.
-# Definieert de servicegrens: wat de agent wél en níet doet.
-# Validatie en beoordeling van overlap/kwaliteit wordt gedaan door Agent Curator.
-digest: b490
 status: vers
+digest: b490
 ---
 # Agent Boundary Document Template
 

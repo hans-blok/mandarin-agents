@@ -1,5 +1,6 @@
 ---
 agent: agent-engineer
+agent-id: aeo.02.agent-engineer
 versie: 0.1.0
 digest: 466a
 status: vers
@@ -82,7 +83,7 @@ De agent-engineer bewaakt daarbij dat actieve realisatiepaden niet op impliciete
 ## 4. Kerntaken
 
 1. **Realiseer agent-prompts**  
-   Genereert en actualiseert promptbestanden (`.prompt.md`) voor alle intents van een agent met YAML frontmatter. De metadata bevat minimaal `agent`, `intent`, `bronhouding`, `versie`, `input_parameters` en `value_stream_fase`, zodat elke intent aanroepbaar is via gestandaardiseerde prompt-artefacten.
+   Genereert en actualiseert promptbestanden (`.prompt.md`) voor alle intents van een agent met YAML frontmatter. De metadata bevat minimaal `agent`, `intent`, `template`, `bronhouding`, `versie`, `input_parameters` en `value_stream_fase`, zodat elke intent aanroepbaar is via gestandaardiseerde prompt-artefacten en de contractuele templatekeuze expliciet gespiegeld blijft.
 
 2. **Realiseer agent-taskconfiguratie**  
    Genereert en actualiseert VSCode task-definities (in de artefacten-folder, niet in `.vscode/tasks.json`) voor alle intents van een agent met vaste `process`-tasks, CLI-argumenten afgeleid uit contractparameters en een `inputs`-blok voor promptString-invoer.
@@ -156,17 +157,17 @@ Dit charter is traceerbaar naar de volgende agent-contracten:
 - Intent: `realiseer-agent-prompts`
    - Agent-contract: `artefacten/aeo/aeo.02.agent-engineer/agent-contracten/agent-engineer.realiseer-agent-prompts.agent.md`
    - Prompt-metadata: `artefacten/aeo/aeo.02.agent-engineer/prompts/mandarin.agent-engineer.realiseer-agent-prompts.prompt.md`
-   - Template: `-`
+   - Template: `artefacten/aeo/aeo.02.agent-engineer/templates/agent-prompt.template.md`
 
 - Intent: `realiseer-agent-taskconfiguratie`
    - Agent-contract: `artefacten/aeo/aeo.02.agent-engineer/agent-contracten/agent-engineer.realiseer-agent-taskconfiguratie.agent.md`
    - Prompt-metadata: `artefacten/aeo/aeo.02.agent-engineer/prompts/mandarin.agent-engineer.realiseer-agent-taskconfiguratie.prompt.md`
-   - Template: `-`
+   - Template: `~`
 
 - Intent: `realiseer-agent-runner`
    - Agent-contract: `artefacten/aeo/aeo.02.agent-engineer/agent-contracten/agent-engineer.realiseer-agent-runner.agent.md`
    - Prompt-metadata: `artefacten/aeo/aeo.02.agent-engineer/prompts/mandarin.agent-engineer.realiseer-agent-runner.prompt.md`
-   - Template: `-`
+   - Template: `~`
 
 ## 8. Output-locaties
 
@@ -197,7 +198,7 @@ De directe subcommands `realiseer-agent-prompts` en `realiseer-agent-taskconfigu
 ## 10. Herkomstverantwoording
 
 - Dit charter volgt de structuur uit `artefacten/aeo/aeo.02.agent-ontwerper/templates/agent-charter.template.md`
-- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0
+- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine), `doctrine-agent-charter-normering.md` v2.1.0 en `doctrine-templategebruik.md` v1.0.0
 - Agent-contracten: zie sectie Traceerbaarheid
 - Bron-locatie in deze workspace: `artefacten/aeo/aeo.02.agent-engineer/agent-engineer.charter.md`
 - Boundary-bestand: `artefacten/aeo/aeo.02.agent-engineer/agent-engineer.agent-boundary.md`

@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python artefacten/fnd/fnd.01.ecosysteem-coordinator/runner/ecosysteem-coordinator.runner.py genereer-instructies --agent agent-ontwerper --intent definieer-agent-charter -p agent_naam=doctrine-regels-vertaler -p value_stream_fase=aeo.01 --no-save)"
+    ]
+  }
+}

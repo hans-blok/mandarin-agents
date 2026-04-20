@@ -1,5 +1,6 @@
 ---
 agent: ecosysteem-beschrijver
+agent-id: aeo.02.ecosysteem-beschrijver
 value_stream: aeo
 value_stream_fase: aeo.02
 versie: 1.0.0

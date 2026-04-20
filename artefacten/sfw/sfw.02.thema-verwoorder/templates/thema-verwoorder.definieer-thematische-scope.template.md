@@ -1,7 +1,16 @@
 ---
-hypothese_code: {hypothese_code}
-digest: 4b78
+# IDENTIFICATIE
+template-id: "025"
+template-naam: thema-verwoorder.definieer-thematische-scope
+
+# RELATIES
+artefact-type-id: "025"
+agent-id: sfw.02.thema-verwoorder
+
+# META-DATA
+versie: 0.1.0
 status: vers
+digest: 4b78
 ---
 # Template: definieer-thematische-scope
 

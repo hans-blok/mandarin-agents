@@ -1,6 +1,8 @@
 ---
 agent: mandarin.agent-curator
 intent: valideer-runner-contract-consistentie
+intent-id: aeo.02.agent-curator.03
+template: ~
 bronhouding: Canon-gebonden
 versie: 1.0.0
 input_parameters:

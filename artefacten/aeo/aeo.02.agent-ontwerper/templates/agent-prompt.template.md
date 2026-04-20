@@ -1,16 +1,33 @@
 ---
-agent: agent-ontwerper
-intent: leg-vast-agent-prompt
+# IDENTIFICATIE
+template-id: "008"
+template-naam: agent-prompt
+
+# RELATIES
+artefact-type-id: "008"
+agent-id: aeo.02.agent-ontwerper
+
+# META-DATA
 versie: 1.0.0
-# Template voor agent charters. Generiek bruikbaar voor alle agents. De vastlegging van het intent hier is een bron voor het goed vastleggen van het agent-contract.
-digest: fc6f
 status: vers
+digest: abbf
 ---
 ---
 # Prompt Metadata (placeholders invullen)
 agent: mandarin.{agent-naam}
 intent: {intent-kortschrift}
+template: {relatief-template-pad-of-~}
 value_stream_fase: {value-stream-code}.{fase-nummer}
+
+werkbronnen:
+  # Bestanden die de runner ophaalt en als context aan de LLM aanbiedt.
+  # Vuistregel: runner-config hoort in de prompt, niet in het contract.
+  - name: <werkbron-naam>
+    type: <agent-boundary|agent-charter|agent-contract|doctrine|template|artefact>
+    required: <true|false>
+    lookup:
+      strategy: <same-agent-folder|workspace-root|explicit-path>
+      pattern: "<glob-patroon>"
 
 input_files:
   # Verplichte input bestanden voor deze intent (placeholders invullen)
@@ -47,7 +64,13 @@ Verplichte placeholders (vervang {...}):
    - Bepaalt welke grondslagen worden geladen uit beleid-workspace.md (base code)
    - Consistent met folder structuur en agent-ID conventie
 
-4. input_files sectie
+4. {relatief-template-pad-of-~}
+  - Verplicht veld volgens doctrine-templategebruik.md
+  - Gebruik een relatief workspace-pad wanneer een expliciet template geldt
+  - Gebruik `~` wanneer geen afzonderlijk template van toepassing is
+  - Deze waarde moet exact gelijk zijn aan de contractuele templatekeuze voor dezelfde intent
+
+5. input_files sectie
    - Lijst van verplichte input bestanden voor deze intent
    - Keys: beschrijvende namen (bijv. boundary_file, contract_file, template_file)
    - Values: paden met placeholders of exacte paden

@@ -1,9 +1,11 @@
 ---
 agent: leveranciers-verkenner
 intent: beschrijf-leveranciersfit
+intent-id: miv.07.leveranciers-verkenner.03
 versie: 1.0.0
+digest: 5c30
+status: vers
 ---
-
 # Leveranciers-verkenner — Beschrijf Leveranciersfit
 
 ## Rolbeschrijving (korte samenvatting)
@@ -63,6 +65,12 @@ De leveranciers-verkenner levert:
 - Alternatieve formaten alleen op expliciete verzoek
 - Output bevat beschrijvende fit-duiding per leverancier, maar geen score, ranking of selectieadvies
 
+**Contractuele templatebinding**:
+
+```yaml
+template: ~
+```
+
 ### Foutafhandeling
 
 De leveranciers-verkenner:
@@ -108,6 +116,9 @@ De leveranciers-verkenner:
   - Principe 4 (Scheiding van Wat en Hoe): Contract beschrijft fit-duiding, geen formele beoordelings- of scoringslogica
   - Principe 7 (Transparante Verantwoording): Herleidbaarheid naar longlist, behoefteprofiel en marktbronnen is expliciet
   - Principe 9 (Output-formaat Normering): Markdown als default
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream `miv`

@@ -1,6 +1,7 @@
 ---
 agent: core-framework-architect
 intent: structureer-gedrag
+intent-id: aod.02.core-framework-architect.02
 versie: 1.0.0
 digest: 976b
 status: vers
@@ -71,6 +72,12 @@ De Core-framework-architect levert:
 - ArchiMate elementen in tabelformaat voor leesbaarheid
 - Element IDs volgen conventie: {laag_prefix}.{type_prefix}.{volgnummer} (bijv. "BUS.PROC.001")
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/core-framework-architect.structureer-gedrag.template.md
+```
+
 ### Foutafhandeling
 
 De Core-framework-architect:
@@ -122,6 +129,9 @@ Gedragsdefinitie bevat GEEN implementatie-details (code, technische configuratie
   - Principe 7 (Transparante Verantwoording): ADRs documenteren gedragsbeslissingen
   - Principe 9 (Output-formaat Normering): Markdown als default
 - **ArchiMate 3.1 Specification**: Volgt ArchiMate behavior metamodel voor layering en relaties
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream aod

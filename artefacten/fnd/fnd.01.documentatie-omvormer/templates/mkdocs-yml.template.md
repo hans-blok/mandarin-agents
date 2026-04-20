@@ -1,10 +1,16 @@
 ---
-template: mkdocs-yml
+# IDENTIFICATIE
+template-id: "018"
+template-naam: mkdocs-yml
+
+# RELATIES
+artefact-type-id: "018"
+agent-id: fnd.01.documentatie-omvormer
+
+# META-DATA
 versie: 1.0.0
-agent: documentatie-omvormer
-doel: Template voor genereren van mkdocs.yml configuratiebestanden
-digest: 7d3a
 status: vers
+digest: 7d3a
 ---
 # MkDocs Configuration Template
 

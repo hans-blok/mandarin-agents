@@ -1,5 +1,6 @@
 ---
 agent: agent-curator
+agent-id: aeo.02.agent-curator
 value_stream: aeo
 value_stream_fase: aeo.02
 versie: 1.0.0

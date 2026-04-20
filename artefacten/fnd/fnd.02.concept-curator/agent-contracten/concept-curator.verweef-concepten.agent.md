@@ -1,6 +1,7 @@
 ---
 agent: concept-curator
 intent: verweef-concepten
+intent-id: fnd.02.concept-curator.04
 versie: 1.0.0
 digest: a055
 status: vers
@@ -39,6 +40,12 @@ De Concept Curator levert:
 - **Gerelateerd aan**: [Concept Y](../pad/naar/ConceptY.md)
 ```
 
+**Contractuele templatebinding**:
+
+```yaml
+template: ~
+```
+
 ### Foutafhandeling
 
 De Concept Curator:
@@ -64,6 +71,9 @@ De Concept Curator:
   - Principe 1 (Identiteit vóór Implementatie): Contract is extern observeerbaar.
   - Principe 7 (Transparante Verantwoording): Elke relatie wordt expliciet vastgelegd.
   - Principe 9 (Output-formaat Normering): Markdown conform vormvastheid.
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream fnd.

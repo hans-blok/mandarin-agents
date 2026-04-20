@@ -1,8 +1,16 @@
 ---
-agent: agent-ontwerper
+# IDENTIFICATIE
+template-id: "006"
+template-naam: agent-charter
+
+# RELATIES
+artefact-type-id: "006"
+agent-id: aeo.02.agent-ontwerper
+
+# META-DATA
 versie: 0.1.0
-digest: 47a6
 status: vers
+digest: 47a6
 ---
 ﻿---
 agent: agent-ontwerper

@@ -1,6 +1,7 @@
 ---
 agent: solution-architect
 intent: definieer-architectuur-keuze-document
+intent-id: aod.05.solution-architect.03
 versie: 1.0.0
 digest: 4933
 status: vers
@@ -95,6 +96,12 @@ datum: {yyyy-mm-dd}
 - Alternatieve formaten alleen op expliciete verzoek
 - Structuur volgt template `solution-architect.definieer-architectuur-keuze-document.template.md`
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/solution-architect.definieer-architectuur-keuze-document.template.md
+```
+
 ### Foutafhandeling
 
 De Solution-architect:
@@ -143,6 +150,9 @@ De Solution-architect:
   - Principe 7 (Transparante Verantwoording): Aannames, afwegingen en bronnen expliciet
   - Principe 9 (Output-formaat Normering): Markdown als default, template-gebonden
 - **doctrine-bronhouding-en-exploratie.md**: Kaderdefinitie als normatieve controlelaag, TOGAF wordt alleen gebruikt via de kaderdefinitie
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream aod

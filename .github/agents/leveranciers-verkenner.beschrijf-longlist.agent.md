@@ -1,9 +1,11 @@
 ---
 agent: leveranciers-verkenner
 intent: beschrijf-longlist
+intent-id: miv.07.leveranciers-verkenner.02
 versie: 1.0.0
+digest: d01e
+status: vers
 ---
-
 # Leveranciers-verkenner — Beschrijf Longlist
 
 ## Rolbeschrijving (korte samenvatting)
@@ -60,6 +62,12 @@ De leveranciers-verkenner levert:
 - Alternatieve formaten alleen op expliciete verzoek
 - Output beschrijft welke leveranciers in aanmerking komen, maar bevat geen ranking, score of voorkeursadvies
 
+**Contractuele templatebinding**:
+
+```yaml
+template: ~
+```
+
 ### Foutafhandeling
 
 De leveranciers-verkenner:
@@ -105,6 +113,9 @@ De leveranciers-verkenner:
   - Principe 4 (Scheiding van Wat en Hoe): Contract beschrijft leveranciersverkenning, geen beoordelings- of gunningslogica
   - Principe 7 (Transparante Verantwoording): Herleidbaarheid naar bronartefacten en marktbronnen is expliciet
   - Principe 9 (Output-formaat Normering): Markdown als default
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream `miv`

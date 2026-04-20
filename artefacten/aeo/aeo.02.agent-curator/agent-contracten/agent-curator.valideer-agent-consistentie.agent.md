@@ -1,6 +1,7 @@
 ---
 agent: agent-curator
 intent: valideer-agent-consistentie
+intent-id: aeo.02.agent-curator.02
 versie: 1.0.0
 digest: bc40
 status: vers
@@ -34,11 +35,24 @@ De agent-curator toetst per agent of de artefacten (charter, contracten, prompts
 De agent-curator levert:
 - **Validatierapport** met per artefact:
   - Checklijst compleetheid (verplichte secties, frontmatter, classificatie)
+  - Template-conformiteit per intent:
+    - contract bevat expliciete `template:`-binding voor de primaire output
+    - prompt-frontmatter bevat expliciete `template:`-eigenschap
+    - contract- en promptwaarde zijn identiek
+    - verwezen templatebestand bestaat, tenzij `template: ~`
   - Bevindingen-tabel (ID, zwaarte, artefact-pad, bevinding, aanbeveling)
   - Eindoordeel: COMPLIANT | DEELS-COMPLIANT | NON-COMPLIANT
 - Escalatielijst voor bevindingen die niet door agent-curator opgelost kunnen worden
 
 **Deliverable bestand**: `artefacten/{vs}/{vs}.{fase}.{agent_naam}/agent-curator.valideer-agent-consistentie.rapport.md`
+
+**Contractuele templatebinding**:
+```yaml
+output:
+  - type: validatierapport
+    herkomstpositie: initiërend
+    template: templates/validatierapport.template.md
+```
 
 **VERPLICHT**: Het bestand MOET worden weggeschreven naar de workspace.
 
@@ -59,6 +73,12 @@ De agent-curator:
 - escaleert naar constitutioneel-auteur bij onduidelijkheid over doctrine-interpretatie;
 - STOP: wanneer canon-ref niet te resolven is (geen geldige commit-hash en geen recente pull beschikbaar).
 
+**Template-zwaartebepaling**:
+- ontbrekend `template:` in contract = KRITIEK;
+- ontbrekend `template:` in prompt = KRITIEK;
+- mismatch tussen contract en prompt = KRITIEK;
+- niet-bestaand templatebestand bij niet-`~` = KRITIEK.
+
 **Let op**: De agent-curator corrigeert geen artefacten. Correctie is verantwoordelijkheid van agent-smeder of agent-ontwerper.
 
 ---
@@ -69,10 +89,15 @@ De agent-curator:
 1. **Bepaal artefacten-pad**: Stel pad vast op basis van `artefacten/{vs}/{vs}.{fase}.{agent_naam}/`.
 2. **Inventariseer aanwezige artefacten**: Controleer welke mappen en bestanden aanwezig zijn (charter, agent-contracten/, prompts/, tasks/, templates/).
 3. **Toets per artefact-type**: Doorloop de verplichte checkboxes per type (charter: 11 secties, contracten: frontmatter + rolbeschrijving + contract + governance + metadata).
-4. **Raadpleeg canon**: Toets clasificatie-assen, doctrine-naleving en traceerbaarheid aan de actuele canon-versie.
-5. **Registreer bevindingen**: Maak bevindingen-tabel met unieke ID (`{agent-naam}-{volgnummer}`), zwaarte, artefact-pad en aanbeveling.
-6. **Bepaal eindoordeel**: KRITIEK aanwezig → NON-COMPLIANT; alleen WAARSCHUWING → DEELS-COMPLIANT; alles voldaan → COMPLIANT.
-7. **Schrijf validatierapport**: Genereer rapport conform template en schrijf weg naar correct pad.
+4. **Toets templateconformiteit per intent**:
+  - lees de contractuele templatebinding uit elk intent-contract;
+  - lees de `template:`-waarde uit het bijbehorende promptbestand;
+  - controleer gelijkheid tussen contract en prompt;
+  - controleer bestaan van het verwezen templatebestand tenzij `template: ~` geldt.
+5. **Raadpleeg canon**: Toets classificatie-assen, doctrine-naleving, templategebruik en traceerbaarheid aan de actuele canon-versie.
+6. **Registreer bevindingen**: Maak bevindingen-tabel met unieke ID (`{agent-naam}-{volgnummer}` of `TMP-{volgnummer}` voor templatebevindingen), zwaarte, artefact-pad en aanbeveling.
+7. **Bepaal eindoordeel**: KRITIEK aanwezig → NON-COMPLIANT; alleen WAARSCHUWING → DEELS-COMPLIANT; alles voldaan → COMPLIANT.
+8. **Schrijf validatierapport**: Genereer rapport conform template en schrijf weg naar correct pad.
 
 ### Kwaliteitsborging
 - Rapport bevat YAML frontmatter met agent, intent, scope, value_stream_fase, datum, canon_ref
@@ -80,6 +105,7 @@ De agent-curator:
 - Eindoordeel is expliciet voor de getoetste agent
 - Escalaties zijn traceerbaar naar ontvanger
 - Geen zelf-correcties in rapport opgenomen
+- Templateconformiteit is per intent expliciet beoordeeld
 
 ---
 
@@ -90,6 +116,11 @@ De agent-curator:
   - Principe 2 (Eenduidige Verantwoordelijkheid): Toetst boundaries op eenduidigheid, signaleert overlap
   - Principe 7 (Transparante Verantwoording): Rapporteert bevindingen transparant per artefact
   - Principe 9 (Output-formaat Normering): Markdown als default
+- **doctrine-templategebruik.md** (v1.0.0):
+  - contract bevat per output expliciete `template:`-keuze
+  - prompt-frontmatter spiegelt de contractuele templatekeuze
+  - mismatch tussen contract en prompt is een validatiefout
+  - templatepaden mogen alleen ontbreken bij expliciet `template: ~`
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen

@@ -1,6 +1,7 @@
 ---
 agent: concept-curator
 intent: rapporteer-concept-status
+intent-id: fnd.02.concept-curator.02
 versie: 1.0.0
 digest: c74c
 status: vers
@@ -34,6 +35,12 @@ Inzichtelijk wordt gemaakt welke concepten 'stabiel', 'voorlopig' of 'verouderd'
 **Formaat**:
 - Markdown (.md) met status-tabellen.
 
+**Contractuele templatebinding**:
+
+```yaml
+template: ~
+```
+
 ### Foutafhandeling
 
 De agent stopt wanneer:
@@ -47,6 +54,9 @@ Escalatie:
 **Doctrine-naleving:**
 - Borgt inzicht in de volwassenheid van het begrippenkader.
 - Ondersteunt life-cycle management van concepten.
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 ## Metadata
 

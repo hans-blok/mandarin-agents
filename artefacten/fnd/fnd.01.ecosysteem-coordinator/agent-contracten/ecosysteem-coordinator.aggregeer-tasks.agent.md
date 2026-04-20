@@ -1,6 +1,7 @@
 ---
 agent: ecosysteem-coordinator
 intent: aggregeer-tasks
+intent-id: fnd.01.ecosysteem-coordinator.01
 versie: 1.1.0
 digest: afb0
 status: vers
@@ -90,6 +91,12 @@ output:
 - UTF-8 encoding
 - 2-space indentation
 
+**Contractuele templatebinding**:
+
+```yaml
+template: ~
+```
+
 ### Foutafhandeling
 
 De ecosysteem-coordinator:
@@ -132,6 +139,9 @@ De ecosysteem-coordinator:
   - Principe 7 (Transparante Verantwoording): Logt alle verwerkte fasen en bronbestanden
   - Richtlijn herkomstpositie: output `initiërend`
 - **doctrine-traceability.md** (v1.1.0): Herkomstpositie `initiërend` — tasks.json start nieuwe configuratie-keten
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Geen canon-consultatie vereist (pure aggregatie op basis van workspace-configuratie)

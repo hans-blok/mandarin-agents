@@ -1,8 +1,16 @@
 ---
-agent: gedragsspecificator
+# IDENTIFICATIE
+template-id: "028"
+template-naam: gedragsspecificator.valideer-scenario-consistentie
+
+# RELATIES
+artefact-type-id: "028"
+agent-id: sfw.03.gedragsspecificator
+
+# META-DATA
 versie: 0.1.0
-digest: 1380
 status: vers
+digest: 1380
 ---
 # Validatierapport Scenario-Consistentie
 

@@ -1,11 +1,16 @@
 ---
-agent: ecosysteem-beschrijver
-template_naam: beschrijf-ecosysteem-contracten
+# IDENTIFICATIE
+template-id: "011"
+template-naam: beschrijf-ecosysteem-contracten
+
+# RELATIES
+artefact-type-id: "011"
+agent-id: aeo.02.ecosysteem-beschrijver
+
+# META-DATA
 versie: 1.0.0
-output_type: document
-doel: Geeft een gestructureerd overzicht van alle agent-contracten in het ecosysteem — per agent, per intent — met de kerngegevens uit elke contract-frontmatter en input/output-synopsis.
-digest: 52bc
 status: vers
+digest: 52bc
 ---
 # Template: Ecosysteem Contractenoverzicht
 

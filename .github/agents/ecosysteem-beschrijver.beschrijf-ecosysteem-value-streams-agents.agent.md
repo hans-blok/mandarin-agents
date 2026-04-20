@@ -1,6 +1,7 @@
 ---
 agent: ecosysteem-beschrijver
 intent: beschrijf-ecosysteem-value-streams-agents
+intent-id: aeo.02.ecosysteem-beschrijver.04
 versie: 1.0.0
 digest: 9d40
 status: vers
@@ -71,6 +72,12 @@ timestamp: {yyyy-mm-dd HH:MM}
 - Boundary-zin: eerste zin uit de `capability-boundary` van het boundary-document
 - Intentaantal: geteld op basis van "Voorstellen agent contracten" sectie in boundary
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/beschrijf-ecosysteem-value-streams-agents.template.md
+```
+
 ### Foutafhandeling
 
 De ecosysteem-beschrijver:
@@ -93,6 +100,9 @@ De ecosysteem-beschrijver:
   - Principe 2 (Eenduidige Verantwoordelijkheid): Eén intent, één value stream & agents overzicht
   - Principe 7 (Transparante Verantwoording): Bronbestanden expliciet vermeld in output
   - Principe 9 (Output-formaat Normering): Markdown als default
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Niet van toepassing — ecosysteem-beschrijver is input-gebonden, geen canon-consultatie vereist

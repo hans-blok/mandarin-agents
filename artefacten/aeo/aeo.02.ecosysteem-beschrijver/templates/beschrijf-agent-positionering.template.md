@@ -1,12 +1,16 @@
 ---
-agent: ecosysteem-beschrijver
-template_naam: beschrijf-agent-positionering
+# IDENTIFICATIE
+template-id: "009"
+template-naam: beschrijf-agent-positionering
+
+# RELATIES
+artefact-type-id: "009"
+agent-id: aeo.02.ecosysteem-beschrijver
+
+# META-DATA
 versie: 1.2.0
-herkomstpositie: voortbouwend
-output_type: document
-doel: Beschrijft de positionering van een agent als context diagram — wie roept de agent aan, welke externe diensten gebruikt de agent.
-digest: becc
 status: vers
+digest: becc
 ---
 # Template: Agent Positionering — Context Diagram
 

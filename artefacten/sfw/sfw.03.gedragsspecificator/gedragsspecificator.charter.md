@@ -1,5 +1,6 @@
 ---
 agent: gedragsspecificator
+agent-id: sfw.03.gedragsspecificator
 versie: 0.1.0
 digest: db0e
 status: vers
@@ -155,6 +156,7 @@ Het log bevat:
 
 -   Gebaseerd op boundary: `artefacten/sfw/sfw.03.gedragsspecificator/agent-boundary-gedragsspecificator.md`
 -   Conform: `doctrine-agent-charter-normering.md` v2.1.0
+-   Conform: `doctrine-templategebruik.md` v1.0.0
 -   Templates gegenereerd door agent-smeder.
 
 ## 12. Change Log

@@ -1,7 +1,8 @@
 ---
 agent: agent-ontwerper
 intent: definieer-agent-contract
-versie: 1.0.0
+intent-id: aeo.02.agent-ontwerper.02
+versie: 1.2.0
 digest: 18e9
 status: vers
 ---
@@ -58,6 +59,14 @@ De Agent-ontwerper levert:
 - Korte toelichting op ontwerpkeuzes en parameter-selectie
 
 **Deliverable bestand**: `artefacten/{vs}/{vs}.{fase}.{agent}/agent-contracten/{agent}.{intent}.agent.md`
+
+**Contractuele templatebinding**:
+```yaml
+output:
+  - type: agent-contract
+    herkomstpositie: initiërend
+    template: templates/agent-contract-intent.template.md
+```
 
 **VERPLICHT**: Het bestand MOET worden weggeschreven naar de workspace (niet alleen voorgesteld).
 
@@ -166,6 +175,9 @@ De Agent-ontwerper:
   - Principe 5 (Evolutionaire Integriteit): Versioning ingebouwd (start 1.0.0)
   - Principe 7 (Transparante Verantwoording): Transparantie-verplichtingen expliciet in contract
   - Principe 9 (Output-formaat Normering): Markdown als default
+- **doctrine-templategebruik.md** (v1.0.0):
+  - contract legt de templatekeuze expliciet vast voor de primaire output
+  - prompt-YAML moet deze templatekeuze exact spiegelen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream aeo

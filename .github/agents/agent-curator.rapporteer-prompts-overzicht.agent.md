@@ -1,6 +1,7 @@
 ---
 agent: agent-curator
 intent: rapporteer-prompts-overzicht
+intent-id: aeo.02.agent-curator.05
 versie: 1.0.0
 digest: 9191
 status: vers
@@ -28,11 +29,21 @@ De agent-curator genereert een gestructureerd overzicht per agent uit alle aanwe
 De agent-curator levert:
 - **Ecosysteem Prompt Contracten overzicht-document** met per agent:
   - De beschrijving van het contract (prompt).
+  - De contractuele templatekeuze per intent.
+  - De gespiegelde prompt-templatewaarde en de template-status.
   - Lijsten met parameters onderverdeeld in Invoer en/of Optioneel.
   - Eventuele definities of output regels.
 - Bevat documentversie en overzicht generatie datum.
 
 **Deliverable bestand**: `docs/agents-prompts-overzicht.md`
+
+**Contractuele templatebinding**:
+```yaml
+output:
+  - type: prompts-overzicht
+    herkomstpositie: initiërend
+    template: templates/ecosysteem-agent-prompt-contracten.template.md
+```
 
 **VERPLICHT**: Het bestand MOET worden weggeschreven naar de workspace.
 
@@ -65,6 +76,7 @@ De agent-curator:
 
 ### Kwaliteitsborging
 - Overzicht bevat per contract een duidelijke weergave van verplichte en optionele parameters
+- Overzicht bevat per contract ook contract-template, prompt-template en template-status
 - Output bestand volgt template nesting strict.
 
 ---
@@ -75,6 +87,9 @@ De agent-curator:
 - **doctrine-agent-charter-normering.md** (v2.1.0, AEO.DOC.001):
   - Principe 7 (Transparante Verantwoording): Overzicht maakt parameters transparant
   - Principe 9 (Output-formaat Normering): Markdown als default
+- **doctrine-templategebruik.md** (v1.0.0):
+  - contract legt expliciet vast welk template voor dit overzicht geldt
+  - prompt-YAML moet dezelfde templatekeuze spiegelen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen

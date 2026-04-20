@@ -1,8 +1,16 @@
 ---
-agent: ecosysteem-beschrijver
+# IDENTIFICATIE
+template-id: "012"
+template-naam: beschrijf-ecosysteem-value-streams-agents
+
+# RELATIES
+artefact-type-id: "012"
+agent-id: aeo.02.ecosysteem-beschrijver
+
+# META-DATA
 versie: 0.1.0
-digest: 3d99
 status: vers
+digest: 3d99
 ---
 ﻿---
 agent: ecosysteem-beschrijver

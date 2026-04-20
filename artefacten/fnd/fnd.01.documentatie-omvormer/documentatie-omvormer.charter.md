@@ -1,5 +1,6 @@
 ---
 agent: documentatie-omvormer
+agent-id: fnd.01.documentatie-omvormer
 versie: 1.1.0
 domein: Documentatie-representatie
 value_stream: Fundamental Infrastructure (fnd)
@@ -185,7 +186,7 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 ## 10. Herkomstverantwoording
 
 - Dit charter volgt de structuur uit `artefacten/aeo/aeo.02.agent-ontwerper/templates/agent-charter.template.md`
-- Governance en doctrines: `beleid-workspace.md` en `doctrine-agent-charter-normering.md` v2.1.0
+- Governance en doctrines: `beleid-workspace.md` en `doctrine-agent-charter-normering.md` v2.1.0 en `doctrine-templategebruik.md` (v1.0.0)
 - Agent-boundary: `artefacten/fnd/fnd.01.documentatie-omvormer/documentatie-omvormer.agent-boundary.md` (gedefinieerd door capability-architect, execution_id: d2a5)
 - Agent-contracten: zie sectie Traceerbaarheid
 - Bron-locatie in deze workspace: `artefacten/fnd/fnd.01.documentatie-omvormer/documentatie-omvormer.charter.md`

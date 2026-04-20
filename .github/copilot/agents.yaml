@@ -6,6 +6,7 @@ agents:
   charter: artefacten/aeo/aeo.01.canon-curator/canon-curator.charter.md
   prompts:
   - .github/prompts/mandarin.canon-curator.adviseer-grondslag-verbeteringen.prompt.md
+  - .github/prompts/mandarin.canon-curator.publiceer-grondslagen.prompt.md
   - .github/prompts/mandarin.canon-curator.valideer-grondslag-consistentie.prompt.md
   - .github/prompts/mandarin.canon-curator.valideer-terminologische-scherpte.prompt.md
   runners: []
@@ -59,6 +60,16 @@ agents:
   - .github/prompts/mandarin.ecosysteem-beschrijver.beschrijf-ecosysteem-artefacten.prompt.md
   - .github/prompts/mandarin.ecosysteem-beschrijver.beschrijf-ecosysteem-contracten.prompt.md
   - .github/prompts/mandarin.ecosysteem-beschrijver.beschrijf-ecosysteem-value-streams-agents.prompt.md
+  runners: []
+- id: handoff-steward
+  name: workspace.handoff-steward
+  type: uitvoerend
+  valueStream: aeo
+  charter: artefacten/aeo/aeo.03.handoff-steward/handoff-steward.charter.md
+  prompts:
+  - .github/prompts/mandarin.handoff-steward.realiseer-handoff-sluiting.prompt.md
+  - .github/prompts/mandarin.handoff-steward.realiseer-initiele-handoff.prompt.md
+  - .github/prompts/mandarin.handoff-steward.realiseer-overzicht-inspectie-handoffs.prompt.md
   runners: []
 - id: core-framework-architect
   name: workspace.core-framework-architect
@@ -118,6 +129,26 @@ agents:
   - .github/prompts/mandarin.behoefteprofiel-opsteller.beschrijf-selectiecriteria.prompt.md
   - .github/prompts/mandarin.behoefteprofiel-opsteller.formuleer-behoefteprofiel.prompt.md
   - .github/prompts/mandarin.behoefteprofiel-opsteller.structureer-eisenpakket.prompt.md
+  runners: []
+- id: leveranciers-verkenner
+  name: workspace.leveranciers-verkenner
+  type: uitvoerend
+  valueStream: miv
+  charter: artefacten/miv/miv.07.leveranciers-verkenner/leveranciers-verkenner.charter.md
+  prompts:
+  - .github/prompts/mandarin.leveranciers-verkenner.beschrijf-leveranciersfit.prompt.md
+  - .github/prompts/mandarin.leveranciers-verkenner.beschrijf-longlist.prompt.md
+  - .github/prompts/mandarin.leveranciers-verkenner.beschrijf-uitsluitingsgronden.prompt.md
+  runners: []
+- id: positionering-en-monetisatie-toetser
+  name: workspace.positionering-en-monetisatie-toetser
+  type: uitvoerend
+  valueStream: miv
+  charter: artefacten/miv/miv.07.positionering-en-monetisatie-toetser/positionering-en-monetisatie-toetser.charter.md
+  prompts:
+  - .github/prompts/mandarin.positionering-en-monetisatie-toetser.signaleer-spanningsvelden.prompt.md
+  - .github/prompts/mandarin.positionering-en-monetisatie-toetser.stel-toetsingsrapport-op.prompt.md
+  - .github/prompts/mandarin.positionering-en-monetisatie-toetser.toets-strategische-compatibiliteit.prompt.md
   runners: []
 - id: hypothese-vormer
   name: workspace.hypothese-vormer

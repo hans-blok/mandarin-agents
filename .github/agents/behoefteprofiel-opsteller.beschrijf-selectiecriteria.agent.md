@@ -1,6 +1,7 @@
 ---
 agent: behoefteprofiel-opsteller
 intent: beschrijf-selectiecriteria
+intent-id: miv.07.behoefteprofiel-opsteller.01
 versie: 1.0.0
 digest: 4445
 status: vers
@@ -63,6 +64,12 @@ De behoefteprofiel-opsteller levert:
 - Alternatieve formaten alleen op expliciete verzoek
 - Output specificeert criteria, maar bevat geen leveranciersscore, keuze of aanbeveling
 
+**Contractuele templatebinding**:
+
+```yaml
+template: ~
+```
+
 ### Foutafhandeling
 
 De behoefteprofiel-opsteller:
@@ -108,6 +115,9 @@ De behoefteprofiel-opsteller:
   - Principe 4 (Scheiding van Wat en Hoe): Contract beschrijft criteria-afleiding, geen evaluatielogica
   - Principe 7 (Transparante Verantwoording): Herleidbaarheid naar bronartefacten is expliciet
   - Principe 9 (Output-formaat Normering): Markdown als default
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream `miv`

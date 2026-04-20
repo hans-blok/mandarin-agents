@@ -122,6 +122,20 @@
       }
     },
     {
+      "label": "aeo.01 - canon-curator: publiceer-grondslagen",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.01.canon-curator/runner/canon-curator.runner.py",
+        "publiceer-grondslagen"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
       "label": "aeo.01 - capability-architect: definieer-agent-boundary",
       "type": "process",
       "command": "python",
@@ -453,6 +467,78 @@
       }
     },
     {
+      "label": "aeo.03 - handoff-steward: realiseer-handoff-sluiting",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.03.handoff-steward/runner/handoff-steward.runner.py",
+        "realiseer-handoff-sluiting",
+        "--handoff-id",
+        "${input:in_handoff_steward_realiseer_handoff_sluiting_handoff_id}",
+        "--handoff-register",
+        "${input:in_handoff_steward_realiseer_handoff_sluiting_handoff_register}",
+        "--ontvangstbevestiging",
+        "${input:in_handoff_steward_realiseer_handoff_sluiting_ontvangstbevestiging}",
+        "--sluitings-datum",
+        "${input:in_handoff_steward_realiseer_handoff_sluiting_sluitings_datum}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.03 - handoff-steward: realiseer-initiele-handoff",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.03.handoff-steward/runner/handoff-steward.runner.py",
+        "realiseer-initiele-handoff",
+        "--execution-bestand",
+        "${input:in_handoff_steward_realiseer_initiele_handoff_execution_bestand}",
+        "--ontvangende-agent",
+        "${input:in_handoff_steward_realiseer_initiele_handoff_ontvangende_agent}",
+        "--handoff-register",
+        "${input:in_handoff_steward_realiseer_initiele_handoff_handoff_register}",
+        "--overdrachtsnota",
+        "${input:in_handoff_steward_realiseer_initiele_handoff_overdrachtsnota}",
+        "--escalatie-indicatie",
+        "${input:in_handoff_steward_realiseer_initiele_handoff_escalatie_indicatie}",
+        "--escalatie-reden",
+        "${input:in_handoff_steward_realiseer_initiele_handoff_escalatie_reden}",
+        "--escalatie-urgentie",
+        "${input:in_handoff_steward_realiseer_initiele_handoff_escalatie_urgentie}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "aeo.03 - handoff-steward: realiseer-overzicht-inspectie-handoffs",
+      "type": "process",
+      "command": "python",
+      "args": [
+        "./artefacten/aeo/aeo.03.handoff-steward/runner/handoff-steward.runner.py",
+        "realiseer-overzicht-inspectie-handoffs",
+        "--handoff-register",
+        "${input:in_handoff_steward_realiseer_overzicht_inspectie_handoffs_handoff_register}",
+        "--filter-status",
+        "${input:in_handoff_steward_realiseer_overzicht_inspectie_handoffs_filter_status}",
+        "--filter-maand",
+        "${input:in_handoff_steward_realiseer_overzicht_inspectie_handoffs_filter_maand}",
+        "--output-bestand",
+        "${input:in_handoff_steward_realiseer_overzicht_inspectie_handoffs_output_bestand}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
       "label": "Canon: pull + copy hash",
       "type": "shell",
       "command": "cd ../mandarin-canon; git pull --ff-only; git rev-parse --short HEAD | Set-Clipboard",
@@ -686,6 +772,81 @@
       "type": "promptString",
       "description": "Value stream fase of 'alle' (bijv. aeo.02)",
       "default": "aeo.02"
+    },
+    {
+      "id": "in_handoff_steward_realiseer_handoff_sluiting_handoff_id",
+      "type": "promptString",
+      "description": "De handoff-identificatie van de te sluiten handoff"
+    },
+    {
+      "id": "in_handoff_steward_realiseer_handoff_sluiting_handoff_register",
+      "type": "promptString",
+      "description": "Pad naar het handoff-register dat wordt bijgewerkt"
+    },
+    {
+      "id": "in_handoff_steward_realiseer_handoff_sluiting_ontvangstbevestiging",
+      "type": "promptString",
+      "description": "Beschrijving of referentie van de bevestiging van ontvangst door de ontvangende agent (Optioneel)"
+    },
+    {
+      "id": "in_handoff_steward_realiseer_handoff_sluiting_sluitings_datum",
+      "type": "promptString",
+      "description": "Datum van sluiting (Optioneel)"
+    },
+    {
+      "id": "in_handoff_steward_realiseer_initiele_handoff_execution_bestand",
+      "type": "promptString",
+      "description": "Pad naar het afgeronde execution-bestand van de overdragende agent"
+    },
+    {
+      "id": "in_handoff_steward_realiseer_initiele_handoff_ontvangende_agent",
+      "type": "promptString",
+      "description": "Identifier van de agent die het handoff-bestand ontvangt"
+    },
+    {
+      "id": "in_handoff_steward_realiseer_initiele_handoff_handoff_register",
+      "type": "promptString",
+      "description": "Pad naar het handoff-register"
+    },
+    {
+      "id": "in_handoff_steward_realiseer_initiele_handoff_overdrachtsnota",
+      "type": "promptString",
+      "description": "Vrije tekst met aanvullende instructie of context voor de ontvanger (Optioneel)"
+    },
+    {
+      "id": "in_handoff_steward_realiseer_initiele_handoff_escalatie_indicatie",
+      "type": "promptString",
+      "description": "Geeft aan of de handoff een escalation van de overdragende agent naar een mens vereist (Optioneel)"
+    },
+    {
+      "id": "in_handoff_steward_realiseer_initiele_handoff_escalatie_reden",
+      "type": "promptString",
+      "description": "Beschrijving van de situatie die escalatie vereist (Optioneel)"
+    },
+    {
+      "id": "in_handoff_steward_realiseer_initiele_handoff_escalatie_urgentie",
+      "type": "promptString",
+      "description": "Ernst van de escalatie (Optioneel)"
+    },
+    {
+      "id": "in_handoff_steward_realiseer_overzicht_inspectie_handoffs_handoff_register",
+      "type": "promptString",
+      "description": "Pad naar het handoff-register"
+    },
+    {
+      "id": "in_handoff_steward_realiseer_overzicht_inspectie_handoffs_filter_status",
+      "type": "promptString",
+      "description": "Filtert het overzicht op status (Optioneel)"
+    },
+    {
+      "id": "in_handoff_steward_realiseer_overzicht_inspectie_handoffs_filter_maand",
+      "type": "promptString",
+      "description": "Filtert het overzicht op kalendermaand in formaat `JJMM` (Optioneel)"
+    },
+    {
+      "id": "in_handoff_steward_realiseer_overzicht_inspectie_handoffs_output_bestand",
+      "type": "promptString",
+      "description": "Pad naar het bestand waar het overzicht wordt geschreven (Optioneel)"
     }
   ]
 }

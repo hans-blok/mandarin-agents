@@ -1,8 +1,16 @@
 ---
-agent: core-framework-architect
+# IDENTIFICATIE
+template-id: "016"
+template-naam: core-framework-architect.structureer-totaal-view
+
+# RELATIES
+artefact-type-id: "016"
+agent-id: aod.02.core-framework-architect
+
+# META-DATA
 versie: 0.1.0
-digest: ac88
 status: vers
+digest: ac88
 ---
 # {ecosysteem_naam} — Totaal Architectuur View
 

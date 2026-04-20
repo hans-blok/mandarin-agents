@@ -186,6 +186,38 @@ def extract_parameters_from_contract(body: str) -> Tuple[List[Dict[str, str]], L
     return required, optional
 
 
+def extract_template_from_contract(body: str) -> Optional[str]:
+    """Extraheer de contractuele templatebinding uit de outputsectie."""
+    lines = body.splitlines()
+    in_template_section = False
+    in_code_block = False
+
+    for raw_line in lines:
+        line = raw_line.strip()
+
+        if line == "**Contractuele templatebinding**:":
+            in_template_section = True
+            continue
+
+        if not in_template_section:
+            continue
+
+        if line.startswith("### ") and not in_code_block:
+            break
+
+        if line.startswith("**") and line.endswith(":") and not in_code_block:
+            break
+
+        if line.startswith("```"):
+            in_code_block = not in_code_block
+            continue
+
+        if in_code_block and line.startswith("template:"):
+            return line.split(":", 1)[1].strip()
+
+    return None
+
+
 def extract_checked_classification(body: str, heading: str) -> Optional[str]:
     """Zoek de aangevinkte classificatiewaarde onder een kopje in boundary markdown."""
     active = False
@@ -265,12 +297,20 @@ def realiseer_agent_prompts_main(args: argparse.Namespace) -> int:
                 continue
 
             required, optional = extract_parameters_from_contract(body)
+            template_value = extract_template_from_contract(body)
+            if not template_value:
+                template_value = '~'
+                print(
+                    f"WARNING: Geen expliciete templatebinding gevonden in {contract_path}; "
+                    "legacy fallback naar template: ~"
+                )
             input_parameters = [p['name'] for p in required + optional]
 
             lines = [
                 '---',
                 f"agent: mandarin.{context['agent_naam']}",
                 f"intent: {intent}",
+                f"template: {template_value}",
                 f"bronhouding: {bronhouding}",
                 'versie: 1.0.0',
                 'input_parameters:',

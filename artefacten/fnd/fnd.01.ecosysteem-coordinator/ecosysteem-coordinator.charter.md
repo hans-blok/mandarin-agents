@@ -1,6 +1,7 @@
 ---
 agent: ecosysteem-coordinator
-versie: 1.4.0
+agent-id: fnd.01.ecosysteem-coordinator
+versie: 1.6.0
 domein: Ecosysteem-lifecycle
 value_stream: fnd
 value_stream_fase: fnd.01
@@ -11,7 +12,7 @@ status: vers
 # Agent Charter - ecosysteem-coordinator
 
 **Agent-ID**: `fnd.01.ecosysteem-coordinator`  
-**Versie**: 1.3.0  
+**Versie**: 1.6.0  
 **Domein**: Ecosysteem-lifecycle  
 **Value Stream Fase**: `fnd.01`  
 **Governance**: Volgt `beleid-workspace.md` (inclusief canon-raadpleging zoals daar vastgelegd) en `doctrine-agent-charter-normering.md`; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
@@ -87,7 +88,7 @@ De ecosysteem-coordinator fungeert als infrastructurele laag die alle agents ond
 ## 4. Kerntaken
 
 1. **Broninjectie — genereer instructies**  
-   Voert bronassemblage uit voor een opgegeven agent en intent: selecteert de relevante kaderbronnen (constitutie, workspace-beleid, doctrines, charter, contract) en werkbronnen (parameters), ordent deze conform het bronregime en voegt ze samen tot één bronpakket — de execution file die het LLM als context ontvangt.
+   Voert bronassemblage uit voor een opgegeven agent en intent: selecteert de relevante kaderbronnen (constitutie, workspace-beleid, doctrines, charter, contract) en werkbronnen (parameters), ordent deze conform het bronregime en voegt ze samen tot één bronpakket — de execution file die het LLM als context ontvangt. Schrijft na elke succesvolle executie een entry naar `executions/execution-ledger.json` (append, create-if-absent).
    → Intent: `genereer-instructies`
 
 2. **Aggregeren van tasks**  
@@ -106,6 +107,7 @@ De ecosysteem-coordinator fungeert als infrastructurele laag die alle agents ond
 - Voert placeholder-substitutie uit in templates (werkbronnen injecteren)
 - Aggregeert task-configuraties uit meerdere bronnen
 - Voert `bootstrap:` declaraties uit prompt frontmatter uit
+- Schrijft en onderhoudt `executions/execution-ledger.json` als append-only ledger
 
 ### Wat de ecosysteem-coordinator NIET doet
 - Wijzigt geen kaderbronnen — constitutie, doctrines, charters en contracten zijn read-only input
@@ -131,7 +133,8 @@ De ecosysteem-coordinator fungeert als infrastructurele laag die alle agents ond
 5. Stel het bronpakket samen als gelaagd execution-bestand (7 secties: opdracht, bronhouding/regime, normatieve grondslagen, agentcontext, werkbronnen, bronmanifest)
 6. Schrijf het bronpakket naar execution_file pad
 7. Bereken `execution_digest` (SHA-256 van body, 12 hex tekens) en schrijf het execution-trace-bestand (`.trace.yaml`) naast het execution-bestand
-8. Append naar `audit/agent-instructions.log.md`
+8. Append entry naar `executions/execution-ledger.json` met velden: `execution_id`, `timestamp` (ISO 8601 UTC), `agent`, `intent`, `execution_file`, `digest`, `status`
+9. Append naar `audit/agent-instructions.log.md`
 
 **aggregeer-tasks:**
 1. Lees `beleid-workspace.md` en parse uitsluitend de YAML frontmatter
@@ -151,30 +154,32 @@ Dit charter is traceerbaar naar de volgende agent-contracten en prompt-metadata:
 - Intent: `genereer-instructies`
   - Agent-contract: `artefacten/fnd/fnd.01.ecosysteem-coordinator/agent-contracten/ecosysteem-coordinator.genereer-instructies.agent.md`
   - Prompt-metadata: `artefacten/fnd/fnd.01.ecosysteem-coordinator/prompts/mandarin.ecosysteem-coordinator.genereer-instructies.prompt.md`
-  - Template: `-`
+  - Template: `artefacten/fnd/fnd.01.ecosysteem-coordinator/templates/ecosysteem-coordinator.genereer-instructies.template.md`
 
 - Intent: `aggregeer-tasks`
   - Agent-contract: `artefacten/fnd/fnd.01.ecosysteem-coordinator/agent-contracten/ecosysteem-coordinator.aggregeer-tasks.agent.md`
   - Prompt-metadata: `artefacten/fnd/fnd.01.ecosysteem-coordinator/prompts/mandarin.ecosysteem-coordinator.aggregeer-tasks.prompt.md`
-  - Template: `-`
+  - Template: `~`
 
 ## 8. Output-locaties
 
 De ecosysteem-coordinator legt alle resultaten vast in de workspace:
 
 - `audit/agent-instructions.log.md` — Gegenereerde instructies met execution metadata
-- `executions/{timestamp}-{agent}.{intent}.md` — Execution-bestanden (bronpakketten), opgebouwd als 7-laagse inhoudsstructuur:
+- `executions/{timestamp}-{agent}.{intent}.md` — Execution-bestanden (bronpakketten), opgebouwd conform `ecosysteem-coordinator.genereer-instructies.template.md`:
   1. YAML frontmatter (execution_id, execution_digest, timestamp, agent, intent, value_stream_fase, canon_ref, bronhouding, modus)
-  2. Opdracht en parameters
-  3. Geldende bronhouding en bronregime (doctrine-excerpt + bronselectierapport)
-  4. Normatieve grondslagen (constitutie + beleid + geselecteerde doctrines)
-  5. Agentcontext (charter + contract + prompt)
-  6. Werkbronnen (optioneel — input-bestanden)
-  7. Bronmanifest en traceerbaarheid (tabel alle bronnen incl. uitgesloten, met opnamevorm en reden)
+  2. Instructie (opdracht + optionele toelichting)
+  3. Parameters (agent, intent, execution_file, method + aanvullende params)
+  4. Template (het volledige template behorend bij de intent — "je gebruikt dit template")
+  5. Werkbron (volledige werkbron, bijv. agent-boundary)
+  6. Charter (volledig charter van de te runnen agent)
+  7. Doctrines (opgenomen en uitgesloten doctrines via bronselectieprofiel)
+  8. Instructies Hand Off (wegschrijven, logging, escalatie)
 - `executions/{timestamp}-{agent}.{intent}.trace.yaml` — Execution-trace-bestand: execution-anker (execution_id + execution_digest) + per-bron bronpad, type, digest, reden_van_opname, opnamevorm
+- `executions/execution-ledger.json` — Append-only ledger van alle executies; elk record bevat `execution_id`, `timestamp`, `agent`, `intent`, `execution_file`, `digest`, `status`
 - `.vscode/tasks.json` — Geaggregeerde task-configuraties
 
-**Bronselectiebeleid** (in `mandarin-canon/grondslagen/bronselectiebeleid.json`): Bepaalt per `agent.intent` welke doctrines worden opgenomen in **sectie 4 (Normatieve grondslagen)**. Sleutelvolgorde: `agent.intent` → `*.intent` → `*.*` → include-all fallback. De bronhouding-doctrine (`doctrine-bronhouding-en-exploratie.md`) valt buiten dit schema en wordt altijd structureel geladen voor **sectie 3** (niet via bronselectiebeleid).
+**Bronselectiebeleid** (in `mandarin-canon/grondslagen/bronselectiebeleid.json`): Bepaalt per `agent.intent` welke doctrines worden opgenomen in **sectie 7 (Doctrines)**. Sleutelvolgorde: `agent.intent` → `*.intent` → `*.*` → include-all fallback.
 
 ## 9. Logging bij handmatige initialisatie
 
@@ -193,8 +198,9 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 ## 10. Herkomstverantwoording
 
 - Dit charter volgt de structuur uit `artefacten/aeo/aeo.02.agent-ontwerper/templates/agent-charter.template.md`
-- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository en `doctrine-agent-charter-normering.md` v2.1.0
+- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository en `doctrine-agent-charter-normering.md` v2.1.0 en `doctrine-templategebruik.md` (v1.1.0)
 - Agent-boundary: `artefacten/fnd/fnd.01.ecosysteem-coordinator/ecosysteem-coordinator.agent-boundary.md`
+- Execution-template (`genereer-instructies`): `artefacten/fnd/fnd.01.ecosysteem-coordinator/templates/ecosysteem-coordinator.genereer-instructies.template.md`
 - Bronnen geïntegreerd:
   - `generate_instructions.py` (voorheen in agent-engineer) → intent `genereer-instructies`
   - `merge_tasks.py` (voorheen in agent-engineer) → intent `aggregeer-tasks`
@@ -208,3 +214,5 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 | 2026-04-06 | 1.2.0 | Broninjectie-terminologie geïntroduceerd: bronassemblage, bronpakket, kaderbron, werkbron — §1, §2, §3, §4, §5, §6 herschreven | GitHub Copilot |
 | 2026-04-06 | 1.3.0 | Bronselectiebeleid (bronselectiebeleid.json in mandarin-canon) en gelaagde 7-sectiestructuur execution-bestand — §6 en §8 bijgewerkt | GitHub Copilot |
 | 2026-04-06 | 1.4.0 | Execution-anker: execution_digest + bronhouding + modus aan YAML frontmatter; execution-trace-bestand (.trace.yaml); opnamevorm + reden_van_opname in bronmanifest; dedup-guard bronhouding verwijderd — §6 stap 7+8 bijgewerkt, §8 uitgebreid | GitHub Copilot |
+| 2026-04-17 | 1.5.0 | Template voor genereer-instructies vastgelegd (8-sectiestructuur); §7 traceerbaarheid, §8 output-structuur en §10 herkomstverantwoording bijgewerkt | Hans Blok |
+| 2026-04-19 | 1.6.0 | execution-ledger.json: append-only ledger in executions/ na elke succesvolle genereer-instructies executie — §4, §5, §6, §8 bijgewerkt | Hans Blok |

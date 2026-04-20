@@ -1,8 +1,16 @@
 ---
-agent: gedragsspecificator
+# IDENTIFICATIE
+template-id: "027"
+template-naam: gedragsspecificator.specificeer-gedrag
+
+# RELATIES
+artefact-type-id: "027"
+agent-id: sfw.03.gedragsspecificator
+
+# META-DATA
 versie: 0.1.0
-digest: edaa
 status: vers
+digest: edaa
 ---
 # Gedragsspecificatie voor {Feature/Capability Naam}
 

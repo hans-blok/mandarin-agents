@@ -1,6 +1,7 @@
 ---
 agent: documentatie-omvormer
 intent: genereer-publicatiestructuur
+intent-id: fnd.01.documentatie-omvormer.03
 versie: 1.0.0
 digest: e316
 status: vers
@@ -82,6 +83,12 @@ docs/
 - Inhoud blijft 100% ongewijzigd
 - `responsive.css` is een vaste structurele deliverable — geen inhoudelijke beslissing
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/mkdocs-yml.template.md
+```
+
 ### Foutafhandeling
 
 De documentatie-omvormer:
@@ -125,6 +132,9 @@ De documentatie-omvormer:
   - Principe 2 (Eenduidige Verantwoordelijkheid): Transformatie van structuur, geen inhoud
   - Principe 7 (Transparante Verantwoording): Transformatie-rapport toont alle acties
 - **Betekenis-blindheid**: Agent interpreteert geen inhoud en neemt geen inhoudelijke beslissingen
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Niet van toepassing — agent is input-gebonden, niet canon-gebonden

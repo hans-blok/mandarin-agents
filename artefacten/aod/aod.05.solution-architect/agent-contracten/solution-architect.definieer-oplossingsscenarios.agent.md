@@ -1,6 +1,7 @@
 ---
 agent: solution-architect
 intent: definieer-oplossingsscenarios
+intent-id: aod.05.solution-architect.01
 versie: 1.0.0
 digest: 6a1a
 status: vers
@@ -97,6 +98,12 @@ versie: 1.0.0
 - Alternatieve formaten alleen op expliciete verzoek
 - Structuur volgt TOGAF scenarioprincipes uit kaderdefinitie
 
+**Contractuele templatebinding**:
+
+```yaml
+template: ~
+```
+
 ### Foutafhandeling
 
 De Solution-architect:
@@ -148,6 +155,9 @@ De Solution-architect:
   - Principe 7 (Transparante Verantwoording): Aannames, trade-offs en bronnen expliciet
   - Principe 9 (Output-formaat Normering): Markdown als default
 - **doctrine-bronhouding-en-exploratie.md**: Kaderdefinitie als normatieve controlelaag, TOGAF wordt alleen gebruikt via de kaderdefinitie
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream aod

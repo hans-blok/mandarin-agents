@@ -1,8 +1,16 @@
 ---
-agent: core-framework-architect
+# IDENTIFICATIE
+template-id: "014"
+template-naam: core-framework-architect.structureer-actieve-structuur
+
+# RELATIES
+artefact-type-id: "014"
+agent-id: aod.02.core-framework-architect
+
+# META-DATA
 versie: 0.1.0
-digest: de66
 status: vers
+digest: de66
 ---
 # {ecosysteem_naam} — Actieve Structuur Definitie
 

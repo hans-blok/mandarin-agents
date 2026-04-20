@@ -1,5 +1,6 @@
 ---
 agent: solution-architect
+agent-id: aod.05.solution-architect
 value_stream: aod
 value_stream_fase: aod.05
 kaderdefinities: grondslagen/kaderdefinities/togaf.kaderdefinitie.md

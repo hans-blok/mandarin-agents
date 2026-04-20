@@ -1,6 +1,7 @@
 ---
 agent: ecosysteem-beschrijver
 intent: beschrijf-agent-positionering
+intent-id: aeo.02.ecosysteem-beschrijver.01
 versie: 1.0.0
 digest: fbbc
 status: vers
@@ -145,6 +146,12 @@ De agent leidt de inhoud van de beschrijving af uit de volgende bronnen:
 - Agent als aanroeper: gebruik `🤖 {Agent-naam}`
 - Mens als aanroeper (exploratieve agents, sfw value stream): gebruik de rolnaam uit boundary sectie "Mogelijke raakvlakken", of `👤 Initiator` als geen expliciete rolnaam is gedefinieerd
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/beschrijf-agent-positionering.template.md
+```
+
 ### Foutafhandeling
 
 De ecosysteem-beschrijver:
@@ -166,6 +173,9 @@ De ecosysteem-beschrijver:
   - Principe 2 (Eenduidige Verantwoordelijkheid): Eén intent, één diagram per agent
   - Principe 7 (Transparante Verantwoording): Bronbestanden expliciet vermeld in output
   - Principe 9 (Output-formaat Normering): Markdown als default
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Niet van toepassing — ecosysteem-beschrijver is input-gebonden, geen canon-consultatie vereist

@@ -1,6 +1,7 @@
 ---
 agent: thema-verwoorder
 intent: definieer-thematische-scope
+intent-id: sfw.02.thema-verwoorder.01
 versie: 0.1.0
 digest: 5ffa
 status: vers
@@ -33,6 +34,12 @@ Deze intent beschrijft het afbakenen en documenteren van de thematische scope bi
 **Outputlocaties**: artefacten/sfw/sfw.02.thema-verwoorder/scopes/
 **Formaat**: Markdown (.md) volgens template
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/thema-verwoorder.definieer-thematische-scope.template.md
+```
+
 ### Foutafhandeling
 - STOP: hypothese_bestand of auteur ontbreekt
 - STOP: hypothese_bestand niet gevonden of niet toegankelijk
@@ -44,6 +51,9 @@ Deze intent beschrijft het afbakenen en documenteren van de thematische scope bi
 - Volgt doctrine-agent-charter-normering.md (Principe 1, 2, 7, 9)
 - Transparantie: alle output en beslissingen worden gelogd
 - Canon-consultatie verplicht bij boundary-wijzigingen
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 ## Metadata
 Intent-ID: sfw.02.thema-verwoorder.definieer-thematische-scope  

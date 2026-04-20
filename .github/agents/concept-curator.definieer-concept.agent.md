@@ -1,6 +1,7 @@
 ---
 agent: concept-curator
 intent: definieer-concept
+intent-id: fnd.02.concept-curator.01
 versie: 1.0.0
 digest: 5e92
 status: vers
@@ -39,6 +40,12 @@ De Concept-Curator definieert en structureert concepten op basis van aangeleverd
 **Formaat**:
 - Markdown (.md) volgens `concept.template.md`.
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/concept.template.md
+```
+
 ### Foutafhandeling
 
 De agent stopt wanneer:
@@ -54,6 +61,9 @@ Escalatie:
 **Doctrine-naleving:**
 - Volgt de principes van eenduidige begripsvorming.
 - Markeert concepten als 'concept', 'vastgesteld' of 'vervallen'.
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 ## Metadata
 

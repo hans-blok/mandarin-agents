@@ -1,6 +1,7 @@
 ---
 agent: gedragsspecificator
 intent: specificeer-gedrag
+intent-id: sfw.03.gedragsspecificator.01
 versie: 0.1.0
 digest: ebcd
 status: vers
@@ -32,6 +33,12 @@ De gedragsspecificator vertaalt informele business wensen, user stories en randv
 **Formaat**:
 - Markdown (.md)
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/gedragsspecificator.specificeer-gedrag.template.md
+```
+
 ### Foutafhandeling
 
 De agent stopt wanneer:
@@ -46,6 +53,9 @@ Escalatie:
 **Doctrine-naleving:**
 - Volgt de template-structuur strikt.
 - Markeert aannames expliciet als 'Openstaande Vragen' (geen impliciete aannames).
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 ## Metadata
 

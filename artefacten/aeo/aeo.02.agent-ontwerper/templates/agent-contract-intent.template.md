@@ -1,14 +1,22 @@
 ---
-agent: agent-ontwerper
-versie: 0.1.0
-digest: b5a5
+# IDENTIFICATIE
+template-id: "007"
+template-naam: agent-contract-intent
+
+# RELATIES
+artefact-type-id: "007"
+agent-id: aeo.02.agent-ontwerper
+
+# META-DATA
+versie: 1.3.0
 status: vers
+digest: 02a6
 ---
-﻿---
-agent: agent-ontwerper
-intent: leg-vast-agent-contract
+---
+agent: {agent-naam}
+intent: {intent-kortschrift}
 versie: 1.0.0
-# Template voor agent charters. Generiek bruikbaar voor alle agents. De vastlegging van het intent hier is een bron voor het goed vastleggen van het agent-contract.
+# Template voor agent contracts. Generiek bruikbaar voor alle agents.
 ---
 
 # {agent-naam} — {intent-naam}
@@ -42,6 +50,14 @@ De {agent-naam} levert:
 - {metadata of rapportage indien van toepassing}: {beschrijving}
 
 **Deliverable bestand**: `{pad-naar-output-bestand}/{bestandsnaam-patroon}.md`
+
+**Contractuele templatebinding**:
+```yaml
+output:
+  - type: {artefact-type}
+    herkomstpositie: {initierend|voortbouwend}
+    template: {relatief-template-pad-of-~}
+```
 
 {Indien van toepassing: beschrijf outputformaat met voorbeeld structuur}
 
@@ -96,6 +112,9 @@ De {agent-naam}:
   - Principe 2 (Eenduidige Verantwoordelijkheid): Eén heldere taak binnen boundary
   - Principe 7 (Transparante Verantwoording): Traceerbaarheid van beslissingen
   - {Principe 9 (Output-formaat Normering): alleen voor agents met werking "Inhoudelijk"}
+- **doctrine-templategebruik.md** (v1.0.0):
+  - contract legt per output expliciet `template: <pad>` of `template: ~` vast
+  - prompt-YAML moet dezelfde templatekeuze spiegelen
 - {Aanvullende doctrine-referenties indien relevant voor deze intent}
 
 **Canon-consultatie:**
@@ -262,13 +281,15 @@ Controleer vóór oplevering:
 
 ---
 
-**Template-versie**: 1.1.0  
-**Laatste update**: 2026-02-14  
+**Template-versie**: 1.2.0  
+**Laatste update**: 2026-04-19  
 **Gebaseerd op**:
 - `doctrine-agent-charter-normering.md` v2.1.0 (AEO.DOC.001)
 - `agent-smeder.boundary.md` (aeo.02.agent-smeder)
 - Bestaande agent-contract voorbeelden (ecosystem-proven patterns)
 
 **Changelog:**
+- v1.3.0 (2026-04-20): `werkbronnen` verplaatst naar prompt-template (vuistregel: runner-config hoort in prompt, niet in contract)
+- v1.2.0 (2026-04-19): `werkbronnen` toegevoegd aan frontmatter, contract-body en invulinstructies
 - v1.1.0 (2026-02-14): Uitgebreide invulinstructies voor agent-smeder, doctrine-checklist, beslisboom
 - v1.0.0 (2026-02-14): Initiële template met basis structuur

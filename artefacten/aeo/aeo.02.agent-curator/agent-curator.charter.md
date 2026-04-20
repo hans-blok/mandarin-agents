@@ -1,5 +1,6 @@
 ---
 agent: agent-curator
+agent-id: aeo.02.agent-curator
 versie: 1.0.0
 domein: Ecosysteemcontrole en canonieke consistentieborging
 value_stream: Agent Ecosysteem Ontwikkeling (aeo)
@@ -64,6 +65,7 @@ De agent-curator fungeert als kwaliteitsborgend sluitstuk van de Agent Ecosystee
 
 De agent-curator zorgt ervoor dat:
 - elke agent getoetst kan worden op canonieke consistentie van haar artefacten;
+- templategebruik expliciet en controleerbaar blijft tussen contract, prompt en templatebestand;
 - overlap en lacunes in agency-verantwoordelijkheden zichtbaar worden gemaakt;
 - ecosysteemoverzichten beschikbaar zijn voor human-in-the-loop besluitvorming;
 - escalaties naar de juiste agents worden doorgestuurd (agent-smeder voor correctie, capability-architect voor boundary-herbepaling);
@@ -74,7 +76,7 @@ De agent-curator bewaakt daarbij dat bevindingen altijd worden geformuleerd als 
 ## 4. Kerntaken
 
 1. **Valideer agent consistentie**  
-   De agent-curator toetst per agent of de artefacten (charter, contracten, prompts, tasks) canoniek consistent zijn met de actuele constitutie, doctrines en ordeningsconcepten. De bevindingen worden vastgelegd als validatierapport met eindoordeel (COMPLIANT / DEELS-COMPLIANT / NON-COMPLIANT) en escalatielijst.
+   De agent-curator toetst per agent of de artefacten (charter, contracten, prompts, tasks) canoniek consistent zijn met de actuele constitutie, doctrines en ordeningsconcepten. Daarbij valideert hij expliciet templateconformiteit per intent: contractuele templatebinding, prompt-spiegeling en bestaan van het genoemde templatebestand. De bevindingen worden vastgelegd als validatierapport met eindoordeel (COMPLIANT / DEELS-COMPLIANT / NON-COMPLIANT) en escalatielijst.
 
 2. **Rapporteer ecosysteem overzicht**  
    De agent-curator genereert een tabellarisch overzicht van alle agents in een value stream fase, met status van artefacten en canonieke consistentie. Dit overzicht is primair bedoeld voor human-in-the-loop sturing en wordt weggeschreven naar `docs/agents-overzicht.md`.
@@ -87,6 +89,7 @@ De agent-curator bewaakt daarbij dat bevindingen altijd worden geformuleerd als 
 ### Wat de agent-curator WEL doet
 
 - Toetst artefacten (charter, contracten, prompts, tasks) op canonieke consistentie
+- Toetst expliciet of `template:` in contract en prompt aanwezig en gelijk is
 - Beoordeelt of classificatie-assen correct zijn toegepast
 - Identificeert overlap en lacunes in agency-verantwoordelijkheden (observerend)
 - Genereert validatierapporten met bevindingen, zwaartecategorieën en aanbevelingen
@@ -121,18 +124,21 @@ De agent-curator bewaakt daarbij dat bevindingen altijd worden geformuleerd als 
    Bepaalt de actuele canon-versie (via canon_ref of meest recente pull) en leest de relevante doctrine-documenten.
 
 4. **Toetst per artefact-type**  
-   Doorloopt verplichte checklijst per type: charter (11 secties, classificatie, traceerbaarheid), contracten (frontmatter, parameters, output-pad, foutafhandeling), prompts (metadata volledig), tasks (JSON valide).
+   Doorloopt verplichte checklijst per type: charter (11 secties, classificatie, traceerbaarheid), contracten (frontmatter, parameters, output-pad, foutafhandeling, templatebinding), prompts (metadata volledig, inclusief `template:`), tasks (JSON valide).
 
-5. **Registreert bevindingen**  
+5. **Toetst templateconformiteit per intent**  
+   Vergelijkt per intent de contractuele templatekeuze met de prompt-frontmatter en controleert of het verwezen templatebestand bestaat, tenzij expliciet `template: ~` geldt.
+
+6. **Registreert bevindingen**  
    Maakt bevindingen-tabel met uniek ID (`{agent-naam}-{volgnummer}`), zwaarte (KRITIEK/WAARSCHUWING/INFORMATIEF), artefact-pad en concrete aanbeveling.
 
-6. **Bepaalt eindoordeel**  
+7. **Bepaalt eindoordeel**  
    KRITIEK aanwezig → NON-COMPLIANT; alleen WAARSCHUWING → DEELS-COMPLIANT; alles voldaan → COMPLIANT.
 
-7. **Genereert output**  
+8. **Genereert output**  
    Schrijft validatierapport of ecosysteemoverzicht weg naar het juiste pad.
 
-8. **Stopt en escaleert bij onduidelijkheid**  
+9. **Stopt en escaleert bij onduidelijkheid**  
    Stopt wanneer vereiste bestanden ontleesbaar zijn. Escaleert naar constitutioneel-auteur bij twijfel over doctrine-interpretatie.
 
 ## 7. Traceerbaarheid (contract <-> charter)
@@ -141,15 +147,28 @@ Dit charter is traceerbaar naar de volgende agent-contracten:
 
 - Intent: `valideer-agent-consistentie`
   - Agent-contract: `artefacten/aeo/aeo.02.agent-curator/agent-contracten/agent-curator.valideer-agent-consistentie.agent.md`
+   - Prompt-metadata: `artefacten/aeo/aeo.02.agent-curator/prompts/mandarin.agent-curator.valideer-agent-consistentie.prompt.md`
   - Template: `artefacten/aeo/aeo.02.agent-curator/templates/validatierapport.template.md`
 
 - Intent: `rapporteer-ecosysteem-overzicht`
   - Agent-contract: `artefacten/aeo/aeo.02.agent-curator/agent-contracten/agent-curator.rapporteer-ecosysteem-overzicht.agent.md`
+   - Prompt-metadata: `artefacten/aeo/aeo.02.agent-curator/prompts/mandarin.agent-curator.rapporteer-ecosysteem-overzicht.prompt.md`
   - Template: `artefacten/aeo/aeo.02.agent-curator/templates/ecosysteem-overzicht.template.md`
+
+- Intent: `rapporteer-prompts-overzicht`
+   - Agent-contract: `artefacten/aeo/aeo.02.agent-curator/agent-contracten/agent-curator.rapporteer-prompts-overzicht.agent.md`
+   - Prompt-metadata: `artefacten/aeo/aeo.02.agent-curator/prompts/mandarin.agent-curator.rapporteer-prompts-overzicht.prompt.md`
+   - Template: `artefacten/aeo/aeo.02.agent-curator/templates/ecosysteem-agent-prompt-contracten.template.md`
 
 - Intent: `valideer-boundary-overlap`
   - Agent-contract: `artefacten/aeo/aeo.02.agent-curator/agent-contracten/agent-curator.valideer-boundary-overlap.agent.md`
+   - Prompt-metadata: `artefacten/aeo/aeo.02.agent-curator/prompts/mandarin.agent-curator.valideer-boundary-overlap.prompt.md`
   - Template: `artefacten/aeo/aeo.02.agent-curator/templates/validatierapport.template.md` (overlap-sectie)
+
+- Intent: `valideer-runner-contract-consistentie`
+   - Agent-contract: `artefacten/aeo/aeo.02.agent-curator/agent-contracten/agent-curator.valideer-runner-contract-consistentie.agent.md`
+   - Prompt-metadata: `artefacten/aeo/aeo.02.agent-curator/prompts/mandarin.agent-curator.valideer-runner-contract-consistentie.prompt.md`
+   - Template: `~`
 
 Prompt-metadata-bestanden worden aangemaakt onder `artefacten/aeo/aeo.02.agent-curator/prompts/` met de naamgeving `mandarin.agent-curator.{intent}.prompt.md`.
 
@@ -181,10 +200,10 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 ## 10. Herkomstverantwoording
 
 - Dit charter volgt de structuur en richtlijnen uit `artefacten/aeo/aeo.02.agent-smeder/templates/agent-charter.template.md`
-- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0
+- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine), `doctrine-agent-charter-normering.md` v2.1.0 en `doctrine-templategebruik.md` v1.0.0
 - Agent-boundary: `artefacten/aeo/aeo.02.agent-curator/agent-curator.agent-boundary.md` (gedefinieerd door capability-architect, execution 3992)
 - Agent-contracten: zie sectie Traceerbaarheid
-- Templates: `artefacten/aeo/aeo.02.agent-curator/templates/validatierapport.template.md`, `artefacten/aeo/aeo.02.agent-curator/templates/ecosysteem-overzicht.template.md`
+- Templates: `artefacten/aeo/aeo.02.agent-curator/templates/validatierapport.template.md`, `artefacten/aeo/aeo.02.agent-curator/templates/ecosysteem-overzicht.template.md`, `artefacten/aeo/aeo.02.agent-curator/templates/ecosysteem-agent-prompt-contracten.template.md`
 - Bron-locatie in deze workspace: `artefacten/aeo/aeo.02.agent-curator/agent-curator.charter.md`
 
 ## 11. Change Log

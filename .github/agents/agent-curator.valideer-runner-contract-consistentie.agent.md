@@ -1,6 +1,7 @@
 ---
 agent: agent-curator
 intent: valideer-runner-contract-consistentie
+intent-id: aeo.02.agent-curator.03
 versie: 1.0.0
 digest: a51f
 status: vers
@@ -54,11 +55,20 @@ De agent-curator levert **uitsluitend aanbevelingen** — past zelf niets aan:
 - Afwijkingtabel per bevinding: intent | parameter | aangetroffen in | ontbreekt in | ernst | aanbeveling
 - Eindoordeel per agent: CONSISTENT / DEELS-CONSISTENT / INCONSISTENT
 
+**Contractuele templatebinding**:
+```yaml
+output:
+	- type: runner-contract-consistentierapport
+		herkomstpositie: initiërend
+		template: ~
+```
+
 **VERPLICHT**: Rapport MOET worden weggeschreven naar de workspace.
 
 **Formaat-normering**:
 - Ernst-categorieën: KRITIEK (runner vraagt param die contract niet kent) / WAARSCHUWING (prompt niet synchroon met contract) / INFORMATIEF
 - Eindoordeel: CONSISTENT / DEELS-CONSISTENT / INCONSISTENT
+- `template: ~` is expliciet omdat de rapportvorm in dit contract zelf is gespecificeerd en geen afzonderlijk templatebestand vereist
 
 ### Foutafhandeling
 
@@ -70,6 +80,10 @@ De agent-curator:
 - escaleert naar agent-ontwerper bij ontbrekende of verouderde contracten.
 
 ### Governance
+
+**Doctrine-naleving:**
+- **doctrine-templategebruik.md** (v1.0.0):
+	- ook wanneer geen apart template geldt, wordt dit expliciet vastgelegd als `template: ~`
 
 **Uitvoerend agent**: agent-curator  
 **Intent-ID**: `aeo.02.agent-curator.valideer-runner-contract-consistentie`  

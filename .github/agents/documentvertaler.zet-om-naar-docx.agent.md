@@ -1,6 +1,7 @@
 ---
 agent: documentvertaler
 intent: zet-om-naar-docx
+intent-id: fnd.02.documentvertaler.01
 versie: 0.1.0
 digest: 4099
 status: vers
@@ -24,6 +25,12 @@ Zet een Markdown-document deterministisch om naar een correct en professioneel W
 **Outputlocaties**: Zoals opgegeven in output_path.
 **Formaat**: Microsoft Word (.docx)
 
+**Contractuele templatebinding**:
+
+```yaml
+template: ~
+```
+
 ### Foutafhandeling
 - STOP: Als markdown_file niet bestaat of niet leesbaar is.
 - STOP: Als output_path niet schrijfbaar is.
@@ -34,6 +41,9 @@ Zet een Markdown-document deterministisch om naar een correct en professioneel W
 - Volgt doctrine-agent-charter-normering.md (Principe 1, 2, 5, 7, 9)
 - Logging van input/output en fouten in audit/agent-instructions.log.md
 - Canon-consultatie verplicht bij template-wijzigingen
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 ## Metadata
 Intent-ID: fnd.02.documentvertaler.zet-om-naar-docx  

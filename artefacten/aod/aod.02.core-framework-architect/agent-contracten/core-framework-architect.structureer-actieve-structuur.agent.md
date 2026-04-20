@@ -1,6 +1,7 @@
 ---
 agent: core-framework-architect
 intent: structureer-actieve-structuur
+intent-id: aod.02.core-framework-architect.01
 versie: 1.0.0
 digest: 92d5
 status: vers
@@ -66,6 +67,12 @@ De Core-framework-architect levert:
 - Element IDs volgen conventie: {laag_prefix}.{type_prefix}.{volgnummer} (bijv. "APP.COMP.001")
 - Domein-specifieke namen voor actors/componenten (bijv. "Chauffeur", "Planning Systeem")
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/core-framework-architect.structureer-actieve-structuur.template.md
+```
+
 ### Foutafhandeling
 
 De Core-framework-architect:
@@ -118,6 +125,9 @@ Actieve structuur bevat GEEN implementatie-details (code, deployment scripts), a
   - Principe 7 (Transparante Verantwoording): ADRs documenteren structuurbeslissingen
   - Principe 9 (Output-formaat Normering): Markdown als default
 - **ArchiMate 3.1 Specification**: Volgt ArchiMate active structure metamodel voor layering en relaties
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream aod

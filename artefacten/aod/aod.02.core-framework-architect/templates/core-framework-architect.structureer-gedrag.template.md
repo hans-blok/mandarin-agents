@@ -1,8 +1,16 @@
 ---
-agent: core-framework-architect
+# IDENTIFICATIE
+template-id: "015"
+template-naam: core-framework-architect.structureer-gedrag
+
+# RELATIES
+artefact-type-id: "015"
+agent-id: aod.02.core-framework-architect
+
+# META-DATA
 versie: 0.1.0
-digest: 81cc
 status: vers
+digest: 81cc
 ---
 # {ecosysteem_naam} — Gedragslaag Definitie
 

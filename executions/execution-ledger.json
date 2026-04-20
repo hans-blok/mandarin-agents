@@ -1,0 +1,38 @@
+[
+  {
+    "execution_id": "20260419075427-agent-ontwerper",
+    "timestamp": "2026-04-19T05:54:27Z",
+    "agent": "agent-ontwerper",
+    "intent": "definieer-agent-charter",
+    "execution_file": "executions/20260419075427-agent-ontwerper.definieer-agent-charter.md",
+    "digest": "449d57f20099",
+    "status": "completed"
+  },
+  {
+    "execution_id": "20260419101220-capability-architect",
+    "timestamp": "2026-04-19T08:12:21Z",
+    "agent": "capability-architect",
+    "intent": "definieer-agent-boundary",
+    "execution_file": "executions/20260419101220-capability-architect.definieer-agent-boundary.md",
+    "digest": "b6c3a7db5a3b",
+    "status": "completed"
+  },
+  {
+    "execution_id": "20260419102031-agent-ontwerper",
+    "timestamp": "2026-04-19T08:20:31Z",
+    "agent": "agent-ontwerper",
+    "intent": "definieer-agent-template",
+    "execution_file": "executions/20260419102031-agent-ontwerper.definieer-agent-template.md",
+    "digest": "5f04f2580384",
+    "status": "completed"
+  },
+  {
+    "execution_id": "20260419213250-agent-ontwerper",
+    "timestamp": "2026-04-19T19:32:51Z",
+    "agent": "agent-ontwerper",
+    "intent": "definieer-agent-charter",
+    "execution_file": "executions/20260419213250-agent-ontwerper.definieer-agent-charter.md",
+    "digest": "a9185893fef8",
+    "status": "completed"
+  }
+]

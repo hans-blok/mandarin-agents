@@ -1,6 +1,8 @@
 ---
 agent: mandarin.agent-engineer
 intent: realiseer-agent-taskconfiguratie
+intent-id: aeo.02.agent-engineer.02
+template: ~
 bronhouding: Input-gebonden
 versie: 1.0.0
 input_parameters:

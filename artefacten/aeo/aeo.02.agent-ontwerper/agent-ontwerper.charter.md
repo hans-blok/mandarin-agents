@@ -1,5 +1,6 @@
 ---
 agent: agent-ontwerper
+agent-id: aeo.02.agent-ontwerper
 versie: 1.2.0
 domein: Agent-identiteitsconstitutie
 value_stream: Agent Ecosysteem Ontwikkeling (aeo)
@@ -157,7 +158,7 @@ Dit charter is traceerbaar naar de volgende agent-contracten:
 
 - Intent: `definieer-agent-template`
 	- Agent-contract: `artefacten/aeo/aeo.02.agent-ontwerper/agent-contracten/agent-ontwerper.definieer-agent-template.agent.md`
-	- Template: _(geen vaste template - deze intent definieert templates zelf per agent)_
+   - Template: `~` _(de outputvorm is volledig in het contract gespecificeerd; deze intent definieert templates zelf per agent)_
 
 Prompt-metadata-bestanden worden aangemaakt onder `artefacten/aeo/aeo.02.agent-ontwerper/prompts/` met de naamgeving `mandarin.agent-ontwerper.{intent}.prompt.md`.
 
@@ -189,7 +190,7 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 ## 10. Herkomstverantwoording
 
 - Dit charter volgt de structuur en richtlijnen uit `artefacten/aeo/aeo.02.agent-ontwerper/templates/agent-charter.template.md`
-- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0
+- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine), `doctrine-agent-charter-normering.md` v2.1.0 en `doctrine-templategebruik.md` v1.0.0
 - Agent-boundary: `artefacten/aeo/aeo.02.agent-ontwerper/agent-ontwerper.agent-boundary.md` (gedefinieerd door capability-architect)
 - Agent-contracten: zie sectie Traceerbaarheid
 - Bron-locatie in deze workspace: `artefacten/aeo/aeo.02.agent-ontwerper/agent-ontwerper.charter.md`

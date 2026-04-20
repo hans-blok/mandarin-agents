@@ -1,5 +1,6 @@
 ---
 agent: hypothese-vormer
+agent-id: sfw.01.hypothese-vormer
 versie: 1.0.0
 domein: Hypothese-formulering en besluitvorbereiding
 value_stream: Software Product Development
@@ -182,7 +183,7 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 ## 10. Herkomstverantwoording
 
 - Dit charter volgt de structuur en richtlijnen uit `artefacten/aeo/aeo.02.agent-ontwerper/templates/agent-charter.template.md`
-- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0
+- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0 en `doctrine-templategebruik.md` (v1.0.0)
 - Agent-boundary: `artefacten/sfw/sfw.01.hypothese-vormer/hypothese-vormer.agent-boundary.md` (gedefinieerd door capability-architect)
 - Agent-contracten: zie sectie 7 Traceerbaarheid
 - Click-principe: Jake Knapp's methodiek voor scherpe hypothese-formulering (scherp probleemcontrast, toetsbaarheid, geen solution-bias)

@@ -1,6 +1,7 @@
 ---
 agent: capability-architect
 intent: definieer-agent-boundary
+intent-id: aeo.01.capability-architect.01
 versie: 0.1.0
 digest: 4ad3
 status: vers
@@ -130,6 +131,12 @@ versie: 1.0.0
 - Alternatieve formaten alleen op expliciete verzoek
 - Markdown bevat structuur volgens `artefacten/aeo/aeo.01.capability-architect/templates/agent-boundary.template.md`
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/agent-boundary.template.md
+```
+
 ### Foutafhandeling
 
 De Capability-architect:
@@ -186,6 +193,9 @@ De Capability-architect:
   - Richtlijn herkomstpositie: Output-specificatie bevat `herkomstpositie: initiërend`
 - **doctrine-traceability.md** (v1.1.0): Herkomstpositie `initiërend` — boundary-document start een nieuwe artefact-keten; runner genereert een nieuwe herkomstcode
 - **doctrine-werkwoorden-intents.md**: Werkwoord "definieer" voor structurerende definitie
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream aeo

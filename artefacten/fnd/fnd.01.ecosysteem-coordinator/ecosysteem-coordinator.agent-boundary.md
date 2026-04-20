@@ -1,5 +1,6 @@
 ---
 agent: ecosysteem-coordinator
+agent-id: fnd.01.ecosysteem-coordinator
 value_stream: fnd
 value_stream_fase: fnd.01
 versie: 1.0.0

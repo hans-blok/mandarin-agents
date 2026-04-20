@@ -1,5 +1,6 @@
 ---
 agent: agent-ontwerper
+agent-id: aeo.02.agent-ontwerper
 value_stream: aeo
 value_stream_fase: aeo.02
 versie: 1.0.0

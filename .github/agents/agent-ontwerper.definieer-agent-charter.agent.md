@@ -1,6 +1,7 @@
 ---
 agent: agent-ontwerper
 intent: definieer-agent-charter
+intent-id: aeo.02.agent-ontwerper.01
 versie: 1.0.0
 digest: f363
 status: vers
@@ -54,6 +55,14 @@ De Agent-ontwerper levert:
 - Korte toelichting op ontwerpkeuzes en doctrine-naleving
 
 **Deliverable bestand**: `artefacten/{vs}/{vs}.{fase}.{agent}/{agent}.charter.md`
+
+**Contractuele templatebinding**:
+```yaml
+output:
+  - type: agent-charter
+    herkomstpositie: initiërend
+    template: templates/agent-charter.template.md
+```
 
 **VERPLICHT**: Het bestand MOET worden weggeschreven naar de workspace (niet alleen voorgesteld).
 
@@ -176,6 +185,9 @@ De Agent-ontwerper:
   - Principe 5 (Evolutionaire Integriteit): Versioning ingebouwd (start 1.0.0), change log verplicht
   - Principe 7 (Transparante Verantwoording): Logging-sectie verplicht, herkomstverantwoording expliciet
   - Principe 9 (Output-formaat Normering): Markdown als default
+- **doctrine-templategebruik.md** (v1.0.0):
+  - contract legt de templatekeuze expliciet vast voor de primaire output
+  - prompt-YAML moet deze templatekeuze exact spiegelen
 - **mandarin-ordeningsconcepten.md**: Classificatie-assen en definities correct gebruiken
 
 **Canon-consultatie:**

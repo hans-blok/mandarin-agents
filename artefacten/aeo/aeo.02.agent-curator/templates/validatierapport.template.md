@@ -1,11 +1,16 @@
 ---
-agent: agent-curator
-template_naam: validatierapport
+# IDENTIFICATIE
+template-id: "004"
+template-naam: validatierapport
+
+# RELATIES
+artefact-type-id: "004"
+agent-id: aeo.02.agent-curator
+
+# META-DATA
 versie: 1.0.0
-output_type: document
-doel: Gestructureerd rapport van de canonieke consistentietoetsing van één agent of een set agents binnen een value stream fase.
-digest: 8b33
 status: vers
+digest: 1684
 ---
 # Template: Validatierapport
 
@@ -61,6 +66,10 @@ canon_ref: <commit-hash>
 - [ ] Contract(en) aanwezig per intent
 - [ ] Classificatie-assen consistent met boundary
 - [ ] Traceerbaarheid boundary → charter → contract aantoonbaar
+- [ ] Templatebinding aanwezig in contract per intent
+- [ ] Templateveld aanwezig in prompt-frontmatter per intent
+- [ ] Contract- en prompt-template zijn identiek per intent
+- [ ] Verwezen templatebestand bestaat of `template: ~` is expliciet vastgelegd
 - [ ] Doctrine-naleving: <doctrine-naam> voldaan
 
 **Bevindingen**:
@@ -80,6 +89,16 @@ canon_ref: <commit-hash>
 | Agent A | Agent B | Overlappend aspect | Zwaarte | Aanbeveling |
 |---------|---------|--------------------|---------|-------------|
 | <agent-a> | <agent-b> | <wat overlapt> | <KRITIEK/WAARSCHUWING> | <actie voor curator of escalatie> |
+
+---
+
+## Template-conformiteit
+
+> Alleen gevuld wanneer templategebruik is meegetoetst binnen de scope van het rapport.
+
+| Intent | Contract-template | Prompt-template | Bestaat bestand | Status | Opmerking |
+|--------|-------------------|-----------------|-----------------|--------|-----------|
+| <intent-naam> | <template-pad of ~> | <template-pad of ~> | <ja/nee/n.v.t.> | <COMPLIANT/NON-COMPLIANT/DEELS-COMPLIANT> | <toelichting> |
 
 ---
 
@@ -139,6 +158,7 @@ Een valide validatierapport volgens dit template:
 - ✓ Bevat toetsresultaten voor elke getoetste agent met minimaal de verplichte checkboxes
 - ✓ Elke bevinding heeft een uniek ID, zwaarte, artefact-pad en aanbeveling
 - ✓ Eindoordeel per agent is één van: COMPLIANT, NON-COMPLIANT, DEELS-COMPLIANT
+- ✓ Kan templateconformiteit per intent expliciet weergeven in een aparte sectie of via bevindingen
 - ✓ Escalaties zijn traceerbaar naar een ontvanger
 - ✓ Gebruikte bronnen (canon-ref en artefactlijst) zijn gedocumenteerd
 
@@ -184,6 +204,10 @@ De agent-engineer is getoetst op canonieke consistentie binnen aeo.02. Charter e
 - [x] Contract(en) aanwezig per intent
 - [ ] Classificatie-assen consistent met boundary
 - [x] Traceerbaarheid boundary → charter → contract aantoonbaar
+- [x] Templatebinding aanwezig in contract per intent
+- [x] Templateveld aanwezig in prompt-frontmatter per intent
+- [x] Contract- en prompt-template zijn identiek per intent
+- [x] Verwezen templatebestand bestaat of `template: ~` is expliciet vastgelegd
 - [x] Doctrine-naleving: doctrine-agent-charter-normering.md v2.1.0 voldaan
 
 **Bevindingen**:
@@ -194,6 +218,14 @@ De agent-engineer is getoetst op canonieke consistentie binnen aeo.02. Charter e
 | agent-engineer-002 | INFORMATIEF | artefacten/aeo/aeo.02.agent-engineer/agent-engineer.charter.md | Change log bevat geen entry voor meest recente update | Voeg change log entry toe bij volgende revisie |
 
 **Eindoordeel**: DEELS-COMPLIANT
+
+---
+
+## Template-conformiteit
+
+| Intent | Contract-template | Prompt-template | Bestaat bestand | Status | Opmerking |
+|--------|-------------------|-----------------|-----------------|--------|-----------|
+| realiseer-agent-prompts | templates/agent-prompt.template.md | templates/agent-prompt.template.md | ja | COMPLIANT | Prompt spiegelt contractuele templatekeuze |
 
 ---
 

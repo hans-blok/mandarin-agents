@@ -1,6 +1,7 @@
 ---
 agent: concept-curator
 intent: valideer-concept-coherentie
+intent-id: fnd.02.concept-curator.03
 versie: 1.0.0
 digest: cb55
 status: vers
@@ -32,6 +33,12 @@ De Concept-Curator valideert of gebruikte concepten consistent en coherent zijn 
 **Formaat**:
 - Markdown (.md) met tabellen van bevindingen.
 
+**Contractuele templatebinding**:
+
+```yaml
+template: ~
+```
+
 ### Foutafhandeling
 
 De agent stopt wanneer:
@@ -46,6 +53,9 @@ Escalatie:
 **Doctrine-naleving:**
 - Controleert op consistent gebruik van de Ubiquitous Language.
 - Signaleert 'drift' in betekenis van concepten.
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 ## Metadata
 

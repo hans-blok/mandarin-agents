@@ -1,7 +1,8 @@
 ---
 agent: agent-ontwerper
 intent: definieer-agent-template
-versie: 1.0.0
+intent-id: aeo.02.agent-ontwerper.03
+versie: 1.2.0
 digest: 286a
 status: vers
 ---
@@ -47,6 +48,14 @@ De Agent-ontwerper levert:
 - Korte toelichting op template-keuzes en structuur-beslissingen
 
 **Deliverable bestand**: `artefacten/{vs}/{vs}.{fase}.{agent}/templates/{template-naam}.template.md`
+
+**Contractuele templatebinding**:
+```yaml
+output:
+  - type: agent-template-document
+    herkomstpositie: initiërend
+    template: ~
+```
 
 **VERPLICHT**: Het bestand MOET worden weggeschreven naar de workspace (niet alleen voorgesteld).
 
@@ -129,6 +138,7 @@ Voor agents die dit template gebruiken:
 - Default formaat: **Markdown** (.md) voor template-documenten
 - Templates beschrijven output-structuur, niet implementatie
 - Templates zijn agent-specifiek (in agent folder) of generiek (in shared folder)
+- `template: ~` is expliciet omdat deze intent zelf template-documenten definieert en de outputvorm in dit contract al volledig is gespecificeerd
 
 ### Foutafhandeling
 
@@ -183,6 +193,9 @@ De Agent-ontwerper:
   - Principe 5 (Evolutionaire Integriteit): Versioning ingebouwd (start 1.0.0), versiebeheer-tabel verplicht
   - Principe 7 (Transparante Verantwoording): Doel en gebruiksinstructies expliciet
   - Principe 9 (Output-formaat Normering): Template-documenten zijn Markdown
+- **doctrine-templategebruik.md** (v1.0.0):
+  - ook afwezigheid van een apart template wordt expliciet vastgelegd als `template: ~`
+  - templatekeuze mag niet impliciet of alleen in vrije tekst verborgen blijven
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream aeo

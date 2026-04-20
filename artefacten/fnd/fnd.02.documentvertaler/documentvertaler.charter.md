@@ -1,5 +1,6 @@
 ---
 agent: documentvertaler
+agent-id: fnd.02.documentvertaler
 value_stream: fnd
 value_stream_fase: fnd.02
 versie: 1.0.0
@@ -143,7 +144,7 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 ## 10. Herkomstverantwoording
 
 - Dit charter volgt de structuur uit `artefacten/aeo/aeo.02.agent-smeder/templates/agent-charter.template.md`
-- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0
+- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0 en `doctrine-templategebruik.md` (v1.0.0)
 - Agent-contracten en prompt-metadata: zie sectie Traceerbaarheid
 - Bron-locatie in deze workspace: `artefacten/fnd/fnd.02.documentvertaler/documentvertaler.charter.md`
 

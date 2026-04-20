@@ -1,11 +1,16 @@
 ---
-agent: agent-curator
-template_naam: ecosysteem-overzicht
+# IDENTIFICATIE
+template-id: "002"
+template-naam: ecosysteem-agent-prompt-contracten
+
+# RELATIES
+artefact-type-id: "002"
+agent-id: aeo.02.agent-curator
+
+# META-DATA
 versie: 1.0.0
-output_type: document
-doel: Overzichtsdocument van alle agents in het ecosysteem met hun status, artefactenvolledigheid en canonieke consistentie — primair bedoeld voor human-in-the-loop sturing.
-digest: cf50
 status: vers
+digest: 977c
 ---
 # Template: Ecosysteem-overzicht
 
@@ -27,6 +32,15 @@ Dit is het gegenereerde overzicht voor Agent: **[AGENT_NAAM]**
 
 **naam**  
 [PROMPT_NAAM]
+
+**contract-template**  
+[CONTRACT_TEMPLATE]
+
+**prompt-template**  
+[PROMPT_TEMPLATE]
+
+**template-status**  
+[TEMPLATE_STATUS]
 
 **beschrijving**  
 [PROMPT_BESCHRIJVING]

@@ -1,8 +1,16 @@
 ---
-agent: concept-curator
+# IDENTIFICATIE
+template-id: "019"
+template-naam: concept
+
+# RELATIES
+artefact-type-id: "019"
+agent-id: fnd.02.concept-curator
+
+# META-DATA
 versie: 0.1.0
-digest: 33d6
 status: vers
+digest: 33d6
 ---
 ## {{Conceptnaam}}
 

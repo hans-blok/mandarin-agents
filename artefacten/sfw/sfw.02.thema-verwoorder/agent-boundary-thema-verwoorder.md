@@ -1,5 +1,6 @@
 ---
 agent: thema-verwoorder
+agent-id: sfw.02.thema-verwoorder
 value_stream: sfw
 value_stream_fase: sfw.02
 versie: 1.0.0

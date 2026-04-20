@@ -1,6 +1,7 @@
 ---
 agent: gedragsspecificator
 intent: vertaal-naar-gherkin
+intent-id: sfw.03.gedragsspecificator.03
 versie: 0.1.0
 digest: d9ff
 status: vers
@@ -33,6 +34,12 @@ Vertaalt functionele requirement-specificaties en acceptatiecriteria naar formel
 **Formaat**:
 - Gherkin (Feature file format: `.feature`).
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/gedragsspecificator.vertaal-naar-gherkin.template.md
+```
+
 ### Foutafhandeling
 
 De agent stopt wanneer:
@@ -48,6 +55,9 @@ Escalatie:
 - Gebruikt consistent de Ubiquitous Language zoals gedefinieerd in de specificatie.
 - Scenario's zijn onafhankelijk en atomair.
 - Gebruikt declaratieve stijl (beschrijf *wat*, niet *hoe* - vermijd UI-details tenzij relevant).
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 ## Metadata
 

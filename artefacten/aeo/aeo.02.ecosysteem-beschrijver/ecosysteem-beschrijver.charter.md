@@ -1,5 +1,6 @@
 ---
 agent: ecosysteem-beschrijver
+agent-id: aeo.02.ecosysteem-beschrijver
 versie: 1.4.0
 domein: Ecosysteem-documentatie en -positionering
 value_stream: Agent Ecosysteem Ontwikkeling
@@ -321,6 +322,7 @@ Inhoud:
 
 - Gebaseerd op agent-boundary en templates in workspace
 - Volgt doctrine-agent-charter-normering.md
+- Volgt doctrine-templategebruik.md (v1.0.0)
 - Volgt workspace-doctrine
 
 ---

@@ -1,5 +1,6 @@
 ---
 agent: behoefteprofiel-opsteller
+agent-id: miv.07.behoefteprofiel-opsteller
 value_stream: miv
 value_stream_fase: miv.07
 kaderdefinities: geen
@@ -196,7 +197,7 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 ## 10. Herkomstverantwoording
 
 - Dit charter volgt de structuur en richtlijnen uit `artefacten/aeo/aeo.02.agent-ontwerper/templates/agent-charter.template.md`
-- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0
+- Governance en doctrines: `beleid-workspace.md`, de mandarin-canon repository (constitutie, value streams, doctrine) en `doctrine-agent-charter-normering.md` v2.1.0 en `doctrine-templategebruik.md` (v1.0.0)
 - Agent-boundary: `artefacten/miv/miv.07.behoefteprofiel-opsteller/behoefteprofiel-opsteller.agent-boundary.md`
 - Agent-contracten en prompt-metadata: zie sectie 7 Traceerbaarheid
 - Positionering: vastleggend, inhoudelijk en externe-bron-gebonden binnen `miv.07`

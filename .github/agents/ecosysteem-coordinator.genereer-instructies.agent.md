@@ -1,8 +1,9 @@
 ---
 agent: ecosysteem-coordinator
 intent: genereer-instructies
+intent-id: fnd.01.ecosysteem-coordinator.02
 versie: 1.2.0
-digest: cc4a
+digest: 8d74
 status: vers
 ---
 # Ecosysteem-coordinator — Genereer Instructies
@@ -133,6 +134,12 @@ Voer de intent `{intent}` uit voor de agent `{agent}`...
 - Markdown met YAML frontmatter
 - UTF-8 encoding zonder BOM
 
+**Contractuele templatebinding**:
+
+```yaml
+template: ~
+```
+
 ### Foutafhandeling
 
 De ecosysteem-coordinator:
@@ -180,6 +187,9 @@ De ecosysteem-coordinator:
   - Principe 1 (Identiteit vóór Implementatie): Assembleert bestaande definities
   - Principe 7 (Transparante Verantwoording): Volledige logging van samenstellingsproces
   - Principe 9 (Output-formaat Normering): Markdown default
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Roept `ecosysteem-coordinator.consulteer-canon` aan als eerste stap

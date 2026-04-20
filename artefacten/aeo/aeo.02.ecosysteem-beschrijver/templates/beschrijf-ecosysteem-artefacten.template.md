@@ -1,11 +1,16 @@
 ---
-agent: ecosysteem-beschrijver
-template_naam: beschrijf-ecosysteem-artefacten
+# IDENTIFICATIE
+template-id: "010"
+template-naam: beschrijf-ecosysteem-artefacten
+
+# RELATIES
+artefact-type-id: "010"
+agent-id: aeo.02.ecosysteem-beschrijver
+
+# META-DATA
 versie: 1.0.0
-output_type: document
-doel: Inventariseert alle aanwezige artefacten in het agent-ecosysteem per agent — welke bestanden aanwezig zijn, van welk type, op welk pad — volledig feitelijk.
-digest: 4994
 status: vers
+digest: 4994
 ---
 # Template: Ecosysteem Artefacten-inventaris
 

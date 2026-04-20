@@ -1,6 +1,7 @@
 ---
 agent: hypothese-vormer
 intent: beschrijf-aannames
+intent-id: sfw.01.hypothese-vormer.01
 versie: 1.1.0
 digest: 5cd6
 status: vers
@@ -76,6 +77,12 @@ De Hypothese-vormer levert:
 - Elke aanname heeft exact 3 sub-secties: wat/waarom/hoe
 - Aannames zijn geformuleerd als risico's, niet als zekerheden
 
+**Contractuele templatebinding**:
+
+```yaml
+template: templates/hypothese-template.md
+```
+
 ### Foutafhandeling
 
 De Hypothese-vormer:
@@ -134,6 +141,9 @@ De Hypothese-vormer:
   - Principe 2 (Eenduidige Verantwoordelijkheid): Maximaal 3 aannames per uitvoering
   - Principe 7 (Transparante Verantwoording): Herkomst aannames gedocumenteerd
   - Principe 9 (Output-formaat Normering): Markdown als default
+
+- **doctrine-templategebruik.md** (v1.0.0):
+  - Contractuele templatebinding expliciet opgenomen
 
 **Canon-consultatie:**
 - Raadpleegt `audit/canon-consult.log.md` voor grondslagen uit value stream sfw
