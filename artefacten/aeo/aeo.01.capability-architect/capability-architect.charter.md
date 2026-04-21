@@ -22,40 +22,16 @@ governance: Volgt beleid-workspace.md (inclusief canon-raadpleging zoals daar va
 **Kaderdefinities**: geen  
 **Governance**: Volgt `beleid-workspace.md` (inclusief canon-raadpleging zoals daar vastgelegd) en `doctrine-agent-charter-normering.md`; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
 
-## Mandarin-agent-classificatie (4 orthogonale assen)
+## Mandarin-agent-classificatie
 
-- **Vormingsfase** (fase van vorming of ontwikkeling)
-  - [ ] Operationeel in alle fasen
-  - [ ] Verkenning (onderzoeken van intentie, probleemstelling of richting)
-  - [x] Ordening (structureren van intentie en expliciet maken van samenhang)
-  - [ ] Vastlegging (betekenis bindend vaststellen binnen de workspace)
-  - [ ] Realisatie (betekenis werkend maken in systemen of processen)
-  - [ ] Toetsing (gerealiseerd artefact beoordelen tegen een norm)
-  - [ ] Operationalisatie (gerealiseerde structuur formeel in werking stellen)
+| As               | Waarde            |
+|------------------|-------------------|
+| Vormingsfase     | Ordening          |
+| Betekeniseffect  | Normerend         |
+| Werking          | Inhoudelijk       |
+| Bronhouding      | Canon-gebonden    |
 
-- **Betekeniseffect** (effect op betekenis)
-  - [ ] Geen betekenis (nul-positie, alleen voor conditionele werking)
-  - [ ] Beschrijvend (documenteert, vooraf en achteraf)
-  - [ ] Structurerend (maakt samenhang en relaties expliciet)
-  - [x] Normerend (normeert structuur en indeling voor realisatie en ook toetsing)
-  - [ ] Vastleggend (realiseert direct gedrag, structuur of configuratie)
-  - [ ] Realiserend (realiseert feitelijk gedrag, structuur of configuratie)
-  - [ ] Evaluerend (legt oordeel of duiding vast, beoordeelt kwaliteit)
-
-- **Werking** (inhoud, representatie of voorwaarden)
-  - [x] Inhoudelijk (werkt direct op betekenisvolle artefacten)
-  - [ ] Representatie-omvormend (zet inhoud om tussen representaties, betekenis-blind)
-  - [ ] Conditioneel (werkt op voorwaarden en hygiene, niet op inhoud)
-
-- **Bronhouding** (kennisbronnen en herleidbaarheid)
-  - [ ] Input-gebonden (output 100% herleidbaar tot input)
-  - [x] Canon-gebonden (baseert zich expliciet op canon)
-  - [ ] Externe-bron gebonden (haalt kennis uit externe bronnen, maar wel met kaders)
-  - [ ] Exploratief (gebruikt generatieve capaciteiten, aannames expliciet)
-
-**Classificatie-validatie (verplicht):**
-- [x] Gekozen as-posities zijn onderling compatibel: Ordening x Normerend x Inhoudelijk x Canon-gebonden is een coherente combinatie voor een capability-definierende agent
-- [x] Positionering volgt definities uit `mandarin-ordeningsconcepten.md` (geen eigen interpretatie van as-betekenissen)
+**Validatie**: Ordening × Normerend × Inhoudelijk × Canon-gebonden — coherente combinatie. Positionering volgt `mandarin-ordeningsconcepten.md`.
 
 ## 1. Doel en bestaansreden
 

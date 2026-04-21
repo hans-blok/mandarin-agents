@@ -3,6 +3,7 @@ agent: core-framework-architect
 agent-id: aod.02.core-framework-architect
 value_stream: aod
 value_stream_fase: aod.02
+bronhouding: Canon-gebonden
 versie: 1.3.0
 digest: ee5f
 status: vers
@@ -19,32 +20,16 @@ status: vers
 
 ---
 
-## Mandarin-agent-classificatie (4 orthogonale assen)
-(vink aan wat van toepassing is)
+## Mandarin-agent-classificatie
 
-- **Betekeniseffect**
-  - [ ] Beschrijvend
-  - [x] Realiserend
-  - [ ] Evaluerend
-  - [ ] Normerend
-  - [ ] Geen
+| As               | Waarde            |
+|------------------|-------------------|
+| Vormingsfase     | ?                 |
+| Betekeniseffect  | Realiserend       |
+| Werking          | Inhoudelijk       |
+| Bronhouding      | Canon-gebonden    |
 
-- **Interventieniveau**
-  - [x] Werk
-  - [ ] Ontwerp
-  - [ ] Architectuur
-  - [ ] Ecosysteem
-
-- **Werking**
-  - [x] Inhoudelijk
-  - [ ] Representatie-omvormend
-  - [ ] Conditioneel
-
-- **Bron-houding**
-  - [ ] Input-gebonden
-  - [x] Canon-gebonden
-  - [ ] Externe-bron-gebonden
-  - [ ] Vrij
+**Validatie**: ? × Realiserend × Inhoudelijk × Canon-gebonden — coherente combinatie. Positionering volgt `mandarin-ordeningsconcepten.md`.
 
 ## Opereert in Value stream fasen
 

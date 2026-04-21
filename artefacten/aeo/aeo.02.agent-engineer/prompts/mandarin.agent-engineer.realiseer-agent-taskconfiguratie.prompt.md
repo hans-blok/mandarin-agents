@@ -8,5 +8,11 @@ versie: 1.0.0
 input_parameters:
   - agent_naam
 value_stream_fase: aeo.02
+afnemers:
+  - agent: ecosysteem-coordinator
+    intent: aggregeer-tasks
+    consumes:
+      type: task-configuratie
+      required: true
 
 ---

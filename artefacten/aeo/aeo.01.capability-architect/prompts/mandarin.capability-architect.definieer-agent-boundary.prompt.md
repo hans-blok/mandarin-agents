@@ -10,5 +10,21 @@ input_parameters:
   - korte_beschrijving
 value_stream_fase: aeo.01
 template: templates/agent-boundary.template.md
+afnemers:
+  - agent: agent-ontwerper
+    intent: definieer-agent-charter
+    consumes:
+      type: agent-boundary
+      required: true
+  - agent: agent-ontwerper
+    intent: definieer-agent-contract
+    consumes:
+      type: agent-boundary
+      required: true
+  - agent: agent-ontwerper
+    intent: definieer-agent-template
+    consumes:
+      type: agent-boundary
+      required: true
 
 ---

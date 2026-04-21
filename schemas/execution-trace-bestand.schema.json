@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "execution-trace-bestand.schema.json",
+  "title": "Execution Trace Bestand",
+  "description": "Schema voor .trace.yaml bestanden gegenereerd door ecosysteem-coordinator.",
+  "type": "object",
+  "required": ["execution_id", "execution_digest", "agent", "intent", "timestamp"],
+  "properties": {
+    "execution_id": {
+      "type": "string",
+      "pattern": "^[0-9]{8}\\.[0-9]{4}$",
+      "description": "Formaat YYYYMMDD.NNNN"
+    },
+    "execution_digest": {
+      "type": "string",
+      "minLength": 12,
+      "maxLength": 12,
+      "description": "12-teken SHA256 digest van het execution-bestand"
+    },
+    "agent": { "type": "string" },
+    "intent": { "type": "string" },
+    "timestamp": { "type": "string" },
+    "value_stream_fase": { "type": "string" },
+    "bronhouding": {
+      "type": "string",
+      "enum": ["Canon-gebonden", "Input-gebonden", "Externe-bron-gebonden", "Exploratief", "onbekend"]
+    },
+    "modus": {
+      "type": "string",
+      "enum": ["handmatig", "automatisch"]
+    },
+    "bronnen": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["bronpad", "type"],
+        "properties": {
+          "bronpad": { "type": "string" },
+          "type": { "type": "string" },
+          "digest": { "type": "string" },
+          "reden_van_opname": { "type": "string" },
+          "opnamevorm": { "type": "string" }
+        }
+      }
+    },
+    "context_events": {
+      "type": "array",
+      "description": "Tokenmetingen en context-events conform implementatienotitie-tokenbewust-contextbeheer.md",
+      "items": {
+        "type": "object",
+        "required": ["event_type", "timestamp", "meetwijze", "bron", "detail"],
+        "properties": {
+          "event_type": {
+            "type": "string",
+            "enum": [
+              "preflight_warning",
+              "context_loss_known",
+              "context_loss_suspected",
+              "compression_event",
+              "token_measurement"
+            ]
+          },
+          "timestamp": { "type": "string" },
+          "meetwijze": {
+            "type": "string",
+            "enum": ["exact", "schatting", "onbekend"]
+          },
+          "bron": { "type": "string" },
+          "detail": { "type": "string" },
+          "input_tokens": { "type": "integer", "minimum": 0 },
+          "output_tokens": { "type": "integer", "minimum": 0 },
+          "context_window_tokens": { "type": "integer", "minimum": 0 }
+        },
+        "if": {
+          "properties": { "event_type": { "const": "context_loss_known" } },
+          "required": ["event_type"]
+        },
+        "then": {
+          "properties": {
+            "meetwijze": { "const": "exact" }
+          }
+        }
+      }
+    }
+  }
+}

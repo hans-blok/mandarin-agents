@@ -21,5 +21,11 @@ werkbronnen:
     lookup:
       strategy: workspace-root
       pattern: "temp/*"
+afnemers:
+  - agent: agent-engineer
+    intent: realiseer-agent-prompts
+    consumes:
+      type: agent-template-document
+      required: false
 
 ---

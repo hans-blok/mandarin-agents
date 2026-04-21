@@ -4,6 +4,7 @@ agent-id: aeo.01.doctrine-regels-vertaler
 value_stream: aeo
 value_stream_fase: aeo.01
 kaderdefinities: geen
+bronhouding: Input-gebonden
 versie: 1.0.0
 status: vers
 ---
@@ -15,41 +16,16 @@ status: vers
 **domein**: Doctrine-naar-regel transformatie
 
 ---
-## Mandarin-agent-classificatie (4 orthogonale assen)
-(vink aan wat van toepassing is)
+## Mandarin-agent-classificatie
 
-- **Vormingsfase** (fase van vorming of ontwikkeling)
-	- [ ] Operationeel in alle fasen
-	- [ ] Verkenning (onderzoeken van intentie, probleemstelling of richting)
-	- [ ] Ordening (structureren van intentie en expliciet maken van samenhang)
-	- [ ] Vastlegging (betekenis bindend vaststellen binnen de workspace)
-	- [x] Realisatie (betekenis werkend maken in systemen of processen)
-	- [ ] Toetsing (gerealiseerd artefact beoordelen tegen een norm)
-	- [ ] Operationalisatie (gerealiseerde structuur formeel in werking stellen)
+| As               | Waarde            |
+|------------------|-------------------|
+| Vormingsfase     | Realisatie        |
+| Betekeniseffect  | Structurerend     |
+| Werking          | Inhoudelijk       |
+| Bronhouding      | Input-gebonden    |
 
-- **Betekeniseffect** (effect op betekenis)
-	- [ ] Geen betekenis (nul-positie, alleen voor conditionele werking)
-	- [ ] Beschrijvend (documenteert, vooraf en achteraf)
-	- [x] Structurerend (maakt samenhang en relaties expliciet)
-	- [ ] Normerend (normeert structuur en indeling voor realisatie en ook toetsing)
-	- [ ] Vastleggend (realiseert direct gedrag, structuur of configuratie)
-	- [ ] Realiserend (realiseert feitelijk gedrag, structuur of configuratie)
-	- [ ] Evaluerend (legt oordeel of duiding vast, beoordeelt kwaliteit)
-
-- **Werking** (inhoud, representatie of voorwaarden)
-	- [x] Inhoudelijk (werkt direct op betekenisvolle artefacten)
-	- [ ] Representatie-omvormend (zet inhoud om tussen representaties, betekenis-blind)
-	- [ ] Conditioneel (werkt op voorwaarden en hygiëne, niet op inhoud)
-
-- **Bronhouding** (kennisbronnen en herleidbaarheid)
-	- [x] Input-gebonden (output 100% herleidbaar tot input)
-	- [ ] Canon-gebonden (baseert zich expliciet op canon)
-	- [ ] Externe-bron-gebonden (haalt kennis uit externe bronnen, maar wel met kaders)
-	- [ ] Exploratief (gebruikt generatieve capaciteiten, aannames expliciet)
-
-**Classificatie-validatie:**
-- [x] Gekozen as-posities zijn onderling compatibel: Realisatie × Structurerend × Inhoudelijk × Input-gebonden is coherent voor een agent die doctrine-inhoud omzet naar toetsbare regelrepresentaties zonder nieuwe normatieve inhoud toe te voegen.
-- [x] Positionering volgt definities uit `mandarin-ordeningsconcepten.md`.
+**Validatie**: Realisatie × Structurerend × Inhoudelijk × Input-gebonden — coherente combinatie. Positionering volgt `mandarin-ordeningsconcepten.md`.
 
 ## Opereert in Value stream fasen
 - Agent Ecosysteem Ontwikkeling (aeo) - fase 01 (Grondslagvorming)

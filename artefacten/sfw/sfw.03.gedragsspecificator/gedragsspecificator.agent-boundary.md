@@ -3,6 +3,7 @@ agent: gedragsspecificator
 agent-id: sfw.03.gedragsspecificator
 value_stream: sfw
 value_stream_fase: sfw.03
+bronhouding: Canon-gebonden
 versie: 1.0.0
 digest: c22c
 status: vers
@@ -15,38 +16,16 @@ doel: Het wegnemen van ambiguïteit en het borgen van gedeeld begrip tussen busi
 domein: Requirements Engineering & BDD
 
 ---
-## Mandarin-agent-classificatie (4 orthogonale assen)
-(vink aan wat van toepassing is)
+## Mandarin-agent-classificatie
 
-<!--
-Richtlijn: agents in value stream `agent-enablement` zijn in principe
-"Ecosysteem-normerend" op de inhoudelijke as.
--->
+| As               | Waarde            |
+|------------------|-------------------|
+| Vormingsfase     | ?                 |
+| Betekeniseffect  | Realiserend       |
+| Werking          | Representatie-omvormend |
+| Bronhouding      | Canon-gebonden    |
 
-- **Betekeniseffect**
-  - [ ] Beschrijvend
-  - [x] Realiserend
-  - [ ] Evaluerend
-  - [ ] Normerend
-  - [ ] Geen
-
-- **Interventieniveau**
-  - [x] Werk
-  - [ ] Ontwerp
-  - [ ] Architectuur
-  - [ ] Ecosysteem
-
-- **Werking**
-  - [ ] Inhoudelijk
-  - [x] Representatie-omvormend
-  - [ ] Conditioneel
-
-- **Bron-houding**
-  - [ ] Input-gebonden
-  - [x] Canon-gebonden
-  - [ ] Externe-bron-gebonden
-  - [ ] Vrij
-
+**Validatie**: ? × Realiserend × Representatie-omvormend × Canon-gebonden — coherente combinatie. Positionering volgt `mandarin-ordeningsconcepten.md`.
 
 ## Opereert in Value stream fasen
 - sfw sfw.03 (Ontwerp/Specificatie)

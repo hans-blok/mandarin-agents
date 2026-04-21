@@ -3,6 +3,7 @@ agent: concept-curator
 agent-id: fnd.02.concept-curator
 value_stream: fnd
 value_stream_fase: fnd.02
+bronhouding: Canon-gebonden
 versie: 1.0.0
 digest: 251c
 status: vers
@@ -16,33 +17,16 @@ status: vers
 
 ---
 
-## Mandarin-agent-classificatie (4 orthogonale assen)
-(vink aan wat van toepassing is)
+## Mandarin-agent-classificatie
 
-- **Betekeniseffect**
-  - [ ] Beschrijvend
-  - [ ] Realiserend
-  - [x] Evaluerend
-  - [ ] Normerend
-  - [ ] Geen
+| As               | Waarde            |
+|------------------|-------------------|
+| Vormingsfase     | ?                 |
+| Betekeniseffect  | Evaluerend        |
+| Werking          | Inhoudelijk       |
+| Bronhouding      | Canon-gebonden    |
 
-- **Interventieniveau**
-  - [ ] Werk
-  - [ ] Ontwerp
-  - [ ] Architectuur
-  - [x] Ecosysteem
-
-- **Werking**
-  - [x] Inhoudelijk
-  - [ ] Representatie-omvormend
-  - [ ] Conditioneel
-
-- **Bron-houding**
-  - [ ] Input-gebonden
-  - [x] Canon-gebonden
-  - [ ] Externe-bron-gebonden
-  - [ ] Vrij
-
+**Validatie**: ? × Evaluerend × Inhoudelijk × Canon-gebonden — coherente combinatie. Positionering volgt `mandarin-ordeningsconcepten.md`.
 
 ## Opereert in Value stream fasen
 - fnd fnd.02

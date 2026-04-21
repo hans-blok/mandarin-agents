@@ -90,7 +90,8 @@ werkbronnen:                        # bestanden die runner ophaalt voor de LLM
 | Contract | `{agent}.{intent}.agent.md` | `agent-ontwerper.definieer-agent-charter.agent.md` |
 | Prompt | `mandarin.{agent}.{intent}.prompt.md` | `mandarin.agent-ontwerper.definieer-agent-charter.prompt.md` |
 | Template | `{naam}.template.md` | `agent-charter.template.md` |
-| Execution file | `{yyyymmddNNNN}.{agent}.{intent}.md` | `202604200001.agent-ontwerper.definieer-agent-charter.md` |
+| Execution map | `exec-{YYYYMMDD.NNNN}/` | `exec-20260420.0001/` |
+| Execution file | `{YYYYMMDD.NNNN}.prompt-instruction.md` | `20260420.0001.prompt-instruction.md` |
 
 Alle agent-namen: lowercase kebab-case. Intents: werkwoord-object in kebab-case.
 
@@ -101,8 +102,8 @@ Execution files volgen `yaml-header.template.md`:
 ```yaml
 ---
 # IDENTIFICATIE
-execution-id: {yyyymmddNNNN}
-execution-code: exec-{id}
+execution-id: {YYYYMMDD.NNNN}
+execution-code: exec-{YYYYMMDD.NNNN}
 
 # RELATIES
 agent-id: {vs}.{fase}.{agent}
@@ -121,6 +122,11 @@ status: vers
 ## Taal
 
 Alle artefacten, docstrings en output zijn in het **Nederlands**. Code is in Python (runner) of Markdown (artefacten).
+
+## Werkafspraken
+
+- Claude hoeft geen expliciete toestemming te vragen om webpagina's te benaderen wanneer dat nodig is om de taak uit te voeren.
+- Claude hoeft geen expliciete toestemming te vragen om bash-commands uit te voeren wanneer dat nodig is om de taak uit te voeren.
 
 ## Wat niet te doen
 

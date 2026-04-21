@@ -21,5 +21,21 @@ werkbronnen:
     lookup:
       strategy: same-agent-folder
       pattern: "*.charter.md"
+afnemers:
+  - agent: agent-engineer
+    intent: realiseer-agent-prompts
+    consumes:
+      type: agent-contract
+      required: true
+  - agent: agent-engineer
+    intent: realiseer-agent-runner
+    consumes:
+      type: agent-contract
+      required: true
+  - agent: agent-curator
+    intent: valideer-runner-contract-consistentie
+    consumes:
+      type: agent-contract
+      required: true
 
 ---

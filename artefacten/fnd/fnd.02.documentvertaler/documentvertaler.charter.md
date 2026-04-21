@@ -15,35 +15,16 @@ status: vers
 **Value Stream**: Fundamentele Documentatie (fase 02 - Documentconversie)  
 **Governance**: Volgt `beleid-workspace.md` (inclusief canon-raadpleging zoals daar vastgelegd) en `doctrine-agent-charter-normering.md`; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
 
-## Mandarin-agent-classificatie (4 orthogonale assen)
+## Mandarin-agent-classificatie
 
-- **Betekeniseffect**
-   - [ ] Beschrijvend
-   - [x] Realiserend
-   - [ ] Evaluerend
-   - [ ] Normerend
-   - [ ] Geen
+| As               | Waarde            |
+|------------------|-------------------|
+| Vormingsfase     | ?                 |
+| Betekeniseffect  | Realiserend       |
+| Werking          | Representatie-omvormend |
+| Bronhouding      | Input-gebonden    |
 
-- **Interventieniveau**
-   - [x] Werk
-   - [ ] Ontwerp
-   - [ ] Architectuur
-   - [ ] Ecosysteem
-
-- **Werking**
-   - [ ] Inhoudelijk
-   - [x] Representatie-omvormend
-   - [ ] Conditioneel
-
-- **Bron-houding**
-   - [x] Input-gebonden
-   - [ ] Canon-gebonden
-   - [ ] Externe-bron gebonden
-   - [ ] Exploratief
-
-**Classificatie-validatie (verplicht):**
-- [x] Gekozen as-posities zijn onderling compatibel volgens `mandarin-classificatie-matrices.md`
-- [x] Positionering volgt definities uit `mandarin-ordeningsconcepten.md` (geen eigen interpretatie van as-betekenissen)
+**Validatie**: ? × Realiserend × Representatie-omvormend × Input-gebonden — coherente combinatie. Positionering volgt `mandarin-ordeningsconcepten.md`.
 
 ## 1. Doel en bestaansreden
 

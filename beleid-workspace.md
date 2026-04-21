@@ -87,6 +87,19 @@ Deze workspace hanteert het principe **Convention over Configuration** (*charter
 - **Traceerbaarheid**: Elk agent-artefact (charter, contract, prompt) moet traceerbaar zijn naar governance-documenten en canonical bronnen via expliciete verwijzingen
 - **JSON Schema conformiteit**: Alle JSON-output (zoals agents-publicatie.json) moet valideren tegen de gedefinieerde schemas in de `/schemas` folder
 - **Markdown-kwaliteit**: Alle documentatie gebruikt B1-taalniveau en volgt de Mandarin-stijlgids voor leesbaarheid en consistentie
+- **Prompt-frontmatter werkbronnen en afnemers**: Prompt-bestanden declareren zowel hun inputs als hun downstream consumers in de YAML frontmatter:
+  - `werkbronnen`: bestanden die de runner ophaalt als input (zie CLAUDE.md voor lookup-strategieën)
+  - `afnemers`: downstream agents die de output van deze intent consumeren — de spiegelstructuur van `werkbronnen`. Schema per entry:
+    ```yaml
+    afnemers:
+      - agent: {agent-naam}          # kebab-case agent-id van de ontvanger
+        intent: {intent-naam}        # specifieke intent; "*" = alle intents
+        consumes:
+          type: {artefact-type}      # matcht output[].type in het contract van deze agent
+          required: true             # is de ontvanger geblokkeerd zonder dit artefact
+    ```
+  - De `type`-waarde in `afnemers[].consumes` MOET overeenkomen met een `type` in de `output`-specificatie van het bijbehorende agent-contract
+  - `afnemers` hoort in de **prompt** (uitvoeringsbedrading), niet in het contract (stabiele capability)
 - **Logging en audit**: Elke handmatige agent-initialisatie wordt gelogd conform Norm 10.4 met paden van gelezen, gewijzigde en aangemaakte bestanden
 - **Version control**: Alle agent-wijzigingen worden gedocumenteerd in charter Change Logs met datum, versie, wijziging en auteur
 - **Template-usage**: Alle nieuwe agent-artefacten gebruiken de verplichte templates uit de `/templates` folder voor consistentie

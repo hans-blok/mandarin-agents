@@ -18,21 +18,16 @@ status: vers
 
 ---
 
-## Mandarin-agent-classificatie (4 orthogonale assen)
+## Mandarin-agent-classificatie
 
-- **Vormingsfase**
-  - [x] Verantwoording
+| As               | Waarde            |
+|------------------|-------------------|
+| Vormingsfase     | Verantwoording    |
+| Betekeniseffect  | Beschrijvend      |
+| Werking          | Inhoudelijk       |
+| Bronhouding      | Input-gebonden    |
 
-- **Betekeniseffect**
-  - [x] Beschrijvend
-
-- **Werking**
-  - [x] Inhoudelijk
-
-- **Bronhouding**
-  - [x] Input-gebonden
-
----
+**Validatie**: Verantwoording × Beschrijvend × Inhoudelijk × Input-gebonden — coherente combinatie. Positionering volgt `mandarin-ordeningsconcepten.md`.
 
 ## 1. Doel en bestaansreden
 

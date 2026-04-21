@@ -28,43 +28,16 @@ versie: 1.1.0
 **Kaderdefinities**: {kaderdefinities — lijst van canonieke paden, of "geen"}  
 **Governance**: Volgt `beleid-workspace.md` (inclusief canon-raadpleging zoals daar vastgelegd) en `doctrine-agent-charter-normering.md`; zie prompt files voor uitvoeringsdetails en grondslagen-patronen.
 
-## Mandarin-agent-classificatie (4 orthogonale assen)
+## Mandarin-agent-classificatie
 
-- **Vormingsfase**
-   - [ ] Verkenning
-   - [ ] Ordening
-   - [ ] Vastlegging
-   - [ ] Realisatie
-   - [ ] Toetsing
-   - [ ] Verantwoording
-   - [ ] Operationalisatie
-   - [ ] Overkoepelend
+| As               | Waarde            |
+|------------------|-------------------|
+| Vormingsfase     | {vormingsfase}    |
+| Betekeniseffect  | {betekeniseffect} |
+| Werking          | {werking}         |
+| Bronhouding      | {bronhouding}     |
 
-- **Betekeniseffect**
-   - [ ] Beschrijvend
-   - [ ] Structuurrealiserend
-   - [ ] Normerend
-   - [ ] Realiserend
-   - [ ] Evaluerend
-   - [ ] Rangschikkend
-   - [ ] Validerend
-   - [ ] Geen
-
-- **Werking**
-   - [ ] Inhoudelijk
-   - [ ] Representatie-omvormend
-   - [ ] Conditioneel
-
-- **Bron-houding**
-   - [ ] Input-gebonden
-   - [ ] Canon-gebonden
-   - [ ] Workspace-gebonden
-   - [ ] Externe-bron-gebonden
-   - [ ] Exploratief
-
-**Classificatie-validatie (verplicht):**
-- [ ] Gekozen as-posities zijn onderling compatibel volgens `mandarin-classificatie-matrices.md`
-- [ ] Positionering volgt definities uit `mandarin-ordeningsconcepten.md` (geen eigen interpretatie van as-betekenissen)
+**Validatie**: {vormingsfase} × {betekeniseffect} × {werking} × {bronhouding} — {validatiebeschrijving}. Positionering volgt `mandarin-ordeningsconcepten.md`.
 
 ## 1. Doel en bestaansreden
 
@@ -194,8 +167,8 @@ Dit voldoet aan **Principe 7 (Transparante Verantwoording)** uit `doctrine-agent
 - Alle tekstblokken tussen `{...}`: Vervang door concrete invulling
 
 **Classificatie (uit boundary + canon):**
-- Kies exact één positie per as (Betekeniseffect, Interventieniveau, Werking, Bron-houding)
-- Gebruik boundary.md als primaire bron voor positionering
+- Vul de classificatietabel in — één waarde per as (Vormingsfase, Betekeniseffect, Werking, Bronhouding)
+- Gebruik boundary.md als primaire bron voor positionering (waarden staan in de tabel of frontmatter)
 - Valideer de combinatie tegen `mandarin-classificatie-matrices.md`
 - Gebruik definities uit `mandarin-ordeningsconcepten.md` als semantische grondslag
 

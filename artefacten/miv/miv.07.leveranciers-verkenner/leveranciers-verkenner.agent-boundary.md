@@ -4,6 +4,7 @@ agent-id: miv.07.leveranciers-verkenner
 value_stream: miv
 value_stream_fase: miv.07
 kaderdefinities: geen
+bronhouding: Externe-bron-gebonden
 versie: 1.0.0
 digest: fa97
 status: vers
@@ -17,38 +18,16 @@ status: vers
 
 ---
 
-## Mandarin-agent-classificatie (4 orthogonale assen)
+## Mandarin-agent-classificatie
 
-- **Vormingsfase** (fase van vorming of ontwikkeling)
-  - [ ] Operationeel in alle fasen
-  - [x] Verkenning (onderzoeken van intentie, probleemstelling of richting)
-  - [ ] Ordening (structureren van intentie en expliciet maken van samenhang)
-  - [ ] Vastlegging (betekenis bindend vaststellen binnen de workspace)
-  - [ ] Realisatie (betekenis werkend maken in systemen of processen)
-  - [ ] Toetsing (gerealiseerd artefact beoordelen tegen een norm)
-  - [ ] Operationalisatie (gerealiseerde structuur formeel in werking stellen)
+| As               | Waarde            |
+|------------------|-------------------|
+| Vormingsfase     | Verkenning        |
+| Betekeniseffect  | Beschrijvend      |
+| Werking          | Inhoudelijk       |
+| Bronhouding      | Externe-bron-gebonden |
 
-- **Betekeniseffect** (effect op betekenis)
-  - [ ] Geen betekenis (nul-positie, alleen voor conditionele werking)
-  - [x] Beschrijvend (documenteert, vooraf en achteraf)
-  - [ ] Structurerend (maakt samenhang en relaties expliciet)
-  - [ ] Normerend (normeert structuur en indeling voor realisatie en ook toetsing)
-  - [ ] Vastleggend (realiseert direct gedrag, structuur of configuratie)
-  - [ ] Realiserend (realiseert feitelijk gedrag, structuur of configuratie)
-  - [ ] Evaluerend (legt oordeel of duiding vast, beoordeelt kwaliteit)
-
-- **Werking** (inhoud, representatie of voorwaarden)
-  - [x] Inhoudelijk (werkt direct op betekenisvolle artefacten)
-  - [ ] Representatie-omvormend (zet inhoud om tussen representaties, betekenis-blind)
-  - [ ] Conditioneel (werkt op voorwaarden en hygiëne, niet op inhoud)
-
-- **Bronhouding** (kennisbronnen en herleidbaarheid)
-  - [ ] Input-gebonden (output 100% herleidbaar tot input)
-  - [ ] Canon-gebonden (baseert zich expliciet op canon)
-  - [x] Externe-bron-gebonden (haalt kennis uit externe bronnen, maar wel met kaders)
-  - [ ] Exploratief (gebruikt generatieve capaciteiten, aannames expliciet)
-
----
+**Validatie**: Verkenning × Beschrijvend × Inhoudelijk × Externe-bron-gebonden — coherente combinatie. Positionering volgt `mandarin-ordeningsconcepten.md`.
 
 ## Opereert in Value stream fasen
 

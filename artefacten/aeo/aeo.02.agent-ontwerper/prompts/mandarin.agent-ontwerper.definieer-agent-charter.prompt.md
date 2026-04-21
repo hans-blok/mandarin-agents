@@ -21,5 +21,11 @@ werkbronnen:
     lookup:
       strategy: same-agent-folder
       pattern: "agent-contracten/*.agent.md"
+afnemers:
+  - agent: agent-curator
+    intent: valideer-agent-consistentie
+    consumes:
+      type: agent-charter
+      required: true
 
 ---

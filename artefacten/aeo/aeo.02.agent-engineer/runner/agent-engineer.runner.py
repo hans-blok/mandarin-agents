@@ -42,6 +42,21 @@ try:
 except ImportError:
     HAS_OPENAI = False
 
+try:
+    _scripts_dir = str(Path(__file__).resolve().parent.parent.parent.parent.parent / "scripts")
+    if _scripts_dir not in sys.path:
+        sys.path.insert(0, _scripts_dir)
+    from context_budget_service import (
+        normalize_openai_usage,
+        build_post_call_status,
+        format_user_warning,
+        events_to_dicts,
+        load_config as _load_budget_config,
+    )
+    HAS_CONTEXT_BUDGET = True
+except Exception:
+    HAS_CONTEXT_BUDGET = False
+
 
 # ==============================================================================
 # SHARED UTILITIES
@@ -219,24 +234,36 @@ def extract_template_from_contract(body: str) -> Optional[str]:
 
 
 def extract_checked_classification(body: str, heading: str) -> Optional[str]:
-    """Zoek de aangevinkte classificatiewaarde onder een kopje in boundary markdown."""
-    active = False
+    """Zoek de classificatiewaarde in de tabel onder ## Mandarin-agent-classificatie."""
+    pattern = rf'^\|\s*{re.escape(heading)}\s*\|\s*(.+?)\s*\|'
+    for line in body.splitlines():
+        m = re.match(pattern, line, flags=re.IGNORECASE)
+        if m:
+            return m.group(1).strip()
+    return None
 
-    for raw_line in body.splitlines():
-        line = raw_line.strip()
 
-        if line.startswith(f"- **{heading}**"):
-            active = True
+def extract_afnemers_block(frontmatter_text: str) -> Optional[str]:
+    """Extraheer het ruwe afnemers-blok uit bestaande frontmatter, inclusief inspringing."""
+    lines = frontmatter_text.splitlines()
+    in_afnemers = False
+    block_lines: List[str] = []
+
+    for line in lines:
+        if line.startswith('afnemers:'):
+            in_afnemers = True
+            block_lines.append(line)
             continue
-        if active and line.startswith("- **") and not line.startswith(f"- **{heading}**"):
-            break
+        if in_afnemers:
+            # Nieuwe top-level YAML key = einde blok
+            if line and not line.startswith(' ') and not line.startswith('-'):
+                break
+            block_lines.append(line)
 
-        if active:
-            match = re.match(r'^-\s+\[x\]\s+(.+)$', line, flags=re.IGNORECASE)
-            if match:
-                value = re.sub(r'\s*\(.+$', '', match.group(1)).strip()
-                return value
-
+    if block_lines:
+        while block_lines and not block_lines[-1].strip():
+            block_lines.pop()
+        return '\n'.join(block_lines)
     return None
 
 
@@ -279,8 +306,12 @@ def realiseer_agent_prompts_main(args: argparse.Namespace) -> int:
     try:
         context = discover_agent_context(args.agent_naam)
         boundary_text = context['boundary_file'].read_text(encoding='utf-8')
-        _, boundary_body = parse_simple_frontmatter(boundary_text)
-        bronhouding = extract_checked_classification(boundary_body, 'Bronhouding') or 'Input-gebonden'
+        boundary_meta, boundary_body = parse_simple_frontmatter(boundary_text)
+        bronhouding = (
+            boundary_meta.get('bronhouding')
+            or extract_checked_classification(boundary_body, 'Bronhouding')
+            or 'Input-gebonden'
+        )
 
         prompts_dir = context['agent_folder'] / 'prompts'
         prompts_dir.mkdir(parents=True, exist_ok=True)
@@ -306,6 +337,15 @@ def realiseer_agent_prompts_main(args: argparse.Namespace) -> int:
                 )
             input_parameters = [p['name'] for p in required + optional]
 
+            prompt_path = prompts_dir / f"mandarin.{context['agent_naam']}.{intent}.prompt.md"
+
+            # Bewaar bestaand afnemers-blok bij herregeneratie
+            existing_afnemers: Optional[str] = None
+            if prompt_path.exists():
+                existing_parts = prompt_path.read_text(encoding='utf-8').split('---', 2)
+                if len(existing_parts) >= 2:
+                    existing_afnemers = extract_afnemers_block(existing_parts[1])
+
             lines = [
                 '---',
                 f"agent: mandarin.{context['agent_naam']}",
@@ -319,14 +359,11 @@ def realiseer_agent_prompts_main(args: argparse.Namespace) -> int:
                 lines.append(f"  - {parameter}")
             if not input_parameters:
                 lines.append('  []')
-            lines.extend([
-                f"value_stream_fase: {context['value_stream_fase']}",
-                '',
-                '---',
-                '',
-            ])
+            lines.append(f"value_stream_fase: {context['value_stream_fase']}")
+            if existing_afnemers:
+                lines.extend(['', existing_afnemers])
+            lines.extend(['', '---', ''])
 
-            prompt_path = prompts_dir / f"mandarin.{context['agent_naam']}.{intent}.prompt.md"
             prompt_path.write_text('\n'.join(lines), encoding='utf-8')
             created_files.append(prompt_path)
 
@@ -963,9 +1000,10 @@ def generate_output_code(output_folder: Path, code_prefix: str, agent: str = Non
     return f"{code_prefix}-{today}-{next_seq:02d}"
 
 
-def call_llm_api(system_prompt: str, user_prompt: str, model: str = None) -> str:
-    """
-    Roep LLM API aan (OpenAI/Azure OpenAI).
+def call_llm_api(system_prompt: str, user_prompt: str, model: str = None) -> tuple[str, object]:
+    """Roep LLM API aan (OpenAI/Azure OpenAI).
+
+    Retourneert (content, usage) waarbij usage het ruwe provider-object is.
     Configuratie via environment variables:
     - OPENAI_API_KEY: API key
     - OPENAI_MODEL: Model naam (default: gpt-4o)
@@ -974,16 +1012,15 @@ def call_llm_api(system_prompt: str, user_prompt: str, model: str = None) -> str
     """
     if not HAS_OPENAI:
         raise ImportError("openai package is vereist. Installeer met: pip install openai")
-    
+
     api_key = os.environ.get('OPENAI_API_KEY')
     if not api_key:
         raise ValueError("OPENAI_API_KEY environment variable niet gezet")
-    
+
     model = model or os.environ.get('OPENAI_MODEL', 'gpt-4o')
     azure_endpoint = os.environ.get('AZURE_OPENAI_ENDPOINT')
-    
+
     if azure_endpoint:
-        # Azure OpenAI
         api_version = os.environ.get('AZURE_OPENAI_API_VERSION', '2024-02-15-preview')
         client = openai.AzureOpenAI(
             api_key=api_key,
@@ -991,9 +1028,8 @@ def call_llm_api(system_prompt: str, user_prompt: str, model: str = None) -> str
             azure_endpoint=azure_endpoint
         )
     else:
-        # Standard OpenAI
         client = openai.OpenAI(api_key=api_key)
-    
+
     response = client.chat.completions.create(
         model=model,
         messages=[
@@ -1003,8 +1039,8 @@ def call_llm_api(system_prompt: str, user_prompt: str, model: str = None) -> str
         temperature=0.3,
         max_tokens=4000
     )
-    
-    return response.choices[0].message.content
+
+    return response.choices[0].message.content, response.usage
 
 
 def write_audit_log(audit_path: Path, execution_id: str, agent: str, intent: str,
@@ -1143,8 +1179,21 @@ def execute_from_execution_file_main(args: argparse.Namespace) -> int:
             llm_response = f"[DRY-RUN] Output zou hier komen voor {output_code}"
         else:
             model = args.model if hasattr(args, 'model') else None
-            llm_response = call_llm_api(system_prompt, user_prompt, model)
-        
+            llm_response, _llm_usage = call_llm_api(system_prompt, user_prompt, model)
+            if HAS_CONTEXT_BUDGET:
+                try:
+                    _workspace_root = str(Path(__file__).resolve().parent.parent.parent.parent.parent)
+                    _budget_cfg = _load_budget_config(_workspace_root)
+                    _snapshot = normalize_openai_usage(_llm_usage)
+                    _post_status = build_post_call_status(_snapshot, model or 'gpt-4o', _budget_cfg)
+                    _warning = format_user_warning(_post_status)
+                    if _warning:
+                        print()
+                        print(_warning)
+                        print()
+                except Exception:
+                    pass
+
         print(f"      Response length: {len(llm_response)} chars")
         print()
         
